@@ -26,6 +26,7 @@ vim.g.maplocalleader = "\\"
 
 -- Load the rest of our options before any plugins load as well
 require("config.options")
+require("config.keymaps")
 
 local lazy = require("lazy")
 ---@type LazyConfig
@@ -38,7 +39,7 @@ local opts = {
   checker = { enabled = true },
   install = { missing = true, colorscheme = { "nvchad" } },
   spec = {
-    { import = "core.ui" },
+    { import = "core" },
     { import = "plugins" }
   },
   change_detection = {
@@ -66,6 +67,7 @@ for _, v in ipairs(vim.fn.readdir(vim.g.base46_cache)) do
   dofile(vim.g.base46_cache .. v)
 end
 
-require("config.keymaps")
 require("config.commands")
 require("config.autocmds")
+
+_G.NvVim = require("util")
