@@ -1,0 +1,7 @@
+{
+  "base46": { "branch": "v2.5", "commit": "b18a012f9ef6eb5a8d980fee81bfb0ce95b149dd" },
+  "lazy.nvim": { "branch": "main", "commit": "077102c5bfc578693f12377846d427f49bc50076" },
+  "plenary.nvim": { "branch": "master", "commit": "2d9b06177a975543726ce5c73fca176cedbffe9d" },
+  "ui": { "branch": "v3.0", "commit": "5fc2fa71c4f5ca04caa3b8fc0863c72599c0eb96" },
+  "volt": { "branch": "main", "commit": "43f72b49037c191eb3cfe26ba7a5574b4bfce226" }
+}
