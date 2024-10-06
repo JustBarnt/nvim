@@ -38,7 +38,7 @@ local opts = {
   checker = { enabled = true },
   install = { missing = true, colorscheme = { "nvchad" } },
   spec = {
-    { import = "core" },
+    { import = "core.ui" },
     { import = "plugins" }
   },
   change_detection = {
