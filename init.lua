@@ -5,7 +5,8 @@ if init_debug then
   require("osv").launch({ port = 8086, blocking = true })
 end
 
-require("config.lazy")
 require("config.options")
+require("config.lsp")
 require("config.keymaps")
 require("config.autocmds")
+require("config.lazy")
