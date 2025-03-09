@@ -20,9 +20,9 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
 	spec = {
 		{ "folke/tokyonight.nvim", priority = 10000 },
-		-- { import = "justbarnt.plugins" },
-		-- { import = "justbarnt.plugins.lang" },
-		{ import = "justbarnt.plugins.core" },
+		-- { import = "plugins.lang" },
+		-- { import = "plugins" },
+		{ import = "plugins.core" },
 	},
 	-- NOTE: Part of lazy.nvim. Include a .lazy.lua file in a project root directory, and those plugins will be merged
 	--       into the plugin spec for that project only
