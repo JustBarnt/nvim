@@ -16,7 +16,6 @@ if init_debug then
   require("osv").launch({ port = 8086, blocking = true })
 end
 
-
 require("utils.string_extensions")
 require("core.options")
 require("core.lsp")
