@@ -4,7 +4,6 @@ local function lsp_status()
 	if #attached_clients == 0 then return "" end
 	local names = vim.iter(attached_clients)
 		:map(function(client)
-			print(client.name)
 			local name = client.name:gsub("language.server", "ls")
 			return name
 		end)

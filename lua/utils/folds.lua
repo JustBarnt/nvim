@@ -1,6 +1,6 @@
 local M = {}
 
-M.lsp_foldexpr(server)
+M.lsp_foldexpr = function(server)
   local has_conform, conform = pcall(require, "conform")
   if has_conform then
     return require("conform.nvim").formatexpr()
@@ -9,7 +9,7 @@ M.lsp_foldexpr(server)
   end
 end
 
-M.foldexpr()
+M.foldexpr = function()
   local buf = vim.api.nvim_get_current_buf()
   if vim.b[buf].ts_folds == nil then
     if vim.bo[buf].filetype == "" then

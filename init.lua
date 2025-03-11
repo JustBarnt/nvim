@@ -1,3 +1,14 @@
+if vim.fn.has("nvim-0.11") ~= 1 then
+	if vim.v.shell_error ~= 0 then
+		vim.api.nvim_echo({
+			{ "Must be using at least Neovim V0.11 or nightly to use:\n", "ErrorMsg" },
+			{ "\nPress any key to exit..." },
+		}, true, {})
+		vim.fn.getchar()
+		os.exit(1)
+	end
+end
+
 ---@diagnostic disable-next-line: undefined-global
 if init_debug then
   local osvpath = vim.fn.stdpath("data") .. "/lazy/one-small-step-for-vimkind"
@@ -5,9 +16,12 @@ if init_debug then
   require("osv").launch({ port = 8086, blocking = true })
 end
 
-require("config.options")
-require("config.lsp")
-require("config.statusline")
-require("config.keymaps")
-require("config.autocmds")
-require("config.lazy")
+
+require("utils.string_extensions")
+require("core.options")
+require("core.lsp")
+require("core.snippet")
+require("core.statusline")
+require("core.keymaps")
+require("core.autocmds")
+require("core.lazy")

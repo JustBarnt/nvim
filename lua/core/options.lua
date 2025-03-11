@@ -20,6 +20,7 @@ vim.o.foldenable = true   -- enable fold
 vim.o.foldlevel = 99      -- start editing with all folds opened
 vim.o.foldmethod = "expr" -- use tree-sitter for folding method
 vim.o.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+vim.o.clipboard="unnamedplus"
 
 
 -- NOTE: Setting vim options can be opinionated.
