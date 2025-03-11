@@ -2,7 +2,7 @@ local icons = require("core.ui.icons").icons.diagnostics
 local M = {}
 
 ---@class vim.diagnostic.Opts
-M.config = {
+M.diagnostic.config = {
 	severity_sort = true,
 	float = { border = "rounded", source = "if_many" },
 	underline = { severity = vim.diagnostic.severity.ERROR },

@@ -11,7 +11,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
   group = vim.api.nvim_create_augroup("user-lsp-attach", { clear = true }),
   callback = function(ev)
 		-- Attach generic LSP keymaps here
-		local config = require("core.lsp.diagnostics").config
+		local config = require("core.lsp.utils")
 		require("core.keymaps.lsp").LspKeys(ev)
 
 		-- Setup all potential lsp methods supported by the lsp	
@@ -28,7 +28,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 				end
 			end
 		end
-		vim.diagnostic.config = config
+		-- vim.diagnostic.config = diagnostic.config
 	end
 })
 
