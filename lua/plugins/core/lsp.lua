@@ -1,6 +1,10 @@
 return {
 	{
 		"williamboman/mason.nvim",
-		opt = {},
+		config = function()
+			require("mason").setup({
+				registries = { "github:mason-org/mason-registry", "github:crashdummyy/mason-registry" }
+			})
+		end
 	},
 }
