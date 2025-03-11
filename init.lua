@@ -7,6 +7,7 @@ end
 
 require("config.options")
 require("config.lsp")
+require("config.statusline")
 require("config.keymaps")
 require("config.autocmds")
 require("config.lazy")
