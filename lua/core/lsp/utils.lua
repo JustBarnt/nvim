@@ -38,6 +38,15 @@ M.format = {
 	timeout_ms = nil
 }
 
+---@param client vim.lsp.Client
+M.fetch_workspaces = function(client)
+		local path = vim.tbl_get(client, "workspace_folders", 1, "name")
+		if not path then
+			return nil
+		end
+		return path
+end
+
 ---@param capabilities? table<string, string> A list a client capabilities for an LSP
 M.create_capabilities = function(capabilities)
 	local has_blink, blink = pcall(require, "blink.cmp")

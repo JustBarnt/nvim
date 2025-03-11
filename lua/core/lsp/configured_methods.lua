@@ -1,6 +1,5 @@
 local M = {}
 
-
 M["textDocument/documentHighlight"] = function(ev)
 	local highlight_group = vim.api.nvim_create_augroup("user-lsp-highlights", { clear = true })
 	vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {

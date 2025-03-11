@@ -32,7 +32,4 @@ vim.api.nvim_create_autocmd("LspAttach", {
 	end
 })
 
-for _, file in ipairs(vim.fn.globpath("lsp", "*.lua", false, true)) do
-	local basepath = vim.fn.fnamemodify(file, ":t:r")
-	vim.lsp.enable(basepath)
-end
+vim.lsp.enable("lua_ls")
