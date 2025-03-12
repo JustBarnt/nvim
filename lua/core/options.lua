@@ -3,43 +3,26 @@
 vim.g.mapleader = vim.keycode("<space>")
 vim.g.maplocalleader = vim.keycode("<cr>")
 
--- remote netrw banner for a cleaner looking netrw
-vim.g.netrw_banner = 0
-
 --- TODO: various global options
 --- similar to lazyvim so I can easily toggle things like autoformat
 
 
 -- general options
+vim.opt.shortmess:append({ W = true, I = true, c = true, C = true})
 vim.o.completeopt = "menu,menuone,popup,fuzzy" -- modern completion menu
-
 vim.opt.guicursor = "a:block"
 vim.opt.isfname:append("@-@")
-
 vim.o.foldenable = true   -- enable fold
 vim.o.foldlevel = 99      -- start editing with all folds opened
 vim.o.foldmethod = "expr" -- use tree-sitter for folding method
 vim.o.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 vim.o.clipboard="unnamedplus"
-
-
--- NOTE: Setting vim options can be opinionated.
--- While options above are crucial to make this whole config work as expected,
--- below are just list of options I think most users will satisfy.
--- Feel free to modify as your preference.
-
-
 vim.o.termguicolors = true  -- enable rgb colors
-
 vim.o.cursorline = true     -- enable cursor line
-
 vim.o.number = true         -- enable line number
 vim.o.relativenumber = true -- and relative line number
-
 vim.o.signcolumn = "yes"    -- always show sign column
-
 vim.o.pumheight = 10        -- max height of completion menu
-
 vim.o.list = true           -- use special characters to represent things like tabs or trailing spaces
 vim.opt.listchars = {       -- NOTE: using `vim.opt` instead of `vim.o` to pass rich object
   tab = "▏ ",

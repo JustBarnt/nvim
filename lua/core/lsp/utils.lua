@@ -1,5 +1,4 @@
 local icons = require("core.ui.icons").icons.diagnostics
-
 local M = {}
 
 
@@ -57,5 +56,32 @@ M.create_capabilities = function(capabilities)
 		capabilities or M.capabilities
 	)
 end
+
+M.on_exit = function(code, signal, client_id)
+	vim.notify(string.format(
+		"LSP Client exited with code %d, signal %s",
+		code,
+		signal
+	))
+end
+
+M.on_error = function(code, msg)
+	vim.notify(string.format(
+		"LSP Client error: %s (code: %s)",
+		msg,
+		code
+	), vim.log.levels.ERROR)
+end
+
+---@param client vim.lsp.Client
+---@param config lsp.LSPObject
+M.on_init = function(client, config)
+	if not M.fetch_workspaces(client) then
+		return
+	end
+
+	client.settings = vim.tbl_deep_extend("force", client.settings, config)
+end
+
 
 return M

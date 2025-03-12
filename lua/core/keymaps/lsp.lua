@@ -6,20 +6,15 @@ M.LspKeys = function(event)
 		vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
 	end
 
-	map("gd", vim.lsp.buf.definition, "[G]oto [D]efinition")
-	map("gr", vim.lsp.buf.references, "[G]oto [R]eferences")
-	map("gI", vim.lsp.buf.implementation, "[G]oto [I]mplementation")
-	map("<leader>D", vim.lsp.buf.type_definition, "Type [D]efinition")
-	map("<leader>ds", vim.lsp.buf.document_symbol, "[D]ocument [S]ymbols")
-	map("<leader>ws", get_workspace_symbols, "[W]orkspace [S]ymbols")
-	map("<leader>rn", vim.lsp.buf.rename, "[R]e[n]ame")
+	map("gd", function() Snacks.picker.lsp_definitions() end, "[G]oto [D]efinition")
+	map("gr", function() Snacks.picker.lsp_references() end, "[G]oto [R]eferences")
+	map("gI", function() Snacks.picker.lsp_implementations() end, "[G]oto [I]mplementation")
+	map("<leader>D", function() Snacks.picker.lsp_type_definitions() end, "Type [D]efinition")
+	map("<leader>ds", function() Snacks.picker.lsp_symbols() end, "[D]ocument [S]ymbols")
+	map("<leader>ws", function() Snacks.picker.lsp_workspace_symbols() end, "[W]orkspace [S]ymbols")
+	map("<leader>rn", function() Snacks.rename.rename_file() end, "[R]e[n]ame")
 	map("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction", { "n", "x" })
-	map("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
-end
-
-function get_workspace_symbols()
-	local word = vim.fn.expand('<cword>')
-	return vim.lsp.buf.workspace_symbol(word)
+	map("gD", function() Snacks.picker.lsp_declarations() end, "[G]oto [D]eclaration")
 end
 
 return M

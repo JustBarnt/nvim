@@ -1,5 +1,6 @@
 return {
 	{
+		-- TODO: Automatically install servers based of filetype?
 		"williamboman/mason.nvim",
 		config = function()
 			require("mason").setup({

@@ -20,9 +20,18 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
 	spec = {
 		{ "folke/tokyonight.nvim", priority = 10000 },
-		-- { import = "plugins.lang" },
-		-- { import = "plugins" },
-		{ import = "plugins.core" },
+		{
+			"folke/snacks.nvim",
+			version = "v2.22.0",
+			priority = 10000,
+			lazy = false,
+			opts = {},
+			config = function(_, opts)
+				require("snacks").setup(opts)
+			end
+		},
+		{ import = "plugins" },
+		{ import = "plugins.lsp" },
 	},
 	-- NOTE: Part of lazy.nvim. Include a .lazy.lua file in a project root directory, and those plugins will be merged
 	--       into the plugin spec for that project only
