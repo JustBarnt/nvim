@@ -51,4 +51,6 @@ require("lazy").setup({
 	},
 })
 
+
+-- vim.diagnostic.config = require("core.ui.icons").icons.diagnostics
 vim.cmd[[colorscheme tokyonight-storm]]

@@ -13,6 +13,40 @@ return {
 			keymap = {
 				preset = "default",
 			},
+			completion = {
+				ghost_text = { enabled = false },
+				list = {
+					selection = {
+						auto_insert = function(ctx)
+							return ctx.mode ~= "cmdline"
+						end,
+						preselect = function(ctx)
+							return ctx.mode ~= "cmdline"
+						end
+					},
+				},
+			},
+			cmdline = {
+				enabled = true,
+				keymap = {
+					["<CR>"] = { "accept_and_enter", "fallback" }
+				},
+				---@diagnostic disable-next-line: assign-type-mismatch
+				sources = function()
+					local type = vim.fn.getcmdtype()
+					if type == "/" or type == "?" then
+						return { "buffer" }
+					end
+					if type == ":" or type == "@" then
+						return { "cmdline", "path" }
+					end
+					return {}
+				end,
+				completion = {
+					menu = { auto_show = true },
+					ghost_text = { enabled = false },
+				}
+			},
 			sources = {
 				-- add lazydev to your completion providers
 				default = { "lazydev", "lsp", "path", "snippets", "buffer" },
@@ -23,6 +57,14 @@ return {
 						-- make lazydev completions top priority (see `:h blink.cmp`)
 						score_offset = 100,
 					},
+					path = {
+						score_offset = 2,
+						opts = {
+							get_cwd = function(_)
+								return vim.uv.cwd()
+							end
+						}
+					}
 				},
 			},
 		},
