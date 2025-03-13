@@ -101,7 +101,19 @@ return {
             or vim.o.lines >= 25 and 'custom_telescope_vertical'
             or 'custom_telescope_vertical_no_preview'
         end,
+        formatters = {
+          file = {
+            filename_first = true,
+          },
+        },
         layouts = require("module.snacks.picker").layout,
+        win = {
+          preview = {
+            wo = {
+              statuscolumn = "%s %{v:lnum}",
+            },
+          },
+        },
       },
     },
 		keys = {
