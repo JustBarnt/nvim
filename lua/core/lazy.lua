@@ -51,5 +51,16 @@ require("lazy").setup({
 	},
 })
 
+-- Config Core Files
+require("core.keymaps")
+require("core.autocmds")
+require("core.user-commands")
+
+-- Neovim native functionality
+require("module.lsp")
+require("module.snippets")
+
+-- Extensions Modules to existing lua classes
+require("module.extensions.string")
 
 vim.cmd[[colorscheme tokyonight-storm]]

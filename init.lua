@@ -17,11 +17,4 @@ if init_debug then
 end
 
 require("core.options")
-require("core.keymaps")
-require("core.autocmds")
 require("core.lazy")
-
-require("module.lsp")
-require("module.snippets")
-
-require("module.extensions.string")
