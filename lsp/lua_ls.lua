@@ -1,5 +1,5 @@
-local utils = require"core.lsp.utils"
-local cfg = require("core.lsp.configs")
+local utils = require("module.lsp.utils")
+local cfg = require("module.lsp.lang.lua")
 
 ---@type vim.lsp.Config
 return {
@@ -10,6 +10,6 @@ return {
 	on_exit = utils.on_exit,
 	on_error = utils.on_error,
 	on_init = function(client)
-		utils.on_init(client, cfg["lua_ls"])
+		utils.on_init(client, cfg.settings)
 	end
 }

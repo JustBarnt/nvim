@@ -6,43 +6,98 @@ vim.g.maplocalleader = vim.keycode("<cr>")
 --- TODO: various global options
 --- similar to lazyvim so I can easily toggle things like autoformat
 
+-- LSP auto formatting
+vim.g.autoformat = true
+
+-- Root dir
+vim.g.root_spec = { "lsp", { ".git", "lua" }, "cwd" }
+
+-- NOTE: vim.o vs vim.opt
+-- vim.o is direct access to methods but doesn't support chaining/methods such as `appened`. Whereas vim.opt supports methods/chaining
 
 -- general options
-vim.opt.shortmess:append({ W = true, I = true, c = true, C = true})
-vim.o.completeopt = "menu,menuone,popup,fuzzy" -- modern completion menu
-vim.opt.guicursor = "a:block"
-vim.opt.isfname:append("@-@")
-vim.o.foldenable = true   -- enable fold
-vim.o.foldlevel = 99      -- start editing with all folds opened
-vim.o.foldmethod = "expr" -- use tree-sitter for folding method
-vim.o.foldexpr = "v:lua.vim.treesitter.foldexpr()"
-vim.o.clipboard="unnamedplus"
-vim.o.termguicolors = true  -- enable rgb colors
-vim.o.cursorline = true     -- enable cursor line
-vim.o.number = true         -- enable line number
-vim.o.relativenumber = true -- and relative line number
-vim.o.signcolumn = "yes"    -- always show sign column
-vim.o.pumheight = 10        -- max height of completion menu
-vim.o.list = true           -- use special characters to represent things like tabs or trailing spaces
-vim.opt.listchars = {       -- NOTE: using `vim.opt` instead of `vim.o` to pass rich object
-  tab = "▏ ",
-  trail = "·",
-  extends = "»",
-  precedes = "«",
-}
 
+vim.o.autowrite = true
+vim.o.clipboard = "unnamedplus"
+vim.o.guicursor = 'n-v-c:block,i-ci-ve:hor20,r-cr:hor20'
+vim.o.conceallevel = 2
+vim.o.cursorline = true
+vim.opt.fillchars = { -- NOTE: using `vim.opt` instead of `vim.o` to pass rich object
+  foldopen = "",
+  foldclose = "",
+  fold = " ",
+  foldsep = " ",
+  diff = "╱",
+  eob = " ",
+}
+vim.o.list = true
+vim.o.mouse = "a"
+vim.o.ruler = false
+vim.o.scrolloff = 4
+vim.opt.shortmess:append({ W = true, I = true, c = true, C = true})
+vim.o.showmode = false
+vim.o.sidescrolloff = 8
+vim.o.signcolumn = "yes"
+vim.o.timeoutlen = 300
+vim.o.virtualedit = "block"
+vim.o.wildmode = "longest:full,full"
+vim.o.winminwidth = 5
+vim.o.wrap = false
+vim.opt.isfname:append("@-@")
 vim.opt.diffopt:append("linematch:60") -- second stage diff to align lines
 
-vim.o.confirm = true                   -- show dialog for unsaved file(s) before quit
-vim.o.updatetime = 200                 -- save swap file with 200ms debouncing
+-- File History
+vim.o.undofile = true
+vim.o.undolevels = 10000
+vim.o.updatetime = 200
 
-vim.o.ignorecase = true                -- case-insensitive search
-vim.o.smartcase = true                 -- , until search pattern contains upper case characters
+-- Tab stop
+vim.o.expandtab = true
+vim.o.shiftround = 2
+vim.o.shiftwidth = 2
+vim.o.tabstop = 2
+vim.o.smartindent = true
 
-vim.o.smartindent = true               -- auto-indenting when starting a new line
-vim.o.shiftround = true                -- round indent to multiple of 'shiftwidth'
-vim.o.shiftwidth = 0                   -- 0 to follow the 'tabstop' value
-vim.o.tabstop = 2                      -- tab width
+-- Session options
+vim.o.seesionoptions = { "buffers", "curdir", "tabpages", "winsize", "help", "global", "skiprtp", "folds"}
 
-vim.o.undofile = true                  -- enable persistent undo
-vim.o.undolevels = 10000               -- 10x more undo levels
+-- Completion Window
+vim.o.completeopt = "menu,menuone,popup,fuzzy"
+vim.o.pumblend = 10
+vim.o.pumheight = 10
+
+-- Line Numbers
+vim.o.number = true
+vim.o.relativenumber = true
+
+-- Fold settings
+vim.o.foldlevel = 99
+vim.o.smoothscroll = true
+vim.o.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+vim.o.foldmethod = 'expr'
+vim.o.foldtext = ""
+
+-- Format settings
+vim.o.formatexpr = "v:lua.vim.lsp.formatexpr()"
+vim.o.formatoptions = "jcroqlnt"
+
+-- Grep settings
+vim.o.grepformat = "%f:%l:%c:%m"
+vim.o.grepprg = "rg --vimgrep"
+
+-- Search/subsitute settings
+vim.o.ignorecase = true
+vim.o.inccommand = "nosplit"
+vim.o.jumpoptions = "view"
+vim.o.smartcase = true
+
+-- Spelling
+vim.o.spelllang = { "en" }
+
+-- Splits
+vim.o.splitbelow = true
+vim.o.splitkeep = "screen"
+vim.o.splitright = true
+
+-- Terminal
+vim.o.termguicolors = true
