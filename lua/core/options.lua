@@ -35,9 +35,9 @@ vim.o.mouse = "a"
 vim.o.ruler = false
 vim.o.scrolloff = 4
 vim.opt.shortmess:append({ W = true, I = true, c = true, C = true})
+vim.o.cmdheight = 0
 vim.o.showmode = false
 vim.o.sidescrolloff = 8
-vim.o.signcolumn = "yes"
 vim.o.timeoutlen = 300
 vim.o.virtualedit = "block"
 vim.o.wildmode = "longest:full,full"
@@ -65,10 +65,6 @@ vim.opt.sessionoptions = { "buffers", "curdir", "tabpages", "winsize", "help", "
 vim.o.completeopt = "menu,menuone,popup,fuzzy"
 vim.o.pumblend = 10
 vim.o.pumheight = 10
-
--- Line Numbers
-vim.o.number = true
-vim.o.relativenumber = true
 
 -- Fold settings
 vim.o.foldlevel = 99
@@ -101,3 +97,11 @@ vim.o.splitright = true
 
 -- Terminal
 vim.o.termguicolors = true
+
+-- Status Column
+vim.o.signcolumn = "yes:1"
+vim.o.statuscolumn = "%s %3{v:lnum} │ %{v:relnum} %C"
+vim.o.number = true
+vim.o.numberwidth = 4
+vim.o.relativenumber = true
+

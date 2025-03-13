@@ -200,5 +200,5 @@ return {
 			local wk = require("which-key")
 			wk.setup(opts)
 		end,
-	}
+	},
 }

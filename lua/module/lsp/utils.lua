@@ -1,26 +1,4 @@
-local icons = require("core.ui.icons").icons.diagnostics
 local M = {}
-
-
----@class vim.diagnostic.Opts
-M.diagnostics = {
-	severity_sort = true,
-	underline = true,
-	update_in_insert = false,
-	signs = {
-		text = {
-			[vim.diagnostic.severity.ERROR] = icons.Error,
-			[vim.diagnostic.severity.WARN] = icons.Warn,
-			[vim.diagnostic.severity.INFO] = icons.Info,
-			[vim.diagnostic.severity.HINT] = icons.Hint
-		}
-	},
-	virtual_text = {
-		prefix = "●",
-		source = "if_many",
-		spacing = 4,
-	}
-}
 
 ---@type lsp.ClientCapabilities
 M.capabilities = {
@@ -57,7 +35,7 @@ M.create_capabilities = function(capabilities)
 	)
 end
 
-M.on_exit = function(code, signal, client_id)
+M.on_exit = function(code, signal)
 	vim.notify(string.format(
 		"LSP Client exited with code %d, signal %s",
 		code,

@@ -1,13 +1,11 @@
 local lsp_methods = vim.lsp.protocol.Methods
 local methods = require("module.lsp.client_methods")
+local icons = require("core.ui.icons").icons
 
 for _, file in ipairs(vim.fn.globpath("lsp", "*.lua", false, true)) do
 	local basepath = vim.fn.fnamemodify(file, ":t:r")
 	vim.lsp.enable(basepath)
 end
-
-
-
 
 -- a wrapper around client:supports_method for LSP capabilities
 ---@param client vim.lsp.Client
@@ -23,8 +21,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
   group = vim.api.nvim_create_augroup("user-lsp-attach", { clear = true }),
   callback = function(ev)
 		-- Attach generic LSP keymaps here
-		local config = require("module.lsp.utils")
-
 		local map = function(keys, func, desc, mode)
 			mode = mode or 'n'
 			vim.keymap.set(mode, keys, func, { buffer = ev.buf, desc = "LSP: " .. desc })
@@ -51,9 +47,28 @@ vim.api.nvim_create_autocmd("LspAttach", {
 					methods[method](ev)
 				end
 			end
-		end
-		vim.diagnostic.config(vim.deepcopy(config.diagnostics))
-	end
+    end
+    vim.diagnostic.config({
+      severity_sort = true,
+      underline = true,
+      update_in_insert = false,
+      signs = {
+        text = {
+          [vim.diagnostic.severity.ERROR] = icons.diagnostics.Error,
+          [vim.diagnostic.severity.WARN] = icons.diagnostics.Warn,
+          [vim.diagnostic.severity.INFO] = icons.diagnostics.Info,
+          [vim.diagnostic.severity.HINT] = icons.diagnostics.Hint
+        }
+      },
+      -- This is newly merged as of jan 2025, this displays diagnostic in a very similar way to nushell
+      virtual_lines = {
+        prefix = "●",
+        current_line = true,
+        spacing = 4,
+        source = "if_many"
+      }
+    })
+  end
 })
 
 ---@type table<number, {token:lsp.ProgressToken, msg:string, done:boolean}[]>
