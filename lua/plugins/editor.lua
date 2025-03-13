@@ -93,6 +93,17 @@ return {
 	},
 	{
 		"snacks.nvim",
+    opts = {
+      ---@class snacks.picker.Config
+      picker = {
+        layout = function()
+          return vim.o.columns >= 120 and 'custom_telescope'
+            or vim.o.lines >= 25 and 'custom_telescope_vertical'
+            or 'custom_telescope_vertical_no_preview'
+        end,
+        layouts = require("module.snacks.picker").layout,
+      },
+    },
 		keys = {
 			-- Top Pickers & Explorer
 			{ "<leader><space>", function() Snacks.picker.smart() end, desc = "Smart Find Files" },

@@ -16,7 +16,11 @@ return {
 		opts = {
 			bigfile = { enabled = true },
 			bufdelete = { enabled = true },
+      lazygit = { enabled = vim.fn.has("lazygit") == 1 },
+      scope = { enabled = true },
+      ---@class snacks.terminal.Config
 			terminal = {
+        shell = "nu.exe",
 				win = {
 					keys = {
 						nav_h = { "<C-h>", term_nav("h"), desc = "Go to Left Window", expr = true, mode = "t" },
@@ -26,6 +30,7 @@ return {
 					},
 				},
 			},
+      quickfile = { enabled = true },
 		},
 		keys = {
 			{"<leader>.", function() Snacks.scratch() end, desc = "Toggle Scratch Buffer"},

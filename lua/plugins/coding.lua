@@ -28,9 +28,6 @@ return {
 			},
 			cmdline = {
 				enabled = true,
-				keymap = {
-					["<CR>"] = { "accept_and_enter", "fallback" }
-				},
 				---@diagnostic disable-next-line: assign-type-mismatch
 				sources = function()
 					local type = vim.fn.getcmdtype()

@@ -32,6 +32,7 @@ require("lazy").setup({
 		},
 		{ import = "plugins" },
 		{ import = "plugins.lsp" },
+    { import = "plugins.colorschemes" },
 	},
 	-- NOTE: Part of lazy.nvim. Include a .lazy.lua file in a project root directory, and those plugins will be merged
 	--       into the plugin spec for that project only
