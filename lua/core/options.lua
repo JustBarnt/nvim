@@ -12,17 +12,17 @@ vim.g.autoformat = true
 -- Root dir
 vim.g.root_spec = { "lsp", { ".git", "lua" }, "cwd" }
 
--- NOTE: vim.o vs vim.opt
--- vim.o is direct access to methods but doesn't support chaining/methods such as `appened`. Whereas vim.opt supports methods/chaining
+-- NOTE: vim.o vs. vim.opt
+--       vim.o only allows passing simple types like integers, booleans, or strings to the option
+--       while vim.opt allows passing rich objects instead
 
 -- general options
-
 vim.o.autowrite = true
 vim.o.clipboard = "unnamedplus"
 vim.o.guicursor = 'n-v-c:block,i-ci-ve:hor20,r-cr:hor20'
 vim.o.conceallevel = 2
 vim.o.cursorline = true
-vim.opt.fillchars = { -- NOTE: using `vim.opt` instead of `vim.o` to pass rich object
+vim.opt.fillchars = {
   foldopen = "",
   foldclose = "",
   fold = " ",
@@ -53,13 +53,13 @@ vim.o.updatetime = 200
 
 -- Tab stop
 vim.o.expandtab = true
-vim.o.shiftround = 2
+vim.o.shiftround = true
 vim.o.shiftwidth = 2
 vim.o.tabstop = 2
 vim.o.smartindent = true
 
 -- Session options
-vim.o.seesionoptions = { "buffers", "curdir", "tabpages", "winsize", "help", "global", "skiprtp", "folds"}
+vim.opt.sessionoptions = { "buffers", "curdir", "tabpages", "winsize", "help", "globals", "skiprtp", "folds" }
 
 -- Completion Window
 vim.o.completeopt = "menu,menuone,popup,fuzzy"
@@ -92,7 +92,7 @@ vim.o.jumpoptions = "view"
 vim.o.smartcase = true
 
 -- Spelling
-vim.o.spelllang = { "en" }
+vim.opt.spelllang = { "en" }
 
 -- Splits
 vim.o.splitbelow = true
