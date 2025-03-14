@@ -1,6 +1,8 @@
 return {
-	treesitters = { "lua" },
+  servers = { "lua-language-server" },
+	treesitters = { "lua", "luadoc", "luap" },
 	formatters = { "stylua" },
+  formatters_by_ft = { "stylua" },
 	settings = {
 		Lua = {
 			runtime = {

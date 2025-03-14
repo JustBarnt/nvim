@@ -24,6 +24,7 @@ M["textDocument/documentHighlight"] = function(ev)
 end
 
 M["textDocument/inlayHint"] = function(ev)
+  vim.lsp.inlay_hint.enable()
 	vim.keymap.set("n", "<leader>uh", function()
 		vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = ev.buf })
 	end,
