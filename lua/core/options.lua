@@ -19,7 +19,7 @@ vim.g.root_spec = { "lsp", { ".git", "lua" }, "cwd" }
 -- general options
 vim.o.autowrite = true
 vim.o.clipboard = "unnamedplus"
-vim.o.guicursor = 'n-v-c:block,i-ci-ve:hor20,r-cr:hor20'
+vim.o.guicursor = "n-v-c:block,i-ci-ve:hor20,r-cr:hor20"
 vim.o.conceallevel = 2
 vim.o.cursorline = true
 vim.opt.fillchars = {
@@ -34,7 +34,7 @@ vim.o.list = true
 vim.o.mouse = "a"
 vim.o.ruler = false
 vim.o.scrolloff = 4
-vim.opt.shortmess:append({ W = true, I = true, c = true, C = true})
+vim.opt.shortmess:append({ W = true, I = true, c = true, C = true })
 vim.o.cmdheight = 0
 vim.o.showmode = false
 vim.o.sidescrolloff = 8
@@ -70,7 +70,7 @@ vim.o.pumheight = 10
 vim.o.foldlevel = 99
 vim.o.smoothscroll = true
 vim.o.foldexpr = "v:lua.vim.treesitter.foldexpr()"
-vim.o.foldmethod = 'expr'
+vim.o.foldmethod = "expr"
 vim.o.foldtext = ""
 
 -- Format settings
@@ -99,9 +99,8 @@ vim.o.splitright = true
 vim.o.termguicolors = true
 
 -- Status Column
-vim.o.signcolumn = "yes:1"
-vim.o.statuscolumn = "%s %3{v:lnum} │ %{v:relnum} %C"
+-- vim.o.signcolumn = "yes:1"
+-- vim.o.statuscolumn = "%s %3{v:lnum} │ %{v:relnum} %C"
 vim.o.number = true
 vim.o.numberwidth = 4
 vim.o.relativenumber = true
-
