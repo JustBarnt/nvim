@@ -1,8 +1,9 @@
+---@type LSPConfig
 return {
-  servers = { "lua-language-server" },
+	servers = { "lua-language-server" },
 	treesitters = { "lua", "luadoc", "luap" },
 	formatters = { "stylua" },
-  formatters_by_ft = { "stylua" },
+	formatters_by_ft = { "stylua" },
 	settings = {
 		Lua = {
 			runtime = {
@@ -28,6 +29,6 @@ return {
 			workspace = {
 				checkThirdParty = false,
 			},
-		}
-	}
+		},
+	},
 }

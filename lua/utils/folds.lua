@@ -1,9 +1,9 @@
 local M = {}
 
-M.lsp_foldexpr = function(server)
+M.lsp_foldexpr = function()
   local has_conform, conform = pcall(require, "conform")
   if has_conform then
-    return require("conform.nvim").formatexpr()
+    return conform.formatexpr()
   else
     return vim.lsp.formatexpr({ timeout_ms = 3000 })
   end

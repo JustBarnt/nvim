@@ -52,6 +52,18 @@ require("lazy").setup({
 	},
 })
 
+---@type table<string, LSPConfig>
+_G.ConfiguredLangs = vim.iter(vim.fn.globpath("lua/module/lsp/lang", "*.lua", false, true)):fold({}, function(acc, path)
+  local lang = vim.fn.fnamemodify(path, ":t:r")
+  local ok, obj = pcall(require, "module/lsp/lang/" .. lang)
+  if ok then
+    acc[lang] = obj
+  else
+    vim.notify(("[Neovim] Failed to load config for [%s]"):format(lang), vim.log.levels.WARN)
+  end
+  return acc
+end)
+
 -- Config Core Files
 require("core.keymaps")
 require("core.autocmds")

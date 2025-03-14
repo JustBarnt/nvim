@@ -1,10 +1,9 @@
+---@type LSPConfig
 return {
   servers = { "gopls", "delve", "gomodifytags", "impl" },
   treesitters = { "go", "gomod", "gowork", "gosum" },
   formatters = { "goimports", "gofumpt" },
-  formatters_by_ft = {
-    go = { "goimports", "gofumpt" },
-  },
+  formatters_by_ft = { "goimports", "gofumpt" },
   settings = {
     gopls = {
       gofumpt = true,

@@ -36,11 +36,11 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		map("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction", { "n", "x" })
 		map("gD", function() Snacks.picker.lsp_declarations() end, "[G]oto [D]eclaration")
 
+    local has_conform, conform = pcall(require, "conform")
 
 		-- Setup all potential lsp methods supported by the lsp	
 		local client = vim.lsp.get_client_by_id(ev.data.client_id)
 		if client then
-
       -- workaround for gopls not supporting semanticTokensProvider
       -- https://github.com/golang/go/issues/54531#issuecomment-1464982242
       if client.name == "gopls" and client.server_capabilities.semanticTokensProvider then

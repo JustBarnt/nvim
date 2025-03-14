@@ -74,7 +74,7 @@ vim.o.foldmethod = 'expr'
 vim.o.foldtext = ""
 
 -- Format settings
-vim.o.formatexpr = "v:lua.vim.lsp.formatexpr()"
+vim.o.formatexpr = "v:lua.requirea'utils.folders'.formatexpr()"
 vim.o.formatoptions = "jcroqlnt"
 
 -- Grep settings

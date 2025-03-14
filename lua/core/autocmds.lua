@@ -1,3 +1,12 @@
+-- Autoformat on save
+-- TODO: Eventually setup in a similar way to LazyVim
+vim.api.nvim_create_autocmd("BufWritePre", {
+  pattern = "*",
+  callback = function(args)
+    require("conform").format({ bufnr = args.buf })
+  end
+})
+
 -- Enable LSP file renaming for imports, etc when a file is moved or renamed
 vim.api.nvim_create_autocmd("User", {
   pattern = "OilActionsPost",
@@ -76,6 +85,7 @@ vim.api.nvim_create_autocmd("FileType", {
     "tsplayground",
   },
   callback = function(event)
+    vim.print("hello")
     vim.bo[event.buf].buflisted = false
     vim.schedule(function()
       vim.keymap.set("n", "q", function()
