@@ -41,7 +41,6 @@ vim.o.sidescrolloff = 8
 vim.o.timeoutlen = 300
 vim.o.virtualedit = "block"
 vim.o.wildmode = "longest:full,full"
-vim.o.winminwidth = 5
 vim.o.wrap = false
 vim.opt.isfname:append("@-@")
 vim.opt.diffopt:append("linematch:60") -- second stage diff to align lines
@@ -65,16 +64,17 @@ vim.opt.sessionoptions = { "buffers", "curdir", "tabpages", "winsize", "help", "
 vim.o.completeopt = "menu,menuone,popup,fuzzy"
 vim.o.pumblend = 10
 vim.o.pumheight = 10
+vim.o.winminwidth = 5
 
 -- Fold settings
 vim.o.foldlevel = 99
 vim.o.smoothscroll = true
-vim.o.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+vim.o.foldexpr = "v:lua.requrie'helpers.folds'.foldexpr()"
 vim.o.foldmethod = "expr"
 vim.o.foldtext = ""
 
 -- Format settings
-vim.o.formatexpr = "v:lua.requirea'utils.folders'.formatexpr()"
+vim.o.formatexpr = "v:lua.require'helpers.folds'.formatexpr()"
 vim.o.formatoptions = "jcroqlnt"
 
 -- Grep settings

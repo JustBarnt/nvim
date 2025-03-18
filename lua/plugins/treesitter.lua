@@ -1,4 +1,4 @@
-local utils = require("utils")
+local utils = require("helpers")
 
 return {
   {
@@ -76,6 +76,6 @@ return {
         opts.ensure_installed = utils.build_table(opts.ensure_installed, servers)
       end
       require("nvim-treesitter.configs").setup(opts)
-    end
+    end,
   },
 }

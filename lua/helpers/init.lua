@@ -1,3 +1,5 @@
+---@class helpers
+---@field folds helpers.folds
 local M = {}
 
 --- returns a list of tables containing the servers from each language configuration
@@ -42,7 +44,7 @@ end
 function M.build_table(...)
   --- Flatten our n tables in to a single list
   ---@type string[]
-  local list = vim.iter({...}):flatten(math.huge):totable()
+  local list = vim.iter({ ... }):flatten(math.huge):totable()
   return M.dedup(list)
 end
 

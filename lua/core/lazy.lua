@@ -55,7 +55,7 @@ require("lazy").setup({
 ---@type table<string, LSPConfig>
 _G.ConfiguredLangs = vim.iter(vim.fn.globpath("lua/module/lsp/lang", "*.lua", false, true)):fold({}, function(acc, path)
   local lang = vim.fn.fnamemodify(path, ":t:r")
-  local ok, obj = pcall(require, "module/lsp/lang/" .. lang)
+  local ok, obj = pcall(require, "modules/lsp/lang/" .. lang)
   if ok then
     acc[lang] = obj
   else
@@ -72,10 +72,10 @@ require("core.autocmds")
 require("core.user-commands")
 
 -- Neovim native functionality
-require("module.lsp")
-require("module.snippets")
+require("modules.lsp")
+require("modules.snippets")
 
 -- Extensions Modules to existing lua classes
-require("module.extensions.string")
+require("modules.extensions.string")
 
 vim.cmd([[colorscheme tokyonight-storm]])

@@ -1,5 +1,5 @@
-local utils = require("module.lsp.utils")
-local cfg = require("module.lsp.lang.lua")
+local utils = require("modules.lsp.utils")
+local cfg = require("modules.lsp.lang.lua")
 
 ---@type vim.lsp.Config
 return {

@@ -1,6 +1,7 @@
+---@class helpers.folds
 local M = {}
 
-M.lsp_foldexpr = function()
+M.formatexpr = function()
   local has_conform, conform = pcall(require, "conform")
   if has_conform then
     return conform.formatexpr()

@@ -1,5 +1,5 @@
 local lsp_methods = vim.lsp.protocol.Methods
-local client_methods = require("module.lsp.client_capabilities")
+local client_methods = require("modules.lsp.client_capabilities")
 local icons = require("core.ui.icons").icons
 
 for _, file in ipairs(vim.fn.globpath("lsp", "*.lua", false, true)) do
