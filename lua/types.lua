@@ -1,5 +1,7 @@
 ---@meta
 
+_G.Helpers = require("helpers")
+
 ---@class LSPConfig
 ---@field servers string[]
 ---@field treesitters string[]

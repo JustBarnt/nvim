@@ -1,6 +1,16 @@
 ---@class helpers
 ---@field folds helpers.folds
+---@field lualine helpers.lualine
+---@field ui helpers.ui
+---@field root helpers.root
 local M = {}
+
+setmetatable(M, {
+  __index = function(t, k)
+    t[k] = require("helpers." .. k)
+    return t[k]
+  end
+})
 
 --- returns a list of tables containing the servers from each language configuration
 ---@param path string

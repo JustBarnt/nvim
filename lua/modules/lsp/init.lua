@@ -1,6 +1,5 @@
 local lsp_methods = vim.lsp.protocol.Methods
 local client_methods = require("modules.lsp.client_capabilities")
-local icons = require("core.ui.icons").icons
 
 for _, file in ipairs(vim.fn.globpath("lsp", "*.lua", false, true)) do
   local basepath = vim.fn.fnamemodify(file, ":t:r")
@@ -27,23 +26,23 @@ vim.api.nvim_create_autocmd("LspAttach", {
     end
 
     -- stylua: ignore
-		map("gd", function() Snacks.picker.lsp_definitions() end, "[G]oto [D]efinition")
+    map("gd", function() Snacks.picker.lsp_definitions() end, "[G]oto [D]efinition")
     -- stylua: ignore
-		map("gr", function() Snacks.picker.lsp_references() end, "[G]oto [R]eferences")
+    map("gr", function() Snacks.picker.lsp_references() end, "[G]oto [R]eferences")
     -- stylua: ignore
-		map("gI", function() Snacks.picker.lsp_implementations() end, "[G]oto [I]mplementation")
+    map("gI", function() Snacks.picker.lsp_implementations() end, "[G]oto [I]mplementation")
     -- stylua: ignore
-		map("<leader>D", function() Snacks.picker.lsp_type_definitions() end, "Type [D]efinition")
+    map("<leader>D", function() Snacks.picker.lsp_type_definitions() end, "Type [D]efinition")
     -- stylua: ignore
-		map("<leader>ds", function() Snacks.picker.lsp_symbols() end, "[D]ocument [S]ymbols")
+    map("<leader>ds", function() Snacks.picker.lsp_symbols() end, "[D]ocument [S]ymbols")
     -- stylua: ignore
-		map("<leader>ws", function() Snacks.picker.lsp_workspace_symbols() end, "[W]orkspace [S]ymbols")
+    map("<leader>ws", function() Snacks.picker.lsp_workspace_symbols() end, "[W]orkspace [S]ymbols")
     -- stylua: ignore
-		map("<leader>rn", function() Snacks.rename.rename_file() end, "[R]e[n]ame")
+    map("<leader>rn", function() Snacks.rename.rename_file() end, "[R]e[n]ame")
     -- stylua: ignore
-		map("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction", { "n", "x" })
+    map("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction", { "n", "x" })
     -- stylua: ignore
-		map("gD", function() Snacks.picker.lsp_declarations() end, "[G]oto [D]eclaration")
+    map("gD", function() Snacks.picker.lsp_declarations() end, "[G]oto [D]eclaration")
     -- stylua: ignore
     map("<leader>cr", vim.lsp.buf.rename, "Rename Symbol")
 
@@ -75,16 +74,17 @@ vim.api.nvim_create_autocmd("LspAttach", {
         end
       end
     end
+
     vim.diagnostic.config({
       severity_sort = true,
       underline = true,
       update_in_insert = false,
       signs = {
         text = {
-          [vim.diagnostic.severity.ERROR] = icons.diagnostics.Error,
-          [vim.diagnostic.severity.WARN] = icons.diagnostics.Warn,
-          [vim.diagnostic.severity.INFO] = icons.diagnostics.Info,
-          [vim.diagnostic.severity.HINT] = icons.diagnostics.Hint,
+          [vim.diagnostic.severity.ERROR] = Helpers.ui.icons.diagnostics.Error,
+          [vim.diagnostic.severity.WARN] = Helpers.ui.icons.diagnostics.Warn,
+          [vim.diagnostic.severity.INFO] = Helpers.ui.icons.diagnostics.Info,
+          [vim.diagnostic.severity.HINT] = Helpers.ui.icons.diagnostics.Hint,
         },
       },
       -- This is newly merged as of jan 2025, this displays diagnostic in a very similar way to nushell
@@ -105,7 +105,8 @@ vim.api.nvim_create_autocmd("LspProgress", {
   ---@param ev {data: {client_id: integer, params: lsp.ProgressParams}}
   callback = function(ev)
     local client = vim.lsp.get_client_by_id(ev.data.client_id)
-    local value = ev.data.params.value --[[@as {percentage?: number, title?: string, message?: string, kind: "begin" | "report" | "end"}]]
+    local value = ev.data.params
+        .value --[[@as {percentage?: number, title?: string, message?: string, kind: "begin" | "report" | "end"}]]
     if not client or type(value) ~= "table" then
       return
     end
@@ -137,7 +138,7 @@ vim.api.nvim_create_autocmd("LspProgress", {
       title = client.name,
       opts = function(notif)
         notif.icon = #progress[client.id] == 0 and " "
-          or spinner[math.floor(vim.uv.hrtime() / (1e6 * 80)) % #spinner + 1]
+            or spinner[math.floor(vim.uv.hrtime() / (1e6 * 80)) % #spinner + 1]
       end,
     })
   end,

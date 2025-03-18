@@ -6,7 +6,7 @@ if not vim.uv.fs_stat(lazypath) then
   if vim.v.shell_error ~= 0 then
     vim.api.nvim_echo({
       { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
-      { out, "WarningMsg" },
+      { out,                            "WarningMsg" },
       { "\nPress any key to exit..." },
     }, true, {})
     vim.fn.getchar()
@@ -19,7 +19,7 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
   spec = {
-    { "folke/tokyonight.nvim", priority = 10000 },
+    { "folke/tokyonight.nvim",        priority = 10000 },
     {
       "folke/snacks.nvim",
       version = "v2.22.0",
@@ -53,7 +53,7 @@ require("lazy").setup({
 })
 
 ---@type table<string, LSPConfig>
-_G.ConfiguredLangs = vim.iter(vim.fn.globpath("lua/module/lsp/lang", "*.lua", false, true)):fold({}, function(acc, path)
+_G.ConfiguredLangs = vim.iter(vim.fn.globpath("lua/modules/lsp/lang", "*.lua", false, true)):fold({}, function(acc, path)
   local lang = vim.fn.fnamemodify(path, ":t:r")
   local ok, obj = pcall(require, "modules/lsp/lang/" .. lang)
   if ok then
@@ -65,6 +65,7 @@ _G.ConfiguredLangs = vim.iter(vim.fn.globpath("lua/module/lsp/lang", "*.lua", fa
 end)
 
 _G.LazyVim = require("lazy.core.util")
+_G.Helpers = require("helpers")
 
 -- Config Core Files
 require("core.keymaps")

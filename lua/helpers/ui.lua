@@ -1,3 +1,4 @@
+---@class helpers.ui
 local M = {}
 
 M.icons = {
@@ -105,5 +106,6 @@ M.kind_filter = {
     "Trait",
   },
 }
+
 
 return M
