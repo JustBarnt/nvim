@@ -13,7 +13,9 @@ return {
       keymap = {
         preset = "default",
       },
-      signature = { enabled = false },
+      signature = {
+        enabled = false,
+      },
       completion = {
         ghost_text = { enabled = false },
         list = {
@@ -75,8 +77,8 @@ return {
         -- See the configuration section for more details
         -- Load luvit types when the `vim.uv` word is found
         { path = "${3rd}/luv/library", words = { "vim%.uv" } },
-        { path = "snacks.nvim",        words = { "Snacks" } },
-        { path = "lazy.nvim",          words = { "LazyVim" } },
+        { path = "snacks.nvim", words = { "Snacks" } },
+        { path = "lazy.nvim", words = { "LazyVim" } },
       },
       integrations = {
         lspconfig = false,
