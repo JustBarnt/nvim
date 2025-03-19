@@ -6,6 +6,8 @@ vim.g.maplocalleader = vim.keycode("<cr>")
 --- TODO: various global options
 --- similar to lazyvim so I can easily toggle things like autoformat
 
+vim.g.trouble_lualine = true
+
 -- LSP auto formatting
 vim.g.autoformat = true
 
@@ -60,11 +62,14 @@ vim.o.smartindent = true
 -- Session options
 vim.opt.sessionoptions = { "buffers", "curdir", "tabpages", "winsize", "help", "globals", "skiprtp", "folds" }
 
--- Completion Window
+-- Completion Window/Popup settings
 vim.o.completeopt = "menu,menuone,popup,fuzzy"
 vim.o.pumblend = 10
 vim.o.pumheight = 10
 vim.o.winminwidth = 5
+
+--- NOTE: New in neovim nightly as of 2025-03-18, but most current plugins have issues if this is set
+-- vim.o.winborder = "rounded"
 
 -- Fold settings
 vim.o.foldlevel = 99
@@ -100,7 +105,7 @@ vim.o.termguicolors = true
 
 -- Status Column
 vim.o.signcolumn = "yes:1"
-vim.o.statuscolumn = "%s %3{v:lnum} │ %{v:relnum} %C"
+vim.opt.statuscolumn = "%s %3{v:lnum} │ %{v:relnum} %C"
 vim.o.number = true
 vim.o.numberwidth = 4
 vim.o.relativenumber = true

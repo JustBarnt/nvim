@@ -1,4 +1,4 @@
-local map = vim.keymap.set
+local map = Helpers.safe_keymap_set
 
 -- better up/down
 map({ "n", "x" }, "j", "v:count == 0 ? 'gj' : 'j'", { desc = "Down", expr = true, silent = true })
@@ -21,11 +21,10 @@ map("n", "<C-Right>", "<cmd>vertical resize +2<cr>", { desc = "Increase Window W
 -- Buffers
 map("n", "<leader>bd", function()
   Snacks.bufdelete()
-end, { desc = "Delete Buffer"})
+end, { desc = "Delete Buffer" })
 map("n", "<leader>bo", function()
   Snacks.bufdelete.other()
-end, { desc = "Delete Other Buffers"})
-
+end, { desc = "Delete Other Buffers" })
 
 -- Move Lines
 map("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move Down" })
@@ -79,31 +78,12 @@ map("n", "<leader>l", "<cmd>Lazy<cr>", { desc = "Lazy" })
 -- new file
 map("n", "<leader>fn", "<cmd>enew<cr>", { desc = "New File" })
 
--- location list
-map("n", "<leader>xl", function()
-  local success, err = pcall(vim.fn.getloclist(0, { winid = 0 }).winid ~= 0 and vim.cmd.lclose or vim.cmd.lopen)
-  if not success and err then
-    vim.notify(err, vim.log.levels.ERROR)
-  end
-end, { desc = "Location List" })
-
--- quickfix list
-map("n", "<leader>xq", function()
-  local success, err = pcall(vim.fn.getqflist({ winid = 0 }).winid ~= 0 and vim.cmd.cclose or vim.cmd.copen)
-  if not success and err then
-    vim.notify(err, vim.log.levels.ERROR)
-  end
-end, { desc = "Quickfix List" })
-
-map("n", "[q", vim.cmd.cprev, { desc = "Previous Quickfix" })
-map("n", "]q", vim.cmd.cnext, { desc = "Next Quickfix" })
-
 ---@param severity? vim.diagnostic.Severity
 ---@param count integer
 local diagnostic_goto = function(count, severity)
   severity = severity and vim.diagnostic.severity[severity] or nil
   return function()
-    vim.diagnostic.jump({ severity, count = count})
+    vim.diagnostic.jump({ severity, count = count })
   end
 end
 map("n", "<leader>cd", vim.diagnostic.open_float, { desc = "Line Diagnostics" })

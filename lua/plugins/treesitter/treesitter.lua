@@ -1,11 +1,9 @@
-local utils = require("helpers")
-
 return {
   {
     "nvim-treesitter/nvim-treesitter",
     version = false,
     build = ":TSUpdate",
-    event = "VeryLazy",
+    event = { "LazyFile", "VeryLazy" },
     cmd = { "TSUpdateSync", "TSUpdate", "TSInstall" },
     lazy = vim.fn.argc(-1) == 0, -- Load treesitter early when opening a file directly. i.e. calling `nvim file.txt` from the cmdline
     init = function(plugin)
@@ -71,11 +69,16 @@ return {
     ---@param opts TSConfig
     config = function(_, opts)
       if type(opts.ensure_installed) == "table" then
-        local servers = utils.get_ensured_installed("lua/module/lsp/lang", "treesitters")
+        local servers = require("helpers").get_ensured_installed("lua/module/lsp/lang", "treesitters")
         ---@diagnostic disable-next-line: param-type-mismatch
-        opts.ensure_installed = utils.build_table(opts.ensure_installed, servers)
+        opts.ensure_installed = require("helpers").build_table(opts.ensure_installed, servers)
       end
       require("nvim-treesitter.configs").setup(opts)
     end,
+  },
+  {
+    "windwp/nvim-ts-autotag",
+    event = "LazyFile",
+    opts = {},
   },
 }
