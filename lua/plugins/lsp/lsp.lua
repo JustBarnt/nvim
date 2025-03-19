@@ -10,8 +10,8 @@ return {
     keys = { { "<leader>cm", "<CMD>Mason<CR>", desc = "Mason" } },
     build = ":MasonUpdate",
     opts = function(_, opts)
-      local servers = utils.get_ensured_installed("lua/module/lsp/lang", "servers")
-      local formatters = utils.get_ensured_installed("lua/module/lsp/lang", "formatters")
+      local servers = utils.get_ensured_installed("lua/modules/lsp/lang", "servers")
+      local formatters = utils.get_ensured_installed("lua/modules/lsp/lang", "formatters")
       return {
         registries = { "github:mason-org/mason-registry", "github:crashdummyy/mason-registry" },
         -- NOTE: [mason.nvim] does not have an ensured installed key, I am adding it into the plugin spec
