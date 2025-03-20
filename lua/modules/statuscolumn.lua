@@ -17,7 +17,7 @@ local defaults = {
   left = { "mark", "sign" }, -- Sign priority (high to low)
   right = { "fold", "git" }, -- Sign priority (high to low)
   folds = {
-    open = false, -- show open fold icons
+    open = true, -- show open fold icons
     git_hl = false, -- use Git Signs hl for fold icons
   },
   git = {
@@ -30,7 +30,7 @@ local defaults = {
 local config = defaults
 
 ---@alias Statuscolumn.Sign.type "mark"|"sign"|"fold"|"git"
----@alias Statuscolumn.Sign {name:string, text:string, texthl:string, priority:number, type:Statuscolunm.Sign.type}
+---@alias Statuscolumn.Sign {name:string, text:string, texthl:string, priority:number, type:Statuscolumn.Sign.type}
 
 -- Cache for signs per buffer and line
 ---@type table<number,table<number,Statuscolumn.Sign[]>>
@@ -170,7 +170,12 @@ function M._get()
     components[2] = "%=" .. num .. " "
   end
 
+  if vim.g.show_lnum_and_relnum then
+    components[2] = "%3{v:lnum} │ %{v:relnum} "
+  end
+
   if show_signs then
+    vim.wo[win].signcolumn = "yes:1"
     local buf = vim.api.nvim_win_get_buf(win)
     local is_file = vim.bo[buf].buftype == ""
     local signs = M.line_signs(win, buf, vim.v.lnum)
@@ -181,7 +186,7 @@ function M._get()
         signs_by_type[s.type] = signs_by_type[s.type] or s
       end
 
-      ---@param types Statuscolumn.Sign.type
+      ---@param types Statuscolumn.Sign.type[]
       local function find(types)
         for _, t in ipairs(types) do
           if signs_by_type[t] then
@@ -190,8 +195,8 @@ function M._get()
         end
       end
 
-      local left_c = type(config.left) == "function" and config.left(win, buf, vim.v.lnum) or config.left --[[@as Statuscolumn.Component]]
-      local right_c = type(config.right) == "function" and config.right(win, buf, vim.v.lnum) or config.right --[[@as Statuscolumn.Component]]
+      local left_c = type(config.left) == "function" and config.left(win, buf, vim.v.lnum) or config.left --[[@as Statuscolumn.Component[] ]]
+      local right_c = type(config.right) == "function" and config.right(win, buf, vim.v.lnum) or config.right --[[@as Statuscolumn.Component[] ]]
       local left, right = find(left_c), find(right_c)
 
       if config.folds.git_hl then
@@ -199,7 +204,7 @@ function M._get()
         if git and left and left.type == "fold" then
           left.texthl = git.texthl
         end
-        if git and rigth and right.type == "fold" then
+        if git and right and right.type == "fold" then
           right.texthl = git.texthl
         end
       end

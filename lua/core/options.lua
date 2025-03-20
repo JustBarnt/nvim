@@ -7,6 +7,7 @@ vim.g.maplocalleader = vim.keycode("<cr>")
 --- similar to lazyvim so I can easily toggle things like autoformat
 
 vim.g.trouble_lualine = true
+vim.g.show_lnum_and_relnum = true
 
 -- LSP auto formatting
 vim.g.autoformat = true
@@ -72,11 +73,11 @@ vim.o.winminwidth = 5
 -- vim.o.winborder = "rounded"
 
 -- Fold settings
-vim.o.foldlevel = 99
-vim.o.smoothscroll = true
-vim.o.foldexpr = "v:lua.requrie'helpers.folds'.foldexpr()"
-vim.o.foldmethod = "expr"
-vim.o.foldtext = ""
+vim.opt.foldlevel = 99
+vim.opt.smoothscroll = true
+vim.opt.foldexpr = "v:lua.require'helpers.folds'.foldexpr()"
+vim.opt.foldmethod = "expr"
+vim.opt.foldtext = ""
 
 -- Format settings
 vim.o.formatexpr = "v:lua.require'helpers.folds'.formatexpr()"
