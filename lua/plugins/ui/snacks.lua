@@ -24,6 +24,7 @@ return {
       refresh = 500,
       top_down = false,
     },
+    ---@class snacks.picker
     picker = {
       formatters = {
         file = {
@@ -33,7 +34,7 @@ return {
       win = {
         preview = {
           wo = {
-            statuscolumn = "%s %{v:lnum}",
+            statuscolumn = "",
           },
         },
       },

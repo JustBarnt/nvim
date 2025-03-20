@@ -105,9 +105,6 @@ vim.o.splitright = true
 vim.o.termguicolors = true
 
 -- Status Column
--- vim.o.signcolumn = "yes:1"
--- vim.opt.statuscolumn = "%s %3{v:lnum} │ %{v:relnum} %C"
 vim.opt.statuscolumn = [[%!v:lua.require'modules.statuscolumn'.get()]]
 vim.o.number = true
-vim.o.numberwidth = 4
 vim.o.relativenumber = true

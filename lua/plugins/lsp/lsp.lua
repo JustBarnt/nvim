@@ -25,12 +25,10 @@ return {
       local mr = require("mason-registry")
       mr:on("package:install:success", function()
         vim.defer_fn(function()
-          -- Check if our buffer is modified and if it is save it before we reload
-          if vim.bo.modified then
-            vim.cmd([[w]])
-          end
-          -- Reload the file to start the lsp after it was installed
-          vim.cmd("edit " .. vim.fn.expand("%:p"))
+          require("lazy.core.handler.event").trigger({
+            event = "FileType",
+            buf = vim.api.nvim_get_current_buf(),
+          })
         end, 100)
       end)
 

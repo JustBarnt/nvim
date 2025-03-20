@@ -13,13 +13,6 @@ vim.api.nvim_create_autocmd("BufWritePre", {
   end,
 })
 
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = "neo-tree",
-  callback = function()
-    vim.wo.statuscolumn = ""
-  end,
-})
-
 -- Enable LSP file renaming for imports, etc when a file is moved or renamed
 vim.api.nvim_create_autocmd("User", {
   pattern = "OilActionsPost",
@@ -98,7 +91,6 @@ vim.api.nvim_create_autocmd("FileType", {
     "tsplayground",
   },
   callback = function(event)
-    vim.print("hello")
     vim.bo[event.buf].buflisted = false
     vim.schedule(function()
       vim.keymap.set("n", "q", function()
