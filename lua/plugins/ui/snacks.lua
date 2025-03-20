@@ -55,6 +55,7 @@ return {
     toggle = {
       map = Helpers.safe_keymap_set,
     },
+    words = { enabled = true },
   },
   --stylua: ignore
   keys = {

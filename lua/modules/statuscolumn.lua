@@ -171,7 +171,7 @@ function M._get()
   end
 
   if vim.g.show_lnum_and_relnum then
-    components[2] = "%3{v:lnum} │ %{v:relnum} "
+    components[2] = "%3{v:lnum} │ %3{v:relnum} "
   end
 
   if show_signs then
@@ -223,6 +223,7 @@ function M.get()
   local win = vim.g.statusline_winid
   local buf = vim.api.nvim_win_get_buf(win)
   local key = ("%d:%d:%d:%d:%d"):format(win, buf, vim.v.lnum, vim.v.virtnum ~= 0 and 1 or 0, vim.v.relnum)
+
   if cache[key] then
     return cache[key]
   end
