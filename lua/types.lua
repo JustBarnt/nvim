@@ -5,7 +5,7 @@
 ---@field treesitters string[]
 ---@field filetypes string[]
 ---@field formatters? string[]
----@field formatter_options conform.FormatterConfigOverride
+---@field formatter_options? conform.FormatterConfigOverride
 ---@field keys? LazyKeysSpec[]
 ---@field settings? string[]
 

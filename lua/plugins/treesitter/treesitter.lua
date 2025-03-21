@@ -25,10 +25,7 @@ return {
       highlight = { enable = true },
       indent = { enable = true },
       ensure_installed = {
-        "bash",
-        "c",
         "c_sharp",
-        "git_config",
         "diff",
         "html",
         "jsdoc",
@@ -68,7 +65,7 @@ return {
     ---@param opts TSConfig
     config = function(_, opts)
       if type(opts.ensure_installed) == "table" then
-        local servers = require("helpers").get_ensured_installed("lua/module/lsp/lang", "treesitters")
+        local servers = require("helpers").get_ensured_installed("lua/modules/lsp/lang", "treesitters")
         ---@diagnostic disable-next-line: param-type-mismatch
         opts.ensure_installed = require("helpers").build_table(opts.ensure_installed, servers)
       end
