@@ -3,8 +3,9 @@
 ---@class LSPConfig
 ---@field servers string[]
 ---@field treesitters string[]
----@field formatters string[]
----@field formatters_by_ft string[]
+---@field formatters? string[]
+---@field formatters_by_ft? string[]
+---@field keys? LazyKeysSpec[]
 ---@field settings? string[]
 
 ---@class vim.api.keyset.create_autocmd.callback.args
