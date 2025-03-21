@@ -2,7 +2,7 @@ local utils = require("modules.lsp.utils")
 
 ---@type vim.lsp.Config
 return {
-  cmd = { "basedpyright" },
+  cmd = { "basedpyright-langserver", "--stdio" },
   root_markers = { "pyproject.toml", "setup.py", "setup.cfg", "requirements.txt", "Pipfile", "pyrightconfig.toml" },
   filetypes = { "python" },
   capabilities = utils.create_capabilities(),
