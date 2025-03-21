@@ -2,7 +2,14 @@
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.uv.fs_stat(lazypath) then
   local lazyrepo = "https://github.com/folke/lazy.nvim.git"
-  local out = vim.fn.system({ "git", "clone", "--filter=blob:none", lazyrepo, "--branch=stable", lazypath })
+  local out = vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    lazyrepo,
+    "--branch=stable",
+    lazypath,
+  })
   if vim.v.shell_error ~= 0 then
     vim.api.nvim_echo({
       { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
@@ -28,7 +35,7 @@ end
 lazy_file()
 
 ---@type table<string, LSPConfig>
-_G.ConfiguredLangs = vim
+_G.AvailableLanguages = vim
   .iter(vim.fn.globpath("lua/modules/lsp/lang", "*.lua", false, true))
   :fold({}, function(acc, path)
     local lang = vim.fn.fnamemodify(path, ":t:r")
@@ -36,10 +43,21 @@ _G.ConfiguredLangs = vim
     if ok then
       acc[lang] = obj
     else
-      vim.notify(("[Neovim] Failed to load config for [%s]"):format(lang), vim.log.levels.WARN)
+      vim.notify(("[Neovim] failed to load config for [%s]"):format(lang), vim.log.levels.WARN)
     end
     return acc
   end)
+
+_G.Lsps = vim.iter(vim.fn.globpath("lsp", "*.lua", false, true)):fold({}, function(acc, path)
+  local lang = vim.fn.fnamemodify(path, ":t:r")
+  local ok, obj = pcall(require, "lsp/" .. lang)
+  if ok then
+    acc[lang] = obj
+  else
+    vim.notify(("[Neovim] failed to load config for [%s]"):format(lang), vim.log.levels.WARN)
+  end
+  return acc
+end)
 
 _G.LazyVim = require("lazy.core.util")
 _G.Helpers = require("helpers")
@@ -84,13 +102,37 @@ require("lazy").setup({
   },
 })
 
+vim.diagnostic.config({
+  severity_sort = true,
+  underline = true,
+  update_in_insert = false,
+  signs = {
+    text = {
+      [vim.diagnostic.severity.ERROR] = Helpers.ui.icons.diagnostics.Error,
+      [vim.diagnostic.severity.WARN] = Helpers.ui.icons.diagnostics.Warn,
+      [vim.diagnostic.severity.INFO] = Helpers.ui.icons.diagnostics.Info,
+      [vim.diagnostic.severity.HINT] = Helpers.ui.icons.diagnostics.Hint,
+    },
+  },
+  -- This is newly merged as of jan 2025, this displays diagnostic in a very similar way to nushell
+  virtual_lines = {
+    prefix = "●",
+    current_line = true,
+    spacing = 4,
+    source = "if_many",
+  },
+  float = {
+    source = true,
+  },
+})
+
 -- Config Core Files
 require("core.keymaps")
 require("core.autocmds")
 require("core.user-commands")
 
 -- Neovim native functionality
-require("modules.lsp")
+require("modules.lsp").setup()
 require("modules.snippets")
 
 -- Extensions Modules to existing lua classes

@@ -72,7 +72,7 @@ return {
           quiet = false,
           lsp_format = "fallback",
         },
-        formatters_by_ft = vim.iter(ConfiguredLangs):fold(
+        formatters_by_ft = vim.iter(AvailableLanguages):fold(
           {},
           ---@param acc table
           ---@param lang string

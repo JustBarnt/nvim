@@ -1,25 +1,7 @@
 # Remaining Items
 1. Plugins
-    a. Coding
-        1. ~mini-ai~ 
-        2. ~ts-comments~
-        3. ~luasnip~
-        4. ~vim-sleuth~
-        5. ~easy-dotnet~
-        6. ~fastaction~
-        7. ~nvim-surround / mini-surround~
-        8. ~symbol-usage~
-    b. Editor
-        1. ~grug-far~
-        2. ~flash.nvim~
-        3. ~harpoon~
-        5. ~undo-tree~
-        6. ~vim-fugitive~
-        7. ~numb~
     c. Linting (maybe)
         1. nvim-lint
-    d. Utils
-        1. persitence.nvim
     e. Dap
         1. nvim-dap
             a. nvim-dap-ui

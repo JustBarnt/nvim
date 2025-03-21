@@ -28,6 +28,7 @@ return {
         "bash",
         "c",
         "c_sharp",
+        "git_config",
         "diff",
         "html",
         "javascript",

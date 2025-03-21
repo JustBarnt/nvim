@@ -1,13 +1,11 @@
 ---@meta
 
-_G.Helpers = require("helpers")
-
 ---@class LSPConfig
 ---@field servers string[]
 ---@field treesitters string[]
 ---@field formatters string[]
 ---@field formatters_by_ft string[]
----@field settings string[]
+---@field settings? string[]
 
 ---@class vim.api.keyset.create_autocmd.callback.args
 ---@field id number
