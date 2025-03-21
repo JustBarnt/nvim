@@ -7,7 +7,7 @@ vim.g.maplocalleader = vim.keycode("<cr>")
 --- similar to lazyvim so I can easily toggle things like autoformat
 
 vim.g.trouble_lualine = true
-vim.g.show_lnum_and_relnum = true
+vim.g.show_lnum_and_relnum = false
 
 -- LSP auto formatting
 vim.g.autoformat = true

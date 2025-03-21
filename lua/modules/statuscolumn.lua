@@ -171,7 +171,7 @@ function M._get()
   end
 
   if vim.g.show_lnum_and_relnum then
-    components[2] = "%3{v:lnum} │ %3{v:relnum} "
+    components[2] = " (%{v:lnum}) %3{v:relnum} "
   end
 
   if show_signs then

@@ -3,8 +3,9 @@
 ---@class LSPConfig
 ---@field servers string[]
 ---@field treesitters string[]
+---@field filetypes string[]
 ---@field formatters? string[]
----@field formatters_by_ft? string[]
+---@field formatter_options conform.FormatterConfigOverride
 ---@field keys? LazyKeysSpec[]
 ---@field settings? string[]
 

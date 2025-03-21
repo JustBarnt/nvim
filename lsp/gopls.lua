@@ -9,6 +9,6 @@ return {
   on_exit = utils.on_exit,
   on_error = utils.on_error,
   on_init = function(client)
-    utils.on_init(client, AvailableLanguages["go"].settings)
+    utils.on_init(client, Languages["go"].settings)
   end,
 }

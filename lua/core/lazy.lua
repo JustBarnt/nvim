@@ -35,20 +35,18 @@ end
 lazy_file()
 
 ---@type table<string, LSPConfig>
-_G.AvailableLanguages = vim
-  .iter(vim.fn.globpath("lua/modules/lsp/lang", "*.lua", false, true))
-  :fold({}, function(acc, path)
-    local lang = vim.fn.fnamemodify(path, ":t:r")
-    local ok, obj = pcall(require, "modules/lsp/lang/" .. lang)
-    if ok then
-      acc[lang] = obj
-    else
-      vim.notify(("[Neovim] failed to load config for [%s]"):format(lang), vim.log.levels.WARN)
-    end
-    return acc
-  end)
+_G.Languages = vim.iter(vim.fn.globpath("lua/modules/lsp/lang", "*.lua", false, true)):fold({}, function(acc, path)
+  local lang = vim.fn.fnamemodify(path, ":t:r")
+  local ok, obj = pcall(require, "modules/lsp/lang/" .. lang)
+  if ok then
+    acc[lang] = obj
+  else
+    vim.notify(("[Neovim] failed to load config for [%s]"):format(lang), vim.log.levels.WARN)
+  end
+  return acc
+end)
 
-_G.Lsps = vim.iter(vim.fn.globpath("lsp", "*.lua", false, true)):fold({}, function(acc, path)
+_G.LSPS = vim.iter(vim.fn.globpath("lsp", "*.lua", false, true)):fold({}, function(acc, path)
   local lang = vim.fn.fnamemodify(path, ":t:r")
   local ok, obj = pcall(require, "lsp/" .. lang)
   if ok then

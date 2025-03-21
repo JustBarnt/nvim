@@ -3,7 +3,7 @@ return {
   servers = { "lua-language-server" },
   treesitters = { "lua", "luadoc", "luap" },
   formatters = { "stylua" },
-  formatters_by_ft = { "stylua" },
+  filetypes = { "lua" },
   settings = {
     Lua = {
       codeLens = {

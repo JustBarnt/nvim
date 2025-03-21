@@ -72,13 +72,20 @@ return {
           quiet = false,
           lsp_format = "fallback",
         },
-        formatters_by_ft = vim.iter(AvailableLanguages):fold(
+        formatters = vim.iter(Languages):fold({}, function(acc, _, config)
+          for _, formatter in ipairs(config.formatters) do
+            acc[formatter] = config.formatter_options
+          end
+          return acc
+        end),
+        formatters_by_ft = vim.iter(Languages):fold(
           {},
           ---@param acc table
-          ---@param lang string
           ---@param config LSPConfig
-          function(acc, lang, config)
-            acc[lang] = config.formatters_by_ft
+          function(acc, _, config)
+            for _, ft in ipairs(config.filetypes) do
+              acc[ft] = config.formatters
+            end
             return acc
           end
         ),

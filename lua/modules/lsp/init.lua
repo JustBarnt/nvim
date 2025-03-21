@@ -70,9 +70,9 @@ local function enable(name, config)
 end
 
 function M.setup()
-  enable("lua_ls", Lsps["lua_ls"])
-  enable("gopls", Lsps["gopls"])
-  enable("bashls", Lsps["bashls"])
+  enable("lua_ls", LSPS["lua_ls"])
+  enable("gopls", LSPS["gopls"])
+  enable("bashls", LSPS["bashls"])
 
   local hover = vim.lsp.buf.hover
   ---@diagnostic disable-next-line: duplicate-set-field

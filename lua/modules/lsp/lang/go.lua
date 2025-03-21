@@ -2,8 +2,8 @@
 return {
   servers = { "gopls", "delve", "gomodifytags", "impl" },
   treesitters = { "go", "gomod", "gowork", "gosum" },
+  filetypes = { "go", "gomod", "gowork", "gotmpl" },
   formatters = { "goimports", "gofumpt" },
-  formatters_by_ft = { "goimports", "gofumpt" },
   settings = {
     gopls = {
       gofumpt = true,
@@ -15,7 +15,7 @@ return {
         test = true,
         tidy = true,
         upgrade_dependecy = true,
-        vendor = true
+        vendor = true,
       },
       hints = {
         assignVariableTypes = true,
@@ -37,6 +37,6 @@ return {
       staticcheck = true,
       directoryFilters = { "-.git", "-.vscode", "-.idea", "-.vscode-test", "-node_modules" },
       semanticTokens = true,
-    }
-  }
+    },
+  },
 }

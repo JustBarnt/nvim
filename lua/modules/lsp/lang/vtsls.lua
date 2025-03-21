@@ -30,7 +30,8 @@ return {
   servers = { "vtsls" },
   treesitters = { "javascript", "typescript", "tsx" },
   formatters = { "biome" },
-  formatters_by_ft = { "biome" },
+  formatter_options = { require_cwd = true },
+  filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" },
   -- stylua: ignore
   keys = {
     {
