@@ -45,6 +45,9 @@ end
 
 ---@param config vim.lsp.Config
 local function enable(name, config)
+  if not config then
+    return
+  end
   if lsp.config then
     lsp.config(name, config)
     lsp.enable(name)
@@ -72,7 +75,7 @@ end
 function M.setup()
   enable("lua_ls", LSPS["lua_ls"])
   enable("gopls", LSPS["gopls"])
-  enable("bashls", LSPS["bashls"])
+  -- enable("bashls", LSPS["bashls"])
 
   local hover = vim.lsp.buf.hover
   ---@diagnostic disable-next-line: duplicate-set-field
