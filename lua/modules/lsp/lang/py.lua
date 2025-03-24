@@ -13,20 +13,26 @@ M["py"] = {
   formatter_options = {},
   filetypes = { "python" },
   settings = {
+    python = {
+      pythonPath = vim.fn.exepath("python"),
+    },
     basedpyright = {
-      disableOrganizedImports = true,
       analysis = {
-        autoImportCompletions = true,
         autoSearchPaths = true,
-        useLibraryForCodeTypes = true,
+        useLibraryCodeForTypes = true,
         diagnosticMode = "openFilesOnly",
-      },
-      inlayHints = {
-        callArgumentNames = true,
       },
     },
   },
 }
+
+-- local function set_python_path(path)
+--   local clients = vim.lsp.get_clients({ bufnr = vim.api.nvim_get_current_buf(), name = "basedpyright" })
+--   for _, client in ipairs(clients) do
+--     client.config.settings = vim.tbl_deep_extend("force", client.config.settings, { python = { pythonPath = path } })
+--     client:notify("workspace/didChangeConfiguration", { settings = nil })
+--   end
+-- end
 
 ---@class vim.lsp.Config
 local Config = {
@@ -35,8 +41,14 @@ local Config = {
   root_markers = { "pyproject.toml", "setup.py", "setup.cfg", "requirements.txt", "Pipfile", "pyrightconfig.toml" },
   filetypes = M.py.filetypes,
   capabilities = Helpers.lsp.create_capabilities(),
-  on_exit = Helpers.lsp.on_exit,
-  on_error = Helpers.lsp.on_error,
+  -- commands = {
+  --   PyrightSetPythonPath = {
+  --     set_python_path,
+  --     description = "Reconfigure basedpyright with the provided python path",
+  --     nargs = 1,
+  --     complete = "file",
+  --   },
+  -- },
   on_init = function(client)
     Helpers.lsp.on_init(client, M.py.settings)
   end,

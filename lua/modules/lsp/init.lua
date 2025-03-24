@@ -20,23 +20,6 @@ local function enable(name, config)
     lsp.enable(name)
     return
   end
-  local group = api.nvim_create_augroup("lsp-enable-" .. name, { clear = true })
-  for _, ft in ipairs(config.filetypes) do
-    api.nvim_create_autocmd("FileType", {
-      pattern = ft,
-      group = group,
-      callback = function(args)
-        if config.root_markers then
-          config = vim.deepcopy(config)
-          config.root_dir = vim.fs.root(args.buf, config.root_markers)
-        end
-        vim.lsp.start(config, {
-          bufnr = args.buf,
-          reuse_client = config.reuse_client,
-        })
-      end,
-    })
-  end
 end
 
 function M.setup()
