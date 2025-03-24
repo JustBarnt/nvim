@@ -2,14 +2,23 @@
 ---@overload fun(config: vim.lsp.Config): vim.lsp.Config
 local M = setmetatable({}, {
   __call = function(m, ...)
-    m.make_config(...)
+    return m.make_config(...)
   end,
 })
+
+M["bash"] = {
+  servers = { "bash-language-server", "shellcheck" },
+  treesitters = { "bash" },
+  filetypes = { "bash", "sh" },
+  formatters = { "shfmt" },
+  formatter_options = {},
+  settings = {},
+}
 
 local Config = {
   cmd = { "bash-language-server", "start" },
   root_markers = { ".bashrc", ".bash_profile", ".git" },
-  filetypes = { "bash", "sh" },
+  filetypes = M.bash.filetypes,
   capabilities = Helpers.lsp.create_capabilities(),
   on_exit = Helpers.lsp.on_exit,
   on_error = Helpers.lsp.on_error,
@@ -23,14 +32,5 @@ local Config = {
 function M.make_config(config)
   return LazyVim.merge({}, Config, config)
 end
-
-M["bash"] = {
-  servers = { "bash-language-server", "shellcheck" },
-  treesitters = { "bash" },
-  filetypes = { "bash", "sh" },
-  formatters = { "shfmt" },
-  formatter_options = {},
-  settings = {},
-}
 
 return M

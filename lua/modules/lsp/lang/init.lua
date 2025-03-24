@@ -33,18 +33,6 @@ setmetatable(M, {
   end,
 })
 
--- formatters_by_ft = vim.iter(Lang):fold(
---   {},
---   ---@param acc table
---   ---@param config LSPConfig
---   function(acc, _, config)
---     for _, ft in ipairs(config.filetypes) do
---       acc[ft] = config.formatters
---     end
---     return acc
---   end
--- ),
-
 function M.get_formatters_by_ft()
   local ret = {}
   for key, value in pairs(M) do

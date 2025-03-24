@@ -2,27 +2,9 @@
 ---@overload fun(config: vim.lsp.Config): vim.lsp.Config
 local M = setmetatable({}, {
   __call = function(m, ...)
-    m.make_config(...)
+    return m.make_config(...)
   end,
 })
-
-local Config = {
-  cmd = { "vtsls", "--stdio" },
-  root_markers = { ".git", "package.json", "tsconfig.json", "jsconfig.json" },
-  filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" },
-  capabilities = Helpers.lsp.create_capabilities(),
-  on_exit = Helpers.lsp.on_exit,
-  on_error = Helpers.lsp.on_error,
-  on_init = function(client)
-    Helpers.lsp.on_init(client, M.js.settings)
-  end,
-}
-
----@param config vim.lsp.Config
----@return vim.lsp.Config
-function M.make_config(config)
-  return LazyVim.merge({}, Config, config)
-end
 
 ---@type LSPConfig
 M["js"] = {
@@ -109,5 +91,23 @@ M["js"] = {
     },
   },
 }
+
+local Config = {
+  cmd = { "vtsls", "--stdio" },
+  root_markers = { ".git", "package.json", "tsconfig.json", "jsconfig.json" },
+  filetypes = M.js.filetypes,
+  capabilities = Helpers.lsp.create_capabilities(),
+  on_exit = Helpers.lsp.on_exit,
+  on_error = Helpers.lsp.on_error,
+  on_init = function(client)
+    Helpers.lsp.on_init(client, M.js.settings)
+  end,
+}
+
+---@param config vim.lsp.Config
+---@return vim.lsp.Config
+function M.make_config(config)
+  return LazyVim.merge({}, Config, config)
+end
 
 return M

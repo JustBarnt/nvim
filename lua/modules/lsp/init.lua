@@ -15,11 +15,11 @@ end
 
 ---@param config vim.lsp.Config
 local function enable(name, config)
-  -- if lsp.config then
-  --   lsp.config(name, config)
-  --   lsp.enable(name)
-  --   return
-  -- end
+  if lsp.config then
+    lsp.config(name, config)
+    lsp.enable(name)
+    return
+  end
   local group = api.nvim_create_augroup("lsp-enable-" .. name, { clear = true })
   for _, ft in ipairs(config.filetypes) do
     api.nvim_create_autocmd("FileType", {
@@ -40,13 +40,28 @@ local function enable(name, config)
 end
 
 function M.setup()
-  -- enable("basedpyright", Languages["py"].config)
-  -- enable("bashls", Languages["bash"].config)
-  -- enable("clangd", Languages["cpp"].config)
-  -- enable("gopls", Languages["go"].config)
-  -- enable("intelephense", Languages["php"].config)
-  enable("lua_ls", Lang.lua.make_config({}))
-  -- enable("vtsls", Languages["js"].config)
+  --TODO: Eventually move these calls out of here and into a after/ftdetect folder?
+  enable("basedpyright", Lang.py())
+  -- enable(
+  --   "ruff",
+  --   ---@diagnostic disable-next-line: missing-fields
+  --   Lang.py({
+  --     cmd = { "ruff", "server" },
+  --     cmd_env = { RUFF_TRACE = "messages" },
+  --     init_options = {
+  --       settings = {
+  --         logLevel = "error",
+  --       },
+  --     },
+  --     settings = {},
+  --   })
+  -- )
+  enable("bashls", Lang.bash())
+  enable("clangd", Lang.cpp())
+  enable("gopls", Lang.go())
+  enable("intelephense", Lang.php())
+  enable("lua_ls", Lang.lua())
+  enable("vtsls", Lang.js())
 
   local hover = vim.lsp.buf.hover
   ---@diagnostic disable-next-line: duplicate-set-field
@@ -66,15 +81,15 @@ function M.setup()
 
   -- stylua: ignore
   local keys = {
-    {"gd", function() Snacks.picker.lsp_definitions() end, "[G]oto [D]efinition" },
+    {"gd", vim.lsp.buf.definition, "[G]oto [D]efinition" },
     {"gr", function() vim.lsp.buf.references({ includeDeclaration = false}) end, "[G]oto [R]eferences" },
-    {"gI", function() Snacks.picker.lsp_implementations() end, "[G]oto [I]mplementation" },
-    {"<leader>D", function() Snacks.picker.lsp_type_definitions() end, "Type [D]efinition" },
-    {"<leader>ds", function() Snacks.picker.lsp_symbols() end, "[D]ocument [S]ymbols" },
-    {"<leader>ws", function() Snacks.picker.lsp_workspace_symbols() end, "[W]orkspace [S]ymbols" },
+    {"gI", vim.lsp.buf.implementation, "[G]oto [I]mplementation" },
+    {"<leader>D", vim.lsp.buf.type_definition, "Type [D]efinition" },
+    {"<leader>ds", vim.lsp.buf.document_symbol, "[D]ocument [S]ymbols" },
+    {"<leader>ws", vim.lsp.buf.workspace_symbol, "[W]orkspace [S]ymbols" },
     {"<leader>rn", function() Snacks.rename.rename_file() end, "[R]e[n]ame" },
     {"<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction", { "n", "x" } },
-    {"gD", function() Snacks.picker.lsp_declarations() end, "[G]oto [D]eclaration" },
+    {"gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration" },
     {"<leader>cr", vim.lsp.buf.rename, "Rename Symbol" },
   }
 
@@ -113,6 +128,11 @@ function M.setup()
           },
           range = true,
         }
+      end
+
+      ---Disable in favor of basedpyright
+      if client.name == "ruff" then
+        client.server_capabilities.hoverProvider = false
       end
 
       if client.name == "vtsls" then

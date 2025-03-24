@@ -2,9 +2,20 @@
 ---@overload fun(config: vim.lsp.Config): vim.lsp.Config
 local M = setmetatable({}, {
   __call = function(m, ...)
-    m.make_config(...)
+    return m.make_config(...)
   end,
 })
+
+M["cpp"] = {
+  servers = { "clangd" },
+  treesitters = { "cpp", "c" },
+  filetypes = { "c", "cpp", "objc", "objcpp", "cuda", "proto" },
+  formatters = {},
+  formatter_options = {},
+  keys = {
+    { "<leader>ch", "<CMD>ClangdSwitchSourceHeader<cr>", desc = "Switch Source/Header (C/C++)" },
+  },
+}
 
 -- https://clangd.llvm.org/extensions.html#switch-between-sourceheader
 local function switch_source_header(bufnr)
@@ -74,7 +85,7 @@ local Config = {
     "compile_flags.txt",
     "configure.ac",
   },
-  filetypes = { "c", "cpp", "objc", "objcpp", "cuda", "proto" },
+  filetypes = M.cpp.filetypes,
   capabilities = Helpers.lsp.create_capabilities({
     textDocument = {
       completion = {
@@ -107,16 +118,5 @@ local Config = {
 function M.make_config(config)
   return LazyVim.merge({}, Config, config)
 end
-
-M["cpp"] = {
-  servers = { "clangd" },
-  treesitters = { "cpp", "c" },
-  filetypes = { "c", "cpp", "objc", "objcpp", "cuda", "proto" },
-  formatters = {},
-  formatter_options = {},
-  keys = {
-    { "<leader>ch", "<CMD>ClangdSwitchSourceHeader<cr>", desc = "Switch Source/Header (C/C++)" },
-  },
-}
 
 return M

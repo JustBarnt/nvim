@@ -2,29 +2,9 @@
 ---@overload fun(config: vim.lsp.Config): vim.lsp.Config
 local M = setmetatable({}, {
   __call = function(m, ...)
-    m.make_config(...)
+    return m.make_config(...)
   end,
 })
-
-local Config = {
-  cmd = { "gopls" },
-  root_markers = { "go.work", "go.mod", ".git" },
-  filetypes = { "go", "gomod", "gowork", "gotmpl" },
-  capabilities = Helpers.lsp.create_capabilities(),
-  on_exit = Helpers.lsp.on_exit,
-  on_error = Helpers.lsp.on_error,
-  on_init = function(client)
-    Helpers.lsp.on_init(client, M.go.settings)
-  end,
-}
-
---- Returns a vim.lsp.Config that is merged with the given config else
---- returns the default
----@param config vim.lsp.Config
----@return vim.lsp.Config
-function M.make_config(config)
-  return LazyVim.merge({}, Config, config)
-end
 
 M["go"] = {
   servers = { "gopls", "delve", "gomodifytags", "impl" },
@@ -68,5 +48,25 @@ M["go"] = {
     },
   },
 }
+
+local Config = {
+  cmd = { "gopls" },
+  root_markers = { "go.work", "go.mod", ".git" },
+  filetypes = M.go.filetypes,
+  capabilities = Helpers.lsp.create_capabilities(),
+  on_exit = Helpers.lsp.on_exit,
+  on_error = Helpers.lsp.on_error,
+  on_init = function(client)
+    Helpers.lsp.on_init(client, M.go.settings)
+  end,
+}
+
+--- Returns a vim.lsp.Config that is merged with the given config else
+--- returns the default
+---@param config vim.lsp.Config
+---@return vim.lsp.Config
+function M.make_config(config)
+  return LazyVim.merge({}, Config, config)
+end
 
 return M
