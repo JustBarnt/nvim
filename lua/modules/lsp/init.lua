@@ -13,49 +13,16 @@ local function client_supports_method(client, method, bufnr)
   return client:supports_method(method, bufnr)
 end
 
----@param config vim.lsp.ClientConfig
----@return vim.lsp.ClientConfig
-function M.make_config(config)
-  local blink = require("blink-cmp")
-  local capabilities =
-    vim.tbl_deep_extend("force", lsp.protocol.make_client_capabilities(), blink.get_lsp_capabilities(), {
-      workspace = {
-        fileOperations = {
-          didRename = true,
-          willRename = true,
-        },
-        didChangeWatchedFiles = {
-          dynamicRegistration = true,
-        },
-      },
-    })
-  local defaults = {
-    handlers = {},
-    capabilities = capabilities,
-    init_options = vim.empty_dict(),
-    settings = vim.empty_dict(),
-  }
-
-  if config then
-    return vim.tbl_deep_extend("force", defaults, config)
-  else
-    return defaults
-  end
-end
-
 ---@param config vim.lsp.Config
 local function enable(name, config)
-  if not config then
-    return
-  end
-  if lsp.config then
-    lsp.config(name, config)
-    lsp.enable(name)
-    return
-  end
+  -- if lsp.config then
+  --   lsp.config(name, config)
+  --   lsp.enable(name)
+  --   return
+  -- end
   local group = api.nvim_create_augroup("lsp-enable-" .. name, { clear = true })
   for _, ft in ipairs(config.filetypes) do
-    api.nvim_creat_autocmd("FileType", {
+    api.nvim_create_autocmd("FileType", {
       pattern = ft,
       group = group,
       callback = function(args)
@@ -73,9 +40,13 @@ local function enable(name, config)
 end
 
 function M.setup()
-  enable("lua_ls", LSPS["lua_ls"])
-  enable("gopls", LSPS["gopls"])
-  -- enable("bashls", LSPS["bashls"])
+  -- enable("basedpyright", Languages["py"].config)
+  -- enable("bashls", Languages["bash"].config)
+  -- enable("clangd", Languages["cpp"].config)
+  -- enable("gopls", Languages["go"].config)
+  -- enable("intelephense", Languages["php"].config)
+  enable("lua_ls", Lang.lua.make_config({}))
+  -- enable("vtsls", Languages["js"].config)
 
   local hover = vim.lsp.buf.hover
   ---@diagnostic disable-next-line: duplicate-set-field

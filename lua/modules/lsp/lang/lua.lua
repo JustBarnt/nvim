@@ -1,8 +1,37 @@
----@type LSPConfig
-return {
+---@class modules.lsp.lang.lua
+---@overload fun(config: vim.lsp.Config): vim.lsp.Config
+local M = setmetatable({}, {
+  ---@param config vim.lsp.Config
+  __call = function(m, config)
+    m.make_config(config)
+  end,
+})
+
+---@class vim.lsp.Config
+local Config = {
+  cmd = { "lua-language-server" },
+  name = "lua_ls",
+  root_markers = { ".luarc.json", ".luarc.jsonc", ".luacheckrc", ".stylua.toml", "selene.toml", "selene.yml", ".git" },
+  filetypes = { "lua" },
+  ---@type lsp.ClientCapabilities
+  capabilities = Helpers.lsp.create_capabilities(),
+  on_exit = Helpers.lsp.on_exit,
+  on_error = Helpers.lsp.on_error,
+  on_init = function(client)
+    Helpers.lsp.on_init(client, M.lua.settings)
+  end,
+}
+
+---@param config vim.lsp.Config
+function M.make_config(config)
+  return LazyVim.merge({}, Config, config)
+end
+
+M.lua = {
   servers = { "lua-language-server" },
   treesitters = { "lua", "luadoc", "luap" },
   formatters = { "stylua" },
+  formatter_options = {},
   filetypes = { "lua" },
   settings = {
     Lua = {
@@ -36,3 +65,5 @@ return {
     },
   },
 }
+
+return M

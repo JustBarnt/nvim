@@ -1,3 +1,5 @@
+---@module 'conform'
+
 ---@meta
 
 ---@class LSPConfig

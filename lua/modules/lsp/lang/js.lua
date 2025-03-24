@@ -1,32 +1,31 @@
----@class LspCommand: lsp.ExecuteCommandParams
----@field handler? lsp.Handler
-
----@param opts LspCommand
-local function execute(opts)
-  local params = {
-    command = opts.command,
-    arguments = opts.arguments,
-  }
-
-  return vim.lsp.buf_request(0, "workspace/executeCommand", params, opts.handler)
-end
-
-local action = setmetatable({}, {
-  __index = function(_, action)
-    return function()
-      vim.lsp.buf.cod_action({
-        apply = true,
-        context = {
-          only = { action },
-          diagnostics = {},
-        },
-      })
-    end
+---@class modules.lsp.lang.js
+---@overload fun(config: vim.lsp.Config): vim.lsp.Config
+local M = setmetatable({}, {
+  __call = function(m, ...)
+    m.make_config(...)
   end,
 })
 
+local Config = {
+  cmd = { "vtsls", "--stdio" },
+  root_markers = { ".git", "package.json", "tsconfig.json", "jsconfig.json" },
+  filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" },
+  capabilities = Helpers.lsp.create_capabilities(),
+  on_exit = Helpers.lsp.on_exit,
+  on_error = Helpers.lsp.on_error,
+  on_init = function(client)
+    Helpers.lsp.on_init(client, M.js.settings)
+  end,
+}
+
+---@param config vim.lsp.Config
+---@return vim.lsp.Config
+function M.make_config(config)
+  return LazyVim.merge({}, Config, config)
+end
+
 ---@type LSPConfig
-return {
+M["js"] = {
   servers = { "vtsls" },
   treesitters = { "javascript", "typescript", "tsx" },
   formatters = { "biome" },
@@ -39,7 +38,7 @@ return {
       function()
         ---@diagnostic disable-next-line: missing-parameter
         local params = vim.lsp.util.make_position_params()
-        execute({
+        Helpers.lsp.execute({
           command = "typescript.goToSourceDefinition",
           arguments = { params.textDocument.uri, params.position },
         })
@@ -49,21 +48,21 @@ return {
     {
       "gR",
       function()
-        execute({
+        Helpers.lsp.execute({
           command = "typescript.findAllFileReferences",
           arguments = { vim.uri_from_bufnr(0) },
         })
       end,
       desc = "File References",
     },
-    { "<leader>co", action["source.organizeImports"], desc = "Organize Imports", },
-    { "<leader>cM", action["source.addMissingImports.ts"], desc = "Add missing imports" },
-    { "<leader>cu", action["source.removeUnused.ts"], desc = "Remove unused imports" },
-    { "<leader>cD", action["source.fixAll.ts"], desc = "Fix all diagnostics" },
+    { "<leader>co", Helpers.lsp.action["source.organizeImports"], desc = "Organize Imports", },
+    { "<leader>cM", Helpers.lsp.action["source.addMissingImports.ts"], desc = "Add missing imports" },
+    { "<leader>cu", Helpers.lsp.action["source.removeUnused.ts"], desc = "Remove unused imports" },
+    { "<leader>cD", Helpers.lsp.action["source.fixAll.ts"], desc = "Fix all diagnostics" },
     {
       "<leader>cV",
       function()
-        execute({ command = "typescript.selectTypeScriptVersion" })
+        Helpers.lsp.execute({ command = "typescript.selectTypeScriptVersion" })
       end,
       desc = "Select TS workspace version",
     },
@@ -110,3 +109,5 @@ return {
     },
   },
 }
+
+return M

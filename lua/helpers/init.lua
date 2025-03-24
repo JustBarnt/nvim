@@ -1,6 +1,7 @@
 ---@class helpers
 ---@field folds helpers.folds
 ---@field lualine helpers.lualine
+---@field lsp helpers.lsp
 ---@field ui helpers.ui
 ---@field root helpers.root
 ---@field mini helpers.mini
@@ -58,27 +59,6 @@ function M.on_load(name, fn)
       end,
     })
   end
-end
-
---- returns a list of tables containing the servers from each language configuration
----@param path string
----@param key string
----@return string[][]
-function M.get_ensured_installed(path, key)
-  local lang_paths = vim.fn.globpath(path, "*.lua", false, true)
-  local langs = {}
-  local ret = {}
-  for _, lang in ipairs(lang_paths) do
-    table.insert(langs, vim.fn.fnamemodify(lang, ":t:r"))
-  end
-
-  for _, lang in ipairs(langs) do
-    local success, obj = pcall(require, path .. "/" .. lang)
-    if success then
-      table.insert(ret, obj[key])
-    end
-  end
-  return ret
 end
 
 ---@generic T

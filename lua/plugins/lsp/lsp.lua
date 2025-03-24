@@ -1,5 +1,3 @@
-local utils = require("helpers")
-
 ---@module "conform"
 
 return {
@@ -10,13 +8,13 @@ return {
     keys = { { "<leader>cm", "<CMD>Mason<CR>", desc = "Mason" } },
     build = ":MasonUpdate",
     opts = function(_, opts)
-      local servers = utils.get_ensured_installed("lua/modules/lsp/lang", "servers")
-      local formatters = utils.get_ensured_installed("lua/modules/lsp/lang", "formatters")
+      local server = Lang.get_option("servers")
+      local formatters = Lang.get_option("formatters")
       return {
         registries = { "github:mason-org/mason-registry", "github:crashdummyy/mason-registry" },
         -- NOTE: [mason.nvim] does not have an ensured installed key, I am adding it into the plugin spec
         --       because I'm using it
-        ensure_installed = utils.build_table(opts.ensure_installed, servers, formatters),
+        ensure_installed = Helpers.build_table(server, formatters),
       }
     end,
     config = function(_, opts)
@@ -72,23 +70,28 @@ return {
           quiet = false,
           lsp_format = "fallback",
         },
-        formatters = vim.iter(Languages):fold({}, function(acc, _, config)
-          for _, formatter in ipairs(config.formatters) do
-            acc[formatter] = config.formatter_options
-          end
-          return acc
-        end),
-        formatters_by_ft = vim.iter(Languages):fold(
-          {},
-          ---@param acc table
-          ---@param config LSPConfig
-          function(acc, _, config)
+        formatters = vim
+          .iter(Lang)
+          :filter(function(_, v)
+            return type(v) ~= "function"
+          end)
+          :fold({}, function(acc, _, config)
+            for _, formatter in ipairs(config.formatters) do
+              acc[formatter] = config.formatter_options
+            end
+            return acc
+          end),
+        formatters_by_ft = vim
+          .iter(Lang)
+          :filter(function(_, v)
+            return type(v) ~= "function"
+          end)
+          :fold({}, function(acc, _, config)
             for _, ft in ipairs(config.filetypes) do
               acc[ft] = config.formatters
             end
             return acc
-          end
-        ),
+          end),
       }
       return opts
     end,
