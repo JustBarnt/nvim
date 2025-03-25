@@ -1,7 +1,7 @@
 return {
   "saghen/blink.cmp",
   event = { "InsertEnter", "CmdlineEnter" },
-  version = "*",
+  version = "v1.0.*",
   build = "cargo build --release",
   ---@module "blink.cmp"
   ---@type blink.cmp.Config
