@@ -64,9 +64,9 @@ return {
     ---@param opts TSConfig
     config = function(_, opts)
       if type(opts.ensure_installed) == "table" then
-        local parsers = Lang.get_option("treesitters")
+        local parsers = require("modules.lsp.lang").get_option("treesitters")
         ---@diagnostic disable-next-line: param-type-mismatch
-        opts.ensure_installed = Helpers.build_table(opts.ensure_installed, parsers)
+        opts.ensure_installed = require("helpers").build_table(opts.ensure_installed, parsers)
       end
       require("nvim-treesitter.configs").setup(opts)
     end,

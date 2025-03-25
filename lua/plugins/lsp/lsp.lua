@@ -8,12 +8,12 @@ return {
     keys = { { "<leader>cm", "<CMD>Mason<CR>", desc = "Mason" } },
     build = ":MasonUpdate",
     opts = function(_, opts)
-      local server = Lang.get_option("servers")
+      local server = require("modules.lsp.lang").get_option("servers")
       return {
         registries = { "github:mason-org/mason-registry", "github:crashdummyy/mason-registry" },
         -- NOTE: [mason.nvim] does not have an ensured installed key, I am adding it into the plugin spec
         --       because I'm using it
-        ensure_installed = Helpers.build_table(server),
+        ensure_installed = require("helpers").build_table(server),
       }
     end,
     config = function(_, opts)
