@@ -54,8 +54,6 @@ local Config = {
   root_markers = { "go.work", "go.mod", ".git" },
   filetypes = M.go.filetypes,
   capabilities = Helpers.lsp.create_capabilities(),
-  on_exit = Helpers.lsp.on_exit,
-  on_error = Helpers.lsp.on_error,
   on_init = function(client)
     Helpers.lsp.on_init(client, M.go.settings)
   end,

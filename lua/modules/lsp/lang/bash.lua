@@ -20,8 +20,6 @@ local Config = {
   root_markers = { ".bashrc", ".bash_profile", ".git" },
   filetypes = M.bash.filetypes,
   capabilities = Helpers.lsp.create_capabilities(),
-  on_exit = Helpers.lsp.on_exit,
-  on_error = Helpers.lsp.on_error,
   on_init = function(client)
     Helpers.lsp.on_init(client, M.bash.settings)
   end,

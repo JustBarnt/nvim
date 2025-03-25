@@ -107,8 +107,6 @@ local Config = {
     clandgFileStatus = true,
   },
   offsetEncoding = { "utf-8", "utf-16" },
-  on_exit = Helpers.lsp.on_exit,
-  on_error = Helpers.lsp.on_error,
   on_init = function(client)
     Helpers.lsp.on_init(client, M.cpp.settings)
   end,

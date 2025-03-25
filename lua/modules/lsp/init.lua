@@ -24,21 +24,6 @@ end
 
 function M.setup()
   --TODO: Eventually move these calls out of here and into a after/ftdetect folder?
-  enable("basedpyright", Lang.py())
-  -- enable(
-  --   "ruff",
-  --   ---@diagnostic disable-next-line: missing-fields
-  --   Lang.py({
-  --     cmd = { "ruff", "server" },
-  --     cmd_env = { RUFF_TRACE = "messages" },
-  --     init_options = {
-  --       settings = {
-  --         logLevel = "error",
-  --       },
-  --     },
-  --     settings = {},
-  --   })
-  -- )
   enable("bashls", Lang.bash())
   enable("clangd", Lang.cpp())
   enable("gopls", Lang.go())

@@ -97,8 +97,6 @@ local Config = {
   root_markers = { ".git", "package.json", "tsconfig.json", "jsconfig.json" },
   filetypes = M.js.filetypes,
   capabilities = Helpers.lsp.create_capabilities(),
-  on_exit = Helpers.lsp.on_exit,
-  on_error = Helpers.lsp.on_error,
   on_init = function(client)
     Helpers.lsp.on_init(client, M.js.settings)
   end,
