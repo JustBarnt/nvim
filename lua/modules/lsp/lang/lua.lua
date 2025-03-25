@@ -8,10 +8,8 @@ local M = setmetatable({}, {
 })
 
 M.lua = {
-  servers = { "lua-language-server" },
+  servers = { "lua-language-server", "stylua" },
   treesitters = { "lua", "luadoc", "luap" },
-  formatters = { "stylua" },
-  formatter_options = {},
   filetypes = { "lua" },
   settings = {
     Lua = {

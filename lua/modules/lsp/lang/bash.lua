@@ -7,11 +7,9 @@ local M = setmetatable({}, {
 })
 
 M["bash"] = {
-  servers = { "bash-language-server", "shellcheck" },
+  servers = { "bash-language-server", "shellcheck", "shfmt" },
   treesitters = { "bash" },
   filetypes = { "bash", "sh" },
-  formatters = { "shfmt" },
-  formatter_options = {},
   settings = {},
 }
 

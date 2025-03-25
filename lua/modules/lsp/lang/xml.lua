@@ -6,28 +6,20 @@ local M = setmetatable({}, {
   end,
 })
 
-M["php"] = {
-  servers = { "intelephense" },
-  treesitters = { "php" },
-  filetypes = { "php", "ctp" },
-  settings = {
-    intelephense = {
-      environment = {
-        includePaths = {
-          "C:\\PHP\\includes",
-        },
-      },
-    },
-  },
+M["xml"] = {
+  servers = { "lemminx", "xmlformatter" },
+  treesitters = { "xml" },
+  filetypes = { "xml", "xsd", "xsl", "xslt", "svg" },
+  settings = {},
 }
 
 local Config = {
-  cmd = { "intelephense", "--stdio" },
-  root_markers = { ".git", "composer.json" },
-  filetypes = M.php.filetypes,
+  cmd = { "lemminx" },
+  root_markers = { ".git" },
+  filetypes = M.xml.filetypes,
   capabilities = Helpers.lsp.create_capabilities(),
   on_init = function(client)
-    Helpers.lsp.on_init(client, M.php.settings)
+    Helpers.lsp.on_init(client, M.xml.settings)
   end,
 }
 

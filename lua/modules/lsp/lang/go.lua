@@ -7,11 +7,9 @@ local M = setmetatable({}, {
 })
 
 M["go"] = {
-  servers = { "gopls", "delve", "gomodifytags", "impl" },
+  servers = { "gopls", "delve", "gomodifytags", "impl", "goimports", "gofumpt" },
   treesitters = { "go", "gomod", "gowork", "gosum" },
   filetypes = { "go", "gomod", "gowork", "gotmpl" },
-  formatters = { "goimports", "gofumpt" },
-  formatter_options = {},
   settings = {
     gopls = {
       gofumpt = true,

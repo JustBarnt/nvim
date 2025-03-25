@@ -6,12 +6,9 @@ local M = setmetatable({}, {
   end,
 })
 
----@type LSPConfig
 M["js"] = {
-  servers = { "vtsls" },
+  servers = { "vtsls", "biome" },
   treesitters = { "javascript", "typescript", "tsx" },
-  formatters = { "biome" },
-  formatter_options = { require_cwd = true },
   filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" },
   -- stylua: ignore
   keys = {

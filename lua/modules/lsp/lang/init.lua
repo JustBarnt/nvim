@@ -6,7 +6,6 @@
 ---@field js modules.lsp.lang.js
 ---@field lua modules.lsp.lang.lua
 ---@field php modules.lsp.lang.php
----@field py modules.lsp.lang.py
 local M = {}
 
 setmetatable(M, {
@@ -32,20 +31,6 @@ setmetatable(M, {
     return result
   end,
 })
-
-function M.get_formatters_by_ft()
-  local ret = {}
-  for key, value in pairs(M) do
-    vim.iter(M[key]):fold(ret, function(acc, _, options)
-      if vim.tbl_contains(options, "server") then
-        for _, ft in ipairs(options.filetypes) do
-          acc[ft] = options.formatters
-        end
-      end
-    end)
-  end
-  return ret
-end
 
 ---@param option string
 ---@return string[]

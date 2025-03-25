@@ -9,12 +9,11 @@ return {
     build = ":MasonUpdate",
     opts = function(_, opts)
       local server = Lang.get_option("servers")
-      local formatters = Lang.get_option("formatters")
       return {
         registries = { "github:mason-org/mason-registry", "github:crashdummyy/mason-registry" },
         -- NOTE: [mason.nvim] does not have an ensured installed key, I am adding it into the plugin spec
         --       because I'm using it
-        ensure_installed = Helpers.build_table(server, formatters),
+        ensure_installed = Helpers.build_table(server),
       }
     end,
     config = function(_, opts)
@@ -70,28 +69,23 @@ return {
           quiet = false,
           lsp_format = "fallback",
         },
-        formatters = vim
-          .iter(Lang)
-          :filter(function(_, v)
-            return type(v) ~= "function"
-          end)
-          :fold({}, function(acc, _, config)
-            for _, formatter in ipairs(config.formatters) do
-              acc[formatter] = config.formatter_options
-            end
-            return acc
-          end),
-        formatters_by_ft = vim
-          .iter(Lang)
-          :filter(function(_, v)
-            return type(v) ~= "function"
-          end)
-          :fold({}, function(acc, _, config)
-            for _, ft in ipairs(config.filetypes) do
-              acc[ft] = config.formatters
-            end
-            return acc
-          end),
+        formatters = {
+          biome = {
+            require_cwd = true,
+          },
+          xmlformat = {
+            prepend_args = { "--selfclose", "--indent", "4", "--preserve", "literal" },
+          },
+        },
+        formatters_by_ft = {
+          xml = { "xmlformat" },
+          javascript = { "biome" },
+          typescript = { "biome" },
+          svelte = { "biome" },
+          lua = { "stylua" },
+          python = { "black" },
+          go = { "goimports", "gofumpt" },
+        },
       }
       return opts
     end,
