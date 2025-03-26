@@ -1,30 +1,30 @@
----@class modules.lsp.lang.xml
+---@class modules.lsp.lang.md
 ---@overload fun(config: vim.lsp.Config): vim.lsp.Config
 local M = setmetatable({}, {
-  ---@param config vim.lsp.Config
-  __call = function(m, config)
-    return m.make_config(config)
+  __call = function(m, ...)
+    return m.make_config(...)
   end,
 })
 
-M.xml = {
-  servers = { "lemminx", "xmlformatter" },
-  treesitters = { "xml" },
-  filetypes = { "xml", "xsd", "xsl", "xslt", "svg" },
+M["md"] = {
+  servers = { "marksman" },
+  treesitters = { "markdown", "markdown_inline" },
+  filetypes = { "markdown", "markdown.mdx" },
   settings = {},
 }
 
 local Config = {
-  cmd = { "lemminx" },
+  cmd = { "marksman", "server" },
   root_markers = { ".git" },
-  filetypes = M.xml.filetypes,
+  filetypes = M.md.filetypes,
   capabilities = Helpers.lsp.create_capabilities(),
   on_init = function(client)
-    Helpers.lsp.on_init(client, M.xml.settings)
+    Helpers.lsp.on_init(client, M.md.settings)
   end,
 }
 
 ---@param config vim.lsp.Config
+---@return vim.lsp.Config
 function M.make_config(config)
   return LazyVim.merge({}, Config, config)
 end

@@ -8,7 +8,7 @@ local M = setmetatable({}, {
 
 M["json"] = {
   servers = { "json-lsp" },
-  treesitters = { "json5" },
+  treesitters = { "json5", "json", "jsonc" },
   filetypes = { "json", "jsonc", "json5" },
   settings = {
     json = {

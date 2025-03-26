@@ -1,37 +1,12 @@
 ---@module "conform"
 
---- Checks if a Prettier config file exists
----@param ctx {buf: number, filename: string, dirname: string}
-local function has_prettier_config(ctx)
-  vim.fn.system({ "prettier", "--find-config-path", ctx.filename })
-  return vim.v.shell_error == 0
-end
-
---- Checks if the parser can be infered for the given context:
---- * If the filetype is in the supported list, return then
---- * Otherwise, check if a parser can be inferred
----@param ctx {buf: number, filename: string, dirname: string}
-local function has_prettier(ctx)
-  local ft = vim.bo[ctx.buf].filetype --[[@string]]
-  local ret = vim.fn.system({ "--prettier", "--file-info", ctx.filename })
-  ---@type boolean, string?
-  local ok, parser = pcall(function()
-    return vim.fn.json_decode(ret).inferredParser
-  end)
-  return ok and parser and parser ~= vim.NIL
-end
-
-has_prettier_config = Helpers.memoize(has_prettier_config)
-has_prettier = Helpers.memoize(has_prettier)
-
 return {
   {
     "williamboman/mason.nvim",
-    event = "BufEnter",
     cmd = "Mason",
     keys = { { "<leader>cm", "<CMD>Mason<CR>", desc = "Mason" } },
     build = ":MasonUpdate",
-    opts = function(_, opts)
+    opts = function()
       local server = require("modules.lsp.lang").get_option("servers")
       return {
         registries = { "github:mason-org/mason-registry", "github:crashdummyy/mason-registry" },
@@ -100,14 +75,12 @@ return {
           xmlformat = {
             prepend_args = { "--selfclose", "--indent", "4", "--preserve", "literal" },
           },
-          prettier = {
-            condition = function(_, ctx)
-              return has_prettier(ctx) and (has_prettier_config(ctx))
-            end,
-          },
         },
         formatters_by_ft = {
           xml = { "xmlformat" },
+          json = { "biome" },
+          jsonc = { "biome" },
+          css = { "biome" },
           javascript = { "biome" },
           typescript = { "biome" },
           svelte = { "biome", "prettier" },

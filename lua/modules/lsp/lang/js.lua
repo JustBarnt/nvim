@@ -8,7 +8,7 @@ local M = setmetatable({}, {
 
 M["js"] = {
   servers = { "vtsls", "biome" },
-  treesitters = { "javascript", "typescript", "tsx" },
+  treesitters = { "javascript", "typescript", "tsx", "jsdoc" },
   filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" },
   -- stylua: ignore
   keys = {

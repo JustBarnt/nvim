@@ -7,7 +7,7 @@ local M = setmetatable({}, {
 })
 
 M["cmake"] = {
-  servers = { "cmakelang", "cmakelint" },
+  servers = { "cmake-language-server", "cmakelint" },
   treesitters = { "cmake" },
   filetypes = { "cmake" },
   settings = {},

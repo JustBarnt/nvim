@@ -7,11 +7,15 @@
 ---@field js modules.lsp.lang.js
 ---@field json modules.lsp.lang.json
 ---@field lua modules.lsp.lang.lua
+---@field md modules.lsp.lang.md
 ---@field nu modules.lsp.lang.nu
 ---@field php modules.lsp.lang.php
 ---@field svelte modules.lsp.lang.svelte
 ---@field xml modules.lsp.lang.xml
 local M = {}
+
+---@type {servers: string[], treesitters: string[], filetypes: string[]}
+local opts = {}
 
 setmetatable(M, {
   __index = function(self, key)
