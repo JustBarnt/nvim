@@ -10,6 +10,7 @@
 ---@field md modules.lsp.lang.md
 ---@field nu modules.lsp.lang.nu
 ---@field php modules.lsp.lang.php
+---@field tailwind modules.lsp.lang.tailwind
 ---@field svelte modules.lsp.lang.svelte
 ---@field xml modules.lsp.lang.xml
 local M = {}
