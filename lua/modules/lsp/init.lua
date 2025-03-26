@@ -22,6 +22,28 @@ local function enable(name, config)
   end
 end
 
+if vim.fn.executable("nu") == 1 then
+  vim.filetype.add({
+    extension = {
+      nu = "nu",
+      nush = "nu",
+      nuon = "nu",
+      nushell = "nu",
+    },
+    pattern = {
+      ["."] = {
+        function(path, bufnr)
+          local content = vim.filetype.getlines(bufnr, 1)
+          if vim.fileytpe.matchregex(content, [[^#!/usr/bin/env nu]]) then
+            return "nu"
+          end
+        end,
+        priority = -math.huge,
+      },
+    },
+  })
+end
+
 function M.setup()
   --TODO: Eventually move these calls out of here and into a after/ftdetect folder?
   enable("bashls", Lang.bash())
@@ -30,8 +52,10 @@ function M.setup()
   enable("gopls", Lang.go())
   enable("intelephense", Lang.php())
   enable("lua_ls", Lang.lua())
+  enable("nushell", Lang.nu())
   enable("svelte", Lang.svelte())
   enable("vtsls", Lang.js())
+  enable("lemminx", Lang.xml())
 
   local hover = vim.lsp.buf.hover
   ---@diagnostic disable-next-line: duplicate-set-field

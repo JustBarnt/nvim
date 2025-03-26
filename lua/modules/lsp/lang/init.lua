@@ -6,8 +6,10 @@
 ---@field go modules.lsp.lang.go
 ---@field js modules.lsp.lang.js
 ---@field lua modules.lsp.lang.lua
+---@field nu modules.lsp.lang.nu
 ---@field php modules.lsp.lang.php
 ---@field svelte modules.lsp.lang.svelte
+---@field xml modules.lsp.lang.xml
 local M = {}
 
 setmetatable(M, {
