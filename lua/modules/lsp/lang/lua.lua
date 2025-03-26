@@ -47,7 +47,6 @@ M.lua = {
 ---@class vim.lsp.Config
 local Config = {
   cmd = { "lua-language-server" },
-  name = "lua_ls",
   root_markers = { ".luarc.json", ".luarc.jsonc", ".luacheckrc", ".stylua.toml", "selene.toml", "selene.yml", ".git" },
   filetypes = M.lua.filetypes,
   ---@type lsp.ClientCapabilities

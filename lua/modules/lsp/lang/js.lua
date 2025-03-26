@@ -58,6 +58,15 @@ M["js"] = {
         },
       },
     },
+    tsserver = {
+      globalPlugins = {
+        {
+          name = "typescript-svelte-plugin",
+          location = Helpers.get_pkg_path("svelte-language-server", "/node_modules/typescript-svelte-plugin"),
+          enableForWorkspaceTypeVersion = true,
+        },
+      },
+    },
     javascript = {
       updateImportsOnFileMove = { enabled = "always" },
       suggest = {

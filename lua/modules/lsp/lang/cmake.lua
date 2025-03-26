@@ -1,4 +1,4 @@
----@class modules.lsp.lang.bash
+---@class modules.lsp.lang.cmake
 ---@overload fun(config: vim.lsp.Config): vim.lsp.Config
 local M = setmetatable({}, {
   __call = function(m, ...)
@@ -9,17 +9,20 @@ local M = setmetatable({}, {
 M["cmake"] = {
   servers = { "cmakelang", "cmakelint" },
   treesitters = { "cmake" },
-  filetypes = { "bash", "sh" },
+  filetypes = { "cmake" },
   settings = {},
 }
 
 local Config = {
-  cmd = { "bash-language-server", "start" },
-  root_markers = { ".bashrc", ".bash_profile", ".git" },
-  filetypes = M.bash.filetypes,
+  cmd = { "cmake-language-server" },
+  root_markers = { "CMakePresets.json", "CTestConfig.cmake", "cmake", "build" },
+  filetypes = M.cmake.filetypes,
   capabilities = Helpers.lsp.create_capabilities(),
+  init_options = {
+    buildDirectory = "build",
+  },
   on_init = function(client)
-    Helpers.lsp.on_init(client, M.bash.settings)
+    Helpers.lsp.on_init(client, M.cmake.settings)
   end,
 }
 

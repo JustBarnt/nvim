@@ -1,5 +1,29 @@
 ---@module "conform"
 
+--- Checks if a Prettier config file exists
+---@param ctx {buf: number, filename: string, dirname: string}
+local function has_prettier_config(ctx)
+  vim.fn.system({ "prettier", "--find-config-path", ctx.filename })
+  return vim.v.shell_error == 0
+end
+
+--- Checks if the parser can be infered for the given context:
+--- * If the filetype is in the supported list, return then
+--- * Otherwise, check if a parser can be inferred
+---@param ctx {buf: number, filename: string, dirname: string}
+local function has_prettier(ctx)
+  local ft = vim.bo[ctx.buf].filetype --[[@string]]
+  local ret = vim.fn.system({ "--prettier", "--file-info", ctx.filename })
+  ---@type boolean, string?
+  local ok, parser = pcall(function()
+    return vim.fn.json_decode(ret).inferredParser
+  end)
+  return ok and parser and parser ~= vim.NIL
+end
+
+has_prettier_config = Helpers.memoize(has_prettier_config)
+has_prettier = Helpers.memoize(has_prettier)
+
 return {
   {
     "williamboman/mason.nvim",
@@ -76,12 +100,18 @@ return {
           xmlformat = {
             prepend_args = { "--selfclose", "--indent", "4", "--preserve", "literal" },
           },
+          prettier = {
+            condition = function(_, ctx)
+              return has_prettier(ctx) and (has_prettier_config(ctx))
+            end,
+          },
         },
         formatters_by_ft = {
           xml = { "xmlformat" },
           javascript = { "biome" },
           typescript = { "biome" },
-          svelte = { "biome" },
+          svelte = { "biome", "prettier" },
+          html = { "biome", "prettier" },
           lua = { "stylua" },
           python = { "black" },
           go = { "goimports", "gofumpt" },
@@ -92,5 +122,28 @@ return {
     config = function(_, opts)
       require("conform").setup(opts)
     end,
+  },
+  {
+    "Civitasv/cmake-tools.nvim",
+    lazy = true,
+    init = function()
+      local loaded = false
+      local function check()
+        local cwd = vim.uv.cwd()
+        if vim.fn.filereadable(cwd .. "/CMakeLists.txt") == 1 then
+          require("lazy").load({ plugins = { "cmake-tools.nvim" } })
+          loaded = true
+        end
+      end
+      check()
+      vim.api.nvim_create_autocmd("DirChanged", {
+        callback = function()
+          if not loaded then
+            check()
+          end
+        end,
+      })
+    end,
+    opts = {},
   },
 }

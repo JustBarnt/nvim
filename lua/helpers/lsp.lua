@@ -32,7 +32,7 @@ end
 M.action = setmetatable({}, {
   __index = function(_, action)
     return function()
-      vim.lsp.buf.cod_action({
+      vim.lsp.buf.code_action({
         apply = true,
         context = {
           only = { action },
@@ -73,13 +73,13 @@ function M.on_error(code, msg)
 end
 
 ---@param client vim.lsp.Client
----@param config lsp.LSPObject
+---@param config? lsp.LSPObject
 function M.on_init(client, config)
   if not M.fetch_workspaces(client) then
     return
   end
 
-  client.settings = vim.tbl_deep_extend("force", client.settings, config)
+  client.settings = vim.tbl_deep_extend("force", client.settings, config or {})
 end
 
 return M

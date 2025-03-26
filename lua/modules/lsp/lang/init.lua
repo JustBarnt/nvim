@@ -1,11 +1,13 @@
 ---@class lang
 ---@field bash modules.lsp.lang.bash
+---@field cmake modules.lsp.lang.cmake
 ---@field cpp modules.lsp.lang.cpp
 ---@field git modules.lsp.lang.git
 ---@field go modules.lsp.lang.go
 ---@field js modules.lsp.lang.js
 ---@field lua modules.lsp.lang.lua
 ---@field php modules.lsp.lang.php
+---@field svelte modules.lsp.lang.svelte
 local M = {}
 
 setmetatable(M, {

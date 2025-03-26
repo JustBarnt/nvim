@@ -2,15 +2,6 @@
 
 ---@meta
 
----@class LSPConfig
----@field servers string[]
----@field treesitters string[]
----@field filetypes string[]
----@field formatters string[]
----@field formatter_options conform.FormatterConfigOverride
----@field keys? LazyKeysSpec[]
----@field settings? string[]
-
 ---@class vim.api.keyset.create_autocmd.callback.args
 ---@field id number
 ---@field event string

@@ -26,9 +26,11 @@ function M.setup()
   --TODO: Eventually move these calls out of here and into a after/ftdetect folder?
   enable("bashls", Lang.bash())
   enable("clangd", Lang.cpp())
+  enable("cmake", Lang.cmake())
   enable("gopls", Lang.go())
   enable("intelephense", Lang.php())
   enable("lua_ls", Lang.lua())
+  enable("svelte", Lang.svelte())
   enable("vtsls", Lang.js())
 
   local hover = vim.lsp.buf.hover
@@ -83,6 +85,11 @@ function M.setup()
         table.insert(keys, { "gD", Snacks.picker.lsp_implementations, "[G]oto [I]mplementation" })
       end
 
+      if client.name == "svelte" then
+        table.insert(keys, { "<leader>co", Helpers.lsp.action["source.organizeImports"], "Organize Imports" })
+        client.capabilities.workspace.didChangeWatchedFiles = { dynamicRegistration = true }
+      end
+
       -- workaround for gopls not supporting semanticTokensProvider
       -- https://github.com/golang/go/issues/54531#issuecomment-1464982242
       if client.name == "gopls" and not client.server_capabilities.semanticTokensProvider then
@@ -105,6 +112,7 @@ function M.setup()
 
       if client.name == "vtsls" then
         client.commands["_typescript.moveToFileRefactoring"] = function(command, ctx)
+          ---@diagnostic disable: assign-type-mismatch
           ---@type string, string, lsp.Range
           local action, uri, range = unpack(command.arguments)
 
