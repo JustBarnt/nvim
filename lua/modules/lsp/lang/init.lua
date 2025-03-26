@@ -5,6 +5,7 @@
 ---@field git modules.lsp.lang.git
 ---@field go modules.lsp.lang.go
 ---@field js modules.lsp.lang.js
+---@field json modules.lsp.lang.json
 ---@field lua modules.lsp.lang.lua
 ---@field nu modules.lsp.lang.nu
 ---@field php modules.lsp.lang.php
