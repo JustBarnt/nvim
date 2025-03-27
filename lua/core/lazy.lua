@@ -36,6 +36,7 @@ lazy_file()
 
 _G.LazyVim = require("lazy.core.util")
 _G.Helpers = require("helpers")
+_G.Installables = require("plugins.servers")
 _G.Lang = require("modules.lsp.lang")
 
 require("lazy").setup({

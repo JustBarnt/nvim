@@ -24,18 +24,7 @@ return {
     opts = {
       highlight = { enable = true },
       indent = { enable = true },
-      ensure_installed = {
-        "c_sharp",
-        "diff",
-        "html",
-        "printf",
-        "query",
-        "regex",
-        "toml",
-        "vim",
-        "vimdoc",
-        "yaml",
-      },
+      ensure_installed = Installables.treesitters,
       incremental_selection = {
         enable = true,
         keymaps = {
@@ -55,15 +44,6 @@ return {
         },
       },
     },
-    ---@param opts TSConfig
-    config = function(_, opts)
-      if type(opts.ensure_installed) == "table" then
-        local parsers = require("modules.lsp.lang").get_option("treesitters")
-        ---@diagnostic disable-next-line: param-type-mismatch
-        opts.ensure_installed = require("helpers").build_table(opts.ensure_installed, parsers)
-      end
-      require("nvim-treesitter.configs").setup(opts)
-    end,
   },
   {
     "windwp/nvim-ts-autotag",
