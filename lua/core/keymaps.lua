@@ -78,6 +78,12 @@ map("n", "<leader>l", "<cmd>Lazy<cr>", { desc = "Lazy" })
 -- new file
 map("n", "<leader>fn", "<cmd>enew<cr>", { desc = "New File" })
 
+map({ "n", "v" }, "<leader>cf", function()
+  LazyVim.try(function()
+    return require("conform").format({ bufnr = vim.api.nvim_get_current_buf() })
+  end, { msg = "[conform.nvim] failed to format" })
+end, { desc = "Format" })
+
 ---@param severity? vim.diagnostic.Severity
 ---@param count integer
 local diagnostic_goto = function(count, severity)
