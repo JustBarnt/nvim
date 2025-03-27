@@ -64,7 +64,7 @@ vim.o.smartindent = true
 vim.opt.sessionoptions = { "buffers", "curdir", "tabpages", "winsize", "help", "globals", "skiprtp", "folds" }
 
 -- Completion Window/Popup settings
-vim.o.completeopt = "menu,menuone,popup,fuzzy"
+vim.o.completeopt = "menuone,popup,fuzzy"
 vim.o.pumblend = 10
 vim.o.pumheight = 10
 vim.o.winminwidth = 5
