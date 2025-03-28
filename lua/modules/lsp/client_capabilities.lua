@@ -1,22 +1,6 @@
 ---@type table<vim.lsp.protocol.Method.ClientToServer, fun(buffer?: number, keys?: LazyKeysSpec[])>
 local M = {}
 
--- 'textDocument/diagnostic'
--- 'textDocument/didChange'
--- 'textDocument/didClose'
--- 'textDocument/didOpen'
--- 'textDocument/didSave'
--- 'workspace/diagnostic'
--- 'workspace/didChangeConfiguration'
--- 'workspace/didChangeWatchedFiles'
--- 'workspace/didChangeWorkspaceFolders'
--- 'workspace/didCreateFiles'
--- 'workspace/didDeleteFiles'
--- 'workspace/didRenameFiles'
--- 'workspace/willCreateFiles'
--- 'workspace/willDeleteFiles'
--- 'workspace/willRenameFiles'
-
 M["textDocument/codeLens"] = function(buffer, keys)
   vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "InsertLeave" }, {
     buffer = buffer,

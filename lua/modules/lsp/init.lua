@@ -37,6 +37,8 @@ end
 function M.setup()
   local configs = {}
   local config_keys = {}
+  local progress = require("modules.lsp.progress")
+  local lsp_commands = require("modules.lsp.user-commands").setup
 
   for _, v in ipairs(vim.api.nvim_get_runtime_file("lsp/*", true)) do
     local name = vim.fn.fnamemodify(v, ":t:r")
@@ -59,36 +61,42 @@ function M.setup()
     {"gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration" },
   }
 
-  require("modules.lsp.progress").setup(lspgroup)
-  require("modules.lsp.user-commands").setup()
+  lsp_commands()
 
   api.nvim_create_autocmd("LspAttach", {
     group = lspgroup,
     callback = function(args)
       -- NOTE: Using `assert` bypasses needing to do a nil check before accessing a member
       --       that could be nil
-      local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
+      local Client = assert(vim.lsp.get_client_by_id(args.data.client_id))
 
-      if client.server_capabilities.implementationProvider then
+      if Client.server_capabilities.implementationProvider then
         table.insert(keys, { "gD", Snacks.picker.lsp_implementations, "[G]oto [I]mplementation" })
       end
 
       -- Setup any LSP Client keymaps and server capabalities
-      if vim.tbl_contains(config_keys, client.name) then
-        local ok, mod = pcall(require, "modules.lsp.client." .. client.name)
+      if vim.tbl_contains(config_keys, Client.name) then
+        local ok, client = pcall(require, "modules.lsp.client." .. Client.name)
         if ok then
-          mod.setup()
+          client.setup()
         end
       end
 
       -- setup any lsp ClientToServer method functionality and/or keymaps
       for _, method in pairs(lsp_methods) do
-        if client:supports_method(method, args.buf) and client_methods[method] then
+        if Client:supports_method(method, args.buf) and client_methods[method] then
           client_methods[method](args.buf, keys)
         end
       end
 
       make_keymaps(args.buf, keys)
+    end,
+  })
+
+  api.nvim_create_autocmd("LspProgress", {
+    group = lspgroup,
+    callback = function(args)
+      progress.setup(args)
     end,
   })
 end
