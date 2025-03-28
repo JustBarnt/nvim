@@ -1,3 +1,30 @@
+vim.api.nvim_create_autocmd({ "CursorMoved" }, {
+  callback = function(args)
+    --- Don't bother trying to run the autocmd if the buffer has no diagnostics
+    if #vim.diagnostic.count(args.buf) == 0 then
+      return
+    end
+    ---@type uv.uv_timer_t|nil
+    local timer = nil
+    local debounce = 100
+    local function refresh_diagnostics()
+      vim.diagnostic.show(nil, 0)
+    end
+
+    local function debounce_diag_refresh()
+      if timer then
+        timer:stop()
+        timer:close()
+      end
+      timer = vim.uv.new_timer()
+      assert(timer)
+      timer:start(debounce, 0, vim.schedule_wrap(refresh_diagnostics))
+    end
+
+    debounce_diag_refresh()
+  end,
+})
+
 -- Autoformat on save
 -- TODO: Eventually setup in a similar way to LazyVim
 vim.api.nvim_create_autocmd("BufWritePre", {
