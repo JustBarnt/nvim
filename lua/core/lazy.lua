@@ -106,7 +106,7 @@ vim.diagnostic.config({
       else
         return string.format(
           "%s %s: [%s: %s]",
-          Helpers.ui.icons.diagnostics[severity],
+          require("helpers.ui").icons.diagnostics[severity],
           diag.message:gsub("%.", ""),
           diag.source:gsub("%.", ""),
           diag.code
@@ -126,7 +126,7 @@ vim.diagnostic.config({
       -- stylua: ignore
       return string.format(
         "%s %s",
-        Helpers.ui.icons.diagnostics[severity],
+        require("helpers.ui").icons.diagnostics[severity],
         diag.message
       )
     end,
