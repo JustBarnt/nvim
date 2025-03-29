@@ -11,7 +11,7 @@ Installables.dap = {
 }
 
 Installables.formatters = {
-  "boime",
+  "biome",
   "gofumpt",
   "goimports",
   "gomodifytags",
@@ -31,6 +31,7 @@ Installables.servers = {
   "lemminx",
   "lua-language-server",
   "marksman",
+  "roslyn",
   "svelte-language-server",
   "vtsls",
 }

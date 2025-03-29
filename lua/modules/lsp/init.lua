@@ -29,8 +29,16 @@ local function make_keymaps(buffer, keys)
   end
 
   for _, key in ipairs(keys) do
+    if type(key) ~= "table" then
+      vim.notify(
+        ("Bad keymap. Expected key to be a table: **%s**\nSkipping this keymap"):format(key),
+        vim.log.levels.WARN
+      )
+      goto continue
+    end
     local lhs, rhs, desc, mode = unpack(key)
     map(lhs, rhs, desc, mode or nil)
+    ::continue::
   end
 end
 

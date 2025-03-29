@@ -1,7 +1,5 @@
 return {
   "williamboman/mason.nvim",
-  cmd = "Mason",
-  keys = { { "<leader>cm", "<CMD>Mason<CR>", desc = "Mason" } },
   build = ":MasonUpdate",
   opts = function()
     return {
@@ -18,6 +16,8 @@ return {
   end,
   config = function(_, opts)
     require("mason").setup(opts)
+
+    vim.keymap.set("n", "<leader>cm", "<CMD>Mason<CR>", { desc = "Mason" })
 
     local mr = require("mason-registry")
     mr:on("package:install:success", function()

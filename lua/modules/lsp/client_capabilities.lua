@@ -14,10 +14,9 @@ M["textDocument/codeLens"] = function(buffer, keys)
 end
 
 M["textDocument/codeAction"] = function(_, keys)
-  vim.list_extend(
-    keys,
-    { "<leader>ca", "<CMD>lua require('fastaction').code_action()<CR>", desc = "Code Action (FastAction)" }
-  )
+  vim.list_extend(keys, {
+    { "<leader>ca", "<CMD>lua require('fastaction').code_action()<CR>", desc = "Code Action (FastAction)" },
+  })
 end
 
 M["textDocument/rename"] = function(_, keys)

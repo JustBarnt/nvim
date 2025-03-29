@@ -37,7 +37,6 @@ lazy_file()
 _G.LazyVim = require("lazy.core.util")
 _G.Helpers = require("helpers")
 _G.Installables = require("plugins.servers")
-_G.Lang = require("modules.lsp.lang")
 
 require("lazy").setup({
   spec = {
@@ -94,42 +93,42 @@ vim.diagnostic.config({
     spacing = vim.o.shiftwidth,
     source = "if_many",
     prefix = "",
-    format = function(diag)
-      local current_line = vim.api.nvim_win_get_cursor(0)[1] - 1 -- convert to 0-indexed line
-      local severity = diag.severity == 1 and "Error"
-        or diag.severity == 2 and "Warn"
-        or diag.severity == 3 and "Info"
-        or diag.severity == 4 and "Hint"
-
-      if diag.lnum == current_line then
-        return ""
-      else
-        return string.format(
-          "%s %s: [%s: %s]",
-          require("helpers.ui").icons.diagnostics[severity],
-          diag.message:gsub("%.", ""),
-          diag.source:gsub("%.", ""),
-          diag.code
-        )
-      end
-    end,
+    -- format = function(diag)
+    --   local current_line = vim.api.nvim_win_get_cursor(0)[1] - 1 -- convert to 0-indexed line
+    --   local severity = diag.severity == 1 and "Error"
+    --     or diag.severity == 2 and "Warn"
+    --     or diag.severity == 3 and "Info"
+    --     or diag.severity == 4 and "Hint"
+    --
+    --   if diag.lnum == current_line then
+    --     return ""
+    --   else
+    --     return string.format(
+    --       "%s %s: [%s: %s]",
+    --       require("helpers.ui").icons.diagnostics[severity],
+    --       diag.message:gsub("%.", ""),
+    --       diag.source:gsub("%.", ""),
+    --       diag.code
+    --     )
+    --   end
+    -- end,
   },
   -- This is newly merged as of jan 2025, this displays diagnostic in a very similar way to nushell
   virtual_lines = {
     current_line = true,
-    format = function(diag)
-      local severity = diag.severity == 1 and "Error"
-        or diag.severity == 2 and "Warn"
-        or diag.severity == 3 and "Info"
-        or diag.severity == 4 and "Hint"
-
-      -- stylua: ignore
-      return string.format(
-        "%s %s",
-        require("helpers.ui").icons.diagnostics[severity],
-        diag.message
-      )
-    end,
+    -- format = function(diag)
+    --   local severity = diag.severity == 1 and "Error"
+    --     or diag.severity == 2 and "Warn"
+    --     or diag.severity == 3 and "Info"
+    --     or diag.severity == 4 and "Hint"
+    --
+    --   -- stylua: ignore
+    --   return string.format(
+    --     "%s %s",
+    --     require("helpers.ui").icons.diagnostics[severity],
+    --     diag.message
+    --   )
+    -- end,
     spacing = vim.o.shiftwidth, -- make diagnostic spacing match code spacing
     source = "if_many",
   },
