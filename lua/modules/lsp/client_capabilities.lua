@@ -15,7 +15,7 @@ end
 
 M["textDocument/codeAction"] = function(_, keys)
   vim.list_extend(keys, {
-    { "<leader>ca", "<CMD>lua require('fastaction').code_action()<CR>", desc = "Code Action (FastAction)" },
+    { "<leader>ca", "<CMD>lua require('fastaction').code_action()<CR>", "Code Action (FastAction)" },
   })
 end
 
@@ -37,7 +37,9 @@ M["textDocument/rename"] = function(_, keys)
 end
 
 M["textDocument/typeDefinition"] = function(_, keys)
-  vim.list_extend(keys, { "<leader>D", vim.lsp.buf.type_definition, "Type [D]efinition" })
+  vim.list_extend(keys, {
+    { "<leader>D", vim.lsp.buf.type_definition, "Type [D]efinition" },
+  })
 end
 
 M["textDocument/formatting"] = function(buffer, keys)
@@ -56,11 +58,13 @@ end
 M["textDocument/inlayHint"] = function(buffer, keys)
   vim.lsp.inlay_hint.enable()
   vim.list_extend(keys, {
-    "<leader>uh",
-    function()
-      vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = buffer }))
-    end,
-    "Toggle Inlay Hints",
+    {
+      "<leader>uh",
+      function()
+        vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = buffer }))
+      end,
+      "Toggle Inlay Hints",
+    },
   })
 end
 

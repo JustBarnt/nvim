@@ -12,6 +12,7 @@ Installables.dap = {
 
 Installables.formatters = {
   "biome",
+  "black",
   "gofumpt",
   "goimports",
   "gomodifytags",
@@ -23,6 +24,7 @@ Installables.formatters = {
 
 Installables.servers = {
   "bash-language-server",
+  "basedpyright",
   "clangd",
   "cmake-language-server",
   "gopls",
