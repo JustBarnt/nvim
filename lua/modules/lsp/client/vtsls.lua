@@ -79,10 +79,10 @@ function Vtsls.setup(client, keys)
   vim.list_extend(keys, {
     {"gD", function() goto_source_definition(client) end, "Goto Source Definition"},
     {"gR", find_all_file_references, "Find All References"},
-    { "<leader>co", Helpers.lsp.action["source.organizeImports"], desc = "Organize Imports", },
-    { "<leader>cM", Helpers.lsp.action["source.addMissingImports.ts"], desc = "Add missing imports" },
-    { "<leader>cu", Helpers.lsp.action["source.removeUnused.ts"], desc = "Remove unused imports" },
-    { "<leader>cD", Helpers.lsp.action["source.fixAll.ts"], desc = "Fix all diagnostics" },
+    { "<leader>co", Helpers.lsp.action["source.organizeImports"],  "Organize Imports", },
+    { "<leader>cM", Helpers.lsp.action["source.addMissingImports.ts"],  "Add missing imports" },
+    { "<leader>cu", Helpers.lsp.action["source.removeUnused.ts"],  "Remove unused imports" },
+    { "<leader>cD", Helpers.lsp.action["source.fixAll.ts"],  "Fix all diagnostics" },
     {"<leader>cV", select_ts_version , "Select TS Workspace Version"},
   })
 end

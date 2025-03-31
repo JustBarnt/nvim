@@ -86,7 +86,7 @@ function M.setup()
       if vim.tbl_contains(config_keys, Client.name) then
         local ok, client = pcall(require, "modules.lsp.client." .. Client.name)
         if ok then
-          client.setup()
+          client.setup(Client, keys)
         end
       end
 

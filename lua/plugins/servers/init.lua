@@ -34,7 +34,9 @@ Installables.servers = {
   "lua-language-server",
   "marksman",
   "roslyn",
+  "ruff",
   "svelte-language-server",
+  "tailwindcss-language-server",
   "vtsls",
 }
 

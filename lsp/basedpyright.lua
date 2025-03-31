@@ -10,6 +10,7 @@ return {
     "pyrightconfig.json",
     ".git",
   },
+  capabilities = Helpers.lsp.create_capabilities(),
   settings = {
     basedpyright = {
       analysis = {
