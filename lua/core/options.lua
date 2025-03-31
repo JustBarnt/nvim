@@ -68,6 +68,7 @@ vim.o.completeopt = "menuone,popup,fuzzy"
 vim.o.pumblend = 10
 vim.o.pumheight = 10
 vim.o.winminwidth = 5
+vim.o.maxmempattern = 10000
 
 --- NOTE: New in neovim nightly as of 2025-03-18, but most current plugins have issues if this is set
 -- vim.o.winborder = "rounded"
