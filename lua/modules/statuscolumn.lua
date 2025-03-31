@@ -45,7 +45,7 @@ function M.setup()
     return
   end
   did_setup = true
-  Snacks.util.set_hl({
+  Helpers.ui.set_hl({
     Mark = "DiagnosticHint",
   }, { prefix = "StatusColumn", default = true })
   local timer = assert(vim.uv.new_timer())

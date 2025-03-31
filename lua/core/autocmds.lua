@@ -1,3 +1,4 @@
+-- Update and hide any inline diagnostics when on the current line
 vim.api.nvim_create_autocmd({ "CursorMoved" }, {
   callback = function(args)
     --- Don't bother trying to run the autocmd if the buffer has no diagnostics

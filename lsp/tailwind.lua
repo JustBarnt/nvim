@@ -1,15 +1,35 @@
----@class modules.lsp.lang.tailwind
----@overload fun(config: vim.lsp.Config): vim.lsp.Config
-local M = setmetatable({}, {
-  __call = function(m, ...)
-    return m.make_config(...)
-  end,
-})
-
-M["tailwind"] = {
-  servers = { "svelte-language-server", "prettier" },
-  treesitters = {},
-  filetypes = {},
+---@class vim.lsp.Config
+return {
+  cmd = { "tailwindcss-language-server", "--stdio" },
+  root_markers = {
+    "tailwind.config.js",
+    "tailwind.config.cjs",
+    "tailwind.config.mjs",
+    "tailwind.config.ts",
+    "postcss.config.js",
+    "postcss.config.cjs",
+    "postcss.config.mjs",
+    "postcss.config.ts",
+  },
+  filetypes = {
+    "html",
+    -- 'markdown',
+    "php",
+    "razor",
+    -- css
+    "css",
+    "less",
+    "postcss",
+    "sass",
+    "scss",
+    -- js
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    -- mixed
+    "svelte",
+  },
   settings = {
     tailwindCSS = {
       validate = true,
@@ -37,22 +57,6 @@ M["tailwind"] = {
       },
     },
   },
-}
-
----@class vim.lsp.Config
-local Config = {
-  cmd = { "tailwind-language-server", "--stdio" },
-  root_markers = {
-    "tailwind.config.js",
-    "tailwind.config.cjs",
-    "tailwind.config.mjs",
-    "tailwind.config.ts",
-    "postcss.config.js",
-    "postcss.config.cjs",
-    "postcss.config.mjs",
-    "postcss.config.ts",
-  },
-  filetypes = M.tailwind.filetypes,
   capabilities = Helpers.lsp.create_capabilities(),
   on_new_config = function(new_config)
     if not new_config.settings then
@@ -66,14 +70,4 @@ local Config = {
       new_config.settings.editor.tabSize = vim.lsp.util.get_effective_tabstop()
     end
   end,
-  on_init = function(client)
-    Helpers.lsp.on_init(client, M.tailwind.settings)
-  end,
 }
-
----@param config vim.lsp.Config
-function M.make_config(config)
-  return LazyVim.merge({}, Config, config)
-end
-
-return M

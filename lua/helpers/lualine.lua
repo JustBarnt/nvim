@@ -17,7 +17,7 @@ function M.status(icon, status)
       return status() ~= nil
     end,
     color = function()
-      return { fg = Snacks.util.color(colors[status()] or colors.ok) }
+      return { fg = Helpers.ui.color(colors[status()] or colors.ok) }
     end,
   }
 end
@@ -119,7 +119,7 @@ function M.root_dir(opts)
     other = true,
     icon = "󱉭 ",
     color = function()
-      return { fg = Snacks.util.color("Special") }
+      return { fg = Helpers.ui.color("Special") }
     end,
   }, opts or {})
 

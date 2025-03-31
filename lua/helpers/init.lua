@@ -18,6 +18,17 @@ function M.is_win()
   return vim.uv.os_uname().sysname:find("Windows") ~= nil
 end
 
+--- retuns true if neovim is in blocked state
+function M.is_blocking()
+  local mode = vim.api.nvim_get_mode()
+  for _, m in ipairs({ "ic", "ix", "c", "no", "r%?", "rm" }) do
+    if mode.mode:find(m) == 1 then
+      return true
+    end
+  end
+  return mode.blocking
+end
+
 ---@param name string
 function M.get_plugin(name)
   return require("lazy.core.config").spec.plugins[name]

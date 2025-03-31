@@ -25,15 +25,44 @@ return {
       highlight = { enable = true },
       indent = { enable = true },
       ensure_installed = {
+        "bash",
+        "c",
         "c_sharp",
+        "cmake",
+        "cpp",
         "diff",
+        "git_config",
+        "gitcommit",
+        "git_rebase",
+        "gitignore",
+        "gitattributes",
+        "go",
+        "gomod",
+        "gosum",
+        "gowork",
         "html",
+        "javascript",
+        "jsdoc",
+        "json",
+        "json5",
+        "jsonc",
+        "lua",
+        "luadoc",
+        "luap",
+        "markdown",
+        "markdown_inline",
+        "nu",
+        "php",
         "printf",
         "query",
         "regex",
+        "svelte",
         "toml",
+        "tsx",
+        "typescript",
         "vim",
         "vimdoc",
+        "xml",
         "yaml",
       },
       incremental_selection = {
@@ -55,13 +84,7 @@ return {
         },
       },
     },
-    ---@param opts TSConfig
     config = function(_, opts)
-      if type(opts.ensure_installed) == "table" then
-        local parsers = require("modules.lsp.lang").get_option("treesitters")
-        ---@diagnostic disable-next-line: param-type-mismatch
-        opts.ensure_installed = require("helpers").build_table(opts.ensure_installed, parsers)
-      end
       require("nvim-treesitter.configs").setup(opts)
     end,
   },
