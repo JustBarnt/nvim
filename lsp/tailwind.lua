@@ -10,6 +10,8 @@ return {
     "postcss.config.cjs",
     "postcss.config.mjs",
     "postcss.config.ts",
+    vim.fs.dirname(vim.fs.dirname("./node_modules/@tailwindcss")),
+    vim.fs.dirname(vim.fs.dirname("./node_modules/tailwindcss")),
   },
   filetypes = {
     "html",
