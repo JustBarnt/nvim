@@ -1,7 +1,7 @@
 -- leader key
 -- you should use vim.keycode to translate keycodes instead of string values
 vim.g.mapleader = vim.keycode("<space>")
-vim.g.maplocalleader = vim.keycode("<cr>")
+vim.g.maplocalleader = vim.keycode("/")
 
 --- TODO: various global options
 --- similar to lazyvim so I can easily toggle things like autoformat
