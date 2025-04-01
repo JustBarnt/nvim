@@ -107,5 +107,6 @@ vim.o.termguicolors = true
 
 -- Status Column
 vim.opt.statuscolumn = [[%!v:lua.require'modules.statuscolumn'.get()]]
+-- vim.opt.statusline = [[%!v:lua.require'modules.statusline'.render()]]
 vim.o.number = true
 vim.o.relativenumber = true

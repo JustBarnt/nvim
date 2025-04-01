@@ -192,6 +192,61 @@ function M.git()
   return ret
 end
 
+local remote_cache = {}
+local branch_cache = {}
+
+function M.get_git_remote(root)
+  if root == nil then
+    return
+  end
+
+  local remote = remote_cache[root]
+  if remote ~= nil then
+    return remote
+  end
+
+  local cmd = table.concat({ "git", "config", "--get remote.origin.url" }, " ")
+  remote = vim.fn.system(cmd)
+
+  if vim.v.shell_error ~= 0 then
+    return nil
+  end
+
+  remote = vim.fs.basename(remote)
+  if remote == nil then
+    return
+  end
+
+  remote = vim.fn.fnamemodify(remote, ":r")
+  remote_cache[root] = remote
+
+  return remote
+end
+
+function M.set_git_branch(root)
+  local cmd = table.concat({ "git", "-C", root, "rev-parse --abbrev-ref HEAD" }, " ")
+
+  local branch = vim.fn.system(cmd)
+  if branch == nil then
+    return nil
+  end
+  branch = branch:gsub("\n", "")
+  branch_cache[root] = branch
+  return branch
+end
+
+function M.get_git_branch(root)
+  if root == nil then
+    return
+  end
+  local branch = branch_cache[root]
+  if branch ~= nil then
+    return branch
+  end
+
+  return M.set_git_branch(root)
+end
+
 ---@param opts? {hl_last?: string}
 function M.pretty_path(opts)
   return ""

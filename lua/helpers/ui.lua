@@ -11,9 +11,47 @@ vim.api.nvim_create_autocmd("ColorScheme", {
   end,
 })
 
+function M.pad_str(in_str, width, align)
+  local num_spaces = width - #in_str
+  if num_spaces < 1 then
+    num_spaces = 1
+  end
+  local spaces = string.rep(" ", num_spaces)
+  if align == "left" then
+    return table.concat({ in_str, spaces })
+  end
+  return table.concat({ spaces, in_str })
+end
+
+function M.hl_str(hl, str)
+  return "%#" .. hl .. "#" .. str .. "%*"
+end
+
+function M.group_number(num, sep)
+  if num < 999 then
+    return tostring(num)
+  else
+    num = tostring(num)
+    return num:reverse():gsub("(%d%d%d)", "%1" .. sep):reverse():gsub("^,", "")
+  end
+end
+
 M.icons = {
   misc = {
+    lsp = "󱁜",
     dots = "󰇘",
+    branch = "",
+    bullet = "•",
+    o_bullet = "○",
+    check = "✔",
+    d_chev = "∨",
+    file = "╼ ",
+    hamburger = "≡",
+    lock = "",
+    r_chev = ">",
+    location = "⌘",
+    up_tri = "▲",
+    info_i = "¡",
   },
   ft = {
     octo = "",

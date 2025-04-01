@@ -43,6 +43,17 @@ M.action = setmetatable({}, {
   end,
 })
 
+---@param method vim.lsp.protocol.Method.ClientToServer|vim.lsp.protocol.Method.ServerToClient
+function M.SupportsMethod(method)
+  local clients = vim.lsp.get_clients({ bufnr = 0 })
+  for _, client in pairs(clients) do
+    if client:supports_method(method, 0) then
+      return true
+    end
+  end
+  return false
+end
+
 ---@param client vim.lsp.Client
 function M.fetch_workspaces(client)
   local path = vim.tbl_get(client, "workspace_folders", 1, "name")

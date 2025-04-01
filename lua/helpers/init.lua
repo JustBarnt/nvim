@@ -5,6 +5,7 @@
 ---@field ui helpers.ui
 ---@field root helpers.root
 ---@field mini helpers.mini
+---@field mode helpers.mode
 local M = {}
 
 setmetatable(M, {
