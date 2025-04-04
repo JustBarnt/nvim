@@ -86,7 +86,7 @@ vim.o.formatoptions = "jcroqlnt"
 
 -- Grep settings
 vim.o.grepformat = "%f:%l:%c:%m"
-vim.o.grepprg = "rg --vimgrep"
+vim.o.grepprg = "rg --vimgrep --smart-case"
 
 -- Search/subsitute settings
 vim.o.ignorecase = true

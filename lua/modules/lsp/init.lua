@@ -4,24 +4,6 @@ local lsp_methods = vim.lsp.protocol.Methods
 local client_methods = require("modules.lsp.client_capabilities")
 local lspgroup = api.nvim_create_augroup("lsp", {})
 
-local function setup_lsp_hover()
-  local hover = vim.lsp.buf.hover
-  ---@diagnostic disable-next-line: duplicate-set-field
-  vim.lsp.buf.hover = function(config)
-    config = config or {}
-    config.border = "single"
-    hover(config)
-  end
-
-  local signature_help = vim.lsp.buf.signature_help
-  ---@diagnostic disable-next-line: duplicate-set-field
-  vim.lsp.buf.signature_help = function(config)
-    config = config or {}
-    config.border = "single"
-    signature_help(config)
-  end
-end
-
 local function make_keymaps(buffer, keys)
   local function map(lhs, rhs, desc, mode)
     mode = mode or "n"
@@ -45,7 +27,6 @@ end
 function M.setup()
   local configs = {}
   local config_keys = {}
-  local progress = require("modules.lsp.progress")
   local lsp_commands = require("modules.lsp.user-commands").setup
 
   for _, v in ipairs(vim.api.nvim_get_runtime_file("lsp/*", true)) do
@@ -56,17 +37,16 @@ function M.setup()
   config_keys = vim.tbl_keys(configs)
   vim.lsp.enable(config_keys)
 
-  -- Applies custom configuration to the lsp hover and signature help
-  setup_lsp_hover()
-
-  -- stylua: ignore
   local keys = {
-    {"gd", vim.lsp.buf.definition, "[G]oto [D]efinition" },
-    {"gr", function() vim.lsp.buf.references({ includeDeclaration = false}) end, "[G]oto [R]eferences" },
-    {"gI", vim.lsp.buf.implementation, "[G]oto [I]mplementation" },
-    {"<leader>ds", vim.lsp.buf.document_symbol, "[D]ocument [S]ymbols" },
-    {"<leader>ws", vim.lsp.buf.workspace_symbol, "[W]orkspace [S]ymbols" },
-    {"gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration" },
+    { "K", vim.lsp.buf.hover, "Hover" },
+    { "gK", vim.lsp.buf.signature_help, "Signature Helper" },
+    { "<c-k>", vim.lsp.buf.signature_help, "Signature Helper", { "i" } },
+    { "gd", Snacks.picker.lsp_definitions, "[G]oto [D]efinition" },
+    { "gr", Snacks.picker.lsp_references, "[G]oto [R]eferences" },
+    { "<leader>ds", Snacks.picker.lsp_symbols, "[D]ocument [S]ymbols" },
+    { "<leader>ws", Snacks.picker.lsp_workspace_symbols, "[W]orkspace [S]ymbols" },
+    { "gD", Snacks.picker.lsp_declarations, "[G]oto [D]eclaration" },
+    { "gy", Snacks.picker.lsp_type_definitions, "Goto T[y]pe Definition" },
   }
 
   lsp_commands()
@@ -79,7 +59,7 @@ function M.setup()
       local Client = assert(vim.lsp.get_client_by_id(args.data.client_id))
 
       if Client.server_capabilities.implementationProvider then
-        table.insert(keys, { "gD", Snacks.picker.lsp_implementations, "[G]oto [I]mplementation" })
+        table.insert(keys, { "gI", Snacks.picker.lsp_implementations, "[G]oto [I]mplementation" })
       end
 
       -- Setup any LSP Client keymaps and server capabalities
@@ -98,13 +78,6 @@ function M.setup()
       end
 
       make_keymaps(args.buf, keys)
-    end,
-  })
-
-  api.nvim_create_autocmd("LspProgress", {
-    group = lspgroup,
-    callback = function(args)
-      progress.setup(args)
     end,
   })
 end

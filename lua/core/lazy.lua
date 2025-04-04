@@ -89,24 +89,9 @@ vim.diagnostic.config({
       [vim.diagnostic.severity.HINT] = Helpers.ui.icons.diagnostics.Hint,
     },
   },
-  virtual_text = {
-    spacing = vim.o.shiftwidth,
-    source = "if_many",
-    severity = {
-      max = vim.diagnostic.severity.WARN,
-    },
-  },
+  virtual_text = true,
   -- This is newly merged as of jan 2025, this displays diagnostic in a very similar way to nushell
-  virtual_lines = {
-    current_line = true,
-    spacing = vim.o.shiftwidth, -- make diagnostic spacing match code spacing
-    severity = {
-      min = vim.diagnostic.severity.ERROR,
-    },
-  },
-  float = {
-    source = true,
-  },
+  virtual_lines = { current_line = true },
 })
 
 -- Config Core Files

@@ -8,19 +8,21 @@ return {
         ["vim.lsp.util.stylize_markdown"] = true,
         ["cmp.entry.get_documentation"] = true,
       },
-      progress = { enabled = false },
-      signature = { view = "custom_signature" },
+      hover = { view = "custom_floating_preview", silent = true },
+      signature = { view = "custom_floating_preview", auto_open = { enabled = false } },
     },
     ---@type NoiceConfigViews
+    ---@diagnostic disable-next-line: missing-fields
     views = {
       ---@class NoiceViewOptions
-      custom_signature = {
+      custom_floating_preview = {
         view = "hover",
         ---@diagnostic disable-next-line: assign-type-mismatch
         size = {
           width = math.floor(vim.o.columns * 0.4 + 0.5),
           height = math.floor(vim.o.lines * 0.4 + 0.5),
         },
+        border = "rounded",
       },
     },
     routes = {

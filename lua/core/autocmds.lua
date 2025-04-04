@@ -1,30 +1,66 @@
--- Update and hide any inline diagnostics when on the current line
-vim.api.nvim_create_autocmd({ "CursorMoved" }, {
-  callback = function(args)
-    --- Don't bother trying to run the autocmd if the buffer has no diagnostics
-    if #vim.diagnostic.count(args.buf) == 0 then
-      return
-    end
-    ---@type uv.uv_timer_t|nil
-    local timer = nil
-    local debounce = 100
-    local function refresh_diagnostics()
-      vim.diagnostic.show(nil, 0)
+local virt_line
+local virt_text
+vim.api.nvim_create_autocmd({ "CursorMoved", "DiagnosticChanged" }, {
+  group = vim.api.nvim_create_augroup("diag_only_virtlines", {}),
+  callback = function()
+    if virt_line == nil then
+      virt_line = vim.diagnostic.config().virtual_lines
     end
 
-    local function debounce_diag_refresh()
-      if timer then
-        timer:stop()
-        timer:close()
+    -- ignore if virtual_lines.currentJ_line is disabled
+    if not (virt_line and virt_line.current_line) then
+      if virt_text then
+        vim.diagnostic.config({ virtual_text = virt_text })
+        virt_text = nil
       end
-      timer = vim.uv.new_timer()
-      assert(timer)
-      timer:start(debounce, 0, vim.schedule_wrap(refresh_diagnostics))
     end
 
-    debounce_diag_refresh()
+    if virt_text == nil then
+      virt_text = vim.diagnostic.config().virtual_text
+    end
+
+    if vim.tbl_isempty(vim.diagnostic.get(0, { lnum = vim.api.nvim_win_get_cursor(0)[1] - 1 })) then
+      vim.diagnostic.config({ virtual_text = virt_text })
+    else
+      vim.diagnostic.config({ virtual_text = false })
+    end
   end,
 })
+
+vim.api.nvim_create_autocmd("ModeChanged", {
+  group = vim.api.nvim_create_augroup("diag_redraw", {}),
+  callback = function()
+    pcall(vim.diagnostic.show)
+  end,
+})
+
+-- -- Update and hide any inline diagnostics when on the current line
+-- vim.api.nvim_create_autocmd({ "CursorMoved" }, {
+--   callback = function(args)
+--     --- Don't bother trying to run the autocmd if the buffer has no diagnostics
+--     if #vim.diagnostic.count(args.buf) == 0 then
+--       return
+--     end
+--     ---@type uv.uv_timer_t|nil
+--     local timer = nil
+--     local debounce = 100
+--     local function refresh_diagnostics()
+--       vim.diagnostic.show(nil, 0)
+--     end
+--
+--     local function debounce_diag_refresh()
+--       if timer then
+--         timer:stop()
+--         timer:close()
+--       end
+--       timer = vim.uv.new_timer()
+--       assert(timer)
+--       timer:start(debounce, 0, vim.schedule_wrap(refresh_diagnostics))
+--     end
+--
+--     debounce_diag_refresh()
+--   end,
+-- })
 
 -- Autoformat on save
 -- TODO: Eventually setup in a similar way to LazyVim

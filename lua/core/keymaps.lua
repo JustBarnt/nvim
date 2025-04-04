@@ -1,5 +1,13 @@
 local map = Helpers.safe_keymap_set
 
+map({ "n" }, "<localleader>/", function()
+  local pattern = vim.fn.input("rg: ")
+  if pattern ~= "" then
+    vim.cmd('silent grep! "' .. pattern .. '"')
+    vim.cmd("copen")
+  end
+end, { desc = "Live Grep" })
+
 -- better up/down
 map({ "n", "x" }, "j", "v:count == 0 ? 'gj' : 'j'", { desc = "Down", expr = true, silent = true })
 map({ "n", "x" }, "<Down>", "v:count == 0 ? 'gj' : 'j'", { desc = "Down", expr = true, silent = true })
