@@ -4,6 +4,25 @@ local lsp_methods = vim.lsp.protocol.Methods
 local client_methods = require("modules.lsp.client_capabilities")
 local lspgroup = api.nvim_create_augroup("lsp", {})
 
+local function setup_lsp_hover()
+  local hover = vim.lsp.buf.hover
+  ---@param config vim.lsp.buf.hover.Opts
+  ---@diagnostic disable-next-line: duplicate-set-field
+  vim.lsp.buf.hover = function(config)
+    config = config or {}
+    config.border = "rounded"
+    hover(config)
+  end
+
+  local signature_help = vim.lsp.buf.signature_help
+  ---@diagnostic disable-next-line: duplicate-set-field
+  vim.lsp.buf.signature_help = function(config)
+    config = config or {}
+    config.border = "rounded"
+    signature_help(config)
+  end
+end
+
 local function make_keymaps(buffer, keys)
   local function map(lhs, rhs, desc, mode)
     mode = mode or "n"
@@ -36,6 +55,8 @@ function M.setup()
 
   config_keys = vim.tbl_keys(configs)
   vim.lsp.enable(config_keys)
+
+  setup_lsp_hover()
 
   local keys = {
     { "K", vim.lsp.buf.hover, "Hover" },

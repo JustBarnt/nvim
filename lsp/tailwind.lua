@@ -10,8 +10,6 @@ return {
     "postcss.config.cjs",
     "postcss.config.mjs",
     "postcss.config.ts",
-    vim.fs.dirname(vim.fs.dirname("./node_modules/@tailwindcss")),
-    vim.fs.dirname(vim.fs.dirname("./node_modules/tailwindcss")),
   },
   filetypes = {
     "html",
@@ -35,6 +33,7 @@ return {
   settings = {
     tailwindCSS = {
       validate = true,
+      emmetCompletions = true,
       lint = {
         cssConflict = "warning",
         invalidApply = "error",
@@ -51,15 +50,8 @@ return {
         "classList",
         "ngClass",
       },
-      includeLanguages = {
-        eelixir = "html-eex",
-        eruby = "erb",
-        templ = "html",
-        htmlangular = "html",
-      },
     },
   },
-  capabilities = Helpers.lsp.create_capabilities(),
   on_new_config = function(new_config)
     if not new_config.settings then
       new_config.settings = {}
