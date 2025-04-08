@@ -1,11 +1,6 @@
 ---@class helpers.lsp
 local M = {}
 
-M.format = {
-  formatting_options = nil,
-  timeout_ms = nil,
-}
-
 ---@class LspCommand: lsp.ExecuteCommandParams
 ---@field handler? lsp.Handler
 
@@ -44,15 +39,6 @@ function M.SupportsMethod(method)
   return false
 end
 
----@param client vim.lsp.Client
-function M.fetch_workspaces(client)
-  local path = vim.tbl_get(client, "workspace_folders", 1, "name")
-  if not path then
-    return nil
-  end
-  return path
-end
-
 ---@param capabilities? vim.lsp.protocol.Method A list a client capabilities for an LSP
 function M.create_capabilities(capabilities)
   local has_blink, blink = pcall(require, "blink.cmp")
@@ -64,18 +50,11 @@ function M.create_capabilities(capabilities)
   )
 end
 
-function M.on_exit(code, signal)
-  vim.notify(string.format("LSP Client exited with code %d, signal %s", code, signal))
-end
-
-function M.on_error(code, msg)
-  vim.notify(string.format("LSP Client error: %s (code: %s)", msg, code), vim.log.levels.ERROR)
-end
-
 ---@param client vim.lsp.Client
 ---@param config? lsp.LSPObject
 function M.on_init(client, config)
-  if not M.fetch_workspaces(client) then
+  local path = vim.tbl_get(client, "workspace_folders", 1, "name")
+  if not path then
     return
   end
 

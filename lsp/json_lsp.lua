@@ -24,8 +24,5 @@ return {
         validate = { enable = true },
       },
     })
-    -- -- Lazy load schemastore
-    -- M.json.settings.json.schemas = M.json.settings.json.schemas or {}
-    -- vim.list_extend(M.json.settings.json.schemas, require("schemastore").json.schemas())
   end,
 }
