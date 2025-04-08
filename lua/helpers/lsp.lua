@@ -1,16 +1,6 @@
 ---@class helpers.lsp
 local M = {}
 
----@type lsp.ClientCapabilities
-M.capabilities = {
-  workspace = {
-    fileOperations = {
-      didRename = true,
-      willRename = true,
-    },
-  },
-}
-
 M.format = {
   formatting_options = nil,
   timeout_ms = nil,
@@ -70,7 +60,6 @@ function M.create_capabilities(capabilities)
     "force",
     vim.lsp.protocol.make_client_capabilities(),
     has_blink and blink.get_lsp_capabilities() or {},
-    M.capabilities,
     capabilities or {}
   )
 end

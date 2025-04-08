@@ -83,6 +83,30 @@ function M.setup()
         table.insert(keys, { "gI", Snacks.picker.lsp_implementations, "[G]oto [I]mplementation" })
       end
 
+      -- vim.lsp.handlers["client/registerCapability"] = function(err, result, ctx)
+      --   local client = vim.lsp.get_client_by_id(ctx.client_id)
+      --   if client and result and result.registrations then
+      --     vim.print(result)
+      --     for _, reg in ipairs(result.registrations) do
+      --       if reg.method == "textDocument/formatting" then
+      --         vim.notify("LEMMINX DYNAMICALLY REGISTERS FORMATTING")
+      --         client.server_capabilities.documentFormattingProvider = true
+      --       end
+      --     end
+      --   end
+      --   return result
+      -- end
+
+      --TODO: Setup code to allow for Dynamic Server Capabilities registration to be defauted instead of forcing it statically like
+      --      I am currently doing the lemmix LSP and formatting. I want to be able to check my result.registration.methods and call
+      --      my client_methods file like I do below for static capabalities
+
+      -- Some LSP clients I have noticed support formatting, but the documentFormattingProvider is set to false,
+      -- setting it to true if client does indeed support it allows keymaps like my formatting to be added when the client actually does support it
+      -- if Client:supports_method("textDocument/formatting", 0) then
+      --   Client.server_capabilities.documentFormattingProvider = true
+      -- end
+
       -- Setup any LSP Client keymaps and server capabalities
       if vim.tbl_contains(config_keys, Client.name) then
         local ok, client = pcall(require, "modules.lsp.client." .. Client.name)
