@@ -5,13 +5,70 @@ local client_methods = require("modules.lsp.client_capabilities")
 local lspgroup = api.nvim_create_augroup("lsp", {})
 
 local function setup_lsp_hover()
-  local hover = vim.lsp.buf.hover
+  -- local hover = vim.lsp.buf.hover
   ---@param config vim.lsp.buf.hover.Opts
   ---@diagnostic disable-next-line: duplicate-set-field
   vim.lsp.buf.hover = function(config)
     config = config or {}
     config.border = "rounded"
-    hover(config)
+
+    local Client = vim.lsp.get_clients({ bufnr = 0 })[1]
+    local params = vim.lsp.util.make_position_params(0, Client.offset_encoding)
+    assert(Client)
+
+    vim.lsp.buf_request(0, "textDocument/hover", params, function(err, res, ctx)
+      if err then
+        vim.notify("Hover error" .. vim.inspect(err))
+      end
+
+      if res == nil then
+        if Client.name == "prismals" then
+          vim.print({
+            context = {
+              client_id = ctx.client_id,
+              bufnr = ctx.bufnr,
+              method = ctx.method,
+              params = ctx.params,
+              version = ctx.version,
+            },
+            result = res,
+          })
+        end
+      else
+        vim.notify("FOUND")
+        local md = vim.lsp.util.convert_input_to_markdown_lines(res.contents)
+        vim.lsp.util.open_floating_preview(md, "markdown", config)
+      end
+    end)
+    -- hover(config)
+  end
+
+  ---@param res lsp.LSPAny|nil
+  vim.lsp.handlers["textDocument/hover"] = function(err, res, ctx, config)
+    local Client = vim.lsp.get_client_by_id(ctx.client_id)
+    assert(Client)
+    if err then
+      vim.notify("Hover error" .. vim.inspect(err))
+    end
+
+    if res == nil then
+      if Client.name == "prismals" then
+        vim.print({
+          context = {
+            client_id = ctx.client_id,
+            bufnr = ctx.bufnr,
+            method = ctx.method,
+            params = ctx.params,
+            version = ctx.version,
+          },
+          result = res,
+        })
+      end
+    else
+      vim.notify("FOUND")
+      local md = vim.lsp.util.convert_input_to_markdown_lines(res.contents)
+      vim.lsp.util.open_floating_preview(md, "markdown", config)
+    end
   end
 
   local signature_help = vim.lsp.buf.signature_help
@@ -114,6 +171,15 @@ function M.setup()
           client.setup(Client, keys)
         end
       end
+
+      -- stylua: ignore
+      vim.lsp.get_client_by_id(1):request("textDocument/hover", vim.lsp.util.make_position_params(vim.api.nvim_get_current_win(), 'utf-16'), function(err, res, ctx) vim.print() end, vim.api.nvim_get_current_buf())
+      -- styllua: ignore
+      -- vim.lsp.buf_request_all(0, "textDocument/hover", vim.lsp.util.make_position_params(vim.api.nvim_get_current_win(), 'utf-16' ), function(results, ctx) vim.print(results) end)
+      -- stylua: ignore
+      -- vim.lsp.buf_request_sync(0, "textDocument/hover", vim.lsp.util.make_position_params(vim.api.nvim_get_current_win(), 'utf-16' ))
+
+      vim.lsp.set_log_level("debug")
 
       -- setup any lsp ClientToServer method functionality and/or keymaps
       for _, method in pairs(lsp_methods) do

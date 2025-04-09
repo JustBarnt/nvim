@@ -1,0 +1,3 @@
+local DocManager = {}
+
+return DocManager
