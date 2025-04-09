@@ -52,6 +52,7 @@ return {
         "markdown",
         "markdown_inline",
         "nu",
+        "prisma",
         "php",
         "printf",
         "query",
