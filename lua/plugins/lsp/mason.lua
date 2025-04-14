@@ -15,6 +15,7 @@ return {
     }
   end,
   config = function(_, opts)
+    dofile(vim.g.base46_cache .. "mason")
     require("mason").setup(opts)
 
     vim.keymap.set("n", "<leader>cm", "<CMD>Mason<CR>", { desc = "Mason" })

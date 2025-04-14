@@ -24,6 +24,7 @@ vim.o.autowrite = true
 vim.o.clipboard = "unnamedplus"
 vim.o.guicursor = "n-v-c:block,i-ci-ve:hor20,r-cr:hor20"
 vim.o.conceallevel = 2
+vim.o.laststatus = 3 -- Global Statusline
 vim.o.cursorline = true
 vim.opt.fillchars = {
   foldopen = "",

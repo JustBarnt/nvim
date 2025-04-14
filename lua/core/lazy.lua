@@ -40,7 +40,8 @@ _G.Installables = require("plugins.servers")
 
 require("lazy").setup({
   spec = {
-    { "folke/tokyonight.nvim", priority = 10000 },
+    { "nvim-lua/plenary.nvim", lazy = true },
+    { "MunifTanjim/nui.nvim", lazy = true },
     {
       "folke/snacks.nvim",
       version = "v2.22.0",
@@ -51,14 +52,26 @@ require("lazy").setup({
         require("snacks").setup(opts)
       end,
     },
-    { "MunifTanjim/nui.nvim", lazy = true },
-    { "nvim-lua/plenary.nvim", lazy = true },
+    {
+      "nvchad/ui",
+      config = function()
+        require("nvchad")
+      end,
+    },
+    {
+      "nvchad/base46",
+      lazy = true,
+      build = function()
+        require("base46").compile()
+        require("base46").load_all_highlights()
+      end,
+    },
+    "nvchad/volt",
     { import = "plugins.ui" },
     { import = "plugins.lsp" },
     { import = "plugins.coding" },
     { import = "plugins.editor" },
     { import = "plugins.treesitter" },
-    { import = "plugins.colorschemes" },
   },
   -- NOTE: Part of lazy.nvim. Include a .lazy.lua file in a project root directory, and those plugins will be merged
   --       into the plugin spec for that project only
@@ -105,5 +118,3 @@ require("modules.snippets")
 
 -- Extensions Modules to existing lua classes
 require("modules.extensions.string")
-
-vim.cmd([[colorscheme tokyonight-storm]])

@@ -34,6 +34,13 @@ vim.api.nvim_create_autocmd("ModeChanged", {
   end,
 })
 
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "neo-tree",
+  callback = function(args)
+    vim.opt_local.statusline = ""
+  end,
+})
+
 -- -- Update and hide any inline diagnostics when on the current line
 -- vim.api.nvim_create_autocmd({ "CursorMoved" }, {
 --   callback = function(args)

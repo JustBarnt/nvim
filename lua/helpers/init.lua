@@ -157,6 +157,15 @@ function M.safe_keymap_set(mode, lhs, rhs, opts)
   end
 end
 
+---@param filetype string[]
+function M.disable_item(filetype)
+  local ft = vim.api.nvim_get_option_value("filetype", {buf = vim.api.nvim_get_current_buf()})
+  if vim.tbl_contains(filetype, ft) then
+    return false
+  end
+  return true
+end
+
 local cache = {} ---@type table<(fun()), table<string, any>>
 
 ---@generic T: fun()

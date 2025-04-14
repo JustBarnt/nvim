@@ -101,6 +101,9 @@ local function make_keymaps(buffer, keys)
 end
 
 function M.setup()
+  dofile(vim.g.base46_cache .. "lsp")
+  dofile(vim.g.base46_cache .. "codeactionmenu")
+
   local configs = {}
   local config_keys = {}
   local lsp_commands = require("modules.lsp.user-commands").setup
