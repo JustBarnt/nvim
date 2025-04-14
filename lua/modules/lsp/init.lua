@@ -5,70 +5,12 @@ local client_methods = require("modules.lsp.client_capabilities")
 local lspgroup = api.nvim_create_augroup("lsp", {})
 
 local function setup_lsp_hover()
-  -- local hover = vim.lsp.buf.hover
-  ---@param config vim.lsp.buf.hover.Opts
+  local hover = vim.lsp.buf.hover
   ---@diagnostic disable-next-line: duplicate-set-field
   vim.lsp.buf.hover = function(config)
     config = config or {}
     config.border = "rounded"
-
-    local Client = vim.lsp.get_clients({ bufnr = 0 })[1]
-    local params = vim.lsp.util.make_position_params(0, Client.offset_encoding)
-    assert(Client)
-
-    vim.lsp.buf_request(0, "textDocument/hover", params, function(err, res, ctx)
-      if err then
-        vim.notify("Hover error" .. vim.inspect(err))
-      end
-
-      if res == nil then
-        if Client.name == "prismals" then
-          vim.print({
-            context = {
-              client_id = ctx.client_id,
-              bufnr = ctx.bufnr,
-              method = ctx.method,
-              params = ctx.params,
-              version = ctx.version,
-            },
-            result = res,
-          })
-        end
-      else
-        vim.notify("FOUND")
-        local md = vim.lsp.util.convert_input_to_markdown_lines(res.contents)
-        vim.lsp.util.open_floating_preview(md, "markdown", config)
-      end
-    end)
-    -- hover(config)
-  end
-
-  ---@param res lsp.LSPAny|nil
-  vim.lsp.handlers["textDocument/hover"] = function(err, res, ctx, config)
-    local Client = vim.lsp.get_client_by_id(ctx.client_id)
-    assert(Client)
-    if err then
-      vim.notify("Hover error" .. vim.inspect(err))
-    end
-
-    if res == nil then
-      if Client.name == "prismals" then
-        vim.print({
-          context = {
-            client_id = ctx.client_id,
-            bufnr = ctx.bufnr,
-            method = ctx.method,
-            params = ctx.params,
-            version = ctx.version,
-          },
-          result = res,
-        })
-      end
-    else
-      vim.notify("FOUND")
-      local md = vim.lsp.util.convert_input_to_markdown_lines(res.contents)
-      vim.lsp.util.open_floating_preview(md, "markdown", config)
-    end
+    hover(config)
   end
 
   local signature_help = vim.lsp.buf.signature_help
@@ -101,9 +43,6 @@ local function make_keymaps(buffer, keys)
 end
 
 function M.setup()
-  dofile(vim.g.base46_cache .. "lsp")
-  dofile(vim.g.base46_cache .. "codeactionmenu")
-
   local configs = {}
   local config_keys = {}
   local lsp_commands = require("modules.lsp.user-commands").setup
@@ -143,30 +82,6 @@ function M.setup()
         table.insert(keys, { "gI", Snacks.picker.lsp_implementations, "[G]oto [I]mplementation" })
       end
 
-      -- vim.lsp.handlers["client/registerCapability"] = function(err, result, ctx)
-      --   local client = vim.lsp.get_client_by_id(ctx.client_id)
-      --   if client and result and result.registrations then
-      --     vim.print(result)
-      --     for _, reg in ipairs(result.registrations) do
-      --       if reg.method == "textDocument/formatting" then
-      --         vim.notify("LEMMINX DYNAMICALLY REGISTERS FORMATTING")
-      --         client.server_capabilities.documentFormattingProvider = true
-      --       end
-      --     end
-      --   end
-      --   return result
-      -- end
-
-      --TODO: Setup code to allow for Dynamic Server Capabilities registration to be defauted instead of forcing it statically like
-      --      I am currently doing the lemmix LSP and formatting. I want to be able to check my result.registration.methods and call
-      --      my client_methods file like I do below for static capabalities
-
-      -- Some LSP clients I have noticed support formatting, but the documentFormattingProvider is set to false,
-      -- setting it to true if client does indeed support it allows keymaps like my formatting to be added when the client actually does support it
-      -- if Client:supports_method("textDocument/formatting", 0) then
-      --   Client.server_capabilities.documentFormattingProvider = true
-      -- end
-
       -- Setup any LSP Client keymaps and server capabalities
       if vim.tbl_contains(config_keys, Client.name) then
         local ok, client = pcall(require, "modules.lsp.client." .. Client.name)
@@ -174,13 +89,6 @@ function M.setup()
           client.setup(Client, keys)
         end
       end
-
-      -- stylua: ignore
-      vim.lsp.get_client_by_id(1):request("textDocument/hover", vim.lsp.util.make_position_params(vim.api.nvim_get_current_win(), 'utf-16'), function(err, res, ctx) vim.print() end, vim.api.nvim_get_current_buf())
-      -- styllua: ignore
-      -- vim.lsp.buf_request_all(0, "textDocument/hover", vim.lsp.util.make_position_params(vim.api.nvim_get_current_win(), 'utf-16' ), function(results, ctx) vim.print(results) end)
-      -- stylua: ignore
-      -- vim.lsp.buf_request_sync(0, "textDocument/hover", vim.lsp.util.make_position_params(vim.api.nvim_get_current_win(), 'utf-16' ))
 
       vim.lsp.set_log_level("debug")
 

@@ -1,3 +1,4 @@
+---@class ChadrcConfig
 local ChadUI = {
   base46 = {
     theme = "onedark",
@@ -6,12 +7,10 @@ local ChadUI = {
       "blankline",
       "blink",
       "bufferline",
-      "codeactionmenu",
       "diffview",
       "flash",
       "git-conflict",
       "grug_far",
-      "lsp",
       "devicons",
       "git",
       "lsp",
