@@ -52,21 +52,7 @@ require("lazy").setup({
         require("snacks").setup(opts)
       end,
     },
-    {
-      "nvchad/ui",
-      config = function()
-        require("nvchad")
-      end,
-    },
-    {
-      "nvchad/base46",
-      lazy = true,
-      build = function()
-        require("base46").compile()
-        require("base46").load_all_highlights()
-      end,
-    },
-    "nvchad/volt",
+    { import = "plugins.nvchad" },
     { import = "plugins.ui" },
     { import = "plugins.lsp" },
     { import = "plugins.coding" },
@@ -76,7 +62,7 @@ require("lazy").setup({
   -- NOTE: Part of lazy.nvim. Include a .lazy.lua file in a project root directory, and those plugins will be merged
   --       into the plugin spec for that project only
   local_spec = true,
-  install = { colorscheme = { "tokyonight", "slate" } },
+  install = { colorscheme = { "slate" } },
   checker = { enabled = true, notify = false },
   performance = {
     rtp = {
