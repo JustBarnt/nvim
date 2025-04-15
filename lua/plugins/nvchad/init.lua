@@ -3,6 +3,7 @@ return {
     "nvchad/ui",
     config = function()
       require("nvchad")
+      vim.g.has_nvchad = true
     end,
   },
   {

@@ -11,15 +11,6 @@ end
 
 vim.g.base46_cache = vim.fn.stdpath("data") .. "/base46_cache/"
 
-dofile(vim.g.base46_cache .. "syntax")
-dofile(vim.g.base46_cache .. "defaults")
-dofile(vim.g.base46_cache .. "statusline")
-dofile(vim.g.base46_cache .. "blankline")
-dofile(vim.g.base46_cache .. "git")
-dofile(vim.g.base46_cache .. "git-conflict")
-dofile(vim.g.base46_cache .. "lsp")
-dofile(vim.g.base46_cache .. "codeactionmenu")
-
 -- Add filetypes for nushell if the executable is found
 if vim.fn.executable("nu") == 1 then
   vim.filetype.add({

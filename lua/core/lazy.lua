@@ -77,6 +77,16 @@ require("lazy").setup({
   },
 })
 
+if vim.g.has_nvchad == true then
+  dofile(vim.g.base46_cache .. "syntax")
+  dofile(vim.g.base46_cache .. "defaults")
+  dofile(vim.g.base46_cache .. "statusline")
+  dofile(vim.g.base46_cache .. "blankline")
+  dofile(vim.g.base46_cache .. "git")
+  dofile(vim.g.base46_cache .. "git-conflict")
+  dofile(vim.g.base46_cache .. "lsp")
+end
+
 vim.diagnostic.config({
   severity_sort = true,
   underline = true,
