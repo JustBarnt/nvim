@@ -38,6 +38,7 @@ Installables.servers = {
   "ruff",
   "svelte-language-server",
   "tailwindcss-language-server",
+  "taplo",
   "vtsls",
 }
 
