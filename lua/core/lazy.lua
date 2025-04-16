@@ -42,6 +42,7 @@ require("lazy").setup({
   spec = {
     { "nvim-lua/plenary.nvim", lazy = true },
     { "MunifTanjim/nui.nvim", lazy = true },
+    "justinsgithub/wezterm-types",
     {
       "folke/snacks.nvim",
       version = "v2.22.0",
