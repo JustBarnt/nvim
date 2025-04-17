@@ -40,6 +40,8 @@ _G.Installables = require("plugins.servers")
 
 require("lazy").setup({
   spec = {
+    { "AlexvZyl/nordic.nvim", priority = 10000 },
+    { "folke/tokyonight.nvim", priority = 10000 },
     { "nvim-lua/plenary.nvim", lazy = true },
     { "MunifTanjim/nui.nvim", lazy = true },
     "justinsgithub/wezterm-types",
@@ -62,7 +64,7 @@ require("lazy").setup({
   -- NOTE: Part of lazy.nvim. Include a .lazy.lua file in a project root directory, and those plugins will be merged
   --       into the plugin spec for that project only
   local_spec = true,
-  install = { colorscheme = { "slate" } },
+  install = { colorscheme = { "nordic", "tokyonight", "slate" } },
   checker = { enabled = true, notify = false },
   performance = {
     rtp = {
@@ -105,4 +107,4 @@ require("modules.snippets")
 -- Extensions Modules to existing lua classes
 require("modules.extensions.string")
 
-vim.cmd([[colorscheme nordic]])
+vim.cmd([[colorscheme tokyonight-storm]])
