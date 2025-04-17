@@ -80,6 +80,7 @@ return {
     -- search
     { "<leader>sd", function() Snacks.picker.diagnostics() end, desc = "Diagnostics" },
     { "<leader>sh", function() Snacks.picker.help() end, desc = "Help Pages" },
+    { "<leader>shi", function() Snacks.picker.highlights() end, desc = "Highlights"},
     { "<leader>sl", function() Snacks.picker.loclist() end, desc = "Location List" },
     { "<leader>sq", function() Snacks.picker.qflist() end, desc = "Quickfix List" },
   },

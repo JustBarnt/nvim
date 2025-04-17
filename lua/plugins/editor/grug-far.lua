@@ -20,7 +20,6 @@ return {
     },
   },
   config = function(_, opts)
-    dofile(vim.g.base46_cache .. "diffview")
     require("grug-far").setup(opts)
   end,
 }

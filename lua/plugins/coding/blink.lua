@@ -68,7 +68,6 @@ return {
     },
   },
   config = function(_, opts)
-    dofile(vim.g.base46_cache .. "blink")
     require("blink-cmp").setup(opts)
   end,
 }

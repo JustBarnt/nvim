@@ -36,7 +36,6 @@ return {
   },
   {
     "echasnovski/mini.hipatterns",
-    enabled = false,
     event = "VeryLazy",
     opts = function()
       local hi = require("mini.hipatterns")

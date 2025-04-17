@@ -13,7 +13,6 @@ return {
     { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
   },
   config = function(_, opts)
-    dofile(vim.g.base46_cache .. "flash")
     require("flash").setup(opts)
   end,
 }

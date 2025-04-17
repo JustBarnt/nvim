@@ -90,8 +90,6 @@ function M.setup()
         end
       end
 
-      vim.lsp.set_log_level("debug")
-
       -- setup any lsp ClientToServer method functionality and/or keymaps
       for _, method in pairs(lsp_methods) do
         if Client:supports_method(method, args.buf) and client_methods[method] then
