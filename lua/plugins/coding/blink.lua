@@ -58,11 +58,11 @@ return {
         },
         path = {
           score_offset = 2,
-          opts = {
-            get_cwd = function(_)
-              return vim.uv.cwd()
-            end,
-          },
+          -- opts = {
+          --   get_cwd = function(_)
+          --     return vim.uv.cwd()
+          --   end,
+          -- },
         },
       },
     },
