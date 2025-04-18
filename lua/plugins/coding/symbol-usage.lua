@@ -1,68 +1,27 @@
 local SymbolKind = vim.lsp.protocol.SymbolKind
 
-local function h(name)
-  return vim.api.nvim_get_hl(0, { name = name })
-end
-
--- hl-groups can have any name
-vim.api.nvim_set_hl(0, "SymbolUsageRounding", { fg = h("CursorLine").bg, italic = true })
-vim.api.nvim_set_hl(0, "SymbolUsageContent", { bg = h("CursorLine").bg, fg = h("Comment").fg, italic = true })
-vim.api.nvim_set_hl(0, "SymbolUsageRef", { fg = h("Function").fg, bg = h("CursorLine").bg, italic = true })
-vim.api.nvim_set_hl(0, "SymbolUsageDef", { fg = h("Type").fg, bg = h("CursorLine").bg, italic = true })
-vim.api.nvim_set_hl(0, "SymbolUsageImpl", { fg = h("@keyword").fg, bg = h("CursorLine").bg, italic = true })
-
 local function text_format(symbol)
-  local res = {}
-
-  local round_start = { "", "SymbolUsageRounding" }
-  local round_end = { "", "SymbolUsageRounding" }
+  local fragments = {}
 
   -- Indicator that shows if there are any other symbols in the same line
-  local stacked_functions_content = symbol.stacked_count > 0 and ("+%s"):format(symbol.stacked_count) or ""
+  local stacked_functions = symbol.stacked_count > 0 and (" | +%s"):format(symbol.stacked_count) or ""
 
   if symbol.references then
     local usage = symbol.references <= 1 and "usage" or "usages"
     local num = symbol.references == 0 and "no" or symbol.references
-    table.insert(res, round_start)
-    table.insert(res, { "󰌹 ", "SymbolUsageRef" })
-    table.insert(res, { ("%s %s"):format(num, usage), "SymbolUsageContent" })
-    table.insert(res, round_end)
+    table.insert(fragments, ("%s %s"):format(num, usage))
   end
 
   if symbol.definition then
-    if #res > 0 then
-      table.insert(res, { " ", "NonText" })
-    end
-    table.insert(res, round_start)
-    table.insert(res, { "󰳽 ", "SymbolUsageDef" })
-    table.insert(res, { symbol.definition .. " defs", "SymbolUsageContent" })
-    table.insert(res, round_end)
+    table.insert(fragments, symbol.definition .. " defs")
   end
 
   if symbol.implementation then
-    if #res > 0 then
-      table.insert(res, { " ", "NonText" })
-    end
-    table.insert(res, round_start)
-    table.insert(res, { "󰡱 ", "SymbolUsageImpl" })
-    table.insert(res, { symbol.implementation .. " impls", "SymbolUsageContent" })
-    table.insert(res, round_end)
+    table.insert(fragments, symbol.implementation .. " impls")
   end
 
-  if stacked_functions_content ~= "" then
-    if #res > 0 then
-      table.insert(res, { " ", "NonText" })
-    end
-    table.insert(res, round_start)
-    table.insert(res, { " ", "SymbolUsageImpl" })
-    table.insert(res, { stacked_functions_content, "SymbolUsageContent" })
-    table.insert(res, round_end)
-  end
-
-  return res
+  return table.concat(fragments, ", ") .. stacked_functions
 end
-
-vim.api.nvim_set_hl(0, "SymbolUsageCustom", { fg = h("@constructor").fg, bg = h("CursorLine").bg, italic = true })
 
 return {
   {
@@ -70,7 +29,7 @@ return {
     event = "BufReadPre",
     ---@diagnostic disable-next-line: missing-fields
     opts = {
-      hl = { link = "SymbolUsageCustom" },
+      hl = { link = "DiagnosticVirtualLinesInfo" },
       --TODO: Define this per language I use
       kinds = {
         SymbolKind.Class,

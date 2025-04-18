@@ -1,5 +1,12 @@
 local map = Helpers.safe_keymap_set
 
+map(
+  { "n" },
+  "<localleader>ghg",
+  Helpers.ui.get_virtual_text_hl_groups,
+  { desc = "Get Extmark Highlight Groups for Current Line" }
+)
+
 map({ "n" }, "<localleader>/", function()
   local pattern = vim.fn.input("rg: ")
   if pattern ~= "" then
