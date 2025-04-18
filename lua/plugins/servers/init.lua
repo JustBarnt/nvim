@@ -28,6 +28,7 @@ Installables.servers = {
   "clangd",
   "cmake-language-server",
   "gopls",
+  "harper-ls",
   "intelephense",
   "json-lsp",
   "lemminx",
