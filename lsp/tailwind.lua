@@ -32,6 +32,7 @@ return {
           "class:list",
           "classList",
           "ngClass",
+          "classes",
         },
       },
     })
