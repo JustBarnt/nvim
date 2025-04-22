@@ -56,16 +56,16 @@ return {
     -- mixed
     "svelte",
   },
-  on_new_config = function(new_config)
-    if not new_config.settings then
-      new_config.settings = {}
+  before_init = function(_, config)
+    if not config.settings then
+      config.settings = {}
     end
-    if not new_config.settings.editor then
-      new_config.settings.editor = {}
+    if not config.settings.editor then
+      config.settings.editor = {}
     end
-    if not new_config.settings.editor.tabSize then
-      -- set tab size for hover
-      new_config.settings.editor.tabSize = vim.lsp.util.get_effective_tabstop()
+    if not config.settings.editor.tabSize then
+      config.settings.editor.tabSize = vim.lsp.util.get_effective_tabstop()
     end
   end,
+  workspace_required = true,
 }
