@@ -58,11 +58,10 @@ return {
               color = function() return { fg = Snacks.util.color("Debug") } end,
             },
             -- stylua: ignore
-            {
-              require("lazy.status").updates,
-              cond = require("lazy.status").has_updates,
-              color = function() return { fg = Snacks.util.color("Special") } end,
-            },
+          {
+            function() return require("lazydo").get_lualine_stats() end,
+            cond = function() return require("lazydo")._initialized end,
+          },
           {
             "diff",
             symbols = {

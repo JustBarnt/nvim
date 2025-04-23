@@ -39,6 +39,9 @@ _G.Helpers = require("helpers")
 _G.Installables = require("plugins.servers")
 
 require("lazy").setup({
+  dev = {
+    path = "D:/Personal/nvim-plugins/",
+  },
   spec = {
     { "AlexvZyl/nordic.nvim", priority = 10000 },
     { "folke/tokyonight.nvim", priority = 10000 },
@@ -76,6 +79,10 @@ require("lazy").setup({
         "zipPlugin",
       },
     },
+  },
+  ui = {
+    border = "rounded",
+    backdrop = 25,
   },
 })
 
