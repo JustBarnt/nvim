@@ -102,6 +102,8 @@ vim.diagnostic.config({
   virtual_lines = { current_line = true },
 })
 
+Helpers.root.setup()
+
 -- Config Core Files
 require("core.keymaps")
 require("core.autocmds")

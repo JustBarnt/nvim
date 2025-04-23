@@ -1,17 +1,21 @@
 ---@class vim.lsp.Config
 return {
   cmd = { "tailwindcss-language-server", "--stdio" },
-  root_markers = {
-    "app.css",
-    "tailwind.config.js",
-    "tailwind.config.cjs",
-    "tailwind.config.mjs",
-    "tailwind.config.ts",
-    "postcss.config.js",
-    "postcss.config.cjs",
-    "postcss.config.mjs",
-    "postcss.config.ts",
-  },
+  root_dir = function(bufnr, on_dir)
+    local root_files = {
+      "tailwind.config.js",
+      "tailwind.config.cjs",
+      "tailwind.config.mjs",
+      "tailwind.config.ts",
+      "postcss.config.js",
+      "postcss.config.cjs",
+      "postcss.config.mjs",
+      "postcss.config.ts",
+    }
+    local fname = vim.api.nvim_buf_get_name(bufnr)
+    root_files = Helpers.insert_package_json(root_files, "tailwindcss", fname)
+    on_dir(vim.fs.dirname(vim.fs.find(root_files, { path = fname, upward = true })[1]))
+  end,
   on_init = function(client)
     Helpers.lsp.on_init(client, {
       tailwindCSS = {
