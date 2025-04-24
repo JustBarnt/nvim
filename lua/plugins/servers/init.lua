@@ -12,7 +12,6 @@ Installables.dap = {
 
 Installables.formatters = {
   "biome",
-  "black",
   "gofumpt",
   "goimports",
   "gomodifytags",

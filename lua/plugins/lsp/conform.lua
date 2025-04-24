@@ -46,7 +46,6 @@ return {
         typescript = { "biome" },
         html = { "biome", "prettier", stop_after_first = true },
         lua = { "stylua" },
-        python = { "black" },
         go = { "goimports", "gofumpt" },
       },
     }
