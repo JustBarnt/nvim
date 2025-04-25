@@ -40,14 +40,7 @@ local function make_keymaps(buffer, keys)
     ::continue::
   end
 end
-local t = {
-  range = { ["end"] = { character = 16, line = 19 }, start = { character = 0, line = 12 } },
-  textDocument = { uri = "file:///D:/CommSys/Utilities/License-Tool/WebUI/src/app.css" },
-}
 
---stylua: ignore
--- vim.lsp.buf_request_all(0, "textDocument/documentColor", vim.lsp.util.make_position_params(vim.api.nvim_get_current_win(), "utf-16") , function(results, ctx) vim.print(results) end)
--- vim.lsp.buf_request_all(0, 'textDocument/documentColor', vim.lsp.util.make_range_params(vim.api.nvim_get_current_win(), "utf-16"), function(results, ctx) vim.print(results) end)
 function M.setup()
   local configs = {}
   local config_keys = {}
@@ -89,26 +82,22 @@ function M.setup()
       end
 
       vim.keymap.set("n", "<leader>mlr", function()
-        vim.ui.input({ prompt = 'LSP Request Method: ' },
-          function(input)
-            local param = { textDocument = vim.lsp.util.make_text_document_params(args.buf) }
-            vim.lsp.buf_request_all(
-              0,
-              input,
-              param,
-              function(results, ctx)
-                vim.print("---------Request Results---------")
-                vim.print(results)
-                vim.print("---------Request Context---------")
-                vim.print(ctx)
-              end)
+        vim.ui.input({ prompt = "LSP Request Method: " }, function(input)
+          local param = { textDocument = vim.lsp.util.make_text_document_params(args.buf) }
+          vim.lsp.buf_request_all(0, input, param, function(results, ctx)
+            vim.print("---------Request Results---------")
+            vim.print(results)
+            vim.print("---------Request Context---------")
+            vim.print(ctx)
           end)
-      end, { desc = "Make an LSP Request"})
+        end)
+      end, { desc = "Make an LSP Request" })
 
       if Client:supports_method("textDocument/documentColor", args.buf) then
         Client.server_capabilities.colorProvider = vim.empty_dict()
         vim.lsp.document_color.enable(true, args.buf)
       end
+
       -- Setup any LSP Client keymaps and server capabalities
       if vim.tbl_contains(config_keys, Client.name) then
         local ok, client = pcall(require, "modules.lsp.client." .. Client.name)

@@ -48,9 +48,6 @@ return function(buf, event)
   local min = fn.line("w0", winid) - 1
   local max = fn.line("w$", winid) + 1
 
-  vim.print("EVENT")
-  vim.print(event)
-
   if event == "TextChangedI" then
     local cur_linenr = fn.line(".", winid) - 1
 

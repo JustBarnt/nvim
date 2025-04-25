@@ -43,8 +43,19 @@ require("lazy").setup({
     path = "D:/Personal/nvim-plugins/",
   },
   spec = {
-    { "AlexvZyl/nordic.nvim", priority = 10000 },
-    { "folke/tokyonight.nvim", priority = 10000 },
+    {
+      "nvchad/ui",
+      config = function()
+        require("nvchad")
+      end,
+    },
+    {
+      "nvchad/base46",
+      lazy = true,
+      build = function()
+        require("base46").load_all_highlights()
+      end,
+    },
     { "nvim-lua/plenary.nvim", lazy = true },
     { "MunifTanjim/nui.nvim", lazy = true },
     "justinsgithub/wezterm-types",
@@ -112,9 +123,7 @@ require("core.user-commands")
 -- Neovim native functionality
 require("modules.lsp").setup()
 require("modules.snippets")
-require("modules.colorify").setup()
+-- require("modules.colorify").setup()
 
 -- Extensions Modules to existing lua classes
 require("modules.extensions.string")
-
-vim.cmd([[colorscheme nordic]])
