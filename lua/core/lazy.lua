@@ -116,4 +116,4 @@ require("modules.snippets")
 -- Extensions Modules to existing lua classes
 require("modules.extensions.string")
 
-vim.cmd([[colorscheme tokyonight-storm]])
+vim.cmd([[colorscheme nordic]])
