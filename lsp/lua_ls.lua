@@ -2,15 +2,6 @@ return {
   cmd = { "lua-language-server" },
   root_markers = { ".luarc.json", ".luarc.jsonc", ".luacheckrc", ".stylua.toml", "selene.toml", "selene.yml", ".git" },
   filetypes = { "lua" },
-  ---@type lsp.ClientCapabilities
-  capabilities = Helpers.lsp.create_capabilities({
-    workspace = {
-      fileOperations = {
-        didRename = true,
-        willRename = true,
-      },
-    },
-  }),
   on_init = function(client)
     Helpers.lsp.on_init(client, {
       Lua = {
