@@ -1,6 +1,7 @@
 local M = {}
 local api = vim.api
 local client_methods = require("modules.lsp.client_capabilities")
+local lsp_autocmds = require("modules.lsp.autocmds")
 local lspgroup = api.nvim_create_augroup("lsp", {})
 
 local function setup_lsp_hover()
@@ -93,11 +94,6 @@ function M.setup()
         end)
       end, { desc = "Make an LSP Request" })
 
-      -- if Client:supports_method("textDocument/documentColor", args.buf) then
-      --   Client.server_capabilities.colorProvider = vim.empty_dict()
-      --   vim.lsp.document_color.enable(true, args.buf)
-      -- end
-
       -- Setup any LSP Client keymaps and server capabalities
       if vim.tbl_contains(config_keys, Client.name) then
         local ok, client = pcall(require, "modules.lsp.client." .. Client.name)
@@ -117,6 +113,7 @@ function M.setup()
 
       -- vim.lsp.set_log_level("debug")
 
+      lsp_autocmds.setup(Client, args.buf)
       make_keymaps(args.buf, keys)
     end,
   })
