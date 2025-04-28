@@ -93,10 +93,10 @@ function M.setup()
         end)
       end, { desc = "Make an LSP Request" })
 
-      if Client:supports_method("textDocument/documentColor", args.buf) then
-        Client.server_capabilities.colorProvider = vim.empty_dict()
-        vim.lsp.document_color.enable(true, args.buf)
-      end
+      -- if Client:supports_method("textDocument/documentColor", args.buf) then
+      --   Client.server_capabilities.colorProvider = vim.empty_dict()
+      --   vim.lsp.document_color.enable(true, args.buf)
+      -- end
 
       -- Setup any LSP Client keymaps and server capabalities
       if vim.tbl_contains(config_keys, Client.name) then
