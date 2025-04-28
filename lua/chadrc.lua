@@ -16,6 +16,7 @@ local ChadUI = {
       SnacksPickerInput = { bg = "black" },
       SnacksPickerPrompt = { bg = "black", fg = "orange" },
       SnacksPickerInputBorder = { link = "SnacksPickerBorder" },
+      BufferLineMiniIconsAzure = { bg = "black2", fg = "cyan" },
     },
     integrations = {
       "blankline",
