@@ -69,6 +69,7 @@ require("lazy").setup({
         require("snacks").setup(opts)
       end,
     },
+    { import = "plugins.nvchad" },
     { import = "plugins.ui" },
     { import = "plugins.lsp" },
     { import = "plugins.coding" },

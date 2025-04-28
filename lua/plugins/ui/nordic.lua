@@ -1,6 +1,6 @@
 return {
-  dir = "D:/Personal/nvim-plugins/nordic.nvim",
-  -- "justbarnt/nordic.nvim",
+  "justbarnt/nordic.nvim",
+  enabled = false,
   opts = {
     on_highlight = function(hl, p)
       hl.Visual = { bg = p.gray1 }

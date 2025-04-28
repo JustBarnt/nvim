@@ -1,8 +1,22 @@
 ---@class ChadrcConfig
 local ChadUI = {
   base46 = {
-    theme = "everforest",
+    theme = "nordic",
     transparency = false,
+    hl_add = {
+      -- Snacks Picker Global Highlights
+      SnacksPicker = { bg = "black2" },
+      SnacksPickerBorder = { bg = "black", fg = "black" },
+      SnacksPickerTitle = { bg = "black", fg = "orange" },
+
+      -- SnacksPicker Preview
+      SnacksPickerPreview = { bg = "black" },
+
+      -- Snacks Prompt Highlights
+      SnacksPickerInput = { bg = "black" },
+      SnacksPickerPrompt = { bg = "black", fg = "orange" },
+      SnacksPickerInputBorder = { link = "SnacksPickerBorder" },
+    },
     integrations = {
       "blankline",
       "blink",
@@ -15,6 +29,7 @@ local ChadUI = {
       "git",
       "lsp",
       "mason",
+      "telescope",
       "nvcheatsheet",
       "notify",
       "nvshades",
@@ -32,7 +47,7 @@ local ChadUI = {
   ui = {
     cmp = {
       icons_left = false, -- only for non-atom styles!
-      style = "flat_dark", -- default/flat_light/flat_dark/atom/atom_colored
+      style = "default", -- default/flat_light/flat_dark/atom/atom_colored
       abbr_maxwidth = 60,
       -- for tailwind, css lsp etc
       format_colors = { lsp = true, icon = "󱓻" },

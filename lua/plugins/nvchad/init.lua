@@ -9,6 +9,9 @@ return {
     },
   },
   {
+    "nvzone/volt",
+  },
+  {
     "nvzone/typr",
     dependencies = "nvzone/volt",
     opts = {
