@@ -10,7 +10,4 @@ return {
       bold = true,
     },
   },
-  config = function(_, opts)
-    require("nordic").setup(opts)
-  end,
 }
