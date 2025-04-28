@@ -12,6 +12,7 @@ return {
         { "<leader>gh", group = "hunks" },
         { "<leader>s", group = "search" },
         { "<leader>u", group = "ui", icon = { icon = "󰙵 ", color = "cyan" } },
+        { "<leader>n", group = "Package Management", icon = { icon = " " } },
         { "<BS>", desc = "Decrement Selection", mode = "x" },
         { "<c-space>", desc = "Increment Selection", mode = { "x", "n" } },
         { "[", group = "prev" },
