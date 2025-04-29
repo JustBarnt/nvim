@@ -4,7 +4,7 @@
 local M = {}
 -- UI
 M.base_30 = {
-  white = "#BBC3D4",
+  white = "#C0C8D8",
   black = "#242933", -- usually your theme bg
   darker_black = "#15181E", -- 6% darker than black
   black2 = "#2F3442", -- 6% lighter than black
@@ -16,7 +16,7 @@ M.base_30 = {
   grey_fg2 = "#8691A9", -- 5% lighter than grey
   light_grey = "#60728A",
   red = "#BF616A",
-  baby_pink = "#C5727A",
+  baby_pink = "#BE9DB8",
   pink = "#B74E58",
   line = "#42495D", -- 15% lighter than black
   green = "#A3BE8C",
@@ -39,8 +39,8 @@ M.base_30 = {
 
 -- check https://github.com/chriskempson/base16/blob/master/styling.md for more info
 M.base_16 = {
-  base00 = "#242933",
-  base01 = "#2F3442",
+  base00 = M.base_30.black,
+  base01 = M.base_30.black2,
   base02 = "#373E4E",
   base03 = "#40485A",
   base04 = "#D8DEE9",
@@ -60,193 +60,322 @@ M.base_16 = {
 -- OPTIONAL
 -- overriding or adding highlights for this specific theme only
 -- defaults/treesitter is the filename i.e integration there,
-
 M.polish_hl = {
+  -- stylua: ignore start
+  defaults = {
+    -- Basic / UI groups
+    NormalFloat                             = { fg = M.base_30.white, bg = M.base_30.black },
+
+    -- Text‐style groups
+    Underlined                              = { underline = true },
+    Bold                                    = { bold = true },
+    Italic                                  = { italic = true },
+
+    -- Markdown / markup hel                pers
+    CodeBlock                               = { fg = M.base_30.white, bg = M.base_30.black },
+    Link                                    = { fg = M.base_30.blue, underline = true },
+    htmlH1                                  = { fg = M.base_30.yellow, bold = true },
+    htmlH2                                  = { fg = M.base_30.orange },
+    mkdHeading                              = { link = 'htmlH1' },
+    mkdCode                                 = { link = 'CodeBlock' },
+    mkdCodeDelimiter                        = { link = 'CodeBlock' },
+    mkdCodeStart                            = { fg = M.base_30.cyan, bold = true },
+    mkdCodeEnd                              = { fg = M.base_30.cyan, bold = true },
+    mkdLink                                 = { link = 'Link' },
+    markdownHeadingDelimiter                = { link = 'mkdHeading' },
+    markdownCode                            = { link = 'CodeBlock' },
+    markdownCodeBlock                       = { link = 'CodeBlock' },
+    markdownH1                              = { link = 'htmlH1' },
+    markdownH2                              = { link = 'htmlH2' },
+    markdownLinkText                        = { link = 'Link' },
+
+    -- Special / misc
+    Special                                 = { fg = M.base_30.blue },
+    Namespace                               = { fg = M.base_30.yellow },
+
+    -- Diagnostics & LSP
+    Error                                  = { fg = M.base_30.red },
+    Todo                                   = { fg = M.base_30.black, bg = M.base_30.sun },
+    Note                                   = { fg = M.base_30.black, bg = M.base_30.cyan },
+    debugPC                                = { bg = M.base_30.darker_black },
+    debugBreakpoint                        = { fg = M.base_30.pink },
+    LspReferenceText                       = { bg = M.base_30.white },
+    LspReferenceRead                       = { bg = M.base_30.white },
+    LspReferenceWrite                      = { bg = M.base_30.white },
+    DiagnosticError                        = { fg = M.base_30.red },
+    DiagnosticWarn                         = { fg = M.base_30.yellow },
+    DiagnosticInfo                         = { fg = M.base_30.cyan },
+    DiagnosticHint                         = { fg = M.base_30.vibrant_green },
+    DiagnosticVirtualTextError             = { fg = M.base_30.red, bg = M.base_30.grey, bold = true },
+    DiagnosticVirtualTextWarn              = { fg = M.base_30.yellow, bg = M.base_30.grey },
+    DiagnosticVirtualTextWarning           = { fg = M.base_30.yellow, bg = M.base_30.grey },
+    DiagnosticVirtualTextInfo              = { fg = M.base_30.cyan, bg = M.base_30.grey },
+    DiagnosticUnderlineError               = { undercurl = true, sp = M.base_30.red },
+    DiagnosticUnderlineWarn                = { undercurl = true, sp = M.base_30.yellow },
+    DiagnosticUnderlineInfo                = { undercurl = true, sp = M.base_30.cyan },
+    DiagnosticUnderlineHint                = { undercurl = true, sp = M.base_30.vibrant_green },
+    DiagnosticText                         = { bg = M.base_30.black_float },
+    LspSignatureActiveParameter            = { underline = true, bold = true, bg = M.base_30.black_float },
+    LspCodeLens                            = { link = "Comment" },
+    LspInfoBorder                          = { link = 'FloatBorder' },
+    ALEErrorSign                           = { fg = M.base_30.red },
+    ALEWarningSign                         = { fg = M.base_30.yellow },
+
+    -- Spell‐checking
+    SpellBad                               = { undercurl = true, sp = M.base_30.red },
+    SpellCap                               = { undercurl = true, sp = M.base_30.yellow },
+    SpellLocal                             = { undercurl = true, sp = M.base_30.cyan },
+    SpellRare                              = { undercurl = true, sp = M.base_30.vibrant_green },
+  },
+  --stylua: ignore end
+
   syntax = {
-    Bold = { bold = true },
-    Boolean = { link = "Number" },
-    Builtin = { fg = M.base_30.blue },
-    Character = { bg = M.base_30.green },
-    CodeBlock = { bg = M.base_30.black, fg = M.base_30.white },
-    Comment = { fg = M.base_30.light_grey, italic = true },
-    Conditional = { link = "Keyword" },
-    Constant = { fg = M.base_30.baby_pink },
-    Define = { link = "Macro" },
-    Delimeter = { italic = true, fg = M.base_30.light_grey },
-    Error = { fg = M.base_30.red }, -- (preferred) any erroneous construct
-    Exception = { link = "Macro" }, --  try, catch, throw
-    Field = { fg = M.base_30.cyan },
-    Float = { link = "Number" },
-    Function = { fg = M.base_30.nord_blue },
-    Identifier = { fg = M.base_30.white },
-    Ignore = { fg = M.base_30.grey_fg2 }, -- (preferred) left blank, hidden  |hl-Ignore|
-    Include = { link = "Macro" },
-    Italic = { italic = true },
-    Keyword = { fg = M.base_30.orage, bold = true },
-    Label = { link = "Keyword" },
-    Macro = { fg = M.base_30.red }, -- same as Define
-    Namespace = { fg = M.base_30.yellow },
-    None = { bg = "None", fg = "None" },
-    Note = { fg = M.base_30.black, bg = M.base_30.nord_blue },
-    Number = { link = "Constant" },
-    Operator = { fg = M.base_30.white },
-    PreCondit = { link = "Macro" }, --  preprocessor #if, #else, #endif, etc.
-    PreProc = { link = "Macro" },
-    Repeat = { link = "Keyword" },
-    Special = { fg = M.base_30.nord_blue },
-    SpecialChar = { fg = M.base_30.red },
+    -- Function-like
+    Function = { fg = M.base_30.seablue },
+
+    -- Keyword-like
+    Keyword = { fg = M.base_30.orange, bold = true },
     Statement = { link = "Keyword" },
+    Conditional = { link = "Keyword" },
+    Repeat = { link = "Keyword" },
+    Label = { link = "Keyword" },
     StorageClass = { link = "Keyword" },
-    String = { fg = M.base_30.green },
+
+    -- Type-like
+    Type = { fg = M.base_30.sun },
     Structure = { link = "Type" },
-    Tag = { link = "Type" },
-    Title = { fg = M.base_30.yellow },
-    Todo = { bg = M.base_30.yellow, fg = M.base_30.darker_black },
-    Type = { fg = M.base_30.yellow },
     Typedef = { link = "Type" },
-    Underlined = { underline = true }, -- (preferred) text that stands out, HTML links
+
+    -- Constant-like
+    Constant = { fg = M.base_30.baby_pink },
+    Number = { link = "Constant" },
+    Float = { link = "Constant" },
+    Boolean = { link = "Constant" },
+
+    -- String-like
+    String = { fg = M.base_30.green },
+    Character = { link = "String" },
+
+    -- Variable-like
     Variable = { fg = M.base_30.white },
+    Identifier = { link = "Variable" },
 
-    mkdCode = { link = "CodeBlock" },
-    mkdCodeDelimiter = { link = "CodeBlock" },
-    markdownCode = { link = "CodeBlock" },
-    markdownCodeBlock = { link = "CodeBlock" },
+    -- Builtin-like
+    Builtin = { fg = M.base_30.blue },
+
+    -- Field/Property-like
+    Field = { fg = M.base_30.cyan },
+
+    -- Operator-like
+    Operator = { fg = M.base_30.white },
+
+    -- Delimiter/Punctuation
+    Delimiter = { italic = true, fg = M.base_30.grey_fg2 },
+
+    -- Comment-like
+    Comment = { fg = M.base_30.grey_fg2 },
+
+    -- Macro/Preprocessor-like
+    Macro = { fg = M.base_30.red },
+    Exception = { link = "Macro" },
+    PreProc = { link = "Macro" },
+    Include = { link = "Macro" },
+    Define = { link = "Macro" },
+    PreCondit = { link = "Macro" },
   },
 
+  -- stylua: ignore start
   treesitter = {
-    ["@markup"] = { link = "@none" },
-    ["@markup.raw"] = { link = "String" },
-    ["@markup.raw.markdown_inline"] = { link = "CodeBlock" },
-    --- Literals
-    ["@string"] = { link = "String" },
-    ["@string.documentation"] = { link = "String" },
-    ["@string.escape"] = { fg = M.base_30.baby_pink }, -- For escape characters within a string.
-    ["@string.regex"] = { fg = M.base_30.baby_pink }, -- For regexes.
-    --- Functions
-    ["@constructor"] = { link = "Function" }, -- For constructor calls and definitions: `= { }` in Lua, and Java constructors.
-    ["@parameter"] = { fg = M.base_30.white, italic = true }, -- For parameters of a function.
-    ["@parameter.builtin"] = { link = "Builtin" }, -- For builtin parameters of a function, e.g. "..." or Smali's pG[1-99]
-    --- Keywords
-    ["@keyword"] = { link = "Keyword" }, -- For keywords that don't fall in previous categories.
-    ["@keyword.conditional"] = { link = "Conditional" },
-    ["@keyword.coroutine"] = { link = "Macro" }, -- For keywords related to coroutines.
-    ["@keyword.debug"] = { link = "Debug" },
-    ["@keyword.directive"] = { link = "PreProc" },
-    ["@keyword.directive.define"] = { link = "Define" },
-    ["@keyword.exception"] = { link = "Exception" },
-    ["@keyword.export"] = { link = "Keyword" },
-    ["@keyword.function"] = { link = "Keyword" }, -- For keywords used to define a function.
-    ["@keyword.import"] = { link = "Include" },
-    ["@keyword.operator"] = { link = "Keyword" },
-    ["@keyword.repeat"] = { link = "Repeat" },
-    ["@keyword.return"] = { link = "Keyword" },
-    ["@keyword.storage"] = { link = "StorageClass" },
-    ["@label"] = { link = "Keyword" }, -- For labels: `label:` in C and `:label:` in Lua.
-    --- Types
-    ["@type.builtin"] = { link = "Type" },
-    ["@field"] = { link = "Field" }, -- For fields.
-    ["@property"] = { link = "Field" },
-    --- Identifiers
-    ["@variable"] = { link = "Variable" }, -- Any variable name that does not have another highlight.
-    ["@variable.builtin"] = { link = "Builtin" }, -- Variable names that are defined by the languages, like `this` or `self`.
-    ["@variable.member"] = { link = "Field" },
-    --- Text
-    -- ['@spell'] = { link = 'Comment' }, -- This seems to interfere with regular text
-    -- ["@text.literal.markdown"] = { },
-    ["@text"] = { link = "Normal" }, -- For strings considered text in a markup language.
-    ["@text.strong"] = { bold = true },
-    ["@text.emphasis"] = { italic = true }, -- For text to be represented with emphasis.
-    ["@text.underline"] = { underline = true }, -- For text to be represented with an underline.
-    ["@text.strike"] = { strikethrough = true }, -- For strikethrough text.
-    ["@text.title"] = { link = "Title" }, -- Text that is part of a title.
-    ["@text.uri"] = { underline = true }, -- Any URI like a link or email.
-    ["@text.literal"] = { link = "String" },
-    ["@text.literal.markdown_inline"] = { link = "CodeBlock" },
-    ["@text.literal.markdown"] = { link = "Normal" },
-    ["@text.reference"] = { link = "Link" },
-    ["@text.todo.unchecked"] = { fg = M.base_30.nord_blue }, -- For brackets and parens.
-    ["@text.todo.checked"] = { fg = M.base_30.vibrant_green }, -- For brackets and parens.
-    ["@text.warning"] = { fg = M.base_30.yellow },
-    ["@text.danger"] = { fg = M.base_30.red },
-    ["@text.diff.add"] = { link = "DiffAdd" },
-    ["@text.diff.delete"] = { link = "DiffDelete" },
-    ["@text.todo"] = { link = "Todo" },
-    ["@text.note"] = { link = "Note" },
-    --LSP Semantic Token roups
-    ["@lsp.type.boolean"] = { link = "Boolean" },
-    ["@lsp.type.builtinType"] = { link = "Type" },
-    ["@lsp.type.comment"] = { link = "Comment" },
-    ["@lsp.type.enum"] = { link = "Type" },
-    ["@lsp.type.enumMember"] = { link = "Field" },
-    ["@lsp.type.escapeSequence"] = { link = "@string.escape" },
-    ["@lsp.type.formatSpecifier"] = { link = "@punctuation.special" },
-    ["@lsp.type.interface"] = { link = "Keyword" },
-    ["@lsp.type.keyword"] = { link = "Keyword" },
-    ["@lsp.type.namespace"] = { link = "Namespace" },
-    ["@lsp.type.number"] = { link = "Number" },
-    ["@lsp.type.operator"] = { link = "@operator" },
-    ["@lsp.type.parameter"] = { link = "@parameter" },
-    ["@lsp.type.property"] = { link = "@property" },
-    ["@lsp.type.selfKeyword"] = { link = "Builtin" },
-    ["@lsp.type.string.rust"] = { link = "String" },
-    ["@lsp.type.typeAlias"] = { link = "Type" },
-    ["@lsp.type.unresolvedReference"] = { undercurl = true, sp = M.base_30.red },
-    ["@lsp.type.variable"] = {}, -- use treesitter styles for regular variables
-    ["@lsp.typemod.class.defaultLibrary"] = { link = "Type" },
-    ["@lsp.typemod.enum.defaultLibrary"] = { link = "Type" },
-    ["@lsp.typemod.enumMember.defaultLibrary"] = { link = "Constant" },
-    ["@lsp.typemod.function.defaultLibrary"] = { link = "Function" },
-    ["@lsp.typemod.keyword.async"] = { link = "Macro" },
-    ["@lsp.typemod.macro.defaultLibrary"] = { link = "Macro" },
-    ["@lsp.typemod.method.defaultLibrary"] = { link = "Function" },
-    ["@lsp.typemod.operator.injected"] = { link = "Operator" },
-    ["@lsp.typemod.string.injected"] = { link = "String" },
-    ["@lsp.typemod.type.defaultLibrary"] = { link = "Type" },
-    ["@lsp.typemod.variable.defaultLibrary"] = { link = "Builtin" },
-    ["@lsp.typemod.variable.injected"] = { link = "Variable" },
-    ["@lsp.typemod.variable.globalScope"] = { link = "Macro" },
-    -- Thins that seems to be missing?
-    ["@annotation"] = { link = "PreProc" },
-    ["@diff.plus"] = { link = "DiffAdd" },
-    ["@diff.minus"] = { link = "DiffDelete" },
-    ["@diff.delta"] = { link = "DiffChange" },
-    ["@character"] = { link = "Character" },
-    ["@character.special"] = { link = "SpecialChar" },
-    ["@string.special"] = { fg = M.base_30.yellow }, -- For escape characters within a string.
-    ["@tag"] = { fg = M.base_30.nord_blue }, -- Tags like html tag names.
-    ["@tag.delimiter"] = { fg = M.base_30.white }, -- Tag delimiter like `<` `>` `/`
-    ["@tag.attribute"] = { fg = M.base_30.yellow }, -- Tag attribute like `id` `class`
-    ["@constant"] = { link = "Constant" },
-    ["@number"] = { link = "Constant" },
-    ["@float"] = { link = "Constant" },
-    ["@boolean"] = { link = "Constant" },
-    ["@constant.macro"] = { link = "Constant" },
-    ["@constant.builtin"] = { link = "Constant" },
-    ["@repeat"] = { link = "Keyword" },
-    ["@conditional"] = { link = "Keyword" },
-    ["@class"] = { link = "Keyword" },
-    ["@include"] = { link = "Include" },
-    ["@macro"] = { link = "Macro" },
-    ["@module"] = { fg = M.base_30.yellow },
-    ["@module.builtin"] = { link = "Builtin" },
-    ["@preproc"] = { link = "Macro" },
-    ["@attribute"] = { link = "Macro" },
-    ["@function.macro"] = { link = "Macro" },
-    ["@define"] = { link = "Macro" },
-    ["@exception"] = { link = "Macro" },
-    ["@function"] = { link = "Function" },
-    ["@method"] = { link = "Function" },
-    ["@method.call"] = { link = "Function" },
-    ["@function.call"] = { link = "Function" },
-    ["@function.builtin"] = { link = "Function" },
-    ["@property.cpp"] = { fg = M.base_30.cyan },
-    ["@namespace"] = { fg = M.base_30.sun },
-    ["@type"] = { link = "Type" },
-    ["@type.definition"] = { link = "Type" },
-    ["@type.qualifier"] = { link = "Keyword" },
-    ["@storageclass"] = { link = "Keyword" },
-    ["@none"] = { link = "None" },
+    -- Comments
+    ['@comment']                                = { link = 'Comment' },
+    ['@comment.documentation']                  = { link = 'Comment' },
+    ['@comment.error']                          = { fg   = M.base_30.red },
+    ['@comment.hint']                           = { fg   = M.base_30.vibrant_green },
+    ['@comment.info']                           = { fg   = M.base_30.cyan },
+    ['@comment.note']                           = { fg   = M.base_30.vibrant_green },
+    ['@comment.todo']                           = { fg   = M.base_30.nord_blue },
+    ['@comment.warning']                        = { fg   = M.base_30.yellow },
+
+    -- Operators
+    ['@operator']                               = { link = 'Operator' },
+
+    -- Punctuation
+    ['@punctuation.bracket']                    = { link = '@operator' },
+    ['@punctuation.delimiter']                  = { link = 'Delimiter' },
+    ['@punctuation.special']                    = { link = 'Macro' },
+    ['@punctuation.special.markdown']           = { fg   = M.base_30.orange, bold = true },
+
+    -- Literals (Strings)
+    ['@string']                                 = { link = 'String' },
+    ['@string.documentation']                   = { link = 'String' },
+    ['@string.escape']                          = { fg   = M.base_30.baby_pink },
+    ['@string.regex']                           = { fg   = M.base_30.baby_pink },
+    ['@string.special']                         = { fg   = M.base_30.yellow },
+
+    -- Numbers & Constants
+    ['@boolean']                                = { link = 'Constant' },
+    ['@constant']                               = { link = 'Constant' },
+    ['@constant.builtin']                       = { link = 'Constant' },
+    ['@constant.macro']                         = { link = 'Constant' },
+    ['@diff.delta']                             = { link = 'DiffChange' },
+    ['@diff.minus']                             = { link = 'DiffDelete' },
+    ['@diff.plus']                              = { link = 'DiffAdd' },
+    ['@float']                                  = { link = 'Constant' },
+    ['@number']                                 = { link = 'Constant' },
+
+    -- Functions & Methods
+    ['@constructor']                            = { link = 'Function' },
+    ['@function']                               = { link = 'Function' },
+    ['@function.builtin']                       = { link = 'Function' },
+    ['@function.call']                          = { link = 'Function' },
+    ['@function.macro']                         = { link = 'Macro' },
+    ['@method']                                 = { link = 'Function' },
+    ['@method.call']                            = { link = 'Function' },
+
+    -- Parameters
+    ['@parameter']                              = { fg   = M.base_30.white,      italic = true },
+    ['@parameter.builtin']                      = { link = 'Builtin' },
+
+    -- Keywords
+    ['@conditional']                            = { link = 'Keyword' },
+    ['@class']                                  = { link = 'Keyword' },
+    ['@include']                                = { link = 'Include' },
+    ['@keyword']                                = { link = 'Keyword' },
+    ['@keyword.conditional']                    = { link = 'Conditional' },
+    ['@keyword.coroutine']                      = { link = 'Macro' },
+    ['@keyword.debug']                          = { link = 'Debug' },
+    ['@keyword.directive']                      = { link = 'PreProc' },
+    ['@keyword.directive.define']               = { link = 'Define' },
+    ['@keyword.exception']                      = { link = 'Exception' },
+    ['@keyword.export']                         = { link = 'Keyword' },
+    ['@keyword.function']                       = { link = 'Keyword' },
+    ['@keyword.import']                         = { link = 'Include' },
+    ['@keyword.operator']                       = { link = 'Keyword' },
+    ['@keyword.repeat']                         = { link = 'Repeat' },
+    ['@keyword.return']                         = { link = 'Keyword' },
+    ['@keyword.storage']                        = { link = 'StorageClass' },
+    ['@label']                                  = { link = 'Keyword' },
+    ['@macro']                                  = { link = 'Macro' },
+    ['@preproc']                                = { link = 'Macro' },
+    ['@repeat']                                 = { link = 'Keyword' },
+    ['@storageclass']                           = { link = 'Keyword' },
+
+    -- Types & Fields & Properties
+    ['@field']                                  = { link = 'Field' },
+    ['@property']                               = { link = 'Field' },
+    ['@property.cpp']                           = { fg   = M.base_30.cyan },
+    ['@type.builtin']                           = { link = 'Type' },
+    ['@type.definition']                        = { link = 'Type' },
+    ['@type.qualifier']                         = { link = 'Keyword' },
+    ['@type']                                   = { link = 'Type' },
+
+    -- Identifiers & Namespaces & Modules
+    ['@annotation']                             = { link = 'PreProc' },
+    ['@attribute']                              = { link = 'Macro' },
+    ['@character']                              = { link = 'Character' },
+    ['@character.special']                      = { link = 'SpecialChar' },
+    ['@module']                                 = { fg   = M.base_30.yellow },
+    ['@module.builtin']                         = { link = 'Builtin' },
+    ['@namespace']                              = { fg   = M.base_30.sun },
+    ['@variable']                               = { link = 'Variable' },
+    ['@variable.builtin']                       = { link = 'Builtin' },
+    ['@variable.member']                        = { link = 'Field' },
+
+    -- Text
+    ['@text']                                   = { link = 'Normal' },
+    ['@text.danger']                            = { fg   = M.base_30.red },
+    ['@text.diff.add']                          = { link = 'DiffAdd' },
+    ['@text.diff.delete']                       = { link = 'DiffDelete' },
+    ['@text.emphasis']                          = { italic = true },
+    ['@text.literal']                           = { link = 'String' },
+    ['@text.literal.markdown']                  = { link = 'Normal' },
+    ['@text.literal.markdown_inline']           = { bg = M.base_30.black2, fg = M.base_30.white },
+    ['@text.note']                              = { link = 'Note' },
+    ['@text.reference']                         = { link = 'Link' },
+    ['@text.strong']                            = { bold = true },
+    ['@text.strike']                            = { strikethrough = true },
+    ['@text.todo']                              = { link = 'Todo' },
+    ['@text.todo.checked']                      = { fg = M.base_30.vibrant_green },
+    ['@text.todo.unchecked']                    = { fg = M.base_30.blue },
+    ['@text.title']                             = { link = 'Title' },
+    ['@text.underline']                         = { underline = true },
+    ['@text.uri']                               = { underline = true },
+    ['@text.warning']                           = { fg = M.base_30.yellow },
+
+    -- Markup
+    ['@markup']                                 = { link = '@none' },
+    ['@markup.emphasis']                        = { italic = true },
+    ['@markup.environment']                     = { link = 'Macro' },
+    ['@markup.environment.name']                = { link = 'Type' },
+    ['@markup.heading']                         = { link = 'Title' },
+    ['@markup.heading.1']                       = { fg   = M.base_30.yellow, bold = true },
+    ['@markup.heading.2']                       = { fg   = M.base_30.orange, bold = true },
+    ['@markup.heading.3']                       = { fg   = M.base_30.baby_pink, bold = true },
+    ['@markup.heading.4']                       = { fg   = M.base_30.green },
+    ['@markup.heading.5']                       = { fg   = M.base_30.nord_blue, italic = true },
+    ['@markup.heading.6']                       = { fg   = M.base_30.cyan, italic = true },
+    ['@markup.italic']                          = { italic = true },
+    ['@markup.list']                            = { link = '@operator' },
+    ['@markup.list.checked']                    = { link = 'Field' },
+    ['@markup.list.markdown']                   = { fg = M.base_30.yellow, bold = true },
+    ['@markup.list.unchecked']                  = { fg = M.base_30.white },
+    ['@markup.link']                            = { fg   = M.base_30.cyan },
+    ['@markup.link.label']                      = { link = 'SpecialChar' },
+    ['@markup.link.label.symbol']               = { link = 'Identifier' },
+    ['@markup.link.url']                        = { link = 'Underlined' },
+    ['@markup.math']                            = { link = 'Special' },
+    ['@markup.raw']                             = { link = 'String' },
+    ['@markup.raw.markdown_inline']             = { bg = M.base_30.black2, fg = M.base_30.white },
+    ['@markup.strong']                          = { bold = true },
+    ['@markup.strikethrough']                   = { strikethrough = true },
+    ['@markup.underline']                       = { underline = true },
+
+    -- TSX
+    ['@constructor.tsx']                        = { fg = M.base_30.blue },
+    ['@tag.delimiter.tsx']                      = { fg = M.base_30.blue },
+    ['@tag.tsx']                                = { fg = M.base_30.blue } ,
   },
+  -- stylua: ignore end
+
+  -- stylua: ignore start
+  semantic_tokens = {
+    -- LSP Semantic Token Highlights
+    ['@lsp.type.boolean']                       = { link = 'Boolean' },
+    ['@lsp.type.builtinType']                   = { link = 'Type' },
+    ['@lsp.type.comment']                       = { link = 'Comment' },
+    ['@lsp.type.enum']                          = { link = 'Type' },
+    ['@lsp.type.enumMember']                    = { link = 'Field' },
+    ['@lsp.type.escapeSequence']                = { link = '@string.escape' },
+    ['@lsp.type.formatSpecifier']               = { link = '@punctuation.special' },
+    ['@lsp.type.interface']                     = { link = 'Keyword' },
+    ['@lsp.type.keyword']                       = { link = 'Keyword' },
+    ['@lsp.type.namespace']                     = { link = 'Namespace' },
+    ['@lsp.type.number']                        = { link = 'Number' },
+    ['@lsp.type.operator']                      = { link = '@operator' },
+    ['@lsp.type.parameter']                     = { link = '@parameter' },
+    ['@lsp.type.property']                      = { link = '@property' },
+    ['@lsp.type.selfKeyword']                   = { link = 'Builtin' },
+    ['@lsp.type.string.rust']                   = { link = 'String' },
+    ['@lsp.type.typeAlias']                     = { link = 'Type' },
+    ['@lsp.type.unresolvedReference']           = { undercurl = true, sp = M.base_30.red },
+    ['@lsp.type.variable']                      = {},
+
+    -- LSP Typemod Highlights
+    ['@lsp.typemod.class.defaultLibrary']       = { link = 'Type' },
+    ['@lsp.typemod.enum.defaultLibrary']        = { link = 'Type' },
+    ['@lsp.typemod.enumMember.defaultLibrary']  = { link = 'Constant' },
+    ['@lsp.typemod.function.defaultLibrary']    = { link = 'Function' },
+    ['@lsp.typemod.keyword.async']              = { link = 'Macro' },
+    ['@lsp.typemod.macro.defaultLibrary']       = { link = 'Macro' },
+    ['@lsp.typemod.method.defaultLibrary']      = { link = 'Function' },
+    ['@lsp.typemod.operator.injected']          = { link = 'Operator' },
+    ['@lsp.typemod.string.injected']            = { link = 'String' },
+    ['@lsp.typemod.type.defaultLibrary']        = { link = 'Type' },
+    ['@lsp.typemod.variable.defaultLibrary']    = { link = 'Builtin' },
+    ['@lsp.typemod.variable.globalScope']       = { link = 'Macro' },
+    ['@lsp.typemod.variable.injected']          = { link = 'Variable' },
+  },
+  -- stylua: ignore end
 }
 
 -- set the theme type whether is dark or light

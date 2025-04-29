@@ -12,23 +12,21 @@ local ChadUI = {
   base46 = {
     theme = "nordic",
     transparency = false,
-    hl_override = {
-      NormalFloat = { link = "CodeBlock" },
-    },
-    hl_add = {
-      -- Snacks Picker Global Highlights
-      SnacksPicker = { bg = "black2" },
-      SnacksPickerBorder = { bg = "black", fg = "black" },
-      SnacksPickerTitle = { bg = "black", fg = "orange" },
-
-      -- SnacksPicker Preview
-      SnacksPickerPreview = { bg = "black" },
-
-      -- Snacks Prompt Highlights
-      SnacksPickerInput = { bg = "black" },
-      SnacksPickerPrompt = { bg = "black", fg = "orange" },
-      SnacksPickerInputBorder = { link = "SnacksPickerBorder" },
-    },
+    -- hl_add = {
+    --   ["@namespace.builtin"] = { link = "@namespace" },
+    --   -- Snacks Picker Global Highlights
+    --   SnacksPicker = { bg = "black2" },
+    --   SnacksPickerBorder = { bg = "black", fg = "black" },
+    --   SnacksPickerTitle = { bg = "black", fg = "orange" },
+    --
+    --   -- SnacksPicker Preview
+    --   SnacksPickerPreview = { bg = "black" },
+    --
+    --   -- Snacks Prompt Highlights
+    --   SnacksPickerInput = { bg = "black" },
+    --   SnacksPickerPrompt = { bg = "black", fg = "orange" },
+    --   SnacksPickerInputBorder = { link = "SnacksPickerBorder" },
+    -- },
   },
 
   ui = {
@@ -43,7 +41,6 @@ local ChadUI = {
     telescope = { style = "borderless" }, -- borderless / bordered
 
     statusline = {
-      enabled = true,
       theme = "default", -- default/vscode/vscode_colored/minimal
       -- default/round/block/arrow separators work only for default statusline theme
       -- round and block will work for minimal theme only
