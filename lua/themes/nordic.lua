@@ -62,18 +62,12 @@ M.base_16 = {
 -- defaults/treesitter is the filename i.e integration there,
 
 M.polish_hl = {
-  defaults = {
-    -- Macro = { fg = M.base_30.red },
-    -- Builtin = { fg = M.base_30.blue },
-    -- Field = { fg = M.base_30.cyan },
-  },
-
   syntax = {
     Bold = { bold = true },
     Boolean = { link = "Number" },
     Builtin = { fg = M.base_30.blue },
     Character = { bg = M.base_30.green },
-    CodeBlock = { bg = M.base_30.black2, fg = M.base_30.white },
+    CodeBlock = { bg = M.base_30.black, fg = M.base_30.white },
     Comment = { fg = M.base_30.light_grey, italic = true },
     Conditional = { link = "Keyword" },
     Constant = { fg = M.base_30.baby_pink },
@@ -112,9 +106,17 @@ M.polish_hl = {
     Typedef = { link = "Type" },
     Underlined = { underline = true }, -- (preferred) text that stands out, HTML links
     Variable = { fg = M.base_30.white },
+
+    mkdCode = { link = "CodeBlock" },
+    mkdCodeDelimiter = { link = "CodeBlock" },
+    markdownCode = { link = "CodeBlock" },
+    markdownCodeBlock = { link = "CodeBlock" },
   },
 
   treesitter = {
+    ["@markup"] = { link = "@none" },
+    ["@markup.raw"] = { link = "String" },
+    ["@markup.raw.markdown_inline"] = { link = "CodeBlock" },
     --- Literals
     ["@string"] = { link = "String" },
     ["@string.documentation"] = { link = "String" },
@@ -159,7 +161,8 @@ M.polish_hl = {
     ["@text.title"] = { link = "Title" }, -- Text that is part of a title.
     ["@text.uri"] = { underline = true }, -- Any URI like a link or email.
     ["@text.literal"] = { link = "String" },
-    ["@text.literal.markdown_inline"] = { bg = M.base_30.darker_black, fg = M.base_30.white },
+    ["@text.literal.markdown_inline"] = { link = "CodeBlock" },
+    ["@text.literal.markdown"] = { link = "Normal" },
     ["@text.reference"] = { link = "Link" },
     ["@text.todo.unchecked"] = { fg = M.base_30.nord_blue }, -- For brackets and parens.
     ["@text.todo.checked"] = { fg = M.base_30.vibrant_green }, -- For brackets and parens.

@@ -1,15 +1,15 @@
 -- bootstrap lazy
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
 if not vim.uv.fs_stat(lazypath) then
   local lazyrepo = "https://github.com/folke/lazy.nvim.git"
-  local out = vim.fn.system({
+  local out = vim.fn.system {
     "git",
     "clone",
     "--filter=blob:none",
     lazyrepo,
     "--branch=stable",
     lazypath,
-  })
+  }
   if vim.v.shell_error ~= 0 then
     vim.api.nvim_echo({
       { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
@@ -26,7 +26,7 @@ vim.opt.rtp:prepend(lazypath)
 
 local function lazy_file()
   -- Add support for the LazyFile event
-  local Event = require("lazy.core.handler.event")
+  local Event = require "lazy.core.handler.event"
 
   Event.mappings.LazyFile = { id = "LazyFile", event = { "BufReadPost", "BufNewFile", "BufWritePre" } }
   Event.mappings["User LazyFile"] = Event.mappings.LazyFile
@@ -34,11 +34,11 @@ end
 
 lazy_file()
 
-_G.LazyVim = require("lazy.core.util")
-_G.Helpers = require("helpers")
-_G.Installables = require("plugins.servers")
+_G.LazyVim = require "lazy.core.util"
+_G.Helpers = require "helpers"
+_G.Installables = require "plugins.servers"
 
-require("lazy").setup({
+require("lazy").setup {
   dev = {
     path = "D:/Personal/nvim-plugins/",
   },
@@ -46,7 +46,7 @@ require("lazy").setup({
     {
       "nvchad/ui",
       config = function()
-        require("nvchad")
+        require "nvchad"
       end,
     },
     {
@@ -96,9 +96,9 @@ require("lazy").setup({
     border = "rounded",
     backdrop = 25,
   },
-})
+}
 
-vim.diagnostic.config({
+vim.diagnostic.config {
   severity_sort = true,
   underline = true,
   focusable = false,
@@ -124,20 +124,19 @@ vim.diagnostic.config({
   },
   -- This is newly merged as of jan 2025, this displays diagnostic in a very similar way to nushell
   -- virtual_lines = { current_line = false },
-})
+}
 
 Helpers.root.setup()
 
 -- Config Core Files
-require("core.keymaps")
-require("core.autocmds")
-require("core.user-commands")
+require "core.keymaps"
+require "core.autocmds"
+require "core.user-commands"
 
 -- Neovim native functionality
 require("modules.lsp").setup()
-require("modules.snippets")
+require "modules.snippets"
 -- require("modules.colorify").setup()
 
 -- Extensions Modules to existing lua classes
-require("modules.extensions.string")
--- vim.cmd([[colorscheme nordic]])
+require "modules.extensions.string"

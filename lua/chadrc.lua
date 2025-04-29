@@ -10,8 +10,11 @@ end
 ---@class ChadrcConfig
 local ChadUI = {
   base46 = {
-    theme = "nightfox",
+    theme = "nordic",
     transparency = false,
+    hl_override = {
+      NormalFloat = { link = "CodeBlock" },
+    },
     hl_add = {
       -- Snacks Picker Global Highlights
       SnacksPicker = { bg = "black2" },
