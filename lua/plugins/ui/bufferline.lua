@@ -1,5 +1,6 @@
 return {
   "akinsho/bufferline.nvim",
+  enabled = false,
   event = "VeryLazy",
   keys = {
     { "<leader>bp", "<Cmd>BufferLineTogglePin<CR>", desc = "Toggle Pin" },
@@ -44,6 +45,7 @@ return {
     },
   },
   config = function(_, opts)
+    dofile(vim.g.base46_cache .. "bufferline")
     require("bufferline").setup(opts)
     -- Fix bufferline when restoring a session
     vim.api.nvim_create_autocmd({ "BufAdd", "BufDelete" }, {

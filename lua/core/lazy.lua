@@ -111,7 +111,7 @@ vim.diagnostic.config({
     },
   },
   float = {
-    border = vim.g.border,
+    border = "rounded",
     source = "if_many",
     prefix = " ",
     scope = "cursor",

@@ -1,10 +1,20 @@
+local tabbufline = require "nvchad.tabufline"
+local term = require "nvchad.term"
+local themes = require "nvchad.themes"
 local map = Helpers.safe_keymap_set
 
+-- stylua: ignore start
+map({ "n" }, "<S-H>", tabbufline.prev, { desc = "Previous Tab" })
+map({ "n" }, "<S-L>", tabbufline.next, { desc = "Next Tab" })
+
+map({"n"}, "<leader>ft", function() themes.open({style = 'flat'}) end, { desc = "Find NVChad Themes" })
+-- stylua: ignore end
+
 map({ "n" }, "<localleader>/", function()
-  local pattern = vim.fn.input("rg: ")
+  local pattern = vim.fn.input "rg: "
   if pattern ~= "" then
     vim.cmd('silent grep! "' .. pattern .. '"')
-    vim.cmd("copen")
+    vim.cmd "copen"
   end
 end, { desc = "Live Grep" })
 
@@ -27,12 +37,10 @@ map("n", "<C-Left>", "<cmd>vertical resize -2<cr>", { desc = "Decrease Window Wi
 map("n", "<C-Right>", "<cmd>vertical resize +2<cr>", { desc = "Increase Window Width" })
 
 -- Buffers
-map("n", "<leader>bd", function()
-  Snacks.bufdelete()
-end, { desc = "Delete Buffer" })
-map("n", "<leader>bo", function()
-  Snacks.bufdelete.other()
-end, { desc = "Delete Other Buffers" })
+-- stylua: ignore start
+map("n", "<leader>bd", function() Snacks.bufdelete() end, { desc = "Delete Buffer" })
+map("n", "<leader>bo", function() Snacks.bufdelete.other() end, { desc = "Delete Other Buffers" })
+-- stylua: ignore end
 
 -- Move Lines
 map("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move Down" })
@@ -40,7 +48,7 @@ map("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move Up" })
 
 -- Clear search and stop snippet on escape
 map({ "i", "n", "s" }, "<esc>", function()
-  vim.cmd("noh")
+  vim.cmd "noh"
   return "<esc>"
 end, { expr = true, desc = "Escape and Clear hlsearch" })
 
@@ -91,7 +99,7 @@ map("n", "<leader>fn", "<cmd>enew<cr>", { desc = "New File" })
 local diagnostic_goto = function(count, severity)
   severity = severity and vim.diagnostic.severity[severity] or nil
   return function()
-    vim.diagnostic.jump({ severity, count = count })
+    vim.diagnostic.jump { severity, count = count }
   end
 end
 map("n", "<leader>cd", vim.diagnostic.open_float, { desc = "Line Diagnostics" })

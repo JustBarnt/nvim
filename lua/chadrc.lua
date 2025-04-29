@@ -1,7 +1,16 @@
+local function getNeotreeWidth()
+  for _, win in pairs(vim.api.nvim_tabpage_list_wins(0)) do
+    if vim.bo[vim.api.nvim_win_get_buf(win)].ft == "neo-tree" then
+      return vim.api.nvim_win_get_width(win)
+    end
+  end
+  return 0
+end
+
 ---@class ChadrcConfig
 local ChadUI = {
   base46 = {
-    theme = "nordic",
+    theme = "nightfox",
     transparency = false,
     hl_add = {
       -- Snacks Picker Global Highlights
@@ -16,33 +25,6 @@ local ChadUI = {
       SnacksPickerInput = { bg = "black" },
       SnacksPickerPrompt = { bg = "black", fg = "orange" },
       SnacksPickerInputBorder = { link = "SnacksPickerBorder" },
-      BufferLineMiniIconsAzure = { bg = "black2", fg = "cyan" },
-      BufferLineMiniIconsGrey = { link = "BufferLineMiniIconsAzure" },
-    },
-    integrations = {
-      "blankline",
-      "blink",
-      "bufferline",
-      "diffview",
-      "flash",
-      "git-conflict",
-      "grug_far",
-      "devicons",
-      "git",
-      "lsp",
-      "mason",
-      "telescope",
-      "nvcheatsheet",
-      "notify",
-      "nvshades",
-      "semantic_tokens",
-      "tiny-inline-diagnostic",
-      "todo",
-      "trouble",
-      "statusline",
-      "syntax",
-      "treesitter",
-      "whichkey",
     },
   },
 
@@ -63,16 +45,28 @@ local ChadUI = {
       -- default/round/block/arrow separators work only for default statusline theme
       -- round and block will work for minimal theme only
       separator_style = "default",
-      order = nil,
-      modules = nil,
+      order = { "mode", "path_and_filename", "git", "%=", "lsp_msg", "%=", "lsp", "diagnostics", "cursor" },
+      modules = {
+        path_and_filename = function()
+          local path = vim.api.nvim_buf_get_name(0)
+          local file = vim.fn.fnamemodify(path, ":t")
+          local parent = vim.fn.fnamemodify(path, ":h:t")
+          return parent .. "/" .. file
+        end,
+      },
     },
 
     -- lazyload it when there are 1+ buffers
     tabufline = {
-      enabled = false,
+      enabled = true,
       lazyload = true,
-      order = { "treeOffset", "buffers", "tabs", "btns" },
-      modules = nil,
+      order = { "neotreeOffset", "buffers", "tabs", "btns" },
+      modules = {
+        neotreeOffset = function()
+          local w = getNeotreeWidth()
+          return w == 0 and "" or "%#NeoTreeNormal#" .. string.rep(" ", w) .. "%#NeoTreeWinSeparator#" .. "|"
+        end,
+      },
       bufwidth = 21,
     },
   },
