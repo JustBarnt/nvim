@@ -13,7 +13,7 @@ return {
       preset = "default",
     },
     signature = {
-      enabled = false,
+      enabled = true,
     },
     completion = {
       ghost_text = { enabled = false },
