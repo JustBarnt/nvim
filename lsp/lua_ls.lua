@@ -11,9 +11,6 @@ return {
         completion = {
           callSnippet = "Replace",
         },
-        diagnostics = {
-          globals = { "vim", "it", "describe" },
-        },
         doc = {
           privateName = { "^_" },
         },

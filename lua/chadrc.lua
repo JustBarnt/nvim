@@ -12,21 +12,23 @@ local ChadUI = {
   base46 = {
     theme = "nordic",
     transparency = false,
-    -- hl_add = {
-    --   ["@namespace.builtin"] = { link = "@namespace" },
-    --   -- Snacks Picker Global Highlights
-    --   SnacksPicker = { bg = "black2" },
-    --   SnacksPickerBorder = { bg = "black", fg = "black" },
-    --   SnacksPickerTitle = { bg = "black", fg = "orange" },
-    --
-    --   -- SnacksPicker Preview
-    --   SnacksPickerPreview = { bg = "black" },
-    --
-    --   -- Snacks Prompt Highlights
-    --   SnacksPickerInput = { bg = "black" },
-    --   SnacksPickerPrompt = { bg = "black", fg = "orange" },
-    --   SnacksPickerInputBorder = { link = "SnacksPickerBorder" },
-    -- },
+    hl_override = {
+      -- ["@lsp.type.variable"] = vim.empty_dict(),
+    },
+    hl_add = {
+      -- Snacks Picker Global Highlights
+      SnacksPicker = { bg = "black2" },
+      SnacksPickerBorder = { bg = "black", fg = "black" },
+      SnacksPickerTitle = { bg = "black", fg = "orange" },
+
+      -- SnacksPicker Preview
+      SnacksPickerPreview = { bg = "black" },
+
+      -- Snacks Prompt Highlights
+      SnacksPickerInput = { bg = "black" },
+      SnacksPickerPrompt = { bg = "black", fg = "orange" },
+      SnacksPickerInputBorder = { link = "SnacksPickerBorder" },
+    },
   },
 
   ui = {

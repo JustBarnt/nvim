@@ -10,8 +10,8 @@ M.base_30 = {
   black2 = "#2F3442", -- 6% lighter than black
   one_bg = "#373E4E", -- 10% lighter than black
   one_bg2 = "#40485A", -- 6% lighter than one_bg2
-  one_bg3 = "#4D566C", -- 6% lighter than one_bg3
-  grey = "#7C87A2", -- 40% lighter than black (the % here depends so choose the perfect grey!)
+  one_bg3 = "#4C566A", -- 6% lighter than one_bg3
+  grey = "#4C566A", -- 40% lighter than black (the % here depends so choose the perfect grey!)
   grey_fg = "#959FB3", -- 10% lighter than grey
   grey_fg2 = "#8691A9", -- 5% lighter than grey
   light_grey = "#60728A",
@@ -63,6 +63,24 @@ M.base_16 = {
 M.polish_hl = {
   -- stylua: ignore start
   defaults = {
+    ['@lsp.type.variable.global']               = { link = "@namespace" },
+    ['@lsp.mod.global']                         = { link = "@namespace" },
+
+    -- LSP Typemod Highlights
+    ['@lsp.typemod.class.defaultLibrary']       = { link = 'Type' },
+    ['@lsp.typemod.enum.defaultLibrary']        = { link = 'Type' },
+    ['@lsp.typemod.enumMember.defaultLibrary']  = { link = 'Constant' },
+    ['@lsp.typemod.function.defaultLibrary']    = { link = 'Function' },
+    ['@lsp.typemod.keyword.async']              = { link = 'Macro' },
+    ['@lsp.typemod.macro.defaultLibrary']       = { link = 'Macro' },
+    ['@lsp.typemod.method.defaultLibrary']      = { link = 'Function' },
+    ['@lsp.typemod.operator.injected']          = { link = 'Operator' },
+    ['@lsp.typemod.string.injected']            = { link = 'String' },
+    ['@lsp.typemod.type.defaultLibrary']        = { link = 'Type' },
+    ['@lsp.typemod.variable.defaultLibrary']    = { link = 'Builtin' },
+    ['@lsp.typemod.variable.globalScope']       = { link = 'Macro' },
+    ['@lsp.typemod.variable.injected']          = { link = 'Variable' },
+
     -- Basic / UI groups
     NormalFloat                             = { fg = M.base_30.white, bg = M.base_30.black },
 
@@ -71,7 +89,7 @@ M.polish_hl = {
     Bold                                    = { bold = true },
     Italic                                  = { italic = true },
 
-    -- Markdown / markup hel                pers
+    -- Markdown / markup helpers
     CodeBlock                               = { fg = M.base_30.white, bg = M.base_30.black },
     Link                                    = { fg = M.base_30.blue, underline = true },
     htmlH1                                  = { fg = M.base_30.yellow, bold = true },
@@ -91,7 +109,7 @@ M.polish_hl = {
 
     -- Special / misc
     Special                                 = { fg = M.base_30.blue },
-    Namespace                               = { fg = M.base_30.yellow },
+    Namespace                               = { fg = M.base_30.sun },
 
     -- Diagnostics & LSP
     Error                                  = { fg = M.base_30.red },
@@ -173,7 +191,7 @@ M.polish_hl = {
     Delimiter = { italic = true, fg = M.base_30.grey_fg2 },
 
     -- Comment-like
-    Comment = { fg = M.base_30.grey_fg2 },
+    Comment = { fg = M.base_30.one_bg3 },
 
     -- Macro/Preprocessor-like
     Macro = { fg = M.base_30.red },
@@ -276,10 +294,11 @@ M.polish_hl = {
     ['@character.special']                      = { link = 'SpecialChar' },
     ['@module']                                 = { fg   = M.base_30.yellow },
     ['@module.builtin']                         = { link = 'Builtin' },
-    ['@namespace']                              = { fg   = M.base_30.sun },
-    ['@variable']                               = { link = 'Variable' },
+    ['@variable']                               = { fg = M.base_30.white },
     ['@variable.builtin']                       = { link = 'Builtin' },
     ['@variable.member']                        = { link = 'Field' },
+    ['@namespace']                              = { fg = M.base_30.sun },
+    ['@namespace.builtin']                      = { link = "@namespace" },
 
     -- Text
     ['@text']                                   = { link = 'Normal' },
@@ -308,18 +327,18 @@ M.polish_hl = {
     ['@markup.environment']                     = { link = 'Macro' },
     ['@markup.environment.name']                = { link = 'Type' },
     ['@markup.heading']                         = { link = 'Title' },
-    ['@markup.heading.1']                       = { fg   = M.base_30.yellow, bold = true },
-    ['@markup.heading.2']                       = { fg   = M.base_30.orange, bold = true },
-    ['@markup.heading.3']                       = { fg   = M.base_30.baby_pink, bold = true },
-    ['@markup.heading.4']                       = { fg   = M.base_30.green },
-    ['@markup.heading.5']                       = { fg   = M.base_30.nord_blue, italic = true },
-    ['@markup.heading.6']                       = { fg   = M.base_30.cyan, italic = true },
+    ['@markup.heading.1']                       = { fg = M.base_30.yellow, bold = true },
+    ['@markup.heading.2']                       = { fg = M.base_30.orange, bold = true },
+    ['@markup.heading.3']                       = { fg = M.base_30.baby_pink, bold = true },
+    ['@markup.heading.4']                       = { fg = M.base_30.green },
+    ['@markup.heading.5']                       = { fg = M.base_30.nord_blue, italic = true },
+    ['@markup.heading.6']                       = { fg = M.base_30.cyan, italic = true },
     ['@markup.italic']                          = { italic = true },
     ['@markup.list']                            = { link = '@operator' },
     ['@markup.list.checked']                    = { link = 'Field' },
     ['@markup.list.markdown']                   = { fg = M.base_30.yellow, bold = true },
     ['@markup.list.unchecked']                  = { fg = M.base_30.white },
-    ['@markup.link']                            = { fg   = M.base_30.cyan },
+    ['@markup.link']                            = { fg = M.base_30.cyan },
     ['@markup.link.label']                      = { link = 'SpecialChar' },
     ['@markup.link.label.symbol']               = { link = 'Identifier' },
     ['@markup.link.url']                        = { link = 'Underlined' },
@@ -349,7 +368,7 @@ M.polish_hl = {
     ['@lsp.type.formatSpecifier']               = { link = '@punctuation.special' },
     ['@lsp.type.interface']                     = { link = 'Keyword' },
     ['@lsp.type.keyword']                       = { link = 'Keyword' },
-    ['@lsp.type.namespace']                     = { link = 'Namespace' },
+    ['@lsp.type.namespace']                     = { link = '@namespace' },
     ['@lsp.type.number']                        = { link = 'Number' },
     ['@lsp.type.operator']                      = { link = '@operator' },
     ['@lsp.type.parameter']                     = { link = '@parameter' },
@@ -358,22 +377,7 @@ M.polish_hl = {
     ['@lsp.type.string.rust']                   = { link = 'String' },
     ['@lsp.type.typeAlias']                     = { link = 'Type' },
     ['@lsp.type.unresolvedReference']           = { undercurl = true, sp = M.base_30.red },
-    ['@lsp.type.variable']                      = {},
-
-    -- LSP Typemod Highlights
-    ['@lsp.typemod.class.defaultLibrary']       = { link = 'Type' },
-    ['@lsp.typemod.enum.defaultLibrary']        = { link = 'Type' },
-    ['@lsp.typemod.enumMember.defaultLibrary']  = { link = 'Constant' },
-    ['@lsp.typemod.function.defaultLibrary']    = { link = 'Function' },
-    ['@lsp.typemod.keyword.async']              = { link = 'Macro' },
-    ['@lsp.typemod.macro.defaultLibrary']       = { link = 'Macro' },
-    ['@lsp.typemod.method.defaultLibrary']      = { link = 'Function' },
-    ['@lsp.typemod.operator.injected']          = { link = 'Operator' },
-    ['@lsp.typemod.string.injected']            = { link = 'String' },
-    ['@lsp.typemod.type.defaultLibrary']        = { link = 'Type' },
-    ['@lsp.typemod.variable.defaultLibrary']    = { link = 'Builtin' },
-    ['@lsp.typemod.variable.globalScope']       = { link = 'Macro' },
-    ['@lsp.typemod.variable.injected']          = { link = 'Variable' },
+    ['@lsp.type.variable']                      = { link = "@variable" },
   },
   -- stylua: ignore end
 }

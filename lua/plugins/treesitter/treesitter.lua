@@ -3,7 +3,8 @@ return {
     "nvim-treesitter/nvim-treesitter",
     version = false,
     build = ":TSUpdate",
-    event = { "LazyFile", "VeryLazy" },
+    -- event = { "LazyFile", "VeryLazy" },
+    event = { "VeryLazy" },
     cmd = { "TSUpdateSync", "TSUpdate", "TSInstall" },
     lazy = vim.fn.argc(-1) == 0, -- Load treesitter early when opening a file directly. i.e. calling `nvim file.txt` from the cmdline
     init = function(plugin)
@@ -13,7 +14,7 @@ return {
       -- Luckily, the only things that those plugins need are the custom queries, which we make available
       -- during startup.
       require("lazy.core.loader").add_to_rtp(plugin)
-      require("nvim-treesitter.query_predicates")
+      require "nvim-treesitter.query_predicates"
     end,
     keys = {
       { "<c-space>", desc = "Increment Selection" },
