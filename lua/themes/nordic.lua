@@ -60,8 +60,8 @@ M.base_16 = {
 -- OPTIONAL
 -- overriding or adding highlights for this specific theme only
 -- defaults/treesitter is the filename i.e integration there,
+-- stylua: ignore start
 M.polish_hl = {
-  -- stylua: ignore start
   defaults = {
     ['@lsp.type.variable.global']               = { link = "@namespace" },
     ['@lsp.mod.global']                         = { link = "@namespace" },
@@ -82,127 +82,126 @@ M.polish_hl = {
     ['@lsp.typemod.variable.injected']          = { link = 'Variable' },
 
     -- Basic / UI groups
-    NormalFloat                             = { fg = M.base_30.white, bg = M.base_30.black },
+    NormalFloat                                 = { fg = M.base_30.white, bg = M.base_30.black },
+    Title                                       = { fg = M.base_16.base04 },
 
     -- Text‐style groups
-    Underlined                              = { underline = true },
-    Bold                                    = { bold = true },
-    Italic                                  = { italic = true },
+    Underlined                                  = { underline = true },
+    Bold                                        = { bold = true },
+    Italic                                      = { italic = true },
 
     -- Markdown / markup helpers
-    CodeBlock                               = { fg = M.base_30.white, bg = M.base_30.black },
-    Link                                    = { fg = M.base_30.blue, underline = true },
-    htmlH1                                  = { fg = M.base_30.yellow, bold = true },
-    htmlH2                                  = { fg = M.base_30.orange },
-    mkdHeading                              = { link = 'htmlH1' },
-    mkdCode                                 = { link = 'CodeBlock' },
-    mkdCodeDelimiter                        = { link = 'CodeBlock' },
-    mkdCodeStart                            = { fg = M.base_30.cyan, bold = true },
-    mkdCodeEnd                              = { fg = M.base_30.cyan, bold = true },
-    mkdLink                                 = { link = 'Link' },
-    markdownHeadingDelimiter                = { link = 'mkdHeading' },
-    markdownCode                            = { link = 'CodeBlock' },
-    markdownCodeBlock                       = { link = 'CodeBlock' },
-    markdownH1                              = { link = 'htmlH1' },
-    markdownH2                              = { link = 'htmlH2' },
-    markdownLinkText                        = { link = 'Link' },
+    CodeBlock                                   = { fg = M.base_30.white, bg = M.base_30.black },
+    Link                                        = { fg = M.base_30.blue, underline = true },
+    htmlH1                                      = { fg = M.base_30.yellow, bold = true },
+    htmlH2                                      = { fg = M.base_30.orange },
+    mkdHeading                                  = { link = 'htmlH1' },
+    mkdCode                                     = { link = 'CodeBlock' },
+    mkdCodeDelimiter                            = { link = 'CodeBlock' },
+    mkdCodeStart                                = { fg = M.base_30.cyan, bold = true },
+    mkdCodeEnd                                  = { fg = M.base_30.cyan, bold = true },
+    mkdLink                                     = { link = 'Link' },
+    markdownHeadingDelimiter                    = { link = 'mkdHeading' },
+    markdownCode                                = { link = 'CodeBlock' },
+    markdownCodeBlock                           = { link = 'CodeBlock' },
+    markdownH1                                  = { link = 'htmlH1' },
+    markdownH2                                  = { link = 'htmlH2' },
+    markdownLinkText                            = { link = 'Link' },
 
     -- Special / misc
-    Special                                 = { fg = M.base_30.blue },
-    Namespace                               = { fg = M.base_30.sun },
+    Namespace                                   = { fg = M.base_30.sun },
 
     -- Diagnostics & LSP
-    Error                                  = { fg = M.base_30.red },
-    Todo                                   = { fg = M.base_30.black, bg = M.base_30.sun },
-    Note                                   = { fg = M.base_30.black, bg = M.base_30.cyan },
-    debugPC                                = { bg = M.base_30.darker_black },
-    debugBreakpoint                        = { fg = M.base_30.pink },
-    LspReferenceText                       = { bg = M.base_30.white },
-    LspReferenceRead                       = { bg = M.base_30.white },
-    LspReferenceWrite                      = { bg = M.base_30.white },
-    DiagnosticError                        = { fg = M.base_30.red },
-    DiagnosticWarn                         = { fg = M.base_30.yellow },
-    DiagnosticInfo                         = { fg = M.base_30.cyan },
-    DiagnosticHint                         = { fg = M.base_30.vibrant_green },
-    DiagnosticVirtualTextError             = { fg = M.base_30.red, bg = M.base_30.grey, bold = true },
-    DiagnosticVirtualTextWarn              = { fg = M.base_30.yellow, bg = M.base_30.grey },
-    DiagnosticVirtualTextWarning           = { fg = M.base_30.yellow, bg = M.base_30.grey },
-    DiagnosticVirtualTextInfo              = { fg = M.base_30.cyan, bg = M.base_30.grey },
-    DiagnosticUnderlineError               = { undercurl = true, sp = M.base_30.red },
-    DiagnosticUnderlineWarn                = { undercurl = true, sp = M.base_30.yellow },
-    DiagnosticUnderlineInfo                = { undercurl = true, sp = M.base_30.cyan },
-    DiagnosticUnderlineHint                = { undercurl = true, sp = M.base_30.vibrant_green },
-    DiagnosticText                         = { bg = M.base_30.black_float },
-    LspSignatureActiveParameter            = { underline = true, bold = true, bg = M.base_30.black_float },
-    LspCodeLens                            = { link = "Comment" },
-    LspInfoBorder                          = { link = 'FloatBorder' },
-    ALEErrorSign                           = { fg = M.base_30.red },
-    ALEWarningSign                         = { fg = M.base_30.yellow },
+    Error                                       = { fg = M.base_30.red },
+    Todo                                        = { fg = M.base_30.black, bg = M.base_30.sun },
+    Note                                        = { fg = M.base_30.black, bg = M.base_30.cyan },
+    debugPC                                     = { bg = M.base_30.darker_black },
+    debugBreakpoint                             = { fg = M.base_30.pink },
+    LspReferenceText                            = { bg = M.base_30.white },
+    LspReferenceRead                            = { bg = M.base_30.white },
+    LspReferenceWrite                           = { bg = M.base_30.white },
+    DiagnosticError                             = { fg = M.base_30.red },
+    DiagnosticWarn                              = { fg = M.base_30.yellow },
+    DiagnosticInfo                              = { fg = M.base_30.cyan },
+    DiagnosticHint                              = { fg = M.base_30.vibrant_green },
+    DiagnosticVirtualTextError                  = { fg = M.base_30.red, bg = M.base_30.grey, bold = true },
+    DiagnosticVirtualTextWarn                   = { fg = M.base_30.yellow, bg = M.base_30.grey },
+    DiagnosticVirtualTextWarning                = { fg = M.base_30.yellow, bg = M.base_30.grey },
+    DiagnosticVirtualTextInfo                   = { fg = M.base_30.cyan, bg = M.base_30.grey },
+    DiagnosticUnderlineError                    = { undercurl = true, sp = M.base_30.red },
+    DiagnosticUnderlineWarn                     = { undercurl = true, sp = M.base_30.yellow },
+    DiagnosticUnderlineInfo                     = { undercurl = true, sp = M.base_30.cyan },
+    DiagnosticUnderlineHint                     = { undercurl = true, sp = M.base_30.vibrant_green },
+    DiagnosticText                              = { bg = M.base_30.black_float },
+    LspSignatureActiveParameter                 = { underline = true, bold = true, bg = M.base_30.black_float },
+    LspCodeLens                                 = { link = "Comment" },
+    LspInfoBorder                               = { link = 'FloatBorder' },
+    ALEErrorSign                                = { fg = M.base_30.red },
+    ALEWarningSign                              = { fg = M.base_30.yellow },
 
     -- Spell‐checking
-    SpellBad                               = { undercurl = true, sp = M.base_30.red },
-    SpellCap                               = { undercurl = true, sp = M.base_30.yellow },
-    SpellLocal                             = { undercurl = true, sp = M.base_30.cyan },
-    SpellRare                              = { undercurl = true, sp = M.base_30.vibrant_green },
+    SpellBad                                    = { undercurl = true, sp = M.base_30.red },
+    SpellCap                                    = { undercurl = true, sp = M.base_30.yellow },
+    SpellLocal                                  = { undercurl = true, sp = M.base_30.cyan },
+    SpellRare                                   = { undercurl = true, sp = M.base_30.vibrant_green },
   },
-  --stylua: ignore end
 
   syntax = {
     -- Function-like
-    Function = { fg = M.base_30.seablue },
+    Function                                    = { fg = M.base_30.seablue },
 
     -- Keyword-like
-    Keyword = { fg = M.base_30.orange, bold = true },
-    Statement = { link = "Keyword" },
-    Conditional = { link = "Keyword" },
-    Repeat = { link = "Keyword" },
-    Label = { link = "Keyword" },
-    StorageClass = { link = "Keyword" },
+    Keyword                                     = { fg = M.base_30.orange, bold = true },
+    Statement                                   = { link = "Keyword" },
+    Conditional                                 = { link = "Keyword" },
+    Repeat                                      = { link = "Keyword" },
+    Label                                       = { link = "Keyword" },
+    StorageClass                                = { link = "Keyword" },
 
     -- Type-like
-    Type = { fg = M.base_30.sun },
-    Structure = { link = "Type" },
-    Typedef = { link = "Type" },
+    Type                                        = { fg = M.base_30.sun },
+    Structure                                   = { link = "Type" },
+    Typedef                                     = { link = "Type" },
 
     -- Constant-like
-    Constant = { fg = M.base_30.baby_pink },
-    Number = { link = "Constant" },
-    Float = { link = "Constant" },
-    Boolean = { link = "Constant" },
+    Constant                                    = { fg = M.base_30.baby_pink },
+    Number                                      = { link = "Constant" },
+    Float                                       = { link = "Constant" },
+    Boolean                                     = { link = "Constant" },
 
     -- String-like
-    String = { fg = M.base_30.green },
-    Character = { link = "String" },
+    Special                                     = { fg = M.base_30.nord_blue },
+    String                                      = { fg = M.base_30.green },
+    Character                                   = { link = "String" },
 
     -- Variable-like
-    Variable = { fg = M.base_30.white },
-    Identifier = { link = "Variable" },
+    Variable                                    = { fg = M.base_30.white },
+    Identifier                                  = { link = "Variable" },
 
     -- Builtin-like
-    Builtin = { fg = M.base_30.blue },
+    Builtin                                     = { fg = M.base_30.blue },
 
     -- Field/Property-like
-    Field = { fg = M.base_30.cyan },
+    Field                                       = { fg = M.base_30.cyan },
 
     -- Operator-like
-    Operator = { fg = M.base_30.white },
+    Operator                                    = { fg = M.base_30.white },
 
     -- Delimiter/Punctuation
-    Delimiter = { italic = true, fg = M.base_30.grey_fg2 },
+    Delimiter                                   = { italic = true, fg = M.base_30.grey_fg2 },
 
     -- Comment-like
-    Comment = { fg = M.base_30.one_bg3 },
+    Comment                                     = { fg = M.base_30.one_bg3 },
 
     -- Macro/Preprocessor-like
-    Macro = { fg = M.base_30.red },
-    Exception = { link = "Macro" },
-    PreProc = { link = "Macro" },
-    Include = { link = "Macro" },
-    Define = { link = "Macro" },
-    PreCondit = { link = "Macro" },
+    Macro                                       = { fg = M.base_30.red },
+    Exception                                   = { link = "Macro" },
+    PreProc                                     = { link = "Macro" },
+    Include                                     = { link = "Macro" },
+    Define                                      = { link = "Macro" },
+    PreCondit                                   = { link = "Macro" },
   },
 
-  -- stylua: ignore start
   treesitter = {
     -- Comments
     ['@comment']                                = { link = 'Comment' },
@@ -251,7 +250,7 @@ M.polish_hl = {
     ['@method.call']                            = { link = 'Function' },
 
     -- Parameters
-    ['@parameter']                              = { fg   = M.base_30.white,      italic = true },
+    ['@parameter']                              = { fg = M.base_30.white, italic = true },
     ['@parameter.builtin']                      = { link = 'Builtin' },
 
     -- Keywords
@@ -354,9 +353,7 @@ M.polish_hl = {
     ['@tag.delimiter.tsx']                      = { fg = M.base_30.blue },
     ['@tag.tsx']                                = { fg = M.base_30.blue } ,
   },
-  -- stylua: ignore end
 
-  -- stylua: ignore start
   semantic_tokens = {
     -- LSP Semantic Token Highlights
     ['@lsp.type.boolean']                       = { link = 'Boolean' },
@@ -379,8 +376,8 @@ M.polish_hl = {
     ['@lsp.type.unresolvedReference']           = { undercurl = true, sp = M.base_30.red },
     ['@lsp.type.variable']                      = { link = "@variable" },
   },
-  -- stylua: ignore end
 }
+--stylua: ignore end
 
 -- set the theme type whether is dark or light
 M.type = "dark" -- "or light"
