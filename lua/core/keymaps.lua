@@ -38,7 +38,7 @@ map("n", "<C-Right>", "<cmd>vertical resize +2<cr>", { desc = "Increase Window W
 
 -- Buffers
 -- stylua: ignore start
-map("n", "<leader>bd", function() Snacks.bufdelete() end, { desc = "Delete Buffer" })
+map("n", "<leader>bd", function() Snacks.bufdelete() end, { desc =  "Delete Buffer" })
 map("n", "<leader>bo", function() Snacks.bufdelete.other() end, { desc = "Delete Other Buffers" })
 -- stylua: ignore end
 
@@ -123,6 +123,8 @@ Snacks.toggle.dim():map("<leader>uD")
 Snacks.toggle.profiler():map("<leader>dpp")
 Snacks.toggle.profiler_highlights():map("<leader>dph")
 
+--stylua: ignore end
+
 -- quit
 map("n", "<leader>qq", "<cmd>qa<cr>", { desc = "Quit All" })
 
@@ -130,7 +132,7 @@ map("n", "<leader>qq", "<cmd>qa<cr>", { desc = "Quit All" })
 map("n", "<leader>ui", vim.show_pos, { desc = "Inspect Pos" })
 map("n", "<leader>uI", function()
   vim.treesitter.inspect_tree()
-  vim.api.nvim_input("I")
+  vim.api.nvim_input "I"
 end, { desc = "Inspect Tree" })
 
 -- Terminal Mappings
@@ -150,3 +152,32 @@ map("n", "<leader><tab><tab>", "<cmd>tabnew<cr>", { desc = "New Tab" })
 map("n", "<leader><tab>]", "<cmd>tabnext<cr>", { desc = "Next Tab" })
 map("n", "<leader><tab>d", "<cmd>tabclose<cr>", { desc = "Close Tab" })
 map("n", "<leader><tab>[", "<cmd>tabprevious<cr>", { desc = "Previous Tab" })
+
+-- Color Column
+local cur_cc = {}
+
+local function append_cc()
+  local buf = vim.api.nvim_get_current_buf()
+  if not cur_cc[buf] then
+    cur_cc[buf] = vim.opt_local.colorcolumn:get()
+  end
+
+  vim.ui.input({ prompt = "Color Column" }, function(input)
+    local new_cc = tonumber(input)
+    vim.validate("new_cc", new_cc, "number")
+    vim.opt_local.colorcolumn:append(input)
+  end)
+end
+
+local function restore_cc()
+  local buf = vim.api.nvim_get_current_buf()
+  local orig = cur_cc[buf]
+
+  if orig ~= nil then
+    vim.opt_local.colorcolumn = orig
+    cur_cc[buf] = nil
+  end
+end
+
+map("n", "<leader>uca", append_cc, { desc = "Appends to Color Column [Buffer]" })
+map("n", "<leader>ucr", restore_cc, { desc = "Restores Color Column [Buffer]" })

@@ -1,16 +1,16 @@
 -- leader key
 -- you should use vim.keycode to translate keycodes instead of string values
-vim.g.mapleader = vim.keycode("<space>")
-vim.g.maplocalleader = vim.keycode("/")
+vim.g.mapleader = vim.keycode "<space>"
+vim.g.maplocalleader = vim.keycode "/"
 
 --- TODO: various global options
 --- similar to lazyvim so I can easily toggle things like autoformat
 
-vim.g.trouble_lualine = true
 vim.g.show_lnum_and_relnum = false
 
 -- LSP auto formatting
-vim.g.autoformat = true
+vim.g.autoformat_ignore = { "xml" }
+vim.g.autoformat = false
 
 -- Root dir
 vim.g.root_spec = { "lsp", { ".git", "lua" }, "cwd" }
@@ -38,7 +38,7 @@ vim.o.list = true
 vim.o.mouse = "a"
 vim.o.ruler = false
 vim.o.scrolloff = 4
-vim.opt.shortmess:append({ W = true, I = true, c = true, C = true })
+vim.opt.shortmess:append { W = true, I = true, c = true, C = true }
 vim.o.cmdheight = 0
 vim.o.showmode = false
 vim.o.sidescrolloff = 8
@@ -46,8 +46,8 @@ vim.o.timeoutlen = 300
 vim.o.virtualedit = "block"
 vim.o.wildmode = "longest:full,full"
 vim.o.wrap = false
-vim.opt.isfname:append("@-@")
-vim.opt.diffopt:append("linematch:60") -- second stage diff to align lines
+vim.opt.isfname:append "@-@"
+vim.opt.diffopt:append "linematch:60" -- second stage diff to align lines
 
 -- File History
 vim.o.undofile = true

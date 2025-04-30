@@ -1,18 +1,3 @@
--- Autoformat on save
--- TODO: Eventually setup in a similar way to LazyVim
-vim.api.nvim_create_autocmd("BufWritePre", {
-  pattern = "*",
-  callback = function(args)
-    local ft = vim.bo[args.buf].filetype
-    local ignored = { "xml" }
-    -- disable autoformatting based of filetype
-    if vim.tbl_contains(ignored, ft) then
-      return
-    end
-    require("conform").format({ bufnr = args.buf })
-  end,
-})
-
 -- Enable LSP file renaming for imports, etc when a file is moved or renamed
 vim.api.nvim_create_autocmd("User", {
   pattern = "OilActionsPost",
@@ -28,7 +13,7 @@ vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
   group = vim.api.nvim_create_augroup("checktime", { clear = true }),
   callback = function()
     if vim.o.buftype ~= "nofile" then
-      vim.cmd("checktime")
+      vim.cmd "checktime"
     end
   end,
 })
@@ -46,7 +31,7 @@ vim.api.nvim_create_autocmd({ "VimResized" }, {
   group = vim.api.nvim_create_augroup("resize_splits", { clear = true }),
   callback = function()
     local current_tab = vim.fn.tabpagenr()
-    vim.cmd("tabdo wincmd =")
+    vim.cmd "tabdo wincmd ="
     vim.cmd("tabnext " .. current_tab)
   end,
 })
@@ -94,7 +79,7 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.bo[event.buf].buflisted = false
     vim.schedule(function()
       vim.keymap.set("n", "q", function()
-        vim.cmd("close")
+        vim.cmd "close"
         pcall(vim.api.nvim_buf_delete, event.buf, { force = true })
       end, {
         buffer = event.buf,
@@ -128,7 +113,7 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
 vim.api.nvim_create_autocmd({ "BufWritePre" }, {
   group = vim.api.nvim_create_augroup("auto_create_dir", { clear = true }),
   callback = function(event)
-    if event.match:match("^%w%w+://") then
+    if event.match:match "^%w%w+://" then
       return
     end
     local file = vim.uv.fs_realpath(event.match) or event.match

@@ -7,7 +7,7 @@ local aus = {}
 aus.document_highlight = function(client, buf)
   if client and client:supports_method("textDocument/documentHighlight", buf) then
     vim.api.nvim_create_augroup("lsp_document_highlight", { clear = false })
-    vim.api.nvim_clear_autocmds({ buffer = buf, group = "lsp_document_highlight" })
+    vim.api.nvim_clear_autocmds { buffer = buf, group = "lsp_document_highlight" }
     vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
       group = "lsp_document_highlight",
       buffer = buf,
@@ -23,11 +23,14 @@ end
 
 ---@param client vim.lsp.Client
 ---@param buf integer|number
-aus.show_diagnostics_on_cursor_hold = function(client, buf)
-  vim.api.nvim_create_autocmd("CursorHold", {
-    buffer = buf,
+aus.format_on_save = function(client, buf)
+  vim.api.nvim_create_autocmd("BufWritePre", {
+    pattern = "*",
     callback = function()
-      vim.diagnostic.open_float(nil, { focus = false, scope = "cursor" })
+      if vim.g.autoformat and not vim.tbl_contains(vim.g.autoformat_ignore, vim.bo[buf].filetype) then
+        vim.print "FORMATTING"
+        require("conform").format { bufnr = buf }
+      end
     end,
   })
 end
