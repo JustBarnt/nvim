@@ -84,6 +84,7 @@ M.polish_hl = {
     -- Basic / UI groups
     NormalFloat                                 = { fg = M.base_30.white, bg = M.base_30.black },
     Title                                       = { fg = M.base_16.base04 },
+    Directory                                   = { fg = M.base_30.nord_blue },
 
     -- Text‐style groups
     Underlined                                  = { underline = true },
