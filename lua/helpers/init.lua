@@ -1,5 +1,6 @@
 ---@class helpers
 ---@field folds helpers.folds
+---@field formatting helpers.formatting
 ---@field lualine helpers.lualine
 ---@field lsp helpers.lsp
 ---@field ui helpers.ui
