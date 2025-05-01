@@ -115,6 +115,7 @@ vim.diagnostic.config {
     source = "if_many",
     prefix = " ",
     scope = "cursor",
+    format = Helpers.formatting.formatErrors,
   },
 
   virtual_text = {
