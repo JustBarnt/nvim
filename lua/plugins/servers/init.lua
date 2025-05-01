@@ -43,6 +43,7 @@ Installables.servers = {
   "tailwindcss-language-server",
   "taplo",
   "vtsls",
+  "yaml-language-server"
 }
 
 Installables.linters = {
