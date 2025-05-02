@@ -14,6 +14,7 @@ return {
         doc = {
           privateName = { "^_" },
         },
+        diagnostics = { disable = { "missing-fields" } },
         hint = {
           enable = true,
           setType = false,
