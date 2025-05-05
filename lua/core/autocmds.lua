@@ -1,15 +1,3 @@
-vim.api.nvim_create_autocmd("User", {
-  pattern = "BlinkCmpAccept",
-  callback = function(args)
-    local item = args.data.item
-    if item.kind == 3 or item.kind == 2 then
-      vim.defer_fn(function()
-        vim.lsp.buf.signature_help()
-      end, 500)
-    end
-  end
-})
-
 -- Enable LSP file renaming for imports, etc when a file is moved or renamed
 vim.api.nvim_create_autocmd("User", {
   pattern = "OilActionsPost",

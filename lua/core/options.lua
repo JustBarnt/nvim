@@ -100,7 +100,8 @@ vim.o.expandtab = true
 vim.o.shiftround = true
 vim.o.shiftwidth = 2
 vim.o.tabstop = 2
-vim.o.smartindent = true
+vim.opt.smartindent = true
+vim.opt.autoindent = true
 
 -- Session options
 vim.opt.sessionoptions = { "buffers", "curdir", "tabpages", "winsize", "help", "globals", "skiprtp", "folds" }

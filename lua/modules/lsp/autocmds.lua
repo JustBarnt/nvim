@@ -28,7 +28,6 @@ aus.format_on_save = function(client, buf)
     pattern = "*",
     callback = function()
       if vim.g.autoformat and not vim.tbl_contains(vim.g.autoformat_ignore, vim.bo[buf].filetype) then
-        vim.print "FORMATTING"
         require("conform").format { bufnr = buf }
       end
     end,
