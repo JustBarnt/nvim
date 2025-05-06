@@ -1,7 +1,6 @@
 local uri_to_fname = vim.uri_to_fname
 local codelens = vim.lsp.codelens
 local request = vim.lsp.buf_request
-local request_sync = vim.lsp.buf_request_sync
 local ts = vim.treesitter
 local util = vim.lsp.util
 local Codelens = {}
