@@ -1,8 +1,10 @@
+---@type vim.lsp.ClientConfig
 return {
   cmd = { "vtsls", "--stdio" },
   root_markers = { ".git", "package.json", "tsconfig.json", "jsconfig.json" },
   filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" },
   capabilities = Helpers.lsp.create_capabilities(),
+  init_options = { hostInfo = "neovim" },
   on_init = function(client)
     Helpers.lsp.on_init(client, {
       complete_function_calls = true,
@@ -13,6 +15,7 @@ return {
           maxInlayHintLength = 30,
           completion = {
             enableServerSideFuzzyMatch = true,
+            entriesLimit = 50,
           },
         },
         tsserver = {
@@ -26,6 +29,14 @@ return {
         },
       },
       typescript = {
+        referencesCodeLens = {
+          enabled = true,
+          showOnAllFunctions = true,
+        },
+        implementationCodeLens = {
+          enabled = true,
+          showOnInterfaceMethods = true,
+        },
         updateImportsOnFileMove = { enabled = "always" },
         suggest = {
           completeFunctionCalls = true,
@@ -36,7 +47,7 @@ return {
           parameterNames = { enabled = "literals" },
           parameterTypes = { enabled = true },
           propertyDeclarationTypes = { enabled = true },
-          variableTypes = { enabled = false },
+          variableTypes = { enabled = true },
         },
       },
     })

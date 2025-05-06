@@ -1,25 +1,13 @@
----@type table<vim.lsp.protocol.Method.ClientToServer, fun(buffer?: number, keys?: LazyKeysSpec[])>
+---@type table<vim.lsp.protocol.Method.ClientToServer, fun(buffer?: number, keys?: LazyKeysSpec[], client: vim.lsp.Client)>
 local M = {}
 
-M["textDocument/codeLens"] = function(buffer, keys)
-  vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "InsertLeave" }, {
-    buffer = buffer,
-    callback = vim.lsp.codelens.refresh,
-  })
-
-  vim.list_extend(keys, {
-    { "<leader>cc", vim.lsp.codelens.run, "Run Codelens" },
-    { "<leader>cC", vim.lsp.codelens.refresh, "Refresh & Display Codelens" },
-  })
-end
-
-M["textDocument/codeAction"] = function(_, keys)
+M["textDocument/codeAction"] = function(_, keys, client)
   vim.list_extend(keys, {
     { "<leader>ca", "<CMD>lua require('fastaction').code_action()<CR>", "Code Action (FastAction)" },
   })
 end
 
-M["textDocument/rename"] = function(_, keys)
+M["textDocument/rename"] = function(_, keys, client)
   vim.api.nvim_create_autocmd("User", {
     pattern = "OilActionsPost",
     callback = function(event)
@@ -36,13 +24,13 @@ M["textDocument/rename"] = function(_, keys)
   })
 end
 
-M["textDocument/typeDefinition"] = function(_, keys)
+M["textDocument/typeDefinition"] = function(_, keys, client)
   vim.list_extend(keys, {
     { "<leader>D", vim.lsp.buf.type_definition, "Type [D]efinition" },
   })
 end
 
-M["textDocument/formatting"] = function(buffer, keys)
+M["textDocument/formatting"] = function(buffer, keys, client)
   table.insert(keys, {
     "<leader>cf",
     function()
@@ -55,7 +43,7 @@ M["textDocument/formatting"] = function(buffer, keys)
   })
 end
 
-M["textDocument/inlayHint"] = function(buffer, keys)
+M["textDocument/inlayHint"] = function(buffer, keys, client)
   vim.lsp.inlay_hint.enable()
   vim.list_extend(keys, {
     {

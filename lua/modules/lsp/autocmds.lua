@@ -1,45 +1,58 @@
+local LspCodelens = require "modules.lsp.codelens"
 local LspAutocmds = {}
 
+---@type table<string, fun(client: vim.lsp.Client, buffer?: number)>
 local aus = {}
 
----@param client vim.lsp.Client
----@param buf integer|number
-aus.document_highlight = function(client, buf)
-  if client and client:supports_method("textDocument/documentHighlight", buf) then
+aus.code_lens = function(client, buffer)
+  if client:supports_method("textDocument/codeLens", buffer) then
+    vim.api.nvim_create_augroup("lsp_code_lens_setup", { clear = true })
+    vim.api.nvim_create_autocmd({ "BufWinEnter", "BufWritePost" }, {
+      group = "lsp_code_lens_setup",
+      callback = function()
+        LspCodelens.full_refresh(buffer)
+        -- LspCodelens.refresh(buffer)
+      end,
+    })
+  end
+end
+
+aus.document_highlight = function(client, buffer)
+  if client:supports_method("textDocument/documentHighlight", buffer) then
     vim.api.nvim_create_augroup("lsp_document_highlight", { clear = false })
-    vim.api.nvim_clear_autocmds { buffer = buf, group = "lsp_document_highlight" }
+    vim.api.nvim_clear_autocmds { buffer = buffer, group = "lsp_document_highlight" }
     vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
       group = "lsp_document_highlight",
-      buffer = buf,
+      buffer = buffer,
       callback = vim.lsp.buf.document_highlight,
     })
     vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
       group = "lsp_document_highlight",
-      buffer = buf,
+      buffer = buffer,
       callback = vim.lsp.buf.clear_references,
     })
   end
 end
 
 ---@param client vim.lsp.Client
----@param buf integer|number
-aus.format_on_save = function(client, buf)
+---@param buffer integer|number
+aus.format_on_save = function(client, buffer)
   vim.api.nvim_create_autocmd("BufWritePre", {
     pattern = "*",
     callback = function()
-      if vim.g.autoformat and not vim.tbl_contains(vim.g.autoformat_ignore, vim.bo[buf].filetype) then
-        require("conform").format { bufnr = buf }
+      if vim.g.autoformat and not vim.tbl_contains(vim.g.autoformat_ignore, vim.bo[buffer].filetype) then
+        require("conform").format { bufnr = buffer }
       end
     end,
   })
 end
 
 ---@param client vim.lsp.Client
----@param buf integer|number
-LspAutocmds.setup = function(client, buf)
+---@param buffer integer|number
+LspAutocmds.setup = function(client, buffer)
   for name, hook in pairs(aus) do
     if type(hook) == "function" then
-      hook(client, buf)
+      hook(client, buffer)
     end
   end
 end

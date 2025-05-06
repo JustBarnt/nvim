@@ -117,10 +117,12 @@ vim.diagnostic.config {
     scope = "cursor",
     format = Helpers.formatting.formatErrors,
   },
-
   virtual_text = {
+    spacing = 4,
+    source = "if_many",
+    prefix = "●",
     severity = {
-      min = vim.diagnostic.severity.ERROR,
+      min = vim.diagnostic.severity.WARN,
     },
   },
   -- This is newly merged as of jan 2025, this displays diagnostic in a very similar way to nushell

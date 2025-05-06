@@ -41,6 +41,7 @@ if init_debug then
   require("osv").launch { port = 8086, blocking = true }
 end
 
+require "lsp_overrides"
 require "core.options"
 require "core.lazy"
 

@@ -26,6 +26,7 @@ end
 return {
   {
     "Wansmer/symbol-usage.nvim",
+    enabled = false,
     event = "BufReadPre",
     ---@diagnostic disable-next-line: missing-fields
     opts = {

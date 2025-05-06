@@ -1,29 +1,13 @@
 local M = {}
 local api = vim.api
-local client_methods = require("modules.lsp.client_capabilities")
-local lsp_autocmds = require("modules.lsp.autocmds")
+local client_methods = require "modules.lsp.client_capabilities"
+local lsp_autocmds = require "modules.lsp.autocmds"
+local lsp_commands = require "modules.lsp.user-commands"
+
 local lspgroup = api.nvim_create_augroup("lsp", {})
 
-local function setup_lsp_hover()
-  local hover = vim.lsp.buf.hover
-  ---@diagnostic disable-next-line: duplicate-set-field
-  vim.lsp.buf.hover = function(config)
-    config = config or {}
-    config.border = "rounded"
-    hover(config)
-  end
-
-  local signature_help = vim.lsp.buf.signature_help
-  ---@diagnostic disable-next-line: duplicate-set-field
-  vim.lsp.buf.signature_help = function(config)
-    config = config or {}
-    config.border = "rounded"
-    signature_help(config)
-  end
-end
-
 local function make_keymaps(buffer, keys)
-  local function map(lhs, rhs, desc, mode)
+ local function map(lhs, rhs, desc, mode)
     mode = mode or "n"
     vim.keymap.set(mode, lhs, rhs, { buffer = buffer, desc = "LSP: " .. desc })
   end
@@ -45,7 +29,6 @@ end
 function M.setup()
   local configs = {}
   local config_keys = {}
-  local lsp_commands = require("modules.lsp.user-commands").setup
 
   for _, v in ipairs(vim.api.nvim_get_runtime_file("lsp/*", true)) do
     local name = vim.fn.fnamemodify(v, ":t:r")
@@ -55,8 +38,9 @@ function M.setup()
   config_keys = vim.tbl_keys(configs)
   vim.lsp.enable(config_keys)
 
-  setup_lsp_hover()
-
+  -- Take how lazyvim applies lsp method keymaps by giving it a 
+  -- 'has' key to check it against a handler
+  -- as well as a 'client_name' key for only enabling the key if it is that lsp client
   local keys = {
     { "K", vim.lsp.buf.hover, "Hover" },
     { "gK", vim.lsp.buf.signature_help, "Signature Helper" },
@@ -67,9 +51,11 @@ function M.setup()
     { "<leader>ws", Snacks.picker.lsp_workspace_symbols, "[W]orkspace [S]ymbols" },
     { "gD", Snacks.picker.lsp_declarations, "[G]oto [D]eclaration" },
     { "gy", Snacks.picker.lsp_type_definitions, "Goto T[y]pe Definition" },
+    { "<leader>cc", vim.lsp.codelens.run, "Run Codelens" },
+    { "<leader>cC", vim.lsp.codelens.refresh, "Refresh & Display Codelens" },
   }
 
-  lsp_commands()
+  lsp_commands.setup()
 
   api.nvim_create_autocmd("LspAttach", {
     group = lspgroup,
@@ -82,17 +68,11 @@ function M.setup()
         table.insert(keys, { "gI", Snacks.picker.lsp_implementations, "[G]oto [I]mplementation" })
       end
 
-      vim.keymap.set("n", "<leader>mlr", function()
-        vim.ui.input({ prompt = "LSP Request Method: " }, function(input)
-          local param = { textDocument = vim.lsp.util.make_text_document_params(args.buf) }
-          vim.lsp.buf_request_all(0, input, param, function(results, ctx)
-            vim.print("---------Request Results---------")
-            vim.print(results)
-            vim.print("---------Request Context---------")
-            vim.print(ctx)
-          end)
-        end)
-      end, { desc = "Make an LSP Request" })
+      -- lsp_overrides.setup "Commands"
+
+      if Client.name == 'vtsls' then
+        vim.tbl_deep_extend("force", {}, Client.settings.typescript, Client.settings.javascript or {})
+      end
 
       -- Setup any LSP Client keymaps and server capabalities
       if vim.tbl_contains(config_keys, Client.name) then
@@ -107,7 +87,7 @@ function M.setup()
         -- Prints out all capabilities
         -- vim.print(method)
         if Client:supports_method(method, args.buf) and client_methods[method] then
-          client_methods[method](args.buf, keys)
+          client_methods[method](args.buf, keys, Client)
         end
       end
 
