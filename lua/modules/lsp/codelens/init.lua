@@ -50,42 +50,6 @@ local function filter_call_sites(bufnr, references)
 
   return out
 end
----@param bufnr? integer
-Codelens.refresh = function(bufnr)
-  bufnr = bufnr or vim.api.nvim_get_current_buf()
-  codelens.clear(nil, bufnr)
-  request(
-    bufnr,
-    "textDocument/codeLens",
-    { textDocument = util.make_text_document_params(bufnr) },
-    function(err, results, ctx)
-      if err or results == nil or #results == 0 then
-        return
-      end
-
-      local client_id = ctx.client_id
-      filter_call_sites(bufnr, {})
-
-      local pending = #results
-      for i, result in ipairs(results) do
-        request(bufnr, "codeLens/resolve", result, function(_, resolved)
-          results[i] = resolved or result
-          pending = pending - 1
-          if pending == 0 then
-            for _, lens in ipairs(results) do
-              lens.command = lens.command or {}
-              if not lens.command.title or lens.command.title == "..." or lens.command.title == "" then
-                lens.command.title = "󰍉 Loading..."
-              end
-            end
-            codelens.save(results, bufnr, client_id)
-            codelens.display(results, bufnr, client_id)
-          end
-        end)
-      end
-    end
-  )
-end
 
 ---@param bufnr integer
 Codelens.full_refresh = function(bufnr)
