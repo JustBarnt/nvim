@@ -52,7 +52,8 @@ end
 
 ---@param client vim.lsp.Client
 ---@param config? lsp.LSPObject
-function M.on_init(client, config)
+---@param opts? { merge: false }
+function M.on_init(client, config, opts)
   local path = vim.tbl_get(client, "workspace_folders", 1, "name")
   if not path then
     return

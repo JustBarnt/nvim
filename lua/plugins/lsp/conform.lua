@@ -32,11 +32,20 @@ return {
         --     return ok and parser and parser ~= vim.NIL or false
         --   end,
         -- },
+        remark = {
+          command = "remark",
+          args = {
+            "--no-color",
+            "--quiet",
+            vim.api.nvim_buf_get_name(0),
+          },
+        },
         xmlformat = {
           prepend_args = { "--selfclose", "--indent", "4", "--preserve", "literal" },
         },
       },
       formatters_by_ft = {
+        markdown = { "remark" },
         xml = { "xmlformat" },
         json = { "biome" },
         jsonc = { "biome" },

@@ -3,13 +3,7 @@ return {
   cmd = { "lua-language-server" },
   root_markers = { ".luarc.json", ".luarc.jsonc", ".luacheckrc", ".stylua.toml", "selene.toml", "selene.yml", ".git" },
   filetypes = { "lua" },
-  capabilities = {
-    textDocument = {
-      callHierarchy = {
-        dynamicRegistration = true,
-      }
-    },
-  },
+  capabilities = Helpers.lsp.create_capabilities(),
   on_init = function(client)
     table.insert(client.server_capabilities.executeCommandProvider.commands, "editor.action.showReferences")
     Helpers.lsp.on_init(client, {
