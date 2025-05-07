@@ -32,6 +32,8 @@ return {
       { desc = "Format File" }
     )
 
+    vim.opt.spell = false
+
     Helpers.lsp.on_init(client, {
       harper_ls = {
         codeActions = {
