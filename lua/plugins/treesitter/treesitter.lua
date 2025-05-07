@@ -58,6 +58,7 @@ return {
         "printf",
         "query",
         "regex",
+        "scheme",
         "svelte",
         "toml",
         "tsx",
