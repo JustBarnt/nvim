@@ -16,36 +16,11 @@ return {
         biome = {
           require_cwd = true,
         },
-        -- prettier = {
-        --   condition = function(_, ctx)
-        --     local ft = vim.bo[ctx.buf].filetype --[[@as string]]
-        --     -- default filetypes are always supported
-        --     if vim.tbl_contains({ "svelte" }, ft) then
-        --       return true
-        --     end
-        --     -- otherwise, check if a parser can be inferred
-        --     local ret = vim.fn.system({ "prettier", "--file-info", ctx.filename })
-        --     ---@type boolean, string?
-        --     local ok, parser = pcall(function()
-        --       return vim.fn.json_decode(ret).inferredParser
-        --     end)
-        --     return ok and parser and parser ~= vim.NIL or false
-        --   end,
-        -- },
-        remark = {
-          command = "remark",
-          args = {
-            "--no-color",
-            "--quiet",
-            vim.api.nvim_buf_get_name(0),
-          },
-        },
         xmlformat = {
           prepend_args = { "--selfclose", "--indent", "4", "--preserve", "literal" },
         },
       },
       formatters_by_ft = {
-        markdown = { "remark" },
         xml = { "xmlformat" },
         json = { "biome" },
         jsonc = { "biome" },
