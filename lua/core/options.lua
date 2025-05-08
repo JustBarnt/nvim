@@ -87,6 +87,7 @@ vim.o.timeoutlen = 300
 vim.o.virtualedit = "block"
 vim.o.wildmode = "longest:full,full"
 vim.o.wrap = false
+vim.o.breakindent = vim.o.wrap and true or false
 vim.opt.isfname:append "@-@"
 vim.opt.diffopt:append "linematch:60" -- second stage diff to align lines
 
