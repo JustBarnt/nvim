@@ -26,9 +26,6 @@ return {
         sign = false,
         icons = {},
       },
-      checkbox = {
-        enabled = false,
-      },
     },
     ft = { "markdown" },
     config = function(_, opts)
