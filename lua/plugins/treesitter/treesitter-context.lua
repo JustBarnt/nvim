@@ -14,6 +14,6 @@ return {
         end
       end,
     }):map("<leader>ut")
-    return { model = "cursor", max_liens = 3 }
+    return { model = "cursor", max_lines = 3 }
   end,
 }

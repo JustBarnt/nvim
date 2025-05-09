@@ -47,7 +47,7 @@ local ChadUI = {
       -- default/round/block/arrow separators work only for default statusline theme
       -- round and block will work for minimal theme only
       separator_style = "default",
-      order = { "mode", "path_and_filename", "git", "%=", "lsp_msg", "%=", "lsp", "diagnostics", "cursor" },
+      order = { "mode", "path_and_filename", "git", "%=", "lsp_msg", "%=", "lsp", "diagnostics", "cursor", "sleuth" },
       modules = {
         path_and_filename = function()
           local path = vim.api.nvim_buf_get_name(0)
@@ -55,6 +55,7 @@ local ChadUI = {
           local parent = vim.fn.fnamemodify(path, ":h:t")
           return parent .. "/" .. file
         end,
+        sleuth = "%{SleuthIndicator()}"
       },
     },
 
