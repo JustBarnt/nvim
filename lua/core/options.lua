@@ -117,9 +117,6 @@ vim.o.maxmempattern = 10000
 --- NOTE: New in neovim nightly as of 2025-03-18, but most current plugins have issues if this is set
 -- vim.o.winborder = "rounded"
 
-vim.opt.fileformat = "unix"
-vim.opt.fileformats = "unix,dos"
-
 -- Fold settings
 vim.opt.foldlevel = 99
 vim.opt.smoothscroll = true
