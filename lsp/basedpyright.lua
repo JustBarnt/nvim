@@ -1,3 +1,4 @@
+---@type vim.lsp.ClientConfig
 return {
   cmd = { "basedpyright-langserver", "--stdio" },
   filetypes = { "python" },
@@ -10,6 +11,7 @@ return {
     "pyrightconfig.json",
     ".git",
   },
+  workspace_required = false,
   capabilities = Helpers.lsp.create_capabilities(),
   settings = {
     basedpyright = {

@@ -12,8 +12,9 @@ return {
           enable = true,
         },
         completion = {
-          callSnippet = "Replace",
+          callSnippet = "Disable",
           autoRequire = true,
+          displayContext = 2,
         },
         doc = {
           privateName = { "^_" },
@@ -21,9 +22,9 @@ return {
         diagnostics = { disable = { "missing-fields" } },
         hint = {
           enable = true,
-          setType = false,
+          setType = true,
           paramType = true,
-          paramName = "Disable",
+          paramName = "All",
           semicolon = "Disable",
           arrayIndex = "Disable",
         },
