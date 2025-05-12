@@ -17,14 +17,9 @@ return {
   {
     "MeanderingProgrammer/render-markdown.nvim",
     opts = {
-      code = {
-        sign = false,
-        width = "block",
-        right_pad = 1,
-      },
-      header = {
-        sign = false,
-        icons = {},
+      completions = {
+        lsp = { enabled = true },
+        blink = { enabled = true }
       },
     },
     ft = { "markdown" },
