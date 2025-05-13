@@ -22,9 +22,9 @@ return {
         diagnostics = { disable = { "missing-fields" } },
         hint = {
           enable = true,
-          setType = true,
+          setType = false,
           paramType = true,
-          paramName = "All",
+          paramName = "Disable",
           semicolon = "Disable",
           arrayIndex = "Disable",
         },
