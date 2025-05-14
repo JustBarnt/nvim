@@ -43,7 +43,7 @@ return {
           BoringWords = true,
           LinkingVerbs = true,
           SentenceCapitalization = false,
-          SpellCheck = true,
+          SpellCheck = false,
           SpelledNumbers = true,
         },
       },
