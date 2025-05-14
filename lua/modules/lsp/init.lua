@@ -46,7 +46,7 @@ function M.setup()
     { "gK", vim.lsp.buf.signature_help, "Signature Helper" },
     { "<c-k>", vim.lsp.buf.signature_help, "Signature Helper", { "i" } },
     { "gd", Snacks.picker.lsp_definitions, "[G]oto [D]efinition" },
-    { "gr", Snacks.picker.lsp_references, "[G]oto [R]eferences" },
+    { "grr", Snacks.picker.lsp_references, "[G]oto [R]eferences" },
     { "<leader>ds", Snacks.picker.lsp_symbols, "[D]ocument [S]ymbols" },
     { "<leader>ws", Snacks.picker.lsp_workspace_symbols, "[W]orkspace [S]ymbols" },
     { "gD", Snacks.picker.lsp_declarations, "[G]oto [D]eclaration" },

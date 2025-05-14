@@ -10,14 +10,6 @@ map({ "n" }, "<S-L>", tabbufline.next, { desc = "Next Tab" })
 map({"n"}, "<leader>ft", function() themes.open({style = 'flat'}) end, { desc = "Find NVChad Themes" })
 -- stylua: ignore end
 
-map({ "n" }, "<localleader>/", function()
-  local pattern = vim.fn.input "rg: "
-  if pattern ~= "" then
-    vim.cmd('silent grep! "' .. pattern .. '"')
-    vim.cmd "copen"
-  end
-end, { desc = "Live Grep" })
-
 -- better up/down
 map({ "n", "x" }, "j", "v:count == 0 ? 'gj' : 'j'", { desc = "Down", expr = true, silent = true })
 map({ "n", "x" }, "<Down>", "v:count == 0 ? 'gj' : 'j'", { desc = "Down", expr = true, silent = true })
@@ -143,15 +135,6 @@ map("t", "<c-_>", "<cmd>close<cr>", { desc = "which_key_ignore" })
 map("n", "<leader>-", "<C-W>s", { desc = "Split Window Below", remap = true })
 map("n", "<leader>|", "<C-W>v", { desc = "Split Window Right", remap = true })
 map("n", "<leader>wd", "<C-W>c", { desc = "Delete Window", remap = true })
-
--- tabs
-map("n", "<leader><tab>l", "<cmd>tablast<cr>", { desc = "Last Tab" })
-map("n", "<leader><tab>o", "<cmd>tabonly<cr>", { desc = "Close Other Tabs" })
-map("n", "<leader><tab>f", "<cmd>tabfirst<cr>", { desc = "First Tab" })
-map("n", "<leader><tab><tab>", "<cmd>tabnew<cr>", { desc = "New Tab" })
-map("n", "<leader><tab>]", "<cmd>tabnext<cr>", { desc = "Next Tab" })
-map("n", "<leader><tab>d", "<cmd>tabclose<cr>", { desc = "Close Tab" })
-map("n", "<leader><tab>[", "<cmd>tabprevious<cr>", { desc = "Previous Tab" })
 
 -- Color Column
 local cur_cc = {}
