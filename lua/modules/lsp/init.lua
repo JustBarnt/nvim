@@ -95,6 +95,28 @@ function M.setup()
 
       lsp_autocmds.setup(Client, args.buf)
       make_keymaps(args.buf, keys)
+
+      vim.diagnostic.config {
+        severity_sort = true,
+        underline = { severity = { vim.diagnostic.severity.ERROR, vim.diagnostic.severity.WARN } },
+        signs = {
+          text = {
+            [vim.diagnostic.severity.ERROR] = Helpers.ui.icons.diagnostics.Error,
+            [vim.diagnostic.severity.WARN] = Helpers.ui.icons.diagnostics.Warn,
+            [vim.diagnostic.severity.INFO] = Helpers.ui.icons.diagnostics.Info,
+            [vim.diagnostic.severity.HINT] = Helpers.ui.icons.diagnostics.Hint,
+          },
+        },
+        float = { border = "rounded", source = "if_many", format = Helpers.formatting.formatErrors },
+        virtual_text = {
+          spacing = 2,
+          source = "if_many",
+          prefix = "●",
+          severity = {
+            min = vim.diagnostic.severity.WARN,
+          },
+        },
+      }
     end,
   })
 end

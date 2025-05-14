@@ -98,37 +98,6 @@ require("lazy").setup {
   },
 }
 
-vim.diagnostic.config {
-  severity_sort = true,
-  underline = true,
-  focusable = false,
-  signs = {
-    text = {
-      [vim.diagnostic.severity.ERROR] = Helpers.ui.icons.diagnostics.Error,
-      [vim.diagnostic.severity.WARN] = Helpers.ui.icons.diagnostics.Warn,
-      [vim.diagnostic.severity.INFO] = Helpers.ui.icons.diagnostics.Info,
-      [vim.diagnostic.severity.HINT] = Helpers.ui.icons.diagnostics.Hint,
-    },
-  },
-  float = {
-    border = "rounded",
-    source = "if_many",
-    prefix = " ",
-    scope = "cursor",
-    format = Helpers.formatting.formatErrors,
-  },
-  virtual_text = {
-    spacing = 4,
-    source = "if_many",
-    prefix = "●",
-    severity = {
-      min = vim.diagnostic.severity.WARN,
-    },
-  },
-  -- This is newly merged as of jan 2025, this displays diagnostic in a very similar way to nushell
-  -- virtual_lines = { current_line = false },
-}
-
 Helpers.root.setup()
 
 -- Config Core Files

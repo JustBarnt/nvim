@@ -56,18 +56,8 @@ return {
           -- make lazydev completions top priority (see `:h blink.cmp`)
           score_offset = 100,
         },
-        path = {
-          score_offset = 2,
-          -- opts = {
-          --   get_cwd = function(_)
-          --     return vim.uv.cwd()
-          --   end,
-          -- },
-        },
+        path = { score_offset = 2 },
       },
     },
   },
-  config = function(_, opts)
-    require("blink-cmp").setup(opts)
-  end,
 }
