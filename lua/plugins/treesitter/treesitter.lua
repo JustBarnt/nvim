@@ -3,6 +3,7 @@ return {
     "nvim-treesitter/nvim-treesitter",
     version = false,
     build = ":TSUpdate",
+    main = "nvim-treesitter.configs",
     -- event = { "LazyFile", "VeryLazy" },
     event = { "VeryLazy" },
     cmd = { "TSUpdateSync", "TSUpdate", "TSInstall" },
@@ -87,9 +88,6 @@ return {
         },
       },
     },
-    config = function(_, opts)
-      require("nvim-treesitter.configs").setup(opts)
-    end,
   },
   {
     "windwp/nvim-ts-autotag",
