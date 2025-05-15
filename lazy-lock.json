@@ -41,6 +41,7 @@
   "showkeys": { "branch": "main", "commit": "8daf5abb5fece0c9e1fa2c5679aaf226a80f5c38" },
   "snacks.nvim": { "branch": "main", "commit": "5eac729fa290248acfe10916d92a5ed5e5c0f9ed" },
   "symbol-usage.nvim": { "branch": "main", "commit": "e8712de8f339d40f96c0c89566f9bb97e647599d" },
+  "time-machine.nvim": { "branch": "main", "commit": "93c527136aa7839a972890071aeea4f630bf8b21" },
   "timerly": { "branch": "main", "commit": "17299a4d332c483ce09052fe8478b41b992f2594" },
   "todo-comments.nvim": { "branch": "main", "commit": "304a8d204ee787d2544d8bc23cd38d2f929e7cc5" },
   "trouble.nvim": { "branch": "main", "commit": "85bedb7eb7fa331a2ccbecb9202d8abba64d37b3" },
