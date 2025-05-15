@@ -81,6 +81,8 @@ M.polish_hl = {
     ['@lsp.typemod.variable.globalScope']       = { link = 'Macro' },
     ['@lsp.typemod.variable.injected']          = { link = 'Variable' },
 
+    NonText                                     = { fg = M.base_30.one_bg3 },
+
     -- Basic / UI groups
     NormalFloat                                 = { fg = M.base_30.white, bg = M.base_30.black },
     Title                                       = { fg = M.base_16.base04 },

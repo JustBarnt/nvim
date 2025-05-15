@@ -61,6 +61,7 @@ vim.g.root_spec = { "lsp", { ".git", "lua" }, "cwd" }
 --       while vim.opt allows passing rich objects instead
 
 -- general options
+vim.o.helpheight = math.ceil((vim.o.lines - 1) * 0.25)
 vim.o.autowrite = true
 vim.o.clipboard = "unnamedplus"
 vim.o.guicursor = "n-v-c:block,i-ci-ve:hor20,r-cr:hor20"
