@@ -17,6 +17,10 @@ return {
       topdelete = { text = "▎" },
       changedelete = { text = "▎" },
     },
+    current_line_blame = true,
+    current_line_blame_opts = { virt_text = true, virt_text_pos = "right_align" },
+    current_line_blame_formatter = " <author>: <author_time:%c> ",
+    update_debounce = 200,
     on_attach = function(buffer)
       local gs = package.loaded.gitsigns
 

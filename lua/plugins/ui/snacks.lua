@@ -42,6 +42,7 @@ return {
     profiler = { enabled = true },
     quickfile = { enabled = true },
     scope = { enabled = true },
+    statuscolumn = { enabled = true },
     terminal = {
       shell = "nu.exe",
       win = {

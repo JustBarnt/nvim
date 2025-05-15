@@ -38,9 +38,9 @@ function M.setup()
   config_keys = vim.tbl_keys(configs)
   vim.lsp.enable(config_keys)
 
-  -- Take how lazyvim applies lsp method keymaps by giving it a 
-  -- 'has' key to check it against a handler
-  -- as well as a 'client_name' key for only enabling the key if it is that lsp client
+  -- TODO: Take how lazyvim applies lsp method keymaps by giving it a 
+  --       'has' key to check it against a handler as well as a 'client_name' 
+  --       key for only enabling the key if it is that lsp client
   local keys = {
     { "K", vim.lsp.buf.hover, "Hover" },
     { "gK", vim.lsp.buf.signature_help, "Signature Helper" },

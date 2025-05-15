@@ -16,6 +16,14 @@ return {
       -- during startup.
       require("lazy.core.loader").add_to_rtp(plugin)
       require "nvim-treesitter.query_predicates"
+      local parsers = require("nvim-treesitter.parsers").get_parser_configs()
+      parsers.lua_patterns = {
+        install_info = {
+          url = "https://github.com/OXY2DEV/tree-sitter-lua_patterns",
+          files = { "src/parser.c" },
+          branch = "main",
+        },
+      }
     end,
     keys = {
       { "<c-space>", desc = "Increment Selection" },
@@ -24,7 +32,7 @@ return {
     ---@type TSConfig
     ---@diagnostic disable-next-line: missing-fields
     opts = {
-      highlight = { enable = true },
+      highlight = { enable = true, additional_vim_regex_highlighting = false },
       indent = { enable = false, disable = { "yaml" } },
       ensure_installed = {
         "bash",
@@ -51,6 +59,7 @@ return {
         "lua",
         "luadoc",
         "luap",
+        "lua_patterns",
         "markdown",
         "markdown_inline",
         "nu",
