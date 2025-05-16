@@ -1,6 +1,7 @@
 ---@class vim.lsp.Config
 return {
   cmd = { "taplo", "lsp", "stdio" },
-  root_markers = { ".git" },
+  -- root_markers = { ".git" },
   filetypes = { "toml" },
+  workspace_required = false,
 }
