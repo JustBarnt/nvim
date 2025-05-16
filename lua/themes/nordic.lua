@@ -63,6 +63,7 @@ M.base_16 = {
 -- stylua: ignore start
 M.polish_hl = {
   defaults = {
+    TimeMachineBorder                           = { link = "SnacksPickerBorder" },
     ['@lsp.type.variable.global']               = { link = "@namespace" },
     ['@lsp.mod.global']                         = { link = "@namespace" },
 
