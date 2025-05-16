@@ -7,7 +7,7 @@ return {
     ---@type conform.setupOpts
     local opts = {
       default_format_opts = {
-        timeout_ms = 3000,
+        timeout_ms = 500,
         async = false,
         quiet = false,
         lsp_format = "fallback",
@@ -19,9 +19,14 @@ return {
         xmlformat = {
           prepend_args = { "--selfclose", "--indent", "4", "--preserve", "literal" },
         },
+        topiary_nu = {
+          command = "topiary",
+          args = { "format", "--language", "nu" },
+        },
       },
       formatters_by_ft = {
         xml = { "xmlformat" },
+        nu = { "topiary_nu" },
         json = { "biome" },
         jsonc = { "biome" },
         css = { "biome" },

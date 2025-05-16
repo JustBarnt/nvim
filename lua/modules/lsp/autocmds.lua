@@ -39,9 +39,10 @@ end
 aus.format_on_save = function(client, buffer)
   vim.api.nvim_create_autocmd("BufWritePre", {
     pattern = "*",
-    callback = function()
-      if vim.g.autoformat and not vim.tbl_contains(vim.g.autoformat_ignore, vim.bo[buffer].filetype) then
-        require("conform").format { bufnr = buffer }
+    callback = function(args)
+      local disable_filetypes = { c = true, cpp = true, xml = true }
+      if vim.g.autoformat and not disable_filetypes[vim.bo[args.buf].filetype] then
+        require("conform").format { bufnr = args.buf }
       end
     end,
   })

@@ -50,8 +50,7 @@ vim.opt.shellpipe = '| complete | update stderr { ansi strip } | tee { get stder
 vim.g.show_lnum_and_relnum = false
 
 -- LSP auto formatting
-vim.g.autoformat_ignore = { "xml" }
-vim.g.autoformat = false
+vim.g.autoformat = true
 
 -- Root dir
 vim.g.root_spec = { "lsp", { ".git", "lua" }, "cwd" }
