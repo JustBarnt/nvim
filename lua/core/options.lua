@@ -1,7 +1,7 @@
 -- leader key
 -- you should use vim.keycode to translate keycodes instead of string values
 vim.g.mapleader = vim.keycode "<space>"
-vim.g.maplocalleader = vim.keycode "/"
+vim.g.maplocalleader = vim.keycode "\\"
 
 vim.opt.sh = "nu"
 
@@ -33,7 +33,8 @@ vim.opt.shellquote = ""
 -- 1. save teh stderr of `makeprg` in the temp file which Neovim reads using `errorformat` to populate the `quickfix` buffer
 -- 2. show the stdout, stderr and the return_code on the screen
 -- NOTE: `ansi strip` removes all ansi coloring from nushell errors
-vim.opt.shellpipe = '| complete | update stderr { ansi strip } | tee { get stderr | save --force --raw %s } | into record'
+vim.opt.shellpipe =
+  "| complete | update stderr { ansi strip } | tee { get stderr | save --force --raw %s } | into record"
 
 -- NOTE: Add custom nu config and env to `vim.opt.sh`
 
@@ -43,7 +44,6 @@ vim.opt.shellpipe = '| complete | update stderr { ansi strip } | tee { get stder
 -- else
 --   vim.opt.sh = "nu --env-config ~/.config/nushell/env.nu --config ~/.config/nushell/config.nu"
 -- end
-
 
 --- TODO: various global options
 --- similar to lazyvim so I can easily toggle things like autoformat
@@ -103,6 +103,7 @@ vim.o.shiftwidth = 2
 vim.o.tabstop = 2
 vim.opt.smartindent = true
 vim.opt.autoindent = true
+vim.opt.smoothscroll = true
 
 -- Session options
 vim.opt.sessionoptions = { "buffers", "curdir", "tabpages", "winsize", "help", "globals", "skiprtp", "folds" }
@@ -119,7 +120,6 @@ vim.o.maxmempattern = 10000
 
 -- Fold settings
 vim.opt.foldlevel = 99
-vim.opt.smoothscroll = true
 vim.opt.foldexpr = "v:lua.require'helpers.folds'.foldexpr()"
 vim.opt.foldmethod = "expr"
 vim.opt.foldtext = ""
@@ -148,6 +148,3 @@ vim.o.splitright = true
 
 -- Terminal
 vim.o.termguicolors = true
-
-vim.o.number = true
-vim.o.relativenumber = true
