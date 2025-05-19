@@ -91,7 +91,7 @@ map("n", "<leader>fn", "<cmd>enew<cr>", { desc = "New File" })
 local diagnostic_goto = function(count, severity)
   severity = severity and vim.diagnostic.severity[severity] or nil
   return function()
-    vim.diagnostic.jump { severity, count = count }
+    vim.diagnostic.jump { severity = severity, count = count }
   end
 end
 map("n", "<leader>cd", vim.diagnostic.open_float, { desc = "Line Diagnostics" })

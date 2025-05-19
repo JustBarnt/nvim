@@ -30,7 +30,6 @@ Installables.servers = {
   "css-lsp",
   "css-variables-language-server",
   "gopls",
-  "harper-ls",
   "intelephense",
   "json-lsp",
   "lemminx",
@@ -42,7 +41,7 @@ Installables.servers = {
   "tailwindcss-language-server",
   "taplo",
   "vtsls",
-  "yaml-language-server"
+  "yaml-language-server",
 }
 
 Installables.linters = {
