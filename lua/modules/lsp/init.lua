@@ -3,11 +3,12 @@ local api = vim.api
 local client_methods = require "modules.lsp.client_capabilities"
 local lsp_autocmds = require "modules.lsp.autocmds"
 local lsp_commands = require "modules.lsp.user-commands"
+local lsp_hover = require "modules.lsp.hover"
 
 local lspgroup = api.nvim_create_augroup("lsp", {})
 
 local function make_keymaps(buffer, keys)
- local function map(lhs, rhs, desc, mode)
+  local function map(lhs, rhs, desc, mode)
     mode = mode or "n"
     vim.keymap.set(mode, lhs, rhs, { buffer = buffer, desc = "LSP: " .. desc })
   end
@@ -38,23 +39,6 @@ function M.setup()
   config_keys = vim.tbl_keys(configs)
   vim.lsp.enable(config_keys)
 
-  -- TODO: Take how lazyvim applies lsp method keymaps by giving it a 
-  --       'has' key to check it against a handler as well as a 'client_name' 
-  --       key for only enabling the key if it is that lsp client
-  local keys = {
-    { "K", vim.lsp.buf.hover, "Hover" },
-    { "gK", vim.lsp.buf.signature_help, "Signature Helper" },
-    { "<c-k>", vim.lsp.buf.signature_help, "Signature Helper", { "i" } },
-    { "gd", Snacks.picker.lsp_definitions, "[G]oto [D]efinition" },
-    { "grr", Snacks.picker.lsp_references, "[G]oto [R]eferences" },
-    { "<leader>ds", Snacks.picker.lsp_symbols, "[D]ocument [S]ymbols" },
-    { "<leader>ws", Snacks.picker.lsp_workspace_symbols, "[W]orkspace [S]ymbols" },
-    { "gD", Snacks.picker.lsp_declarations, "[G]oto [D]eclaration" },
-    { "gy", Snacks.picker.lsp_type_definitions, "Goto T[y]pe Definition" },
-    { "<leader>cc", vim.lsp.codelens.run, "Run Codelens" },
-    { "<leader>cC", vim.lsp.codelens.refresh, "Refresh & Display Codelens" },
-  }
-
   lsp_commands.setup()
 
   api.nvim_create_autocmd("LspAttach", {
@@ -64,13 +48,36 @@ function M.setup()
       --       that could be nil
       local Client = assert(vim.lsp.get_client_by_id(args.data.client_id))
 
+      -- TODO: Take how lazyvim applies lsp method keymaps by giving it a
+      --       'has' key to check it against a handler as well as a 'client_name'
+      --       key for only enabling the key if it is that lsp client
+      local keys = {
+        {
+          "K",
+          function()
+            lsp_hover.get_hover_info(Client)
+          end,
+          "Hover",
+        },
+        { "gK", vim.lsp.buf.signature_help, "Signature Helper" },
+        { "<c-k>", vim.lsp.buf.signature_help, "Signature Helper", { "i" } },
+        { "gd", Snacks.picker.lsp_definitions, "[G]oto [D]efinition" },
+        { "grr", Snacks.picker.lsp_references, "[G]oto [R]eferences" },
+        { "<leader>ds", Snacks.picker.lsp_symbols, "[D]ocument [S]ymbols" },
+        { "<leader>ws", Snacks.picker.lsp_workspace_symbols, "[W]orkspace [S]ymbols" },
+        { "gD", Snacks.picker.lsp_declarations, "[G]oto [D]eclaration" },
+        { "gy", Snacks.picker.lsp_type_definitions, "Goto T[y]pe Definition" },
+        { "<leader>cc", vim.lsp.codelens.run, "Run Codelens" },
+        { "<leader>cC", vim.lsp.codelens.refresh, "Refresh & Display Codelens" },
+      }
+
       if Client.server_capabilities.implementationProvider then
         table.insert(keys, { "gI", Snacks.picker.lsp_implementations, "[G]oto [I]mplementation" })
       end
 
       -- lsp_overrides.setup "Commands"
 
-      if Client.name == 'vtsls' then
+      if Client.name == "vtsls" then
         vim.tbl_deep_extend("force", {}, Client.settings.typescript, Client.settings.javascript or {})
       end
 
