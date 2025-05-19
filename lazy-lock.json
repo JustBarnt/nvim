@@ -9,7 +9,6 @@
   "cmake-tools.nvim": { "branch": "master", "commit": "1ee065c33ca777c0e03cd7c358010202ee70bb88" },
   "conform.nvim": { "branch": "master", "commit": "372fc521f8421b7830ea6db4d6ea3bae1c77548c" },
   "diffview.nvim": { "branch": "main", "commit": "4516612fe98ff56ae0415a259ff6361a89419b0a" },
-  "easy-dotnet.nvim": { "branch": "main", "commit": "50e3d11c16ef80df475e0c92248cdc066bc9fc0a" },
   "fastaction.nvim": { "branch": "main", "commit": "b62716177731390be1f2131065ace7d7dac4ec99" },
   "flash.nvim": { "branch": "main", "commit": "3c942666f115e2811e959eabbdd361a025db8b63" },
   "gitsigns.nvim": { "branch": "main", "commit": "43b0c856ae5f32a195d83f4a27fe21d63e6c966c" },
