@@ -17,20 +17,20 @@ end
 M.action = setmetatable({}, {
   __index = function(_, action)
     return function()
-      vim.lsp.buf.code_action({
+      vim.lsp.buf.code_action {
         apply = true,
         context = {
           only = { action },
           diagnostics = {},
         },
-      })
+      }
     end
   end,
 })
 
 ---@param method vim.lsp.protocol.Method.ClientToServer|vim.lsp.protocol.Method.ServerToClient
 function M.SupportsMethod(method)
-  local clients = vim.lsp.get_clients({ bufnr = 0 })
+  local clients = vim.lsp.get_clients { bufnr = 0 }
   for _, client in pairs(clients) do
     if client:supports_method(method, 0) then
       return true

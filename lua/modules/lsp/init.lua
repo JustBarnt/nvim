@@ -52,13 +52,7 @@ function M.setup()
       --       'has' key to check it against a handler as well as a 'client_name'
       --       key for only enabling the key if it is that lsp client
       local keys = {
-        {
-          "K",
-          function()
-            lsp_hover.get_hover_info(Client)
-          end,
-          "Hover",
-        },
+        { "K", vim.lsp.buf.hover, "Hover" },
         { "gK", vim.lsp.buf.signature_help, "Signature Helper" },
         { "<c-k>", vim.lsp.buf.signature_help, "Signature Helper", { "i" } },
         { "gd", Snacks.picker.lsp_definitions, "[G]oto [D]efinition" },

@@ -148,3 +148,7 @@ vim.o.splitright = true
 
 -- Terminal
 vim.o.termguicolors = true
+
+-- Numbers
+vim.o.number = true
+vim.o.relativenumber = true
