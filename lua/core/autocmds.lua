@@ -25,7 +25,7 @@ vim.api.nvim_create_autocmd("FileType", {
         if not seen[row] then
           seen[row] = true
           vim.print(seen[row])
-          vim.cmd(("%dfoldclose"):format(row+1))
+          vim.cmd(("%dfoldclose"):format(row + 1))
         end
       end
     end
