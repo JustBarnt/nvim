@@ -1,3 +1,22 @@
+vim.api.nvim_create_autocmd("BufReadPost", {
+  pattern = "*Clear.log",
+  callback = function()
+    vim.notify("Entering a `Clear.log`: normalizing to Unix‑LF in binary mode", vim.log.levels.INFO)
+
+    if vim.fn.search("\r\n", "nw") > 0 then
+      -- collapse all CRLF → LF, ignore if none found
+      vim.cmd [[silent! %s/\r\n/\r/ge]]
+    end
+    if vim.fn.search("\r", "nw") > 0 then
+      -- collapse any stray lone CR → LF, ignore if none found
+      vim.cmd [[silent! %s/\r/\r/ge]]
+    end
+
+    vim.opt_local.binary = true
+    vim.opt_local.fileformat = "unix"
+  end,
+})
+
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "markdown",
   once = true,
