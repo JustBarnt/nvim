@@ -34,6 +34,10 @@ if vim.fn.executable "nu" == 1 then
   }
 end
 
+vim.filetype.add {
+  extension = { log = "log" },
+}
+
 ---@diagnostic disable-next-line: undefined-global
 if init_debug then
   local osvpath = vim.fn.stdpath "data" .. "/lazy/one-small-step-for-vimkind"

@@ -23,6 +23,11 @@ return {
           command = "topiary",
           args = { "format", "--language", "nu" },
         },
+        injected = {
+          options = {
+            ignore_errors = true,
+          },
+        },
       },
       formatters_by_ft = {
         xml = { "xmlformat" },
@@ -36,6 +41,7 @@ return {
         html = { "biome", "prettier", stop_after_first = true },
         lua = { "stylua" },
         go = { "goimports", "gofumpt" },
+        log = { "injected" },
       },
     }
     return opts
