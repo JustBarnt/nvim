@@ -2,7 +2,7 @@ return {
   cmd = { "vscode-json-language-server", "--stdio" },
   root_markers = { "*.json" },
   filetypes = { "json", "jsonc", "json5" },
-  capabilities = Helpers.lsp.create_capabilities({
+  capabilities = Helpers.lsp.create_capabilities {
     textDocument = {
       completion = {
         completionItem = {
@@ -10,7 +10,7 @@ return {
         },
       },
     },
-  }),
+  },
   init_options = {
     provideFormatter = true,
   },

@@ -17,6 +17,13 @@ return {
       require("lazy.core.loader").add_to_rtp(plugin)
       require "nvim-treesitter.query_predicates"
       local parsers = require("nvim-treesitter.parsers").get_parser_configs()
+      parsers.log = {
+        install_info = {
+          url = "https://github.com/Tudyx/tree-sitter-log",
+          files = { "src/parser.c" },
+          branch = "main",
+        },
+      }
       parsers.lua_patterns = {
         install_info = {
           url = "https://github.com/OXY2DEV/tree-sitter-lua_patterns",

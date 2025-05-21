@@ -72,7 +72,7 @@ function M.setup()
       -- lsp_overrides.setup "Commands"
 
       if Client.name == "vtsls" then
-        vim.tbl_deep_extend("force", {}, Client.settings.typescript, Client.settings.javascript or {})
+        Client.settings.javascript = Client.settings.typescript
       end
 
       -- Setup any LSP Client keymaps and server capabalities

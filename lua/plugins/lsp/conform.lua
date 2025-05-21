@@ -3,6 +3,16 @@ return {
   dependencies = { "mason.nvim" },
   lazy = true,
   cmd = "ConformInfo",
+  keys = {
+    {
+      "<leader>cF",
+      function()
+        require("conform").format { formatters = { "injected" }, timeout_ms = 3000 }
+      end,
+      mode = { "n", "v" },
+      desc = "Format Injected Langs",
+    },
+  },
   opts = function()
     ---@type conform.setupOpts
     local opts = {
@@ -26,13 +36,17 @@ return {
         injected = {
           options = {
             ignore_errors = true,
+            lang_to_formatters = {
+              json = { "jq" },
+              xml = { "xmlformat" },
+            },
           },
         },
       },
       formatters_by_ft = {
         xml = { "xmlformat" },
         nu = { "topiary_nu" },
-        json = { "biome" },
+        json = { "jq" },
         jsonc = { "biome" },
         css = { "biome" },
         svelte = { "prettier" },

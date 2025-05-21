@@ -11,6 +11,7 @@ end
 local ChadUI = {
   base46 = {
     theme = "nordic",
+    integrations = { "render-markdown" },
     transparency = false,
     hl_override = {
       -- ["@lsp.type.variable"] = vim.empty_dict(),
