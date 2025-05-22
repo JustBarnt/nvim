@@ -117,6 +117,11 @@ Snacks.toggle.profiler_highlights():map("<leader>dph")
 
 --stylua: ignore end
 
+map("n", "<leader>uf", function()
+  vim.g.autoformat = not vim.g.autoformat
+  vim.notify(("Autoformatting turned: %s"):format(vim.g.autoformat and "on" or "off"), vim.log.levels.INFO)
+end, { desc = "Toggle Autoformatting" })
+
 -- quit
 map("n", "<leader>qq", "<cmd>qa<cr>", { desc = "Quit All" })
 

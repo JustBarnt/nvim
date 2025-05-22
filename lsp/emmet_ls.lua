@@ -1,0 +1,21 @@
+return {
+  cmd = { "emmet-ls", "--stdio" },
+  workspace_required = false,
+  filetypes = {
+    "astro",
+    "css",
+    "eruby",
+    "html",
+    "htmldjango",
+    "javascriptreact",
+    "less",
+    "pug",
+    "sass",
+    "scss",
+    "svelte",
+    "typescriptreact",
+    "vue",
+    "htmlangular",
+  },
+  root_markers = { ".git" },
+}

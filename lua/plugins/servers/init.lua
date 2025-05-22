@@ -22,14 +22,16 @@ Installables.formatters = {
 }
 
 Installables.servers = {
-  "bash-language-server",
   "basedpyright",
+  "bash-language-server",
   "clangd",
   "cmake-language-server",
-  "cssmodules-language-server",
   "css-lsp",
   "css-variables-language-server",
+  "cssmodules-language-server",
+  "emmet-ls",
   "gopls",
+  "html-lsp",
   "intelephense",
   "json-lsp",
   "lemminx",
