@@ -22,7 +22,6 @@ Installables.formatters = {
 }
 
 Installables.servers = {
-  "basedpyright",
   "bash-language-server",
   "clangd",
   "cmake-language-server",
@@ -37,6 +36,7 @@ Installables.servers = {
   "lemminx",
   "lua-language-server",
   "prisma-language-server",
+  "pyrefly",
   "roslyn",
   "ruff",
   "svelte-language-server",
