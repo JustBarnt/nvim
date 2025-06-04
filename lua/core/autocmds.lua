@@ -1,19 +1,19 @@
--- vim.api.nvim_create_autocmd("BufReadPost", {
---   pattern = "*Clear.log",
---   callback = function()
---     Snacks.notify.info({
---       "Entering a `Clear.log`",
---       "Normaling log to **Unix-LF in binary mode**"
---     })
---     --
---     -- collapse all CRLF → LF, ignore if none found
---     vim.cmd [[silent! %s/\r\n/\r/ge]]
---     -- collapse any stray lone CR → LF, ignore if none found
---     vim.cmd [[silent! %s/\r/\r/ge]]
---     vim.opt_local.binary = true
---     vim.opt_local.fileformat = "unix"
---   end,
--- })
+vim.api.nvim_create_autocmd("BufReadPost", {
+  pattern = "*Clear.log",
+  callback = function()
+    Snacks.notify.info({
+      "Entering a `Clear.log`",
+      "Normaling log to **Unix-LF in binary mode**"
+    })
+    --
+    -- collapse all CRLF → LF, ignore if none found
+    vim.cmd [[silent! %s/\r\n/\r/ge]]
+    -- collapse any stray lone CR → LF, ignore if none found
+    vim.cmd [[silent! %s/\r/\r/ge]]
+    vim.opt_local.binary = true
+    vim.opt_local.fileformat = "unix"
+  end,
+})
 
 -- vim.api.nvim_create_autocmd("FileType", {
 --   pattern = "markdown",

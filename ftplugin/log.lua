@@ -1,9 +1,9 @@
 local opt = vim.opt_local
 
 -- Core
-opt.binary = true
-opt.eol = false
-opt.fileformat = "unix"
+-- opt.binary = true
+-- opt.eol = false
+-- opt.fileformat = "unix"
 opt.shadafile = "NONE"
 opt.swapfile = false
 opt.undofile = false
@@ -19,28 +19,17 @@ opt.wrap = false
 opt.number = false
 opt.relativenumber = false
 opt.cursorcolumn = false
+opt.eventignore = { "FileType", "UIEnter", "BufReadPre" }
 
-local function setup()
-  Snacks.notify.info { "Entered a **.log** file running optimizations" }
+-- Filetype-related
+vim.cmd "filetype off"
+vim.cmd "filetype indent off"
 
-  -- Filetype-related
-  vim.cmd "filetype off"
-  vim.cmd "filetype indent off"
+-- Disable treesitter for log files
+vim.treesitter.stop()
 
-  -- Disable treesitter for log files
-  vim.treesitter.stop()
+vim.schedule(function()
+  Snacks.notify.info { "Log file optimization applied." }
+end)
 
-  local ok, ts = pcall(require, "vim.treesitter")
-  local buf = vim.api.nvim_get_current_buf()
-  if ok and ts.highlighter and ts.highlighter.active then
-    if ts.highlighter.active[buf] then
-      ts.stop(buf)
-    end
-  end
 
-  vim.schedule(function()
-    Snacks.notify.info { "Log file optimization applied." }
-  end)
-end
-
-setup()
