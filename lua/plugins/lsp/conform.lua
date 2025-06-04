@@ -18,7 +18,7 @@ return {
     local opts = {
       default_format_opts = {
         timeout_ms = 500,
-        async = false,
+        async = true,
         quiet = false,
         lsp_format = "fallback",
       },

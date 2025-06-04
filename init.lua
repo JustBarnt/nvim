@@ -11,31 +11,17 @@ if vim.fn.has "nvim-0.11" ~= 1 then
   end
 end
 
--- Add filetypes for nushell if the executable is found
-if vim.fn.executable "nu" == 1 then
-  vim.filetype.add {
-    extension = {
-      nu = "nu",
-      nush = "nu",
-      nuon = "nu",
-      nushell = "nu",
-    },
-    pattern = {
-      ["."] = {
-        function(path, bufnr)
-          local content = vim.filetype.getlines(bufnr, 1)
-          if vim.fileytpe.matchregex(content, [[^#!/usr/bin/env nu]]) then
-            return "nu"
-          end
-        end,
-        priority = -math.huge,
-      },
-    },
-  }
-end
-
 vim.filetype.add {
-  extension = { log = "log" },
+  extension = {
+    nu = "nu",
+    nush = "nu",
+    nuon = "nu",
+    nushell = "nu",
+    log = "log",
+  },
+  pattern = {
+    [".*/git/%a+(%-?%a+)"] = { "gitconfig", { priority = 10 }},
+  },
 }
 
 ---@diagnostic disable-next-line: undefined-global

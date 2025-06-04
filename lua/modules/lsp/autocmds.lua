@@ -36,17 +36,17 @@ end
 
 ---@param client vim.lsp.Client
 ---@param buffer integer|number
-aus.format_on_save = function(client, buffer)
-  vim.api.nvim_create_autocmd("BufWritePre", {
-    pattern = "*",
-    callback = function(args)
-      local disable_filetypes = { c = true, cpp = true, xml = true }
-      if vim.g.autoformat and not disable_filetypes[vim.bo[args.buf].filetype] then
-        require("conform").format { bufnr = args.buf }
-      end
-    end,
-  })
-end
+-- aus.format_on_save = function(client, buffer)
+--   vim.api.nvim_create_autocmd("BufWritePre", {
+--     pattern = "*",
+--     callback = function(args)
+--       local disable_filetypes = { c = true, cpp = true, xml = true }
+--       if vim.g.autoformat and not disable_filetypes[vim.bo[args.buf].filetype] then
+--         require("conform").format { bufnr = args.buf, async = true }
+--       end
+--     end,
+--   })
+-- end
 
 ---@param client vim.lsp.Client
 ---@param buffer integer|number

@@ -61,7 +61,7 @@ vim.g.root_spec = { "lsp", { ".git", "lua" }, "cwd" }
 
 -- general options
 vim.o.helpheight = math.ceil((vim.o.lines - 1) * 0.25)
-vim.o.autowrite = true
+vim.o.autowrite = false
 vim.o.clipboard = "unnamedplus"
 vim.o.guicursor = "n-v-c:block,i-ci-ve:hor20,r-cr:hor20"
 vim.o.conceallevel = 2
@@ -80,7 +80,7 @@ vim.o.mouse = "a"
 vim.o.ruler = false
 vim.o.scrolloff = 4
 vim.opt.shortmess:append { W = true, I = true, c = true, C = true }
-vim.o.cmdheight = 0
+vim.o.cmdheight = 1
 vim.o.showmode = false
 vim.o.sidescrolloff = 8
 vim.o.timeoutlen = 300

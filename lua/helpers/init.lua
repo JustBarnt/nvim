@@ -17,7 +17,7 @@ setmetatable(M, {
 })
 
 function M.is_win()
-  return vim.uv.os_uname().version:match("Windows")
+  return vim.uv.os_uname().version:match "Windows"
 end
 
 function M.insert_package_json(config_files, field, fname)
@@ -39,7 +39,7 @@ end
 --- retuns true if neovim is in blocked state
 function M.is_blocking()
   local mode = vim.api.nvim_get_mode()
-  for _, m in ipairs({ "ic", "ix", "c", "no", "r%?", "rm" }) do
+  for _, m in ipairs { "ic", "ix", "c", "no", "r%?", "rm" } do
     if mode.mode:find(m) == 1 then
       return true
     end
@@ -63,13 +63,25 @@ function M.opts(name)
   if not plugin then
     return {}
   end
-  local Plugin = require("lazy.core.plugin")
+  local Plugin = require "lazy.core.plugin"
   return Plugin.values(plugin, "opts", false)
 end
 
 function M.is_loaded(name)
-  local Config = require("lazy.core.config")
+  local Config = require "lazy.core.config"
   return Config.plugins[name] and Config.plugins[name]._.loaded
+end
+
+---@param name string
+function M.unload_plugin(name)
+  local Loader = require "lazy.core.loader"
+
+  if not M.is_loaded(name) then
+    return
+  end
+
+  local plugin = M.get_plugin(name)
+  return Loader.deactivate(plugin)
 end
 
 ---@param name string
@@ -113,7 +125,7 @@ end
 ---@param opts? { warn?: boolean }
 function M.get_pkg_path(pkg, path, opts)
   pcall(require, "mason")
-  local root = vim.env.MASON or (vim.fn.stdpath("data") .. "/mason")
+  local root = vim.env.MASON or (vim.fn.stdpath "data" .. "/mason")
   opts = opts or {}
   opts.warn = opts.warn == nil and true or opts.warn
   path = path or ""
@@ -190,7 +202,7 @@ local cache = {} ---@type table<(fun()), table<string, any>>
 ---@return T
 function M.memoize(fn)
   return function(...)
-    local key = vim.inspect({ ... })
+    local key = vim.inspect { ... }
     cache[fn] = cache[fn] or {}
     if cache[fn][key] == nil then
       cache[fn][key] = fn(...)
