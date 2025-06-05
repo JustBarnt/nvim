@@ -1,13 +1,10 @@
 return {
   {
     "nvim-treesitter/nvim-treesitter",
-    version = false,
+    branch = "master",
     build = ":TSUpdate",
     main = "nvim-treesitter.configs",
-    -- event = { "LazyFile", "VeryLazy" },
-    event = { "VeryLazy" },
-    cmd = { "TSUpdateSync", "TSUpdate", "TSInstall" },
-    lazy = vim.fn.argc(-1) == 0, -- Load treesitter early when opening a file directly. i.e. calling `nvim file.txt` from the cmdline
+    lazy = false,
     init = function(plugin)
       -- PERF: add nvim-treesitter queries to the rtp and it's custom query predicates early
       -- This is needed because a bunch of plugins no longer `require("nvim-treesitter")`, which
