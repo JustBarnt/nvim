@@ -2,6 +2,9 @@ local tabbufline = require "nvchad.tabufline"
 local term = require "nvchad.term"
 local themes = require "nvchad.themes"
 local map = Helpers.safe_keymap_set
+local strings = require "modules.utils.strings"
+
+map({"n", "v"}, "<leader>rw", strings.replace_word_under_cursor, { desc = "Replace `<cword>` instance in buffer" })
 
 -- stylua: ignore start
 map({ "n" }, "<S-H>", tabbufline.prev, { desc = "Previous Tab" })
