@@ -18,6 +18,8 @@ vim.filetype.add {
     nuon = "nu",
     nushell = "nu",
     log = "log",
+    xaml = "xaml",
+    axaml = "axaml",
   },
   pattern = {
     [".*/git/%a+(%-?%a+)"] = { "gitconfig", { priority = 10 }},

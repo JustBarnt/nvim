@@ -80,7 +80,7 @@ vim.o.mouse = "a"
 vim.o.ruler = false
 vim.o.scrolloff = 4
 vim.opt.shortmess:append { W = true, I = true, c = true, C = true }
-vim.o.cmdheight = 1
+vim.o.cmdheight = 0
 vim.o.showmode = false
 vim.o.sidescrolloff = 8
 vim.o.timeoutlen = 300

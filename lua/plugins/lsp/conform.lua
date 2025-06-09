@@ -26,12 +26,13 @@ return {
         biome = {
           require_cwd = true,
         },
-        xmlformat = {
-          prepend_args = { "--selfclose", "--indent", "4", "--preserve", "literal" },
-        },
         topiary_nu = {
           command = "topiary",
           args = { "format", "--language", "nu" },
+        },
+        ["xstyler"] = {
+          command = "xstyler",
+          args = { "--write-to-stdout", "--take-pipe" },
         },
         injected = {
           options = {
@@ -44,7 +45,6 @@ return {
         },
       },
       formatters_by_ft = {
-        xml = { "xmlformat" },
         nu = { "topiary_nu" },
         json = { "jq" },
         jsonc = { "biome" },
@@ -56,6 +56,7 @@ return {
         lua = { "stylua" },
         go = { "goimports", "gofumpt" },
         log = { "injected" },
+        axaml = { "xstyler" }
       },
     }
     return opts
