@@ -97,7 +97,12 @@ return {
   },
   {
     "windwp/nvim-ts-autotag",
-    event = "LazyFile",
-    opts = {},
+    event = "BufReadPre",
+    opts = {
+      aliases = {
+        ["xaml"] = "xml",
+        ["axaml"] = "xml",
+      }
+    },
   },
 }
