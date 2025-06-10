@@ -6,6 +6,11 @@ local strings = require "modules.utils.strings"
 
 map({"n", "v"}, "<leader>rw", strings.replace_word_under_cursor, { desc = "Replace `<cword>` instance in buffer" })
 
+map("n", "<leader>mm", Helpers.marks.jump_to_mark, { desc = "Jumps to mark" })
+map("n", "<leader>mD", Helpers.marks.del_all_marks, { desc = "Delete all mark" })
+map("n", "<leader>md", Helpers.marks.del_mark, { desc = "Delete mark" })
+map("n", "<leader>m", Helpers.marks.mark, { desc = "Create Mark" })
+
 -- stylua: ignore start
 map({ "n" }, "<S-H>", tabbufline.prev, { desc = "Previous Tab" })
 map({ "n" }, "<S-L>", tabbufline.next, { desc = "Next Tab" })

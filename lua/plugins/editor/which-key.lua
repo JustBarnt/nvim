@@ -10,6 +10,7 @@ return {
         { "<leader>f", group = "file/find" },
         { "<leader>g", group = "git" },
         { "<leader>gh", group = "hunks" },
+        {"<leader>m",   group = "marks" },
         { "<leader>s", group = "search" },
         { "<leader>u", group = "ui", icon = { icon = "󰙵 ", color = "cyan" } },
         { "<leader>n", group = "Package Management", icon = { icon = " " } },
