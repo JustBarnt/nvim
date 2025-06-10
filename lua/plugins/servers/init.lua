@@ -42,6 +42,7 @@ Installables.servers = {
   "svelte-language-server",
   "tailwindcss-language-server",
   "taplo",
+  "vim-language-server",
   "vtsls",
   "yaml-language-server",
 }

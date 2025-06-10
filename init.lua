@@ -10,6 +10,40 @@ if vim.fn.has "nvim-0.11" ~= 1 then
     os.exit(1)
   end
 end
+  --
+  -- vim.api.nvim_exec2([[
+  -- function! SetMark()
+  --   let keycode = getchar()
+  --   let keystr = nr2char(keycode)
+  --   " Ideavim only supports upper case marks so
+  --   " ensure our pressed key is uppercase
+  --   " let upper = toupper(keystr)
+  --   execute 'mark ' . keystr
+  -- endfunction
+  --
+  -- function! DelMark()
+  --   let keycode = getchar()
+  --   let keystr = nr2char(keycode)
+  --   " Ideavim only supports upper case marks so
+  --   " ensure our pressed key is uppercase
+  --   " let upper = toupper(keystr)
+  --   execute 'delmark ' . keystr
+  -- endfunction
+  --
+  -- function! DelAllMarks()
+  --   execute 'delmarks!'
+  -- endfunction
+  --
+  -- function! JumpToMark()
+  --   let keycode = getchar()
+  --   let keystr = nr2char(keycode)
+  --   " Ideavim only supports upper case marks so
+  --   " ensure our pressed key is uppercase
+  --   " let upper = toupper(keystr)
+  --   execute 'norm! `' . keystr
+  -- endfunction
+  -- ]], { output = false } )
+  --
 
 vim.filetype.add {
   extension = {
@@ -22,7 +56,7 @@ vim.filetype.add {
     axaml = "axaml",
   },
   pattern = {
-    [".*/git/%a+(%-?%a+)"] = { "gitconfig", { priority = 10 }},
+    [".*/git/%a+(%-?%a+)"] = { "gitconfig", { priority = 10 } },
   },
 }
 

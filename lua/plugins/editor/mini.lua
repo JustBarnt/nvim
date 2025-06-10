@@ -25,7 +25,33 @@ return {
       },
       move = { mappings = { left = "H", down = "J", right = "L", up = "K" } },
       surround = { n_lines = 500 },
+      icons = {
+        file = {
+          [".axaml"] = { glyph = "󰙳", hl = "MiniIconsGreen" },
+          [".xaml"] = { glyph = "󰙳", hl = "MiniIconsGreen" },
+          [".keep"] = { glyph = "󰊢", hl = "MiniIconsGrey" },
+          [".eslintrc.js"] = { glyph = "󰱺", hl = "MiniIconsYellow" },
+          [".node-version"] = { glyph = "", hl = "MiniIconsGreen" },
+          [".yarnrc.yml"] = { glyph = "", hl = "MiniIconsBlue" },
+          ["eslint.config.js"] = { glyph = "󰱺", hl = "MiniIconsYellow" },
+          ["package.json"] = { glyph = "", hl = "MiniIconsGreen" },
+          ["tsconfig.json"] = { glyph = "", hl = "MiniIconsAzure" },
+          ["tsconfig.build.json"] = { glyph = "", hl = "MiniIconsAzure" },
+          ["yarn.lock"] = { glyph = "", hl = "MiniIconsBlue" },
+        },
+        filetype = {
+          dotenv = { glyph = "", hl = "MiniIconsYellow" },
+          axaml = { glyph = "󰙳", hl = "MiniIconsGreen" },
+          xaml = { glyph = "󰙳", hl = "MiniIconsGreen" },
+        },
+      },
     }
+  end,
+  init = function()
+    package.preload["nvim-web-devicons"] = function()
+      require("mini.icons").mock_nvim_web_devicons()
+      return package.loaded["nvim-web-devicons"]
+    end
   end,
   config = function(_, opts)
     require("mini.ai").setup { opts.ai }
@@ -33,6 +59,7 @@ return {
     require("mini.move").setup { opts.move }
     require("mini.operators").setup()
     require("mini.splitjoin").setup()
+    require("mini.icons").setup(opts.icons)
 
     Helpers.on_load("which-key.nvim", function()
       vim.schedule(function()

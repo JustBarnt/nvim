@@ -83,7 +83,7 @@ vim.opt.shortmess:append { W = true, I = true, c = true, C = true }
 vim.o.cmdheight = 0
 vim.o.showmode = false
 vim.o.sidescrolloff = 8
-vim.o.timeoutlen = 300
+vim.o.timeoutlen = 1000
 vim.o.virtualedit = "block"
 vim.o.wildmode = "longest:full,full"
 vim.o.wrap = false
