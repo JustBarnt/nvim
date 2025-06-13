@@ -3,7 +3,13 @@ local Marks = {}
 
 Marks.jump_to_mark = function()
   local mark = vim.fn.getcharstr()
-  vim.cmd("norm! `" .. mark)
+  local success = pcall(function()
+    vim.cmd("norm! `" .. mark)
+  end)
+
+  if not success then
+    vim.notify("E20: Mark not set", vim.log.levels.ERROR)
+  end
 end
 
 Marks.del_all_marks = function()
@@ -13,7 +19,9 @@ end
 
 Marks.del_mark = function()
   local mark = vim.fn.getcharstr()
-  vim.cmd("delmark " .. mark)
+  pcall(function()
+    vim.cmd("delmark " .. mark)
+  end)
   vim.api.nvim__redraw { statuscolumn = true }
 end
 
