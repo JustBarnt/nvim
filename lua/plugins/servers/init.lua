@@ -33,6 +33,7 @@ Installables.servers = {
   "html-lsp",
   "intelephense",
   "json-lsp",
+  "just-lsp",
   "lemminx",
   "lua-language-server",
   "prisma-language-server",

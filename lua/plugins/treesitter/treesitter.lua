@@ -53,6 +53,7 @@ return {
         "json",
         "json5",
         "jsonc",
+        "just",
         "lua",
         "luadoc",
         "luap",
