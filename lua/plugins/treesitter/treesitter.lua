@@ -13,6 +13,7 @@ return {
       -- during startup.
       require("lazy.core.loader").add_to_rtp(plugin)
       require "nvim-treesitter.query_predicates"
+      ---@class ParserInfo[]
       local parsers = require("nvim-treesitter.parsers").get_parser_configs()
       parsers.lua_patterns = {
         install_info = {
@@ -20,6 +21,15 @@ return {
           files = { "src/parser.c" },
           branch = "main",
         },
+      }
+
+      parsers.ccic_transactions = {
+        install_info = {
+          url = "https://svnstore:3000/bwilliams/tree-sitter-ccic-transactions",
+          files = { "src/parser.c" },
+          branch = "main"
+        },
+        filetype = "ctx"
       }
     end,
     keys = {

@@ -54,6 +54,7 @@ vim.filetype.add {
     log = "log",
     xaml = "xaml",
     axaml = "axaml",
+    ctx = "ctx"
   },
   pattern = {
     [".*/git/%a+(%-?%a+)"] = { "gitconfig", { priority = 10 } },
