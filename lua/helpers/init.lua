@@ -2,6 +2,7 @@
 ---@field folds helpers.folds
 ---@field formatting helpers.formatting
 ---@field lsp helpers.lsp
+---@field lualine helpers.lualine
 ---@field marks helpers.marks
 ---@field ui helpers.ui
 ---@field root helpers.root

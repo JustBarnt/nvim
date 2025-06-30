@@ -1,3 +1,5 @@
 return {
-  "justbarnt/nordic.nvim"
+  "justbarnt/nordic.nvim",
+  lazy = false,
+  priority = 10000,
 }

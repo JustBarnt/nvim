@@ -39,9 +39,9 @@ _G.Helpers = require "helpers"
 _G.Installables = require "plugins.servers"
 
 require("lazy").setup {
-  dev = {
-    path = "D:/Personal/nvim-plugins/",
-  },
+  -- dev = {
+  --   path = "D:/Personal/nvim-plugins/",
+  -- },
   spec = {
     { "nvim-lua/plenary.nvim", lazy = true },
     { "MunifTanjim/nui.nvim", lazy = true },
