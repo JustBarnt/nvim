@@ -43,19 +43,6 @@ require("lazy").setup {
     path = "D:/Personal/nvim-plugins/",
   },
   spec = {
-    {
-      "nvchad/ui",
-      config = function()
-        require "nvchad"
-      end,
-    },
-    {
-      "nvchad/base46",
-      lazy = true,
-      build = function()
-        require("base46").load_all_highlights()
-      end,
-    },
     { "nvim-lua/plenary.nvim", lazy = true },
     { "MunifTanjim/nui.nvim", lazy = true },
     "justinsgithub/wezterm-types",
@@ -69,17 +56,17 @@ require("lazy").setup {
         require("snacks").setup(opts)
       end,
     },
-    { import = "plugins.nvchad" },
     { import = "plugins.ui" },
     { import = "plugins.lsp" },
     { import = "plugins.coding" },
     { import = "plugins.editor" },
     { import = "plugins.treesitter" },
+    { import = "plugins.themes" },
   },
   -- NOTE: Part of lazy.nvim. Include a .lazy.lua file in a project root directory, and those plugins will be merged
   --       into the plugin spec for that project only
   local_spec = true,
-  install = { colorscheme = { "nordic", "tokyonight", "slate" } },
+  install = { colorscheme = { "tokyonight", "slate" } },
   checker = { enabled = true, notify = false },
   performance = {
     rtp = {
@@ -100,6 +87,8 @@ require("lazy").setup {
     backdrop = 25,
   },
 }
+
+vim.cmd("colorscheme nordic")
 
 Helpers.root.setup()
 

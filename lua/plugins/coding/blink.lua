@@ -1,21 +1,19 @@
+
 return {
   "saghen/blink.cmp",
   event = { "InsertEnter", "CmdlineEnter" },
-  version = "v1.0.*",
-  build = "cargo build --release",
+  version = "v1.*",
+  -- build = "cargo build --release",
   ---@module "blink.cmp"
   ---@type blink.cmp.Config
   opts = {
-    fuzzy = {
-      implementation = "prefer_rust",
-    },
-    keymap = {
-      preset = "default",
-    },
-    signature = {
-      enabled = false,
-    },
+    fuzzy = { implementation = "prefer_rust" },
+    keymap = { preset = "default" },
+    signature = { enabled = false, window = { show_documentation = false } },
     completion = {
+      accept = {
+        auto_brackets = { enabled = false },
+      },
       ghost_text = { enabled = false },
       list = {
         selection = {
@@ -48,7 +46,10 @@ return {
     },
     sources = {
       -- add lazydev to your completion providers
-      default = { "lazydev", "lsp", "path", "snippets", "buffer" },
+      default = { "lsp", "path", "snippets", "buffer" },
+      per_filetype = {
+        lua = { inherit_defaults = true, 'lazydev' },
+      },
       providers = {
         lazydev = {
           name = "LazyDev",
@@ -56,7 +57,7 @@ return {
           -- make lazydev completions top priority (see `:h blink.cmp`)
           score_offset = 100,
         },
-        path = { score_offset = 2 },
+        lsp = { fallbacks = {} }
       },
     },
   },

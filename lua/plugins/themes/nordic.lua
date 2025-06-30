@@ -1,0 +1,3 @@
+return {
+  "justbarnt/nordic.nvim"
+}

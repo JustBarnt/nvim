@@ -1,6 +1,6 @@
-local tabbufline = require "nvchad.tabufline"
-local term = require "nvchad.term"
-local themes = require "nvchad.themes"
+-- local tabbufline = require "nvchad.tabufline"
+-- local term = require "nvchad.term"
+-- local themes = require "nvchad.themes"
 local map = Helpers.safe_keymap_set
 local strings = require "modules.utils.strings"
 
@@ -12,10 +12,10 @@ map("n", "<leader>dm", Helpers.marks.del_all_marks, { desc = "Delete all mark" }
 map("n", "m", Helpers.marks.jump_to_mark, { desc = "Create Mark" })
 
 -- stylua: ignore start
-map({ "n" }, "<S-H>", tabbufline.prev, { desc = "Previous Tab" })
-map({ "n" }, "<S-L>", tabbufline.next, { desc = "Next Tab" })
-
-map({"n"}, "<leader>ft", function() themes.open({style = 'flat'}) end, { desc = "Find NVChad Themes" })
+-- map({ "n" }, "<S-H>", tabbufline.prev, { desc = "Previous Tab" })
+-- map({ "n" }, "<S-L>", tabbufline.next, { desc = "Next Tab" })
+--
+-- map({"n"}, "<leader>ft", function() themes.open({style = 'flat'}) end, { desc = "Find NVChad Themes" })
 -- stylua: ignore end
 
 -- better up/down
