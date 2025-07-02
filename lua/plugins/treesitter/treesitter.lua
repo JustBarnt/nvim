@@ -29,7 +29,7 @@ return {
           files = { "src/parser.c" },
           branch = "main"
         },
-        filetype = "ctx"
+        filetype = "cctrx"
       }
     end,
     keys = {
