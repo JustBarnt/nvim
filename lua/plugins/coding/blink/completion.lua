@@ -1,13 +1,20 @@
 ---@module 'blink.cmp'
 ---@class blink.cmp.CompletionConfigPartial
-
 return {
   accept = {
     auto_brackets = { enabled = false },
   },
+  documentation = {
+    auto_show = true,
+    auto_show_delay_ms = 200,
+    window = { border = "rounded" },
+  },
   menu = {
+    scrollbar = false,
+    border = "rounded",
     draw = {
-      padding = { 0, 1 },
+      padding = { 1, 1 },
+      columns = { { "label" }, { "kind_icon" }, { "kind" } },
       components = {
         kind_icon = {
           text = function(ctx)
@@ -28,7 +35,7 @@ return {
       }
     },
   },
-  ghost_text = { enabled = false },
+  ghost_text = { enabled = true },
   list = {
     selection = {
       auto_insert = function(ctx)
