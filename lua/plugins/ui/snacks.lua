@@ -67,6 +67,7 @@ return {
     { "<leader>n", function() Snacks.picker.notifications() end, desc = "Notification History" },
     { "<leader>.", function() Snacks.scratch.open() end, desc = "Scratch Buffer" },
     -- find
+    { "<leader>fm", function() Snacks.picker.marks() end, desc = "Marks" },
     { "<leader>fc", function() Snacks.picker.files({ cwd = vim.fn.stdpath("config") }) end, desc = "Find Config File" },
     { "<leader>ff", function() Snacks.picker.files() end, desc = "Find Files" },
     { "<leader>fp", function() Snacks.picker.projects() end, desc = "Projects" },

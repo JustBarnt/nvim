@@ -88,7 +88,7 @@ require("lazy").setup {
   },
 }
 
-vim.cmd("colorscheme nordic")
+vim.cmd("colorscheme tokyonight-night")
 
 Helpers.root.setup()
 
