@@ -477,7 +477,7 @@ function M.color(group, prop)
   for _, g in ipairs(group) do
     local hl = vim.api.nvim_get_hl(0, { name = g, link = false })
     if hl[prop] then
-      return string.format("#%06x", hl[prop])
+      return string.format("#%06X", hl[prop])
     end
   end
 end

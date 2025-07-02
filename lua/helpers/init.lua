@@ -21,6 +21,30 @@ function M.is_win()
   return vim.uv.os_uname().version:match "Windows"
 end
 
+
+--- Checks if the provided app_ver is at least equal to or greater
+--- than then provided `minimum` version
+---@param app_ver string Application version
+---@param version string The minimum version required
+---@return boolean
+function M.semantic_ver_has(app_ver, version)
+  local min_version_req = vim.split(version, '.', { plain = true })
+  local app_version = vim.split(version, '.', { plain = true })
+
+  for i = 1, 3 do
+    local min_ver_part = tonumber(min_version_req[i] or 0)
+    local app_ver_part = tonumber(app_version[i] or 0)
+
+    if app_ver_part > min_ver_part then
+      return true
+    elseif app_ver_part < min_ver_part then
+      return false
+    end
+  end
+
+  return true
+end
+
 function M.insert_package_json(config_files, field, fname)
   local path = vim.fn.fnamemodify(fname, ":h")
   local root_with_package = vim.fs.dirname(vim.fs.find("package.json", { path = path, upward = true })[1])

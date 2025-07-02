@@ -35,3 +35,7 @@ end
 require "lsp_overrides"
 require "core.options"
 require "core.lazy"
+
+if vim.g.neovide then
+  require "core.neovide"
+end
