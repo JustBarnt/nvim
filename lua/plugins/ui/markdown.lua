@@ -24,7 +24,6 @@ return {
     },
     ft = { "markdown" },
     config = function(_, opts)
-      dofile(vim.g.base46_cache .. "render-markdown")
       require("render-markdown").setup(opts)
       Snacks.toggle({
         name = "Render Markdown",
