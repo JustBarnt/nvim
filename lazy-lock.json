@@ -1,7 +1,6 @@
 {
   "LazyDo": { "branch": "main", "commit": "5b36c04fac4c4f3257cf66d0c1a34a88a78850aa" },
   "SchemaStore.nvim": { "branch": "main", "commit": "e4f80f37cd11ed58a6e914cc30850749f021b6a7" },
-  "betterTerm.nvim": { "branch": "main", "commit": "05dda8c7699fed951cd6dd776e590689ab1a200c" },
   "blink.cmp": { "branch": "main", "commit": "9bcb14b43852a6f2bfd5ac9ef29cb5cf09b1b39b" },
   "bufferline.nvim": { "branch": "main", "commit": "655133c3b4c3e5e05ec549b9f8cc2894ac6f51b3" },
   "cmake-tools.nvim": { "branch": "master", "commit": "17244215b1a96e4b2a83a16abd6719197f270f96" },
