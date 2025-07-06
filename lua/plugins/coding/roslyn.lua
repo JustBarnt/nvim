@@ -1,10 +1,10 @@
 ---@module "roslyn"
 return {
-  "seblyng/roslyn.nvim",
+  "justbarnt/roslyn.nvim",
   ft = "cs",
   ---@class RoslynNvimConfig
   opts = {
-    filewatching = "roslyn",
-    broad_search = true,
+    -- filewatching = "roslyn",
+    -- broad_search = true,
   },
 }
