@@ -74,66 +74,71 @@ Codelens.full_refresh = function(bufnr)
       local client = assert(vim.lsp.get_client_by_id(client_id))
 
       for i, lens in ipairs(results) do
-        request(bufnr, "codeLens/resolve", lens, function(_, resolved)
-          results[i] = resolved or lens
+        if lens.command then
+          results[i] = lens
           pending = pending - 1
+        else
+          request(bufnr, "codeLens/resolve", lens, function(_, resolved)
+            results[i] = resolved or lens
+            pending = pending - 1
 
-          -- Once resolved, fetch counts & redrawn
-          if pending == 0 then
-            for _, l in pairs(results) do
-              local pos_params = {
-                textDocument = { uri = uri },
-                position = l.range.start,
-                context = { includeDeclaration = false },
-              }
-
-              request(bufnr, "textDocument/references", pos_params, function(err, all_refs, ctx)
-                if err then
-                  return
-                end
-
-                if not all_refs or vim.tbl_isempty(all_refs) then
-                  return
-                end
-
-                -- 1. Keep only refs in the buffer
-                --    Translate uri into a filename and normalize it
-                --    to filter our list of references in the current
-                --    buffer instead of across the entire workspace...
-                local in_file_refs = vim.tbl_filter(function(loc)
-                  local loc_fname = vim.fs.normalize(uri_to_fname(loc.uri))
-                  local fname = vim.fs.normalize(uri_to_fname(uri))
-                  return loc_fname == fname
-                end, all_refs)
-
-                -- 2. Filter method/function calls for 'n Usages'
-                local calls = filter_call_sites(bufnr, in_file_refs)
-
-                -- 3. Inject Title & Command
-                l.command = l.command or {}
-                l.command.title = string.format(
-                  "%d Reference%s | %d Usage%s",
-                  #in_file_refs,
-                  (#in_file_refs == 1 and "" or "s"),
-                  #calls,
-                  (#calls == 1 and "" or "s")
-                )
-
-                -- 4. Make it clickable like in VSCode/Visual Studio
-                l.command.command = "editor.action.showReferences" -- May need to leave this blank or check if the LSP supports this?
-                l.command.arguments = {
-                  uri,
-                  l.range.start,
-                  util.locations_to_items(in_file_refs, client.offset_encoding),
+            -- Once resolved, fetch counts & redrawn
+            if pending == 0 then
+              for _, l in pairs(results) do
+                local pos_params = {
+                  textDocument = { uri = uri },
+                  position = l.range.start,
+                  context = { includeDeclaration = false },
                 }
 
-                -- 5. Save and Display our codelens
-                codelens.save(results, bufnr, client_id)
-                codelens.display(results, bufnr, client_id)
-              end)
+                request(bufnr, "textDocument/references", pos_params, function(err, all_refs, ctx)
+                  if err then
+                    return
+                  end
+
+                  if not all_refs or vim.tbl_isempty(all_refs) then
+                    return
+                  end
+
+                  -- 1. Keep only refs in the buffer
+                  --    Translate uri into a filename and normalize it
+                  --    to filter our list of references in the current
+                  --    buffer instead of across the entire workspace...
+                  local in_file_refs = vim.tbl_filter(function(loc)
+                    local loc_fname = vim.fs.normalize(uri_to_fname(loc.uri))
+                    local fname = vim.fs.normalize(uri_to_fname(uri))
+                    return loc_fname == fname
+                  end, all_refs)
+
+                  -- 2. Filter method/function calls for 'n Usages'
+                  local calls = filter_call_sites(bufnr, in_file_refs)
+
+                  -- 3. Inject Title & Command
+                  l.command = l.command or {}
+                  l.command.title = string.format(
+                    "%d Reference%s | %d Usage%s",
+                    #in_file_refs,
+                    (#in_file_refs == 1 and "" or "s"),
+                    #calls,
+                    (#calls == 1 and "" or "s")
+                  )
+
+                  -- 4. Make it clickable like in VSCode/Visual Studio
+                  l.command.command = "editor.action.showReferences" -- May need to leave this blank or check if the LSP supports this?
+                  l.command.arguments = {
+                    uri,
+                    l.range.start,
+                    util.locations_to_items(in_file_refs, client.offset_encoding),
+                  }
+
+                  -- 5. Save and Display our codelens
+                  codelens.save(results, bufnr, client_id)
+                  codelens.display(results, bufnr, client_id)
+                end)
+              end
             end
-          end
-        end)
+          end)
+        end
       end
     end
   )
