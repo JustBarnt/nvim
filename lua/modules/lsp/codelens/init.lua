@@ -61,53 +61,110 @@ Codelens.full_refresh = function(bufnr)
     "textDocument/codeLens",
     { textDocument = util.make_text_document_params(bufnr) },
     function(err, results, ctx)
-      if err then
-        return
-      end
-      if not results or vim.tbl_isempty(results) then
+      if err or not results or vim.tbl_isempty(results) then
         return
       end
 
       local client_id = ctx.client_id
       local uri = ctx.params.textDocument.uri
-      local pending = #results
       local client = assert(vim.lsp.get_client_by_id(client_id))
+
+      local uniq = {}
+      local filtered_results = {}
+      for _, lens in ipairs(results) do
+        local range = lens.range.start
+        local key = range.line .. ":" .. range.character
+        if uniq[key] then
+          local existing = uniq[key]
+          if not existing.command and lens.command then
+            for i, stored in ipairs(filtered_results) do
+              if stored == existing then
+                filtered_results[i] = lens
+                break
+              end
+            end
+          end
+          uniq[key] = lens
+        else
+          uniq[key] = lens
+          table.insert(filtered_results, lens)
+        end
+      end
+      results = filtered_results
+      if vim.tbl_isempty(results) then
+        return
+      end
+
+      local pending = #results
+      local refs_to_query = {}
 
       for i, lens in ipairs(results) do
         if lens.command then
-          results[i] = lens
           pending = pending - 1
         else
+          lens._need_ref = true
           request(bufnr, "codeLens/resolve", lens, function(_, resolved)
             results[i] = resolved or lens
             pending = pending - 1
-
-            -- Once resolved, fetch counts & redrawn
             if pending == 0 then
-              for _, l in pairs(results) do
+              local ref_count = 0
+              for j, l in pairs(results) do
+                if l._need_ref then
+                  table.insert(refs_to_query, { index = j, lens = l })
+                  ref_count = ref_count + 1
+                end
+              end
+
+              if ref_count == 0 then
+                codelens.save(results, bufnr, client_id)
+                codelens.display(results, bufnr, client_id)
+                return
+              end
+              local remaining = ref_count
+              for _, task in ipairs(refs_to_query) do
+                local j = task.index
+                local l = task.lens
                 local pos_params = {
                   textDocument = { uri = uri },
                   position = l.range.start,
                   context = { includeDeclaration = false },
                 }
-
-                request(bufnr, "textDocument/references", pos_params, function(err, all_refs, ctx)
-                  if err then
+                request(bufnr, "textDocument/references", pos_params, function(err_ref, all_refs)
+                  remaining = remaining - 1
+                  if err_ref then
+                    if remaining == 0 then
+                      local final_results = {}
+                      for _, lens_final in ipairs(results) do
+                        if not lens_final then
+                          table.insert(final_results, lens_final)
+                        end
+                      end
+                      codelens.save(final_results, bufnr, client_id)
+                      codelens.display(final_results, bufnr, client_id)
+                    end
                     return
                   end
 
                   if not all_refs or vim.tbl_isempty(all_refs) then
+                    results[j]._drop = true
+                    if remaining == 0 then
+                      local final_results = {}
+                      for _, lens_final in ipairs(results) do
+                        if not lens_final._drop then
+                          table.insert(final_results, lens_final)
+                        end
+                      end
+                      codelens.save(final_results, bufnr, client_id)
+                      codelens.display(final_results, bufnr, client_id)
+                    end
                     return
                   end
-
                   -- 1. Keep only refs in the buffer
                   --    Translate uri into a filename and normalize it
                   --    to filter our list of references in the current
                   --    buffer instead of across the entire workspace...
                   local in_file_refs = vim.tbl_filter(function(loc)
-                    local loc_fname = vim.fs.normalize(uri_to_fname(loc.uri))
-                    local fname = vim.fs.normalize(uri_to_fname(uri))
-                    return loc_fname == fname
+                    return vim.fs.normalize(uri_to_fname(loc.uri)) == vim.fs.normalize(uri_to_fname(uri))
                   end, all_refs)
 
                   -- 2. Filter method/function calls for 'n Usages'
@@ -138,6 +195,10 @@ Codelens.full_refresh = function(bufnr)
               end
             end
           end)
+        end
+        if pending == 0 then
+          codelens.save(results, bufnr, client_id)
+          codelens.display(results, bufnr, client_id)
         end
       end
     end
