@@ -40,7 +40,7 @@ return {
     ---@diagnostic disable-next-line: missing-fields
     opts = {
       highlight = { enable = true, additional_vim_regex_highlighting = false },
-      indent = { enable = false, disable = { "yaml" } },
+      indent = { enable = true, disable = { "yaml" } },
       ensure_installed = {
         "bash",
         "c",
