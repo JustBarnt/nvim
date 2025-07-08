@@ -1,21 +1,7 @@
-local LspCodelens = require "modules.lsp.codelens"
 local LspAutocmds = {}
 
 ---@type table<string, fun(client: vim.lsp.Client, buffer?: number)>
 local aus = {}
-
--- aus.code_lens = function(client, buffer)
---   if client:supports_method("textDocument/codeLens", buffer) then
---     vim.api.nvim_create_augroup("lsp_code_lens_setup", { clear = true })
---     vim.api.nvim_create_autocmd({ "BufWinEnter", "BufWritePost" }, {
---       group = "lsp_code_lens_setup",
---       callback = function()
---         LspCodelens.full_refresh(buffer)
---         -- LspCodelens.refresh(buffer)
---       end,
---     })
---   end
--- end
 
 aus.document_highlight = function(client, buffer)
   if client:supports_method("textDocument/documentHighlight", buffer) then

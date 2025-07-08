@@ -69,8 +69,6 @@ function M.setup()
         table.insert(keys, { "gI", Snacks.picker.lsp_implementations, "[G]oto [I]mplementation" })
       end
 
-      -- lsp_overrides.setup "Commands"
-
       if Client.name == "vtsls" then
         Client.settings.javascript = Client.settings.typescript
       end
