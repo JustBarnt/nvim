@@ -69,6 +69,10 @@ function M.setup()
         table.insert(keys, { "gI", Snacks.picker.lsp_implementations, "[G]oto [I]mplementation" })
       end
 
+      -- if Client.server_capabilities.codeLensProvider then
+      --   vim.lsp.codelens.refresh()
+      -- end
+
       if Client.name == "vtsls" then
         Client.settings.javascript = Client.settings.typescript
       end

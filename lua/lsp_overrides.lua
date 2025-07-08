@@ -14,30 +14,6 @@ vim.lsp.buf.signature_help = function(config)
   signature_help(config)
 end
 
---[[
---{
-  command = {
-    arguments = {},
-    command = "",
-    title = "1 references"
-  },
-  data = {
-    id = 2,
-    uri = "file:///c%3A/Users/bwilliams/.config/nvim/lua/modules/lsp/codelens/init.lua"
-  },
-  range = {
-    ["end"] = {
-      character = 0,
-      line = 54
-    },
-    start = {
-      character = 0,
-      line = 54
-    }
-  }
-}
---]]--
-
 -- TODO: Turn this into a replacement for  codelens.run that when `resovled[i].command.command == ""`
 --       it will use my custom version of `editor.action.showReferences`
 local showReferences = vim.lsp.commands["editor.action.showReferences"]

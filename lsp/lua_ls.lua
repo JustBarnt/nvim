@@ -28,6 +28,9 @@ return {
           semicolon = "Disable",
           arrayIndex = "Disable",
         },
+        type = {
+          weakNilCheck = true
+        },
         runtime = {
           version = "LuaJIT",
         },
