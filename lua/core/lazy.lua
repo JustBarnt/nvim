@@ -36,7 +36,7 @@ lazy_file()
 
 _G.LazyVim = require "lazy.core.util"
 _G.Helpers = require "helpers"
-_G.Installables = require "plugins.servers"
+_G.Installables = require "modules.servers.init"
 
 require("lazy").setup {
   -- dev = {
@@ -56,12 +56,14 @@ require("lazy").setup {
         require("snacks").setup(opts)
       end,
     },
-    { import = "plugins.ui" },
-    { import = "plugins.lsp" },
+    -- { import = "plugins.activate" },
+    { import = "plugins" },
     { import = "plugins.coding" },
     { import = "plugins.editor" },
-    { import = "plugins.treesitter" },
+    { import = "plugins.lsp" },
     { import = "plugins.themes" },
+    { import = "plugins.treesitter" },
+    { import = "plugins.ui" },
   },
   -- NOTE: Part of lazy.nvim. Include a .lazy.lua file in a project root directory, and those plugins will be merged
   --       into the plugin spec for that project only
