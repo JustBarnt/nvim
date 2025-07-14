@@ -1,6 +1,6 @@
 return {
-  dir = "D:/Personal/Github/activate.nvim",
-  -- "justbarnt/activate.nvim",
+  -- dir = "D:/Personal/Github/activate.nvim",
+  "justbarnt/activate.nvim",
   keys = {
     {
       "<leader>P",
@@ -8,9 +8,8 @@ return {
       desc = "Plugins"
     }
   },
-  opts = {
-    -- config_dir = "plugins/activate",
-  },
+  ---@class Activate.Config
+  opts = { },
   dependencies = {
     "nvim-telescope/telescope.nvim"
   }
