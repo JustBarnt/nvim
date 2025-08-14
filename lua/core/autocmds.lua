@@ -15,6 +15,11 @@ vim.api.nvim_create_autocmd("BufReadPost", {
   end,
 })
 
+vim.api.nvim_create_autocmd("CmdlineEnter",{
+  pattern = { "cd", "tcd", "lcd" },
+  command = "silent!"
+})
+
 -- vim.api.nvim_create_autocmd("FileType", {
 --   pattern = "markdown",
 --   once = true,
