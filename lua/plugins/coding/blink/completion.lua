@@ -5,7 +5,7 @@ return {
     auto_brackets = { enabled = false },
   },
   documentation = {
-    auto_show = true,
+    auto_show = false,
     auto_show_delay_ms = 200,
     window = { border = "rounded" },
   },
@@ -35,7 +35,7 @@ return {
       }
     },
   },
-  ghost_text = { enabled = true },
+  ghost_text = { enabled = false },
   list = {
     selection = {
       auto_insert = function(ctx)
