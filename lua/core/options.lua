@@ -89,7 +89,13 @@ vim.o.wildmode = "longest:full,full"
 vim.o.wrap = false
 vim.o.breakindent = vim.o.wrap and true or false
 vim.opt.isfname:append "@-@"
-vim.opt.diffopt:append "linematch:60" -- second stage diff to align lines
+
+if vim.fn.has('nvim-0.12') == 1 then
+  vim.o.diffopt = 'internal,filler,closeoff,inline:word,linematch:40'
+elseif vim.fn.has('nvim-0.11') == 1 then
+  -- Fixed: https://github.com/neovim/neovim/issues/35449
+  vim.o.diffopt = 'internal,filler,closeoff,linematch:40'
+end
 
 -- File History
 vim.o.undofile = true
