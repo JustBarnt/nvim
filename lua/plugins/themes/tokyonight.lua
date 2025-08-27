@@ -1,4 +1,4 @@
-local is_transparent = vim.fn.getenv "TERM" == "xterm-ghostty"
+local is_transparent = vim.fn.getenv "TERM" == "xterm-ghostty" or vim.fn.getenv "TERM_PROGRAM" == "WezTerm"
 
 return {
   "folke/tokyonight.nvim",
