@@ -13,7 +13,6 @@ return {
       -- make lazydev completions top priority (see `:h blink.cmp`)
       score_offset = 100,
     },
-    lsp = { fallbacks = {} },
     buffer = {
       opts = {
         -- Retrieve buffer completion from only NORMAL buffer types
