@@ -1,5 +1,5 @@
 return {
-  "echasnovski/mini.nvim",
+  "nvim-mini/mini.nvim",
   opts = function()
     local ai = require "mini.ai"
     return {

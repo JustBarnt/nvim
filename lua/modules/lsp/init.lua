@@ -75,9 +75,9 @@ function M.setup()
         })
       end
 
-      -- if Client.server_capabilities.codeLensProvider then
-      --   vim.lsp.codelens.refresh()
-      -- end
+      if Client.server_capabilities.codeLensProvider then
+        vim.lsp.codelens.refresh()
+      end
 
       if Client.name == "vtsls" then
         Client.settings.javascript = Client.settings.typescript

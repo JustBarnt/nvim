@@ -21,7 +21,6 @@ function M.is_win()
   return vim.uv.os_uname().version:match "Windows"
 end
 
-
 --- Checks if the provided app_ver is at least equal to or greater
 --- than then provided `minimum` version
 ---@param app_ver string Application version

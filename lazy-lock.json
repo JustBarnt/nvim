@@ -16,9 +16,10 @@
   "harpoon": { "branch": "harpoon2", "commit": "ed1f853847ffd04b2b61c314865665e1dadf22c7" },
   "lazy.nvim": { "branch": "main", "commit": "6c3bda4aca61a13a9c63f1c1d1b16b9d3be90d7a" },
   "lazydev.nvim": { "branch": "main", "commit": "2367a6c0a01eb9edb0464731cc0fb61ed9ab9d2c" },
+  "lensline.nvim": { "branch": "release/1.x", "commit": "1dd55c72431e6ce1e16e85c6f9903fd65ff37d8c" },
   "lualine.nvim": { "branch": "master", "commit": "b8c23159c0161f4b89196f74ee3a6d02cdc3a955" },
   "mason.nvim": { "branch": "main", "commit": "7dc4facca9702f95353d5a1f87daf23d78e31c2a" },
-  "mini.nvim": { "branch": "main", "commit": "0069a71538020a77a19f4f8d5e89f066e264a6dc" },
+  "mini.nvim": { "branch": "main", "commit": "0ffc2af38b3c5293076317b138635d6d7c80a40f" },
   "neo-tree.nvim": { "branch": "main", "commit": "bbeda076c8a2e7d16614287cd70239f577e5bf55" },
   "neonuget": { "branch": "main", "commit": "92adae3091bb5cbc09bb6effb13fc7753fa6074e" },
   "noice.nvim": { "branch": "main", "commit": "0427460c2d7f673ad60eb02b35f5e9926cf67c59" },
@@ -44,6 +45,5 @@
   "ts-comments.nvim": { "branch": "main", "commit": "1bd9d0ba1d8b336c3db50692ffd0955fe1bb9f0c" },
   "visual-whitespace.nvim": { "branch": "main", "commit": "77bd21fb442cf2b97d7224f8269c053e9def9cb9" },
   "wezterm-types": { "branch": "main", "commit": "3ae049cae5f7c11a7e647642a0a74b7faa64d324" },
-  "which-key.nvim": { "branch": "main", "commit": "370ec46f710e058c9c1646273e6b225acf47cbed" },
-  "xeno.nvim": { "branch": "master", "commit": "4a1d3946b5c3b9b581e76a84746a06b0977b1fed" }
+  "which-key.nvim": { "branch": "main", "commit": "370ec46f710e058c9c1646273e6b225acf47cbed" }
 }

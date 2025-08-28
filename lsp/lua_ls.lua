@@ -8,9 +8,6 @@ return {
     table.insert(client.server_capabilities.executeCommandProvider.commands, "editor.action.showReferences")
     Helpers.lsp.on_init(client, {
       Lua = {
-        codeLens = {
-          enable = true,
-        },
         completion = {
           callSnippet = "Disable",
           autoRequire = true,
