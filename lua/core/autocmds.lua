@@ -1,58 +1,31 @@
--- vim.api.nvim_create_autocmd("BufReadPost", {
---   pattern = "*Clear.log",
---   callback = function()
---     Snacks.notify.info {
---       "Entering a `Clear.log`",
---       "Normaling log to **Unix-LF in binary mode**",
---     }
---     --
---     -- collapse all CRLF → LF, ignore if none found
---     vim.cmd [[silent! %s/\r\n/\r/ge]]
---     -- collapse any stray lone CR → LF, ignore if none found
---     vim.cmd [[silent! %s/\r/\r/ge]]
---     vim.opt_local.binary = true
---     vim.opt_local.fileformat = "unix"
---   end,
--- })
+vim.api.nvim_create_autocmd("BufReadPost", {
+  pattern = "*Clear.log",
+  callback = function()
+    Snacks.notify.info {
+      "Entering a `Clear.log`",
+      "Normaling log to **Unix-LF in binary mode**",
+    }
+    --
+    -- collapse all CRLF → LF, ignore if none found
+    vim.cmd [[silent! %s/\r\n/\r/ge]]
+    -- collapse any stray lone CR → LF, ignore if none found
+    vim.cmd [[silent! %s/\r/\r/ge]]
+    vim.opt_local.binary = true
+    vim.opt_local.fileformat = "unix"
+  end,
+})
 
+-- from https://www.reddit.com/r/neovim/comments/1abd2cq/what_are_your_favorite_tricks_using_neovim/
+vim.api.nvim_create_autocmd('BufReadPost', {
+  desc = "Open file at the last position it was in buffer",
+  command = 'silent! normal! g`"zv'
+})
+
+-- Disables output when running `cd` commands in neovim
 vim.api.nvim_create_autocmd("CmdlineEnter",{
   pattern = { "cd", "tcd", "lcd" },
   command = "silent!"
 })
-
--- vim.api.nvim_create_autocmd("FileType", {
---   pattern = "markdown",
---   once = true,
---   callback = function(args)
---     local ts = vim.treesitter
---     local parser = assert(ts.get_parser(args.buf, "markdown"))
---     local tree = parser:parse()[1]:root()
---
---     local query = ts.query.parse(
---       "markdown",
---       [[
---         (
---           (atx_heading
---               (atx_h2_marker)
---                 heading_content: (inline) @heading)
---             (#match? @heading "Completed")
---         )
---       ]]
---     )
---
---     local seen = {}
---     for id, node in query:iter_captures(tree, args.buf, 0, -1) do
---       if query.captures[id] == "heading" then
---         local row = select(1, node:range())
---         if not seen[row] then
---           seen[row] = true
---           vim.print(seen[row])
---           vim.cmd(("%dfoldclose"):format(row + 1))
---         end
---       end
---     end
---   end,
--- })
 
 -- Enable LSP file renaming for imports, etc when a file is moved or renamed
 vim.api.nvim_create_autocmd("User", {

@@ -39,9 +39,10 @@ _G.Helpers = require "helpers"
 _G.Installables = require "modules.servers.init"
 
 require("lazy").setup {
-  -- dev = {
-  --   path = "D:/Personal/nvim-plugins/",
-  -- },
+  dev = {
+    -- path = "D:/Personal/nvim-plugins/",
+    path = "D:/Personal/Github/",
+  },
   spec = {
     { "nvim-lua/plenary.nvim", lazy = true },
     { "MunifTanjim/nui.nvim", lazy = true },
@@ -89,8 +90,6 @@ require("lazy").setup {
     backdrop = 25,
   },
 }
-
-vim.cmd("colorscheme tokyonight-moon")
 
 Helpers.root.setup()
 

@@ -90,11 +90,10 @@ vim.o.wrap = false
 vim.o.breakindent = vim.o.wrap and true or false
 vim.opt.isfname:append "@-@"
 
-if vim.fn.has('nvim-0.12') == 1 then
-  vim.o.diffopt = 'internal,filler,closeoff,inline:word,linematch:40'
-elseif vim.fn.has('nvim-0.11') == 1 then
-  -- Fixed: https://github.com/neovim/neovim/issues/35449
-  vim.o.diffopt = 'internal,filler,closeoff,linematch:40'
+if vim.fn.has "nvim-0.12" == 1 then
+  vim.o.diffopt = "internal,filler,closeoff,algorithm:patience,indent-heuristic,inline:char,linematch:40"
+elseif vim.fn.has "nvim-0.11" == 1 then
+  vim.o.diffopt = "internal,filler,closeoff,algorithm:patience,indent-heuristic,linematch:40"
 end
 
 -- File History
@@ -143,6 +142,7 @@ vim.o.ignorecase = true
 vim.o.inccommand = "nosplit"
 vim.o.jumpoptions = "view"
 vim.o.smartcase = true
+vim.opt.whichwrap:append "<,>,[,]"
 
 -- Spelling
 vim.opt.spelllang = { "en" }
