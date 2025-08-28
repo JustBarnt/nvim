@@ -69,6 +69,12 @@ function M.setup()
         table.insert(keys, { "gI", Snacks.picker.lsp_implementations, "[G]oto [I]mplementation" })
       end
 
+      if Client.server_capabilities.colorProvider then
+        vim.lsp.document_color.enable(true, args.buf, {
+          style = 'virtual'
+        })
+      end
+
       -- if Client.server_capabilities.codeLensProvider then
       --   vim.lsp.codelens.refresh()
       -- end

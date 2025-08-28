@@ -95,14 +95,16 @@ vim.cmd("colorscheme tokyonight-moon")
 Helpers.root.setup()
 
 -- Config Core Files
-require "core.keymaps"
+require "core.keymaps" 
 require "core.autocmds"
 require "core.user-commands"
 
 -- Neovim native functionality
 require("modules.lsp").setup()
 require "modules.snippets"
-require("modules.colorify").setup()
+-- require("modules.colorify").setup()
+
+
 
 -- Extensions Modules to existing lua classes
 require "modules.extensions.string"
