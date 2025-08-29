@@ -1,3 +1,20 @@
+vim.api.nvim_create_user_command("TempFile", function()
+  local fts = vim.fn.getcompletion("", "filetype")
+
+  vim.ui.select(fts, {
+    prompt = "Select Filetype:",
+  }, function(choice)
+      if choice then
+        vim.cmd "enew"
+        vim.bo.buftype = "nofile"
+        vim.bo.bufhidden = "hide"
+        vim.bo.swapfile = false
+        vim.bo.filetype = choice
+        vim.api.nvim_buf_set_name(0, "temp." .. choice)
+      end
+    end)
+end, {})
+
 vim.api.nvim_create_user_command("ConvertEOL", function(opts)
   local fmt = opts.args
   if fmt ~= "unix" and fmt ~= "dos" and fmt ~= "mac" then
@@ -6,7 +23,7 @@ vim.api.nvim_create_user_command("ConvertEOL", function(opts)
     })
   end
   vim.bo.fileformat = fmt
-  vim.cmd([[write]])
+  vim.cmd [[write]]
   vim.notify("File converted to: " .. fmt, vim.log.levels.INFO, {
     title = "ConvertEOL",
   })

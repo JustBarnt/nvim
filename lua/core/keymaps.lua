@@ -4,11 +4,13 @@ local strings = require "modules.utils.strings"
 map({"n", "v"}, "<leader>rw", strings.replace_word_under_cursor, { desc = "Replace `<cword>` instance in buffer" })
 
 map("n", "<leader>m", Helpers.marks.mark, { desc = "Mark line" })
-map("n", "dm", Helpers.marks.del_mark, { desc = "Delete mark" })
-map("n", "<leader>dm", Helpers.marks.del_all_marks, { desc = "Delete all mark" })
+map("n", "<leader>dm", Helpers.marks.del_mark, { desc = "Delete mark" })
+map("n", "<leader>Dm", Helpers.marks.del_all_marks, { desc = "Delete all mark" })
 map("n", "m", Helpers.marks.jump_to_mark, { desc = "Create Mark" })
 
 -- better up/down
+-- unless we provide a count like `5j|5k` we actually move by visual lines using `gj|gk` instead of
+-- logical lines
 map({ "n", "x" }, "j", "v:count == 0 ? 'gj' : 'j'", { desc = "Down", expr = true, silent = true })
 map({ "n", "x" }, "<Down>", "v:count == 0 ? 'gj' : 'j'", { desc = "Down", expr = true, silent = true })
 map({ "n", "x" }, "k", "v:count == 0 ? 'gk' : 'k'", { desc = "Up", expr = true, silent = true })
@@ -82,7 +84,8 @@ map("n", "gcO", "O<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>", { desc = "Add Commen
 map("n", "<leader>l", "<cmd>Lazy<cr>", { desc = "Lazy" })
 
 -- new file
-map("n", "<leader>fn", "<cmd>enew<cr>", { desc = "New File" })
+map("n", "<leader>nf", "<cmd>enew<cr>", { desc = "New File" })
+map("n", "<leader>nt", "<cmd>TempFile", { desc = "New Temp File" })
 
 ---@param severity? vim.diagnostic.Severity
 ---@param count integer

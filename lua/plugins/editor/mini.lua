@@ -24,7 +24,7 @@ return {
         },
       },
       move = { mappings = { left = "H", down = "J", right = "L", up = "K" } },
-      surround = { n_lines = 500 },
+      surround = { n_lines = 20 },
       icons = {
         file = {
           [".axaml"] = { glyph = "󰙳", hl = "MiniIconsGreen" },
