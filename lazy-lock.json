@@ -3,6 +3,7 @@
   "activate.nvim": { "branch": "main", "commit": "50a585d9b54ae7fa2bd961fb96471bd8da5cacce" },
   "blink.cmp": { "branch": "main", "commit": "bae4bae0eedd1fa55f34b685862e94a222d5c6f8" },
   "bufferline.nvim": { "branch": "main", "commit": "655133c3b4c3e5e05ec549b9f8cc2894ac6f51b3" },
+  "clangd_extensions.nvim": { "branch": "main", "commit": "b67cc417d9020fb4b83d46662351b4d16894905e" },
   "cmake-tools.nvim": { "branch": "master", "commit": "88e07c6bff838a5bda2f461e9c1122b79ff0829f" },
   "conform.nvim": { "branch": "master", "commit": "b4aab989db276993ea5dcb78872be494ce546521" },
   "diffview.nvim": { "branch": "main", "commit": "4516612fe98ff56ae0415a259ff6361a89419b0a" },

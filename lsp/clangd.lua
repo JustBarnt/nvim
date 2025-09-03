@@ -13,10 +13,10 @@
 
 -- https://clangd.llvm.org/extensions.html#switch-between-sourceheader
 local function switch_source_header(bufnr)
-  local method_name = 'textDocument/switchSourceHeader'
-  local client = vim.lsp.get_clients({ bufnr = bufnr, name = 'clangd' })[1]
+  local method_name = "textDocument/switchSourceHeader"
+  local client = vim.lsp.get_clients({ bufnr = bufnr, name = "clangd" })[1]
   if not client then
-    return vim.notify(('method %s is not supported by any servers active on the current buffer'):format(method_name))
+    return vim.notify(("method %s is not supported by any servers active on the current buffer"):format(method_name))
   end
   local params = vim.lsp.util.make_text_document_params(bufnr)
   ---@diagnostic disable-next-line: param-type-mismatch
@@ -25,7 +25,7 @@ local function switch_source_header(bufnr)
       error(tostring(err))
     end
     if not result then
-      vim.notify('corresponding file cannot be determined')
+      vim.notify "corresponding file cannot be determined"
       return
     end
     vim.cmd.edit(vim.uri_to_fname(result))
@@ -34,42 +34,45 @@ end
 
 local function symbol_info()
   local bufnr = vim.api.nvim_get_current_buf()
-  local clangd_client = vim.lsp.get_clients({ bufnr = bufnr, name = 'clangd' })[1]
+  local clangd_client = vim.lsp.get_clients({ bufnr = bufnr, name = "clangd" })[1]
   ---@diagnostic disable-next-line: missing-parameter, param-type-mismatch
-  if not clangd_client or not clangd_client.supports_method 'textDocument/symbolInfo' then
-    return vim.notify('Clangd client not found', vim.log.levels.ERROR)
+  if not clangd_client or not clangd_client.supports_method "textDocument/symbolInfo" then
+    return vim.notify("Clangd client not found", vim.log.levels.ERROR)
   end
   local win = vim.api.nvim_get_current_win()
   local params = vim.lsp.util.make_position_params(win, clangd_client.offset_encoding)
   ---@diagnostic disable-next-line: missing-parameter, param-type-mismatch
-  clangd_client:request('textDocument/symbolInfo', params, function(err, res)
+  clangd_client:request("textDocument/symbolInfo", params, function(err, res)
     if err or #res == 0 then
       -- Clangd always returns an error, there is not reason to parse it
       return
     end
-    local container = string.format('container: %s', res[1].containerName) ---@type string
-    local name = string.format('name: %s', res[1].name) ---@type string
-    vim.lsp.util.open_floating_preview({ name, container }, '', {
+    local container = string.format("container: %s", res[1].containerName) ---@type string
+    local name = string.format("name: %s", res[1].name) ---@type string
+    vim.lsp.util.open_floating_preview({ name, container }, "", {
       height = 2,
       width = math.max(string.len(name), string.len(container)),
       focusable = false,
       focus = false,
-      border = 'single',
-      title = 'Symbol Info',
+      border = "single",
+      title = "Symbol Info",
     })
   end, bufnr)
 end
 
+---@type vim.lsp.ClientConfig
 return {
   cmd = {
     "clangd",
     "--background-index",
+    "--suggest-missing-includes",
     "--clang-tidy",
     "--header-insertion=iwyu",
     "--completion-style=detailed",
     "--function-arg-placeholders",
     "--fallback-style=llvm",
   },
+  flags = { allow_incremental_sync = true, debounce_text_changes = 500 },
   root_markers = {
     ".git",
     ".clangd",
@@ -79,22 +82,33 @@ return {
     "compile_flags.txt",
     "configure.ac",
   },
-  filetypes = { "c", "cpp", "objc", "objcpp", "cuda", "proto" },
-  capabilities = Helpers.lsp.create_capabilities({
+  filetypes = { "c", "cpp", "objc", "objcpp", "cuda" },
+  capabilities = Helpers.lsp.create_capabilities {
     textDocument = {
       completion = {
         editsNearCursor = true,
       },
     },
-    offsetEncoding = { 'utf-8', 'utf-16' },
-  }),
+    offsetEncoding = { "utf-8", "utf-16" },
+  },
+  settings = {
+    clangd = {
+      inlayHints = false
+    },
+  },
+  init_options = {
+    usePlaceholders = true,
+    completeUnimported = true,
+    clangdFileStatus = true,
+    fallbackFlags = { "-std=c++17" },
+  },
   on_attach = function()
-      vim.api.nvim_buf_create_user_command(0, 'LspClangdSwitchSourceHeader', function()
-        switch_source_header(0)
-      end, { desc = 'Switch between source/header' })
+    vim.api.nvim_buf_create_user_command(0, "LspClangdSwitchSourceHeader", function()
+      switch_source_header(0)
+    end, { desc = "Switch between source/header" })
 
-      vim.api.nvim_buf_create_user_command(0, 'LspClangdShowSymbolInfo', function()
-        symbol_info()
-      end, { desc = 'Show symbol info' })
+    vim.api.nvim_buf_create_user_command(0, "LspClangdShowSymbolInfo", function()
+      symbol_info()
+    end, { desc = "Show symbol info" })
   end,
 }
