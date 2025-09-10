@@ -60,18 +60,56 @@ local function symbol_info()
   end, bufnr)
 end
 
----@type vim.lsp.ClientConfig
-return {
-  cmd = {
+---@return boolean - true if a solution was found, false if not
+local function find_sln_file(start_dir)
+  local uv = vim.uv
+  local dir = uv.fs_realpath(start_dir) or start_dir
+
+  while dir do
+    for _, name in ipairs(vim.fn.globpath(dir, "*.sln", false, true)) do
+      if vim.fn.filereadable(name) == 1 then 
+        return true
+      end
+    end
+    local parent = uv.fs_realpath(dir .. "/..")
+    if parent == dir then
+      break
+    end
+    dir = parent
+  end
+  return false
+end
+
+local function get_cxx_compiler()
+  local cwd = vim.fn.getcwd()
+  local use_clang_cl = find_sln_file(cwd)
+
+  if use_clang_cl then
+    return {
     "clangd",
+    "--query-driver=clang-cl.exe",
     "--background-index",
-    "--suggest-missing-includes",
     "--clang-tidy",
     "--header-insertion=iwyu",
     "--completion-style=detailed",
-    "--function-arg-placeholders",
     "--fallback-style=llvm",
-  },
+  }
+  else
+    return {
+    "clangd",
+    "--query-driver=C:/w64devkit/bin/g++.exe",
+    "--background-index",
+    "--clang-tidy",
+    "--header-insertion=iwyu",
+    "--completion-style=detailed",
+    "--fallback-style=llvm",
+  }
+  end
+end
+
+---@type vim.lsp.ClientConfig
+return {
+  cmd = get_cxx_compiler(),
   flags = { allow_incremental_sync = true, debounce_text_changes = 500 },
   root_markers = {
     ".git",
@@ -100,7 +138,7 @@ return {
     usePlaceholders = true,
     completeUnimported = true,
     clangdFileStatus = true,
-    fallbackFlags = { "-std=c++17" },
+    fallbackFlags = { "-std=c++23" },
   },
   on_attach = function()
     vim.api.nvim_buf_create_user_command(0, "LspClangdSwitchSourceHeader", function()

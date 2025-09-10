@@ -23,6 +23,7 @@ Installables.formatters = {
 
 Installables.servers = {
   "bash-language-server",
+  "clangd",
   "cmake-language-server",
   "css-lsp",
   "css-variables-language-server",
