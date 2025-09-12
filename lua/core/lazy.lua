@@ -69,7 +69,7 @@ require("lazy").setup {
   -- NOTE: Part of lazy.nvim. Include a .lazy.lua file in a project root directory, and those plugins will be merged
   --       into the plugin spec for that project only
   local_spec = true,
-  install = { colorscheme = { "tokyonight", "slate" } },
+  install = { colorscheme = { "onedark", "tokyonight", "slate" } },
   checker = { enabled = true, notify = false },
   performance = {
     rtp = {
@@ -93,6 +93,8 @@ require("lazy").setup {
 
 Helpers.root.setup()
 
+vim.cmd("colorscheme onedark")
+
 -- Config Core Files
 require "core.keymaps" 
 require "core.autocmds"
@@ -102,8 +104,6 @@ require "core.user-commands"
 require("modules.lsp").setup()
 require "modules.snippets"
 -- require("modules.colorify").setup()
-
-
 
 -- Extensions Modules to existing lua classes
 require "modules.extensions.string"
