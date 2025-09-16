@@ -4,7 +4,7 @@ local subtle_color = "#8c98b3"
 return {
   "folke/tokyonight.nvim",
   lazy = false,
-  priority = 10000,
+  priority = 1000,
   opts = {
     transparent = is_transparent,
     on_colors = function(colors)

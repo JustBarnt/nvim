@@ -13,23 +13,6 @@ end
 return {
   "snacks.nvim",
   opts = {
-    bigfile = {
-      notify = true,
-      size = 5 * 1024 * 1024,
-      line_length = 1000,
-      setup = function(ctx)
-        if vim.fn.exists(":NoMatchParen") ~= 0 then
-          vim.cmd[[NoMatchParen]]
-        end
-        Snacks.util.wo(0, { foldmethod = "indent", statuscolumn = "", conceallevel = 0 })
-        vim.schedule(function()
-          if vim.api.nvim_buf_is_valid(ctx.buf) then
-            vim.bo[ctx.buf].syntax = ctx.ft
-            Snacks.indent.disable()
-          end
-        end)
-      end,
-    },
     bufdelete = { enabled = true },
     dashboard = { enabled = true },
     indent = { enabled = true },

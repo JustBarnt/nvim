@@ -1,6 +1,6 @@
 return { 
   "navarasu/onedark.nvim",
-  priority = 10000,
+  priority = 1000,
   opts = {
     style = "darker"
   }

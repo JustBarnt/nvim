@@ -1,4 +1,69 @@
 vim.api.nvim_create_autocmd("BufReadPost", {
+  group = vim.api.nvim_create_augroup("LargeFile", { clear = true }),
+  callback = function(args)
+    local max_filesize = 1.5 * 1024 * 1024 -- 1.5MB
+    local max_linelength = 1000
+    local is_large = false
+
+    local ok, stats = pcall(vim.uv.fs_stat, args.file)
+    local lines = vim.api.nvim_buf_line_count(args.buf)
+
+    if ok and stats and stats.size > max_filesize then
+      is_large = true
+    else
+      local num_lines = vim.api.nvim_buf_line_count(args.buf)
+      local end_line = math.min(num_lines, 200)
+      local lines = vim.api.nvim_buf_get_lines(args.buf, 0, end_line, false)
+
+      for _, line in ipairs(lines) do
+        if #line > max_linelength then
+          is_large = true
+          break
+        end
+      end
+    end
+
+    if is_large then
+      local filetype = vim.api.nvim_get_option_value("filetype", { buf = args.buf })
+      -- Buffer flag used to disable expensive plugins
+      vim.b[args.buf].large_file = true
+
+      -- Disable some general items
+      vim.opt_local.swapfile = false
+      vim.opt_local.undofile = false
+      vim.opt_local.hlsearch = false
+      vim.opt_local.incsearch = false
+      vim.opt_local.syntax = filetype
+      -- vim.opt_local.autoindent = false
+      vim.opt_local.smartindent = false
+      vim.opt_local.cindent = false
+      vim.opt_local.indentexpr = ""
+      vim.opt_local.list = false
+      Snacks.indent.enabled = false
+
+      Snacks.util.wo(0, {
+        relativenumber = false,
+        number = true,
+        foldmethod = "manual",
+        statuscolumn = "",
+        conceallevel = 0,
+        cursorline = false,
+        colorcolumn = "",
+        wrap = false,
+        spell = false,
+      })
+
+      pcall(vim.treesitter.stop(), args.buf)
+      if vim.fn.exists ":NoMatchParen" ~= 0 then
+        vim.cmd [[NoMatchParen]]
+      end
+
+      Snacks.notify.info("Large file detected. Disabling expensive plugins and features", { title = "Big File" })
+    end
+  end,
+})
+
+vim.api.nvim_create_autocmd("BufReadPost", {
   pattern = "*Clear.log",
   callback = function()
     Snacks.notify.info {
@@ -16,15 +81,15 @@ vim.api.nvim_create_autocmd("BufReadPost", {
 })
 
 -- from https://www.reddit.com/r/neovim/comments/1abd2cq/what_are_your_favorite_tricks_using_neovim/
-vim.api.nvim_create_autocmd('BufReadPost', {
+vim.api.nvim_create_autocmd("BufReadPost", {
   desc = "Open file at the last position it was in buffer",
-  command = 'silent! normal! g`"zv'
+  command = 'silent! normal! g`"zv',
 })
 
 -- Disables output when running `cd` commands in neovim
-vim.api.nvim_create_autocmd("CmdlineEnter",{
+vim.api.nvim_create_autocmd("CmdlineEnter", {
   pattern = { "cd", "tcd", "lcd" },
-  command = "silent!"
+  command = "silent!",
 })
 
 -- Enable LSP file renaming for imports, etc when a file is moved or renamed
