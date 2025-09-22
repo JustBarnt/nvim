@@ -117,6 +117,7 @@ function M.setup()
           },
         },
         float = { border = "rounded", source = "if_many", format = Helpers.formatting.formatErrors },
+        jump = { on_jump = vim.diagnostic.open_float },
         virtual_text = {
           spacing = 2,
           source = "if_many",
