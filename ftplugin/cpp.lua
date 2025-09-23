@@ -10,6 +10,6 @@ set.cindent = true
 set.showmatch = true
 set.colorcolumn = "80"
 
-vim.cmd([[
+vim.cmd [[
   setlocal cinoptions=:0,p0,t0,+0,(0,u0,W4
-]])
+]]
