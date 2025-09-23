@@ -21,14 +21,50 @@ function M.is_win()
   return vim.uv.os_uname().version:match "Windows"
 end
 
+--- @class VersioningTable
+--- @field Major number
+--- @field Minor number
+--- @field Patch number
+--- @field Nightly boolean
+
+--- Returns a table containing the current Major, Minor, and path version of
+--- Neovim or the prerelease if running nightly
+--- @return VersioningTable
+function M.vim_version()
+  local v = vim.version()
+  ---@type VersioningTable
+  local table = {}
+
+  if v.prerelease then
+    table.Nightly = true
+    vim.notify(
+      ("Neovim v%d.%d.%d)"):format(v.major, v.minor, v.patch),
+      vim.log.levels.INFO,
+      { title = "Neovim: running nightly!" }
+    )
+  else
+    vim.notify(
+      ("Neovim v%d.%d.%d)"):format(v.major, v.minor, v.patch),
+      vim.log.levels.INFO,
+      { title = "Neovim: running nightly!" }
+    )
+  end
+
+  table.Major = v.major
+  table.Minor = v.minor
+  table.Patch = v.patch
+
+  return table
+end
+
 --- Checks if the provided app_ver is at least equal to or greater
 --- than then provided `minimum` version
 ---@param app_ver string Application version
 ---@param version string The minimum version required
 ---@return boolean
 function M.semantic_ver_has(app_ver, version)
-  local min_version_req = vim.split(version, '.', { plain = true })
-  local app_version = vim.split(version, '.', { plain = true })
+  local min_version_req = vim.split(version, ".", { plain = true })
+  local app_version = vim.split(version, ".", { plain = true })
 
   for i = 1, 3 do
     local min_ver_part = tonumber(min_version_req[i] or 0)

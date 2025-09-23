@@ -3,6 +3,7 @@ return {
   event = "VeryLazy",
   opts = {
     defaults = {},
+    preset = "helix",
     spec = {
       {
         mode = { "n", "v" },
