@@ -18,11 +18,11 @@ return {
     indent = { enabled = true },
     input = { enabled = true },
     lazygit = { enabled = vim.fn.has("lazygit") == 1 },
-    notifier = {
-      style = "minimal",
-      refresh = 500,
-      top_down = false,
-    },
+    -- notifier = {
+    --   style = "minimal",
+    --   refresh = 500,
+    --   top_down = false,
+    -- },
     ---@class snacks.picker
     picker = {
       formatters = {

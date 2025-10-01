@@ -39,10 +39,10 @@ _G.Helpers = require "helpers"
 _G.Installables = require "modules.servers.init"
 
 require("lazy").setup {
-  dev = {
+ --[[ dev = {
     -- path = "D:/Personal/nvim-plugins/",
     path = "D:/Personal/Github/",
-  },
+  },]]
   spec = {
     { "nvim-lua/plenary.nvim", lazy = true },
     { "MunifTanjim/nui.nvim", lazy = true },
@@ -74,7 +74,7 @@ require("lazy").setup {
   performance = {
     rtp = {
       disabled_plugins = {
-        "gzip",
+        --"gzip",
         "matchit",
         "matchparen",
         "netrwPlugin",
