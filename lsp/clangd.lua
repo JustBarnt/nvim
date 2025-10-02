@@ -92,7 +92,6 @@ local function get_cxx_compiler()
     "--clang-tidy",
     "--header-insertion=iwyu",
     "--completion-style=detailed",
-    "--fallback-style=llvm",
   }
   else
     return {
@@ -102,7 +101,6 @@ local function get_cxx_compiler()
     "--clang-tidy",
     "--header-insertion=iwyu",
     "--completion-style=detailed",
-    "--fallback-style=llvm",
   }
   end
 end
