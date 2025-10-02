@@ -103,6 +103,7 @@ require "core.user-commands"
 -- Neovim native functionality
 require("modules.lsp").setup()
 require "modules.snippets"
+require("modules.lsp.cpp").setup()
 -- require("modules.colorify").setup()
 
 -- Extensions Modules to existing lua classes
