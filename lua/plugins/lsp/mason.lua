@@ -1,22 +1,24 @@
 return {
   "mason-org/mason.nvim",
-  keys = { { "<leader>cm", "<cmd>Mason<cr>", desc = "Mason" } },
-  cmd = "Mason",
+  -- keys = { { "<leader>cm", "<cmd>Mason<cr>", desc = "Mason" } },
+  -- cmd = "Mason",
   build = ":MasonUpdate",
   opts_extend = { "ensure_installed" },
   opts = {
-      registries = { "github:mason-org/mason-registry", "github:crashdummyy/mason-registry" },
-      -- NOTE: [mason.nvim] does not have an ensured installed key, I am adding it into the plugin spec
-      --       because I'm using it
-      ensure_installed = require("helpers").build_table(
-        Installables.servers,
-        Installables.formatters,
-        Installables.linters,
-        Installables.dap
-      ),
+    registries = { "github:mason-org/mason-registry", "github:crashdummyy/mason-registry" },
+    -- NOTE: [mason.nvim] does not have an ensured installed key, I am adding it into the plugin spec
+    --       because I'm using it
+    ensure_installed = require("helpers").build_table(
+      Installables.servers,
+      Installables.formatters,
+      Installables.linters,
+      Installables.dap
+    ),
   },
   config = function(_, opts)
     require("mason").setup(opts)
+
+    vim.keymap.set("n", "<leader>cm", "<CMD>Mason<CR>", { desc = "Mason" })
 
     local mr = require "mason-registry"
     mr:on("package:install:success", function()

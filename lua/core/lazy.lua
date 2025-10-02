@@ -74,7 +74,7 @@ require("lazy").setup {
   performance = {
     rtp = {
       disabled_plugins = {
-        --"gzip",
+        "gzip",
         "matchit",
         "matchparen",
         "netrwPlugin",
@@ -103,7 +103,6 @@ require "core.user-commands"
 -- Neovim native functionality
 require("modules.lsp").setup()
 require "modules.snippets"
-require("modules.lsp.cpp").setup()
 -- require("modules.colorify").setup()
 
 -- Extensions Modules to existing lua classes
