@@ -1,3 +1,4 @@
+---@type vim.lsp.ClientConfig
 return {
   cmd = { "vscode-json-language-server", "--stdio" },
   root_markers = { "*.json" },
@@ -14,15 +15,22 @@ return {
   init_options = {
     provideFormatter = true,
   },
-  on_init = function(client)
-    Helpers.lsp.on_init(client, {
-      json = {
-        format = {
-          enable = true,
-        },
-        schemas = require("schemastore").json.schemas(),
-        validate = { enable = true },
+  settings = {
+    json = {
+      format = {
+        enable = true,
       },
-    })
-  end,
+      schemas = require("schemastore").json.schemas {
+        extra = {
+          {
+            description = "CMakePresets",
+            fileMatch = "CMakePresets.json",
+            name = "CMakePresets.json",
+            url = "https://raw.githubusercontent.com/Kitware/CMake/master/Help/manual/presets/schema.json",
+          },
+        },
+      },
+      validate = { enable = true },
+    },
+  },
 }
