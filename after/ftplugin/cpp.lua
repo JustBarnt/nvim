@@ -1,2 +1,3 @@
-vim.opt_local.cindent = false
+vim.opt_local.cindent = true
 vim.opt_local.tabstop = 4
+vim.opt_local.cinoptions = "g0,N-s,:0,l1"
