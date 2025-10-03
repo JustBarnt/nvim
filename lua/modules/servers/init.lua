@@ -12,6 +12,7 @@ Installables.dap = {
 
 Installables.formatters = {
   "biome",
+  "clang-format",
   "gofumpt",
   "goimports",
   "gomodifytags",
