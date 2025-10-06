@@ -146,5 +146,7 @@ return {
     vim.api.nvim_buf_create_user_command(0, "LspClangdShowSymbolInfo", function()
       symbol_info()
     end, { desc = "Show symbol info" })
+
+    vim.keymap.set("n", "<leader>sf", "<CMD>LspClangdSwitchSourceHeader<CR>")
   end,
 }
