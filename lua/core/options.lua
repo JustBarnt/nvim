@@ -3,47 +3,9 @@
 vim.g.mapleader = vim.keycode "<space>"
 vim.g.maplocalleader = vim.keycode "\\"
 
-vim.opt.sh = "nu"
-
--- WARN: disable usage of temp files for shell commands
--- Nu doesn't support `input redirection` which Neovim uses to send buffer content to a command:
--- When set to `false` the stdin pipe will be used instead
--- NOTE: some info about `shelltemp`: https://github.com/neovim/neovim/issues/1008
---       according to: https://github.com/neovim/neovim/issues/33012 `shelltemp` is now set to be false by default on nightly
-vim.opt.shelltemp = false
-
--- string to be used to put the output of shell commands in a temp file
--- 1. when 'shelltemp' is `true`
--- 2. in the `diff-mode` (`nvim -d file1 file2`) when `diffopt` is set
---    to use an external diff command: `set diffopt-=internal`
-vim.opt.shellredir = "out+err> %s"
-
--- flags for nu:
--- * `--stdin`       redirect all input to -c
--- * `--no-newline`  do not append '\n' to stdout
--- * `--commands -c` execute a command
-vim.opt.shellcmdflag = "--stdin --no-newline -c"
-
--- disable all escaping and quoting
-vim.opt.shellxescape = ""
-vim.opt.shellxquote = ""
-vim.opt.shellquote = ""
-
--- string to be used with `:make` command to:
--- 1. save teh stderr of `makeprg` in the temp file which Neovim reads using `errorformat` to populate the `quickfix` buffer
--- 2. show the stdout, stderr and the return_code on the screen
--- NOTE: `ansi strip` removes all ansi coloring from nushell errors
-vim.opt.shellpipe =
-  "| complete | update stderr { ansi strip } | tee { get stderr | save --force --raw %s } | into record"
-
--- NOTE: Add custom nu config and env to `vim.opt.sh`
-
--- if jit.os == "Windows" then
---   local command = ("nu --env-config %s\\nushell\\env.nu --config %s\\nushell\\config.nu"):format(vim.env.XDG_CONFIG_HOME, vim.env.XDG_CONFIG_HOME)
---   vim.opt.sh = command
--- else
---   vim.opt.sh = "nu --env-config ~/.config/nushell/env.nu --config ~/.config/nushell/config.nu"
--- end
+if vim.fn.executable "nu" == 1 then
+  require "core.nushell"
+end
 
 --- TODO: various global options
 --- similar to lazyvim so I can easily toggle things like autoformat
@@ -68,15 +30,8 @@ vim.o.guicursor = "n-v-c:block,i-ci-ve:hor20,r-cr:hor20"
 vim.o.conceallevel = 2
 vim.o.laststatus = 3 -- Global Statusline
 vim.o.cursorline = true
-vim.opt.fillchars = {
-  foldopen = "",
-  foldclose = "",
-  fold = " ",
-  foldsep = " ",
-  diff = "╱",
-  eob = " ",
-}
-vim.o.list = true
+vim.opt.list = true
+vim.opt.listchars = { space = "⋅", trail = "⋅", tab = "  ↦" }
 vim.o.mouse = "a"
 vim.o.ruler = false
 vim.o.scrolloff = 4
@@ -87,6 +42,7 @@ vim.o.sidescrolloff = 8
 vim.o.timeoutlen = 1000
 vim.o.virtualedit = "block"
 vim.o.wildmode = "longest:full,full"
+vim.o.linebreak = true
 vim.o.wrap = false
 vim.o.breakindent = vim.o.wrap and true or false
 vim.opt.isfname:append "@-@"
@@ -121,14 +77,23 @@ vim.o.pumheight = 10
 vim.o.winminwidth = 5
 vim.o.maxmempattern = 10000
 
---- NOTE: New in neovim nightly as of 2025-03-18, but most current plugins have issues if this is set
--- vim.o.winborder = "rounded"
-
 -- Fold settings
+vim.o.foldcolumn = "1"
+vim.o.foldlevelstart = 99
 vim.opt.foldlevel = 99
 vim.opt.foldexpr = "v:lua.require'helpers.folds'.foldexpr()"
 vim.opt.foldmethod = "expr"
-vim.opt.foldtext = ""
+vim.wo.foldtext = ""
+vim.opt.fillchars = {
+  eob = " ",
+  fold = " ",
+  foldopen = "",
+  foldclose = "",
+  foldsep = " ",
+  foldinner = " ",
+  diff = "╱",
+  msgsep = "─",
+}
 
 -- Format settings
 vim.o.formatexpr = "v:lua.require'helpers.folds'.formatexpr()"
