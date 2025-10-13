@@ -8,11 +8,13 @@ return {
     auto_show = false,
     auto_show_delay_ms = 200,
     window = { border = "rounded" },
+    treesitter_highlighting = true,
   },
   menu = {
     scrollbar = false,
     border = "rounded",
     draw = {
+      treesitter = { "lsp" },
       padding = { 1, 1 },
       columns = { { "label" }, { "kind_icon" }, { "kind" } },
       components = {
