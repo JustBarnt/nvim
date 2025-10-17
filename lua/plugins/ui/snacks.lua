@@ -17,12 +17,12 @@ return {
     dashboard = { enabled = true },
     indent = { enabled = true },
     input = { enabled = true },
-    lazygit = { enabled = vim.fn.has("lazygit") == 1 },
-    -- notifier = {
-    --   style = "minimal",
-    --   refresh = 500,
-    --   top_down = false,
-    -- },
+    lazygit = { enabled = vim.fn.has "lazygit" == 1 },
+    notifier = {
+      style = "minimal",
+      refresh = 500,
+      top_down = false,
+    },
     ---@class snacks.picker
     picker = {
       formatters = {
@@ -46,10 +46,10 @@ return {
       shell = "nu.exe",
       win = {
         keys = {
-          nav_h = { "<C-h>", term_nav("h"), desc = "Go to Left Window", expr = true, mode = "t" },
-          nav_j = { "<C-j>", term_nav("j"), desc = "Go to Lower Window", expr = true, mode = "t" },
-          nav_k = { "<C-k>", term_nav("k"), desc = "Go to Upper Window", expr = true, mode = "t" },
-          nav_l = { "<C-l>", term_nav("l"), desc = "Go to Right Window", expr = true, mode = "t" },
+          nav_h = { "<C-h>", term_nav "h", desc = "Go to Left Window", expr = true, mode = "t" },
+          nav_j = { "<C-j>", term_nav "j", desc = "Go to Lower Window", expr = true, mode = "t" },
+          nav_k = { "<C-k>", term_nav "k", desc = "Go to Upper Window", expr = true, mode = "t" },
+          nav_l = { "<C-l>", term_nav "l", desc = "Go to Right Window", expr = true, mode = "t" },
         },
       },
     },
