@@ -3,7 +3,7 @@ return {
   cmd = { "intelephense", "--stdio" },
   root_markers = { ".git", "composer.json" },
   filetypes = { "php", "ctp" },
-  capabilities = Helpers.lsp.create_capabilities(),
+  capabilities = { },
   settings = {
     intelephense = {
       environment = {
@@ -13,4 +13,9 @@ return {
       },
     },
   },
+  on_attach = function(client, bufnr)
+    -- NOTE: USE TREESITTER INDENT FOR PHP. Intelephense's `GetPhpIndent()`
+    --       SUCKS
+    vim.bo[bufnr].indentexpr = "nvim_treesitter#indent()"
+  end,
 }

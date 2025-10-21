@@ -12,7 +12,7 @@ vim.api.nvim_create_autocmd({"BufReadPre"}, {
     end
 
     if vim.treesitter.query.get(ft, "indents") then
-      vim.bo.indentexpr = "nvim_treesitter#indent()"
+      vim.bo[args.buf].indentexpr = "nvim_treesitter#indent()"
     end
   end,
 }) 
