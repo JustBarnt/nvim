@@ -1,23 +1,3 @@
--- If the file supports treesitter indents and isn't in a list of exluded files, 
--- enable treesitter indents
-vim.api.nvim_create_autocmd({"BufReadPre"}, {
-  group = vim.api.nvim_create_augroup("justbarnt/ts_indents", { clear = true}),
-  callback = function(args)
-    local ft = vim.api.nvim_get_option_value("filetype", { buf = args.buf})
-    local exclude = { "yaml", "cpp", "c", "hpp", "h" }
-    for _, filetype in pairs(exclude) do
-      if ft == filetype then
-        return
-      end
-    end
-
-    if vim.treesitter.query.get(ft, "indents") then
-      vim.bo[args.buf].indentexpr = "nvim_treesitter#indent()"
-    end
-  end,
-}) 
-
-
 vim.api.nvim_create_autocmd("BufReadPost", {
   group = vim.api.nvim_create_augroup("LargeFile", { clear = true }),
   callback = function(args)
