@@ -105,7 +105,7 @@ function M.setup()
       lsp_autocmds.setup(Client, args.buf)
       make_keymaps(args.buf, keys)
 
-      require("modules.dataflow").setup()
+      -- require("modules.dataflow").setup()
       vim.diagnostic.config {
         severity_sort = true,
         underline = { severity = { vim.diagnostic.severity.ERROR, vim.diagnostic.severity.WARN } },
