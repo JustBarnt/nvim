@@ -57,6 +57,9 @@ local function create_dimmed_color(alpha)
   return blend_colors(fg_color, bg_color, alpha)
 end
 
+-- BUG: When cursor is on the method/function name it shows just the function name
+--      and dims everything in the function block
+
 ---@param client vim.lsp.Client
 function DataFlow.highlight_variable_flow(client)
   log("=== Starting highlight_variable_flow ===")
@@ -76,7 +79,7 @@ function DataFlow.highlight_variable_flow(client)
   log("Window:", win)
   log("Client name:", client.name)
   log("Client offset encoding:", client.offset_encoding)
-  
+
   ---@class lsp.TextDocumentPositionParams
   local params = vim.lsp.util.make_position_params(win, client.offset_encoding)
   log("Params:", params)
@@ -107,7 +110,7 @@ function DataFlow.highlight_variable_flow(client)
     end
     
     log("Found", #res, "references")
-    
+
     -- Get current function range with treesitter
     local ts_utils = require("nvim-treesitter.ts_utils")
     local current_node = ts_utils.get_node_at_cursor()
@@ -119,6 +122,7 @@ function DataFlow.highlight_variable_flow(client)
     end
 
     local fn_node = current_node
+
     local depth = 0
     while fn_node and depth < 50 do
       local node_type = fn_node:type()
