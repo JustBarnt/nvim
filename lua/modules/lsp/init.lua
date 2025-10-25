@@ -94,18 +94,18 @@ function M.setup()
       -- setup any lsp ClientToServer method functionality and/or keymaps
       for _, method in pairs(vim.lsp.protocol.Methods) do
         -- Prints out all capabilities
-        -- vim.print(method)
         if Client:supports_method(method, args.buf) and client_methods[method] then
           client_methods[method](args.buf, keys, Client)
         end
       end
 
-      -- vim.lsp.set_log_level("debug")
+      _G.LspClients = {}
+      table.insert(LspClients, Client)
 
       lsp_autocmds.setup(Client, args.buf)
       make_keymaps(args.buf, keys)
 
-      -- require("modules.dataflow").setup()
+      require("modules.dataflow").setup(Client)
       vim.diagnostic.config {
         severity_sort = true,
         underline = { severity = { vim.diagnostic.severity.ERROR, vim.diagnostic.severity.WARN } },

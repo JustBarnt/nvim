@@ -23,6 +23,9 @@ return {
       refresh = 500,
       top_down = false,
     },
+    notify = {
+      enabled = true,
+    },
     ---@class snacks.picker
     picker = {
       formatters = {

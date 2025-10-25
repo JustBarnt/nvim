@@ -3,22 +3,22 @@ local LspAutocmds = {}
 ---@type table<string, fun(client: vim.lsp.Client, buffer?: number)>
 local aus = {}
 
-aus.document_highlight = function(client, buffer)
-  if client:supports_method("textDocument/documentHighlight", buffer) then
-    vim.api.nvim_create_augroup("lsp_document_highlight", { clear = false })
-    vim.api.nvim_clear_autocmds { buffer = buffer, group = "lsp_document_highlight" }
-    vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-      group = "lsp_document_highlight",
-      buffer = buffer,
-      callback = vim.lsp.buf.document_highlight,
-    })
-    vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
-      group = "lsp_document_highlight",
-      buffer = buffer,
-      callback = vim.lsp.buf.clear_references,
-    })
-  end
-end
+-- aus.document_highlight = function(client, buffer)
+--   if client:supports_method("textDocument/documentHighlight", buffer) then
+--     vim.api.nvim_create_augroup("lsp_document_highlight", { clear = false })
+--     vim.api.nvim_clear_autocmds { buffer = buffer, group = "lsp_document_highlight" }
+--     vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+--       group = "lsp_document_highlight",
+--       buffer = buffer,
+--       callback = vim.lsp.buf.document_highlight,
+--     })
+--     vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
+--       group = "lsp_document_highlight",
+--       buffer = buffer,
+--       callback = vim.lsp.buf.clear_references,
+--     })
+--   end
+-- end
 
 ---@param client vim.lsp.Client
 ---@param buffer integer|number

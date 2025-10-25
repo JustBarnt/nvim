@@ -34,6 +34,7 @@ end
 
 lazy_file()
 
+_G.DataFlow = require "modules.dataflow"
 _G.LazyVim = require "lazy.core.util"
 _G.Helpers = require "helpers"
 _G.Installables = require "modules.servers.init"
