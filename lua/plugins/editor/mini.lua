@@ -24,7 +24,6 @@ return {
         },
       },
       move = { mappings = { left = "H", down = "J", right = "L", up = "K" } },
-      surround = { n_lines = 20 },
       icons = {
         file = {
           [".axaml"] = { glyph = "󰙳", hl = "MiniIconsGreen" },
@@ -55,7 +54,6 @@ return {
   end,
   config = function(_, opts)
     require("mini.ai").setup { opts.ai }
-    require("mini.surround").setup { opts.surround }
     require("mini.move").setup { opts.move }
     require("mini.operators").setup()
     require("mini.splitjoin").setup()

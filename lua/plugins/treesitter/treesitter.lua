@@ -58,6 +58,7 @@ return {
         "gosum",
         "gowork",
         "html",
+        "ini",
         "javascript",
         "jsdoc",
         "json",
