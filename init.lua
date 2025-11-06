@@ -1,7 +1,8 @@
-if vim.fn.has "nvim-0.12" ~= 1 then
+-- Support only Neovim v0.11 and nightly
+if vim.fn.has "nvim-0.11" ~= 1 then
   if vim.v.shell_error ~= 0 then
     vim.api.nvim_echo({
-      { "Must be using at least Neovim nightly to use:\n", "ErrorMsg" },
+      { "Must be using at least Neovim v0.11 to use:\n", "ErrorMsg" },
       { "\nPress any key to exit..." },
     }, true, {})
     vim.fn.getchar()
@@ -9,34 +10,18 @@ if vim.fn.has "nvim-0.12" ~= 1 then
   end
 end
 
-vim.filetype.add {
-  extension = {
-    nu = "nu",
-    nush = "nu",
-    nuon = "nu",
-    nushell = "nu",
-    log = "log",
-    xaml = "xaml",
-    axaml = "axaml",
-    cctrx = "cctrx",
-    reg = "ini"
-  },
-  pattern = {
-    [".*/git/%a+(%-?%a+)"] = { "gitconfig", { priority = 10 } },
-  },
-}
+-- Load our filetype additions
+require("filetypes").setup()
 
----@diagnostic disable-next-line: undefined-global
-if init_debug then
-  local osvpath = vim.fn.stdpath "data" .. "/lazy/one-small-step-for-vimkind"
-  vim.opt.rtp:append(osvpath)
-  require("osv").launch { port = 8086, blocking = true }
-end
+-- Bootstrap lazy.nvim we need to make sure any thing plugin releated is 
+-- loaded and available for the rest of our configuration startup
+require "lazy"
 
-require "lsp_overrides"
-require "core.options"
-require "core.lazy"
+-- Load the our user modules
+require "user.options"
+require "user.keymaps"
 
+-- Load neovide settings if we are in neovide
 if vim.g.neovide then
-  require "core.neovide"
+  require "user.neovide"
 end

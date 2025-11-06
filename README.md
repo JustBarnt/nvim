@@ -1,21 +1,79 @@
-# Config Re-write
+## Neovim Configuration
 
+### TODO
 
-## Tree-sitter
-Use `nvim-treesitter` `main` branch
-    - use `ftplugin` to setup the highlighting and downloading for the parse if it is not installed
+1. lazy.nvim bootstrap
+2. options
+3. keymaps
+4. Plugins
+  a. Treesitter
+  b. lsp
 
-Installing:
-`require'nvim-treesitter'.install { ... }`
+#### Treesitter
 
-Highlighting, folds, indentation:
-```lua
-vim.api.nvim_create_autocmd('filetype', {
-    pattern = { '<filetype>' },
-    callback = function()
-        vim.treesitter.start()
-        vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
-        vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr"
-    end
-})
-```
+Use `nvim-treesitter` `main` branch.
+
+Use an `autocmd` on `BufReadPre` to see enable the wanted treesitter features
+
+### Plugins
+
+- [ ] `lazy.nvim`
+- [ ] `treesitter`
+
+#### Coding
+
+- [ ] `blink.cmp`
+- [ ] `conform`
+- [ ] `fast-action`
+- [ ] `lazydev`
+- [ ] `lensline.nvim`
+- [ ] `lua-console.nvim` and/or `replua.nvim`
+- [ ] `nvim-svelte-check`
+- [ ] `quick-c`
+- [ ] `roslyn.nvim`
+- [ ] `sidekick.nvim`
+- [ ] `tiny-inline-diagnostics.nvim`
+- [ ] `ts-comments`
+
+#### LSP
+
+- [ ] `clangd-extensions`
+- [ ] `fidget.nvim`
+- [ ] `mason-lspconfig`
+- [ ] `mason`
+- [ ] `nvim-lspconfig`
+- [ ] `schemastore`
+
+#### Editor
+
+- [ ] `cord.nvim`
+- [ ] `diffview`
+- [ ] `docpair`
+- [ ] `flash`
+- [ ] `gitsigns`
+- [ ] `grug-far`
+- [ ] `harpoon` or `buffer-sticks.nvim`
+- [ ] `mini.nvim`
+- [ ] `nvim-surround`
+- [ ] `oil.nvim`
+- [ ] `overseer.nvim`
+- [ ] `pathfinder.nvim`
+- [ ] `sort.nvim`
+- [ ] `time-machine`
+- [ ] `tiny-glimmer.nvim`
+- [ ] `todo-comments`
+- [ ] `treewalker.nvim`
+- [ ] `trouble.nvim`
+- [ ] `vim-speeddating`
+- [ ] `visual-whitespace.nvim`
+- [ ] `which-key`
+
+#### Extras
+
+- [ ] `bufferline`
+- [ ] `lualine`
+- [ ] `snacks`
+
+#### Plugin Work
+
+- [ ] `node-type.nvim`
