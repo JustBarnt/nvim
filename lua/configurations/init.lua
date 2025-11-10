@@ -1,19 +1,64 @@
 ---@class Configuration
----@field servers string[]
----@field parsers string[]
+---@field debuggers Debuggers
+---@field formatters Formatters
 ---@field lazyCfg LazyConfiguration
+---@field linters Linters
+---@field lsps Lsps
+---@field parsers Parsers
 local M = {}
 
 ---@class LazyConfiguration
 ---@reference refer to `lazy.nvim` configuration for details
 
--- Contains a list of LSP servers to always install
----@type string[]
-local lsp_servers = {}
+---@alias Debuggers string[]
+---@alias Formatters string[]
+---@alias Linters string[]
+---@alias Lsps string[]
+---@alias Parsers string[]
 
--- Contains a list of parsers to install for Treesitter
 ---@type string[]
-local ts_parsers = {}
+--stylua: ignore
+local lsps = {
+  "clangd", "cmake-language-server", "css-lsp", "css-variables-language-server",
+  "cssmodules-language-server", "emmet-ls", "gopls", "html-lsp",
+  "intelephense", "json-lsp", "just-lsp", "lemminx",
+  "lua-language-server", "pyrefly", "roslyn", "ruff",
+  "svelte-language-server", "tailwindcss-language-server", "taplo", "vim-language-server",
+  "vtsls", "yaml-language-server",
+}
+
+--stylua: ignore
+---@type Linters
+local linters = { "cmakelint", "shellcheck" }
+
+---@type Formatters
+--stylua: ignore
+local formatters = {
+  "clang-format", "gofumpt", "goimports",
+  "gomodifytags", "shfmt", "stylua",
+  "xmlformatter",
+}
+
+---@type Debuggers
+--stylua: ignore
+local debuggers = {}
+
+---@type Parsers
+
+--stylua: ignore
+local parsers = {
+  "bash", "c", "c_sharp", "cmake",
+  "cpp", "diff", "git_config", "gitcommit",
+  "git_rebase", "gitignore", "gitattributes", "go",
+  "gomod", "gosum", "gowork", "html",
+  "ini", "javascript", "jsdoc", "json",
+  "json5", "jsonc", "just", "lua",
+  "luadoc", "luap", "lua_patterns", "markdown",
+  "markdown_inline", "nu", "prisma", "php",
+  "printf", "query", "regex", "scheme",
+  "svelte", "toml", "tsx", "typescript",
+  "vim", "vimdoc", "xml", "yaml",
+}
 
 -- Contains the `lazy.nvim` configuration
 ---@class LazyConfiguration
@@ -52,15 +97,17 @@ local lazy_config = {
   ui = {
     border = "rounded",
     backdrop = 25,
-  }
+  },
 }
 
 local configs = {
-  servers = lsp_servers,
-  parsers = ts_parsers,
+  debuggers = debuggers,
+  formatters = formatters,
   lazyCfg = lazy_config,
+  linters = linters,
+  lsps = lsps,
+  parsers = parsers,
 }
-
 
 ---@param t table
 ---@param path string
@@ -87,25 +134,18 @@ local function get_nested(t, path)
   return current
 end
 
-local config_mt = {
-  __index = function(table, key)
-    if key == "get" then
-      return function(path)
-        if path:find "%." then
-          return get_nested(configs, path)
-        else
-          return configs[path]
-        end
-      end
-    end
-    return configs[key]
-  end,
+---@overload fun(path: "dap"): string[]
+---@overload fun(path: "formatters"): string[]
+---@overload fun(path: "lazyCfg"): LazyConfiguration
+---@overload fun(path: "linters"): string[]
+---@overload fun(path: "lsps"): string[]
+---@overload fun(path: "parsers"): string[]
+function M:get(path)
+  if path:find "%." then
+    return get_nested(configs, path)
+  else
+    return configs[path]
+  end
+end
 
-  __newindex = function(table, key, value)
-    error("Configurations are read-only. Cannot set '" .. tostring(key) .. "'")
-  end,
-}
-
--- Set metatable for
-setmetatable(M, config_mt)
 return M

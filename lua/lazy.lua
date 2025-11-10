@@ -1,7 +1,7 @@
-local Config = require "configurations"
+local Config = require("configurations")
 
 -- bootstrap lazy
-local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.uv.fs_stat(lazypath) then
   local lazyrepo = "https://github.com/folke/lazy.nvim.git"
   local out = vim.fn.system {
@@ -27,4 +27,4 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 -- Configure lazy.nvim
-require("lazy").setup { Config.get "lazyCfg" }
+require("lazy").setup { Config:get("lazyCfg") }
