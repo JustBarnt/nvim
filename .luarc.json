@@ -5,6 +5,8 @@
   "workspace.library": [
     "C:/Program Files/Neovim/share/nvim/runtime/lua/",
     "$VIMRUNTIME",
-    "${3rd}/luv/library"
+    "${3rd}/luv/library",
+    "~/.local/share/nvim-data/lazy/snacks.nvim",
+    "~/.local/share/nvim-data/lazy/blink.cmp"
   ]
 }
