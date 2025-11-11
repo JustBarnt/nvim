@@ -10,6 +10,8 @@ if vim.fn.has("nvim-0.11") ~= 1 then
   end
 end
 
+vim.g.nushell = vim.fn.executable "nu"
+
 -- Load our filetype additions
 require("filetypes").setup()
 
@@ -22,6 +24,9 @@ require("user.options")
 require("user.keymaps")
 require("user.autocmds")
 require("user.commands")
+
+-- TODO: Move to a plugin
+require("filetypes.ft-commands")
 
 -- Load neovide settings if we are in neovide
 if vim.g.neovide then
@@ -37,4 +42,3 @@ end
 --   file:write('\n')
 --   file:write('---@alias Filetype "' .. types .. '"')
 -- end
-

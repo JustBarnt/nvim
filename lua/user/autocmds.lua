@@ -1,17 +1,18 @@
+local api = vim.api
 local autocmd = vim.api.nvim_create_autocmd
 local augroup = vim.api.nvim_create_augroup
-local api = vim.api
+local fn = vim.fn
 local vloc = vim.opt_local
 
--- Disable out when using `cd` command inside neovim
 autocmd("CmdlineEnter", {
   pattern = { "cd", "tcd", "lcd" },
+  desc = "Disable out when using `cd` command inside neovim",
   command = "!silent",
 })
 
--- Use Snacks to enable LSP file renaming for imports when a file is moved or renamed
 autocmd("User", {
   group = augroup("barnt/lsprename", { clear = true }),
+  desc = "Use Snacks to enable LSP file renaming for imports when a file is moved or renamed",
   pattern = "OilActionsPost",
   callback = function(event)
     if event.data.actions.type == "move" then
@@ -20,9 +21,9 @@ autocmd("User", {
   end,
 })
 
--- Reload the file if the content changed
 autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
   group = augroup("barnt/checktime", { clear = true }),
+  desc = "Reload the file if the content changed",
   callback = function()
     if vim.o.buftype ~= "nofile" then
       vim.cmd("checktime")
@@ -30,17 +31,17 @@ autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
   end,
 })
 
--- Highlight yanked text
 autocmd("TextYankPost", {
   group = augroup("barnt/yank", { clear = true }),
+  desc = "Highlight yanked text",
   callback = function()
     vim.hl.on_yank()
   end,
 })
 
--- Resize splits if the terminal window changes
 autocmd("VimResized", {
   group = augroup("barnt/resize_splits", { clear = true }),
+  desc = "Resize splits if the terminal window changes",
   callback = function()
     local current_tab = vim.fn.tabpagenr()
     vim.cmd("tabdo wincmd =")
@@ -48,9 +49,9 @@ autocmd("VimResized", {
   end,
 })
 
--- Go to last loc when opening a buffer
 autocmd("BufReadPost", {
   group = augroup("barnt/last_loc", { clear = true }),
+  desc = "Go to last loc when opening a buffer",
   callback = function(event)
     local exclude = { "gitcommit" }
     local buf = event.buf
@@ -66,9 +67,9 @@ autocmd("BufReadPost", {
   end,
 })
 
--- Quick close out of certain filetypes
 autocmd("FileType", {
   group = augroup("barnt/quickquit", { clear = true }),
+  desc = "Quick close out of certain filetypes",
   --stylua: ignore
   pattern = {
     "PlenaryTestPopup", "oil", "checkhealth",
@@ -91,32 +92,32 @@ autocmd("FileType", {
   end,
 })
 
--- Wrap, spelling, spell check
 autocmd("FileType", {
+  desc = "Wrap, spelling, spell check",
   group = augroup("barnt/wrapspell", { clear = true }),
-  pattern = { "text", "plaintex", "gitcommit", "markdown" }, 
+  pattern = { "text", "plaintex", "gitcommit", "markdown" },
   callback = function()
     vloc.wrap = true
     vloc.spell = true
     vloc.breakindent = true
     vloc.linebreak = true
-  end
+  end,
 })
 
--- Disable `concealleavel` for json files
 autocmd("FileType", {
   group = augroup("barnt/json_conceal", { clear = true }),
-  pattern = { "json", "jsonc", "json5"},
+  desc = "Disable `concealleavel` for json files",
+  pattern = { "json", "jsonc", "json5" },
   callback = function()
     vloc.conceallevel = 0
   end,
 })
 
--- Auto create dir when saving a file, in case some intermediate directory does not exist
 autocmd({ "BufWritePre" }, {
   group = augroup("barnt/auto_create_dir", { clear = true }),
+  desc = "Auto create dir when saving a file, in case some intermediate directory does not exist",
   callback = function(event)
-    if event.match:match "^%w%w+://" then
+    if event.match:match("^%w%w+://") then
       return
     end
     local file = vim.uv.fs_realpath(event.match) or event.match
@@ -124,9 +125,9 @@ autocmd({ "BufWritePre" }, {
   end,
 })
 
--- Show cursor line only in active window
-autocmd({"InsertLeave", "WinEnter" }, {
+autocmd({ "InsertLeave", "WinEnter" }, {
   group = augroup("barnt/cursorline_active", { clear = true }),
+  desc = "Show cursor line only in active window",
   callback = function()
     if vim.w.auto_cursorline then
       vim.wo.cursorline = true
@@ -135,8 +136,9 @@ autocmd({"InsertLeave", "WinEnter" }, {
   end,
 })
 
-autocmd({"InsertEnter", "WinLeave" }, {
+autocmd({ "InsertEnter", "WinLeave" }, {
   group = augroup("barnt/cursorline_inactive", { clear = true }),
+  desc = "",
   callback = function()
     if vim.wo.cursorline then
       vim.w.auto_cursorline = true
@@ -144,3 +146,22 @@ autocmd({"InsertEnter", "WinLeave" }, {
     end
   end,
 })
+
+autocmd({ "FileType" }, {
+  group = augroup("barnt/help_splt", { clear = true }),
+  desc = "Open help in split",
+  pattern = "help",
+  command = "wincmd L",
+})
+
+-- autocmd({ "CursorMoved", "CursorMovedI", "WinScrolled" }, {
+--   desc = "Fix scrolloff when you are at the EOF",
+--   group = augroup("barnt/scroll_eof", { clear = true }),
+--   callback = function(event)
+--     if api.nvim_win_get_config(0).relative ~= "" then
+--       return -- Ignore floating windows
+--     end
+--
+--     local win_height = fn.winheight(0)
+--   end
+-- })

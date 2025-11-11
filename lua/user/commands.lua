@@ -1,52 +1,28 @@
 local command = vim.api.nvim_create_user_command
-local select = vim.ui.select
 
----@type FileTypeOpts
-local CreateFileOpts = {
-  temporary = false,
-  filetype = "",
-  buftype = "",
-  bufhidden = "",
-  swapfile = true
-}
+command("IncMatches", function(opts)
+  local pattern = opts.args
+  pattern = pattern:gsub("\\S", "%%S")
 
----@type FileTypeOpts
-local TempFileOpts = {
-  temporary = false,
-  filetype = "",
-  buftype = "",
-  bufhidden = "",
-  swapfile = true,
-  ---@param self FileTypeOpts
-  name = function(self)
-    return "temp." .. self.filetype
+  local counter = 0
+  local bufnr = vim.api.nvim_get_current_buf()
+  local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
+
+  for i, line in ipairs(lines) do
+    if line:find(pattern) then
+      counter = counter + 1
+      lines[i] = lines:gsub(pattern, function(m)
+        if counter == 1 then
+          return m
+        else
+          return m .. tostring(counter)
+        end
+      end)
+    end
   end
-}
 
----@param filetype string filetype
----@param opts? FileTypeOpts buffer type
-local function create_buffer(filetype, opts)
-  opts = vim.tbl_deep_extend("force", CreateFileOpts, opts)
-  vim.cmd("enew")
-  vim.bo.buftype = opts.buftype
-  vim.bo.bufhiden = opts.bufhidden
-  vim.bo.swapfile = opts.swapfile
-  vim.bo.filetype = filetype
-end
-
-
--- Create a tempfile by filetype
-command("CreateFile", function()
-  local fts = vim.fn.getcompletion("", "filetype")
-  select(fts, { prompt = "Select Filetype:" },
-    function(choice)
-      if choice then
-        vim.cmd("enew")
-        vim.bo.buftype = "nofile"
-        vim.bo.bufhidden = "hide"
-        vim.bo.swapfile = false
-        vim.bo.filetype = choice
-        vim.api.nvim_buf_set_name(0, "temp." .. choice)
-      end
-  end)
-end, {})
+  vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, lines)
+end, {
+  nargs = 1,
+  desc = "Scan the buffer for words matching the given pattern and append an incrementing counter (per new line)"
+})
