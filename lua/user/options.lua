@@ -1,8 +1,3 @@
--- Leader keys
--- vim.keycode translates keycodes instead of strings
-vim.g.mapleader = vim.keycode("<space>")
-vim.g.maplocalleader = vim.keycode("\\")
-
 -- Load a nushell specific terminal setup if
 -- nushell is installed on this system
 if vim.g.nushell then

@@ -1,3 +1,5 @@
 return {
-  
+  {
+    "neovim/nvim-lspconfig"
+  }
 }

@@ -1,3 +1,8 @@
+-- Leader keys
+-- vim.keycode translates keycodes instead of strings
+vim.g.mapleader = vim.keycode("<space>")
+vim.g.maplocalleader = vim.keycode("\\")
+
 -- Support only Neovim v0.11 and nightly
 if vim.fn.has("nvim-0.11") ~= 1 then
   if vim.v.shell_error ~= 0 then
@@ -17,7 +22,7 @@ require("filetypes").setup()
 
 -- Bootstrap lazy.nvim we need to make sure any thing plugin releated is
 -- loaded and available for the rest of our configuration startup
-require("lazy")
+require("lazy-bootstrap")
 
 -- Load the our user modules
 require("user.options")

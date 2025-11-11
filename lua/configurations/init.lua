@@ -1,120 +1,45 @@
----@class Configuration
----@field debuggers Debuggers
----@field formatters Formatters
----@field lazyCfg LazyConfiguration
----@field linters Linters
----@field lsps Lsps
----@field parsers Parsers
+-- TODO: To make this file less overwhelming I want to separate out into modules inside the `configurations` directory
+
+-- NOTE: Inspiration from LazyVim: https://github.com/LazyVim/LazyVim/blob/c64a61734fc9d45470a72603395c02137802bc6f/lua/lazyvim/util/init.lua#L23
+
+---@class config
+---@field diagnostics config.diagnostics
+---@field lazy        config.lazy
+---@field lsps        config.lsp
+---@field parsers     config.treesitter
+---@field ui          config.ui
 local M = {}
 
----@class LazyConfiguration
----@reference refer to `lazy.nvim` configuration for details
+setmetatable(M, {
+  __index = function(t, k)
+    local ok, mod = pcall(require, "configurations." .. k)
+    if not ok then
+      --stylua: ignore
+      vim.notify(
+        string.format("Configuration module 'configuration.%s' not found", k),
+        vim.log.levels.ERROR
+      )
+      return nil
+    end
+    t[k] = mod
+    return t[k]
+  end,
+  __newindex = function(t, k, v)
+    --stylua: ignore
+    vim.notify(
+      string.format("Configuration is read-only. Cannton set '%s'" , k),
+      vim.log.levels.ERROR
+    )
+  end,
+})
 
----@alias Debuggers string[]
----@alias Formatters string[]
----@alias Linters string[]
----@alias Lsps string[]
----@alias Parsers string[]
-
----@type string[]
---stylua: ignore
-local lsps = {
-  "clangd", "cmake-language-server", "css-lsp", "css-variables-language-server",
-  "cssmodules-language-server", "emmet-ls", "gopls", "html-lsp",
-  "intelephense", "json-lsp", "just-lsp", "lemminx",
-  "lua-language-server", "pyrefly", "roslyn", "ruff",
-  "svelte-language-server", "tailwindcss-language-server", "taplo", "vim-language-server",
-  "vtsls", "yaml-language-server",
-}
-
---stylua: ignore
----@type Linters
-local linters = { "cmakelint", "shellcheck" }
-
----@type Formatters
---stylua: ignore
-local formatters = {
-  "clang-format", "gofumpt", "goimports",
-  "gomodifytags", "shfmt", "stylua",
-  "xmlformatter",
-}
-
----@type Debuggers
---stylua: ignore
-local debuggers = {}
-
----@type Parsers
-
---stylua: ignore
-local parsers = {
-  "bash", "c", "c_sharp", "cmake",
-  "cpp", "diff", "git_config", "gitcommit",
-  "git_rebase", "gitignore", "gitattributes", "go",
-  "gomod", "gosum", "gowork", "html",
-  "ini", "javascript", "jsdoc", "json",
-  "json5", "jsonc", "just", "lua",
-  "luadoc", "luap", "lua_patterns", "markdown",
-  "markdown_inline", "nu", "prisma", "php",
-  "printf", "query", "regex", "scheme",
-  "svelte", "toml", "tsx", "typescript",
-  "vim", "vimdoc", "xml", "yaml",
-}
-
--- Contains the `lazy.nvim` configuration
----@class LazyConfiguration
-local lazy_config = {
-  spec = {
-    { "nvim-lua/plenary.nvim", lazy = true },
-    { "MunifTanjim/nui.nvim", lazy = true },
-    {
-      "folke/snacks.nvim",
-      version = "v2.22.0",
-      priority = 10000,
-      lazy = false,
-      opts = {},
-      config = function(_, opts)
-        require("snacks").setup(opts)
-      end,
-    },
-  },
-  local_spec = true,
-  install = { colorscheme = { "onedark", "slate" } },
-  checker = { enabled = true, notify = false },
-  performance = {
-    rtp = {
-      disabled_plugins = {
-        "gzip",
-        "matchit",
-        "matchparen",
-        "netrwPlugin",
-        "tarPlugin",
-        "tohtml",
-        "tutor",
-        "zipPlugin",
-      },
-    },
-  },
-  ui = {
-    border = "rounded",
-    backdrop = 25,
-  },
-}
-
-local configs = {
-  debuggers = debuggers,
-  formatters = formatters,
-  lazyCfg = lazy_config,
-  linters = linters,
-  lsps = lsps,
-  parsers = parsers,
-}
-
+---Helper to get nested keys using dot notation
 ---@param t table
 ---@param path string
 ---@return any
 local function get_nested(t, path)
   local keys = {}
-  for key in path:gmatch "[^.]+" do
+  for key in path:gmatch("[^.]+") do
     table.insert(keys, key)
   end
 
@@ -123,29 +48,23 @@ local function get_nested(t, path)
     if type(current) ~= "table" then
       return nil
     end
-
-    local numeric_key = tonumber(key)
-    if numeric_key then
-      current = current[numeric_key]
-    else
-      current = current[key]
-    end
+    current = current[key]
   end
   return current
 end
 
----@overload fun(path: "dap"): string[]
----@overload fun(path: "formatters"): string[]
----@overload fun(path: "lazyCfg"): LazyConfiguration
----@overload fun(path: "linters"): string[]
----@overload fun(path: "lsps"): string[]
----@overload fun(path: "parsers"): string[]
-function M:get(path)
-  if path:find "%." then
-    return get_nested(configs, path)
-  else
-    return configs[path]
-  end
+---Get a configuration value by path
+---@param path string
+---@return any
+M.get = function(path)
+  return get_nested(M, path)
+end
+
+---Pretty print a configuration path
+---@param path string
+M.inspect = function(path)
+  local value = get_nested(M, path)
+  print(vim.inspect(value))
 end
 
 return M

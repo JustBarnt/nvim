@@ -1,59 +1,59 @@
 ---@meta
 
---- @class vim.api.keyset.create_user_command.command_args
---- @field name string
---- @field args string
---- @field fargs string[]
---- @field nargs string
---- @field bang boolean
---- @field line1 number
---- @field line2 number
---- @field range number
---- @field count number
---- @field reg string
---- @field mods string
---- @field smods vim.api.keyset.create_user_command.command_args.smods
+---@class vim.api.keyset.create_user_command.command_args
+---@field name string
+---@field args string
+---@field fargs string[]
+---@field nargs string
+---@field bang boolean
+---@field line1 number
+---@field line2 number
+---@field range number
+---@field count number
+---@field reg string
+---@field mods string
+---@field smods vim.api.keyset.create_user_command.command_args.smods
 
---- @class vim.api.keyset.create_user_command.command_args.smods
---- @field silent boolean
---- @field emsg_silent boolean
---- @field unsilent boolean
---- @field tab number
---- @field verbose number
---- @field split string
---- @field vertical boolean
---- @field horizontal boolean
---- @field hide boolean
---- @field keepalt boolean
---- @field keepjumps boolean
---- @field keepmarks boolean
---- @field keeppatterns boolean
---- @field lockmarks boolean
---- @field noautocmd boolean
---- @field noswapfile boolean
---- @field browse boolean
---- @field confirm boolean
---- @field sandbox boolean
+---@class vim.api.keyset.create_user_command.command_args.smods
+---@field silent boolean
+---@field emsg_silent boolean
+---@field unsilent boolean
+---@field tab number
+---@field verbose number
+---@field split string
+---@field vertical boolean
+---@field horizontal boolean
+---@field hide boolean
+---@field keepalt boolean
+---@field keepjumps boolean
+---@field keepmarks boolean
+---@field keeppatterns boolean
+---@field lockmarks boolean
+---@field noautocmd boolean
+---@field noswapfile boolean
+---@field browse boolean
+---@field confirm boolean
+---@field sandbox boolean
 
---- @class vim.api.keyset.create_user_command.opts
---- @field desc? string Description for listing the command
---- @field force? boolean Override any previous definition (default: true)
---- @field bang? boolean Command can take a ! modifier
---- @field bar? boolean Command can be followed by | and another command
---- @field register? boolean Command can take a register
---- @field buffer? boolean|number Buffer-local command
---- @field nargs? string|number Number of arguments: 0, 1, '*', '?', '+'
---- @field complete? string|fun(arg_lead: string, cmd_line: string, cursor_pos: number): string[] Command completion
---- @field range? boolean|string Command can take a range
---- @field count? boolean|number Command can take a count
---- @field addr? string Address type for range
---- @field keepscript? boolean Keep script context
---- @field preview? fun(opts: vim.api.keyset.create_user_command.command_args): number Preview callback for inccommand
+---@class vim.api.keyset.create_user_command.opts
+---@field desc? string Description for listing the command
+---@field force? boolean Override any previous definition (default: true)
+---@field bang? boolean Command can take a ! modifier
+---@field bar? boolean Command can be followed by | and another command
+---@field register? boolean Command can take a register
+---@field buffer? boolean|number Buffer-local command
+---@field nargs? string|number Number of arguments: 0, 1, '*', '?', '+'
+---@field complete? string|fun(arg_lead: string, cmd_line: string, cursor_pos: number): string[] Command completion
+---@field range? boolean|string Command can take a range
+---@field count? boolean|number Command can take a count
+---@field addr? string Address type for range
+---@field keepscript? boolean Keep script context
+---@field preview? fun(opts: vim.api.keyset.create_user_command.command_args): number Preview callback for inccommand
 
---- @param name string Name of the new user command
---- @param command string|fun(args: vim.api.keyset.create_user_command.command_args) Command or callback
---- @param opts vim.api.keyset.create_user_command.opts Command attributes
---- @return nil
+---@param name string Name of the new user command
+---@param command string|fun(args: vim.api.keyset.create_user_command.command_args) Command or callback
+---@param opts vim.api.keyset.create_user_command.opts Command attributes
+---@return nil
 function vim.api.nvim_create_user_command(name, command, opts) end
 
 ---@class vim.api.keyset.create_autocmd.callback.args
