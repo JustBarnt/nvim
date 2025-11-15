@@ -26,7 +26,5 @@ end
 -- adds all of our plugins into vims runtimepath
 vim.opt.rtp:prepend(lazypath)
 
--- local config = Config:get("lazyCfg")
-
 -- Configure lazy.nvim
-require("lazy").setup(config)
+require("lazy").setup(Config.lazy)

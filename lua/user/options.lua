@@ -72,14 +72,23 @@ vim.opt.foldexpr = "v:lua.require'helpers.folds'.foldexpr()"
 vim.opt.foldmethod = "expr"
 vim.wo.foldtext = ""
 vim.opt.fillchars = {
+  diff = "╱",
   eob = " ",
   fold = " ",
-  foldopen = "",
   foldclose = "",
+  -- foldinner = " ", nvim 0.12
+  foldopen = "",
   foldsep = " ",
-  foldinner = " ",
-  diff = "╱",
   msgsep = "─",
+}
+
+vim.opt.fillchars = {
+  diff = "╱",
+  eob = " ",
+  fold = " ",
+  foldclose = "",
+  foldopen = "",
+  foldsep = " ",
 }
 
 -- Format settings

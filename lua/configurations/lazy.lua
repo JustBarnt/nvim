@@ -1,7 +1,5 @@
 ---@class config.lazy
-local M = {}
-
-M.lazy_config = {
+local M = {
   spec = {
     -- { "nvim-lua/plenary.nvim", lazy = true },
     -- { "MunifTanjim/nui.nvim", lazy = true },
@@ -18,7 +16,7 @@ M.lazy_config = {
     { import = "plugins" },
   },
   local_spec = true,
-  install = { colorscheme = { "onedark", "slate" } },
+  install = { colorscheme = { "vim" } },
   checker = { enabled = true, notify = false },
   performance = {
     rtp = {

@@ -9,6 +9,9 @@
   a. Treesitter
   b. lsp
 
+#### Mason
+Like treesitter use `init` function to install the lsp automatically
+
 #### Treesitter
 
 Use `nvim-treesitter` `main` branch.

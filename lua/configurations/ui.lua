@@ -17,7 +17,11 @@ M.icons = {
     location = " ",
     up_chev = " ",
     info_i = " ",
-    package = " ",
+    package = {
+      installed = "󱧕 ",
+      uninstalled = "󱧖 ",
+      updates = "󰏗 "
+    },
   },
   ft = {
     octo = " ",
@@ -110,7 +114,6 @@ M.kind_filter = {
     "Method",
     "Module",
     "Namespace",
-    -- "Package", -- remove package since luals uses it for control flow structures
     "Property",
     "Struct",
     "Trait",

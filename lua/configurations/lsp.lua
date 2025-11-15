@@ -1,12 +1,88 @@
 local autocmd = vim.api.nvim_create_autocmd
 local augroup = vim.api.nvim_create_augroup
+local api = vim.api
+local lsp = vim.lsp
+local util = vim.lsp.util
 
----@class config.lsp
----@field debuggers string[]
----@field formatters string[]
----@field language_servers string[]
----@field linters string[]
-local M = {}
+---@param severity? vim.diagnostic.Severity
+---@param count integer
+local function diagnostic_goto(count, severity)
+  severity = severity and vim.diagnostic.severity[severity] or nil
+  return function()
+    vim.diagnostic.jump { severity = severity, count = count }
+  end
+end
+
+-- function keymap.set(mode: string|string[], lhs: string, rhs: string|function, opts?: vim.keymap.set.Opts)
+
+--stylua: ignore start
+
+---@class LspKeymaps
+---@field [1] string[]        mode
+---@field [2] string          lhs
+---@field [3] string|function rhs
+---@field [4] string          desc
+
+---@type LspKeymaps[]
+local keys = {
+  { { "n" }, "K",          lsp.buf.hover,                "Hover"                      },
+  { { "n" }, "gd",         lsp.buf.definition,           "Goto Definition"            },
+  { { "n" }, "gD",         lsp.buf.declaration,          "Goto Declaration"           },
+  { { "n" }, "grr",        lsp.buf.references,           "Goto References"            },
+  { { "n" }, "grt",        lsp.buf.type_definition,      "Goto Type Definition"       },
+  { { "n" }, "gro",        lsp.buf.document_symbol,      "Document Symbols"           },
+  { { "n" }, "grO",        lsp.buf.workspace_symbol,     "Workspace Symbols"          },
+  { { "n" }, "<leader>uc", lsp.codelens.run,             "Run Codelens"               },
+  { { "n" }, "<leader>uC", lsp.codelens.refresh,         "Refresh & Display Codelens" },
+  { { "i" }, "<C-s>",      lsp.buf.signature_help,       "Signature Helper"           },
+
+  -- Diagnostic Keymaps
+  { { "n" }, "gl",         vim.diagnostic.open_float,    "Get Diagnostics"            },
+  { { "n" }, "]d",         diagnostic_goto(1),           "Next Diagnostic"            },
+  { { "n" }, "[d",         diagnostic_goto(-1),          "Previous Diagnostic"        },
+  { { "n" }, "]e",         diagnostic_goto(1,"ERROR"),   "Next Diagnostic"            },
+  { { "n" }, "[e",         diagnostic_goto(-1, "ERROR"), "Previous Diagnostic"        },
+  { { "n" }, "]w",         diagnostic_goto(1, "WARN"),   "Next Diagnostic"            },
+  { { "n" }, "[w",         diagnostic_goto(-1, "WARN"),  "Previous Diagnostic"        },
+}
+--stylua: ignore end
+
+-- Capability-based actions
+local capability_actions = {
+  completionProvider = function(client, buf)
+    vim.bo[buf].omnifunc = "v:lua.vim.lsp.omnifunc"
+  end,
+
+  definitionProvider = function(client, buf)
+    vim.bo[buf].tagfunc = "v:lua.vim.lsp.tagfunc"
+  end,
+
+  colorProvider = function(client, buf)
+    local ok = pcall(vim.lsp.document_color.enable, true, buf, { style = "virtual" })
+    if not ok then
+      vim.notify(("Client `%s` does not support `document_color`"):format(client.name), vim.log.levels.INFO)
+    end
+  end,
+
+  codeLensProvider = function(client, buf)
+    local ok = pcall(vim.lsp.codelens.refresh)
+    if not ok then
+      vim.notify(("Client `%s` does not support `codelens`"):format(client.name), vim.log.levels.INFO)
+    end
+  end,
+}
+
+-- Capability-based keymaps
+--stylua: ignore start
+  ---@type table<lsp.ServerCapabilities, any>
+local capability_keymaps     = {
+  implementationProvider     = { { "n" },      "gri", lsp.buf.implementation, "Goto Implementation" },
+  renameProvider             = { { "n" },      "grn", lsp.buf.rename,         "Symbol Rename"       },
+  documentFormattingProvider = { { "n" },      "grf", lsp.buf.format,         "Code Format"         },
+  typeHierarchyProvider      = { { "n" },      "grh", lsp.buf.typehierarchy,  "Show Type Hierarchy" },
+  codeActionsProvider        = { { "n", "v" }, "gra", lsp.buf.code_action,    "Code Actions"        },
+}
+--stylua: ignore end
 
 --- Creates Client Capabilities
 ---@return lsp.ClientCapabilities
@@ -14,7 +90,7 @@ local function create_capabilities()
   local capabilities = vim.lsp.protocol.make_client_capabilities()
   capabilities.textDocument.foldingRange = {
     dynamicRegistration = true,
-    lineFoldingOnly = true
+    lineFoldingOnly = true,
   }
 
   capabilities.textDocument.semanticTokens.multilineTokenSupport = true
@@ -28,49 +104,121 @@ local function create_capabilities()
   return capabilities
 end
 
+---Sets up capability based actions
+---@param client vim.lsp.Client
+local function setup_server_capabilities(client, buf)
+  for capability, action in pairs(capability_actions) do
+    if client.server_capabilities[capability] then
+      action(client, buf)
+    end
+  end
+end
+
+---Sets up capability based keymaps
+---@param client vim.lsp.Client
+local function setup_capability_keymaps(client)
+  for capability, keymap_def in pairs(capability_keymaps) do
+    if client.server_capabilities[capability] then
+      table.insert(keys, keymap_def)
+    end
+  end
+end
+
 local function lsp_attach()
   local lsp_group = augroup("barnt/lsp_attach", { clear = true })
   autocmd("LspAttach", {
     group = lsp_group,
+    callback = function(ev)
+      local client = assert(vim.lsp.get_client_by_id(ev.data.client_id))
+
+      -- Remove default keybinds
+      for _, bind in ipairs { "grn", "gra", "gri", "grr", "grt", "K" } do
+        pcall(vim.keymap.del, "n", bind, { buffer = ev.buf })
+      end
+
+      setup_server_capabilities(client, ev.buf)
+      setup_capability_keymaps(client)
+
+      for _, map in ipairs(keys) do
+        vim.keymap.set(map[1], map[2], map[3], { buffer = ev.buf, desc = map[4] })
+      end
+
+      vim.diagnostic.config = Config.diagnostics
+    end,
   })
 end
 
---stylua: ignore
+---@class config.lsp
+---@field debuggers string[]
+---@field formatters string[]
+---@field language_servers table<string, string>
+---@field linters string[]
+local M = {}
+
+--stylua: ignore start
+
 M.debuggers = {}
 
---stylua: ignore
 M.formatters = {
   "clang-format", "gofumpt", "goimports",
   "gomodifytags", "shfmt", "stylua",
   "xmlformatter",
 }
 
---stylua: ignore
 M.language_servers = {
-  "clangd", "cmake-language-server", "css-lsp", "css-variables-language-server",
-  "cssmodules-language-server", "emmet-ls", "gopls", "html-lsp",
-  "intelephense", "json-lsp", "just-lsp", "lemminx",
-  "lua-language-server", "pyrefly", "roslyn", "ruff",
-  "svelte-language-server", "tailwindcss-language-server", "taplo", "vim-language-server",
-  "vtsls", "yaml-language-server"
+  ["clangd"] = "clangd",
+  ["cmake-language-server"] = "cmake",
+  ["css-lsp"] = "cssls",
+  ["css-variables-language-server"] = "css_variables",
+  ["cssmodules-language-server"] = "cssmodules_ls",
+  ["emmet-ls"] = "emmet_ls",
+  ["gopls"] = "gopls",
+  ["html-lsp"] = "html",
+  ["intelephense"] = "intelephense",
+  ["json-lsp"] = "jsonls",
+  ["just-lsp"] = "just",
+  ["lemminx"] = "lemminx",
+  ["lua-language-server"] = "lua_ls",
+  ["nushell"] = "nushell",
+  ["pyrefly"] = "pyrefly",
+  ["roslyn"] = "roslyn_ls",
+  ["ruff"] = "ruff",
+  ["svelte-language-server"] = "svelte",
+  ["tailwindcss-language-server"] = "tailwindcss",
+  ["taplo"] = "taplo",
+  ["vim-language-server"] = "vimls",
+  ["vtsls"] = "vtsls",
+  ["yaml-language-server"] = "yamlls",
 }
 
---stylua: ignore
 M.linters = { "cmakelint", "shellcheck" }
 
----Sets up various LSP Capabilities
----@param capabilities any
-M.setup = function(capabilities)
+-- stylua: ignore end
+
+--- Setup language servers
+M.setup = function()
   vim.lsp.config("*", {
-    capabilities = create_capabilities()
+    capabilities = create_capabilities(),
   })
 
-  -- Remove default keybinds
-  for _, bind in ipairs({"grn", "gra", "gri", "grr", "grt"}) do
-      pcall(vim.keymap.del, "n", bind)
+  local completion_kinds = vim.lsp.protocol.CompletionItemKind
+  local icons = Config.ui.icons.kinds
+  for i, kind in ipairs(completion_kinds) do
+    completion_kinds[i] = icons[kind] and icons[kind] .. kind or kind
   end
 
   lsp_attach()
+end
+
+--- Creates a flattened arrary of all Mason servers to download
+function M:ensure_installed()
+  local lsps = vim.tbl_keys(self.language_servers)
+  return vim.iter({
+    lsps,
+    self.debuggers,
+    self.formatters,
+    self.linters 
+  }):flatten(math.huge):totable()
 end
 
 return M
