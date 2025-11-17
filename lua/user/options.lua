@@ -9,7 +9,7 @@ end
 --       vim.opt allows passing rich objects like tables
 
 -- general options
-vim.o.colorcolumn = "80"
+vim.o.colorcolumn = "120"
 vim.o.helpheight = math.ceil((vim.o.lines - 1) * 0.25)
 vim.o.autowrite = false
 vim.o.clipboard = "unnamedplus"
