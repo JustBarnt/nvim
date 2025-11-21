@@ -6,7 +6,7 @@ _G.bt = function(...)
   require("snacks.debug").backtrace()
 end
 
-vim._print = function(...)
+vim._print = function(_, ...)
   dd(...)
 end
 
