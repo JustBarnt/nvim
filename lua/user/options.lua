@@ -33,12 +33,7 @@ vim.o.linebreak = true
 vim.o.wrap = false
 vim.o.breakindent = vim.o.wrap and true or false
 vim.opt.isfname:append "@-@"
-
-if vim.fn.has "nvim-0.12" == 1 then
-  vim.o.diffopt = "internal,filler,closeoff,algorithm:patience,indent-heuristic,inline:char,linematch:40"
-elseif vim.fn.has "nvim-0.11" == 1 then
-  vim.o.diffopt = "internal,filler,closeoff,algorithm:patience,indent-heuristic,linematch:40"
-end
+vim.o.diffopt = "internal,filler,closeoff,algorithm:patience,indent-heuristic,linematch:40"
 
 -- File History
 vim.o.undofile = true
@@ -76,19 +71,9 @@ vim.opt.fillchars = {
   eob = " ",
   fold = " ",
   foldclose = "",
-  -- foldinner = " ", nvim 0.12
   foldopen = "",
   foldsep = " ",
   msgsep = "─",
-}
-
-vim.opt.fillchars = {
-  diff = "╱",
-  eob = " ",
-  fold = " ",
-  foldclose = "",
-  foldopen = "",
-  foldsep = " ",
 }
 
 -- Format settings
@@ -120,3 +105,10 @@ vim.o.termguicolors = true
 -- Numbers
 vim.o.number = true
 vim.o.relativenumber = true
+
+-- NOTE: This will contain any "nightly" features I am trying out. As
+--       neovim releases updates, nightly features will get moved out
+if vim.fn.has "nvim-0.12" == 1 then
+  vim.o.diffopt = "internal,filler,closeoff,algorithm:patience,indent-heuristic,inline:char,linematch:40"
+  table.insert(vim.opt.fillchars, { foldinner = " " })
+end
