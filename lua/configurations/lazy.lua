@@ -1,35 +1,10 @@
 ---@class config.lazy
 local M = {
   spec = {
-    { "nvim-lua/plenary.nvim", lazy = true },
-    --TODO: Move to a local dec
-    {
-      "nvchad/ui",
-      config = function()
-        require "nvchad"
-      end
-    },
-    {
-      "nvchad/base46",
-      lazy = true,
-      config = function()
-        require("base46").load_all_highlights()
-      end
-    },
-    {
-      "folke/snacks.nvim",
-      version = "v2.22.0",
-      priority = 10000,
-      lazy = false,
-      opts = {},
-      config = function(_, opts)
-        require("snacks").setup(opts)
-      end,
-    },
     { import = "plugins" },
   },
   local_spec = true,
-  install = { colorscheme = { "vim" } },
+  install = { colorscheme = { "onedark", "habamax" } },
   checker = { enabled = true, notify = false },
   performance = {
     rtp = {
