@@ -142,8 +142,6 @@ local function lsp_attach()
       for _, map in ipairs(keys) do
         vim.keymap.set(map[1], map[2], map[3], { buffer = ev.buf, desc = map[4] })
       end
-
-      vim.diagnostic.config = Config.diagnostics
     end,
   })
 end
@@ -201,12 +199,16 @@ M.setup = function()
     capabilities = create_capabilities(),
   })
 
+  local lsps = vim.tbl_values(Config.lsp.language_servers)
+  vim.lsp.enable(lsps)
+
   local completion_kinds = vim.lsp.protocol.CompletionItemKind
   local icons = Config.ui.icons.kinds
   for i, kind in ipairs(completion_kinds) do
     completion_kinds[i] = icons[kind] and icons[kind] .. kind or kind
   end
 
+  vim.diagnostic.config(Config.diagnostics.config)
   lsp_attach()
 end
 

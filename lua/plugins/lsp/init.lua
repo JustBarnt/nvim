@@ -5,8 +5,7 @@ return {
     "neovim/nvim-lspconfig",
     lazy = false,
     init = function()
-      local lsps = vim.tbl_values(Config.lsp.language_servers)
-      vim.lsp.enable(lsps)
+      Config.lsp.setup()
     end,
   },
   {
