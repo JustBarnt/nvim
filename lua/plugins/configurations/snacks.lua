@@ -1,4 +1,4 @@
----@class config.snacks
+---@class PluginConfigs.snacks
 local M = {}
 
 M.config = {

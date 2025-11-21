@@ -1,4 +1,4 @@
----@class config.treesitter
+---@class PluginConfigs.treesitter
 local M = {}
 
 --stylua: ignore
