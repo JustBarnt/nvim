@@ -1,3 +1,15 @@
+ _G.dd = function(...)
+   require("snacks.debug").inspect(...)
+ end
+
+_G.bt = function(...)
+  require("snacks.debug").backtrace()
+end
+
+vim._print = function(...)
+  dd(...)
+end
+
 -- Leader keys
 -- vim.keycode translates keycodes instead of strings
 vim.g.mapleader = vim.keycode("<space>")

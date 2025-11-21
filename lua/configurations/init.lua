@@ -7,6 +7,7 @@
 ---@field lazy        config.lazy
 ---@field lsp         config.lsp
 ---@field parsers     config.treesitter
+---@field snacks      config.snacks
 ---@field ui          config.ui
 local M = {}
 
