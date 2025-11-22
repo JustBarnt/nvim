@@ -16,6 +16,12 @@ local maps = {
   { {"n", "x"}, "j", "v:count == 0 ? 'gj' : 'j'", { desc = "Down", expr = true, silent = true } },
   { {"n", "x"}, "k", "v:count == 0 ? 'gk' : 'k'", { desc = "Up", expr = true, silent = true } },
 
+  -- Windows
+  { {"n"}, "<leader>-", "<C-w>s",  { desc = "Split Window Below",  remap = true } },
+  { {"n"}, "<leader>|", "<C-w>v",  { desc = "Split Window Right",  remap = true } },
+  { {"n"}, "<leader>wd", "<C-w>c", { desc = "Delete Window",       remap = true } },
+
+
   -- Window movement
   { {"n"}, "<C-h>", "<C-w>h", { desc = "Focus Left Window",  remap = true } },
   { {"n"}, "<C-j>", "<C-w>j", { desc = "Focus Lower Window", remap = true } },

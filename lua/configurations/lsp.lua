@@ -58,7 +58,7 @@ local capability_actions = {
   end,
 
   colorProvider = function(client, buf)
-    local ok = pcall(vim.lsp.document_color.enable, true, buf, { style = "virtual" })
+    local ok = pcall(function() vim.lsp.document_color.enable(true, buf, { style = "virtual" }) end)
     if not ok then
       vim.notify(("Client `%s` does not support `document_color`"):format(client.name), vim.log.levels.INFO)
     end
