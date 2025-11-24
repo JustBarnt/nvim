@@ -38,7 +38,7 @@ require("lazy-bootstrap")
 
 -- Load the our user modules
 require("user.options")
-require("user.keymaps")
+require("user.keys")
 require("user.autocmds")
 require("user.commands")
 

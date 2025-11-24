@@ -1,17 +1,8 @@
----@class UserKeymaps
----@field [1] string[]        mode
----@field [2] string          lhs
----@field [3] string|function rhs
----@field [4] vim.keymap.set.Opts?          vim.api.keyset.keymap
-
--- TODO: Add my "strings.replace_word_under_cursor later
---       and my Helpers.marks
-
--- TODO: Do I want to remap bufnext/bufprev to something other than HL? also do I want to map <ctrl^> to something as
---       well?
+---@class Keymaps.base
+local M = {}
 
 ---@type UserKeymaps[]
-local maps = {
+local base = {
   -- Better up/down unless we provide a count like `5j` move by visual lines `gj` instead of logical lines
   { {"n", "x"}, "j", "v:count == 0 ? 'gj' : 'j'", { desc = "Down", expr = true, silent = true } },
   { {"n", "x"}, "k", "v:count == 0 ? 'gk' : 'k'", { desc = "Up", expr = true, silent = true } },
@@ -57,3 +48,5 @@ local maps = {
   -- Lazy
   { {"n"}, "<leader>l", "<CMD>Lazy<CR>",      { desc = "Lazy" }},
 }
+
+return M
