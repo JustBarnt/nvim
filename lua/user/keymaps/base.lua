@@ -1,11 +1,10 @@
----@class Keymaps.base
+---@class UserKeymaps[]
 local M = {}
 
----@type UserKeymaps[]
-local base = {
+M.base = {
   -- Better up/down unless we provide a count like `5j` move by visual lines `gj` instead of logical lines
-  { {"n", "x"}, "j", "v:count == 0 ? 'gj' : 'j'", { desc = "Down", expr = true, silent = true } },
-  { {"n", "x"}, "k", "v:count == 0 ? 'gk' : 'k'", { desc = "Up", expr = true, silent = true } },
+  { {"n", "x"}, "j", "v:count == 0 ? 'gj' : 'j'", { desc = "Down", expr = true } },
+  { {"n", "x"}, "k", "v:count == 0 ? 'gk' : 'k'", { desc = "Up", expr = true } },
 
   -- Windows
   { {"n"}, "<leader>-", "<C-w>s",  { desc = "Split Window Below",  remap = true } },

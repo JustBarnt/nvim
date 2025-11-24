@@ -1,51 +1,5 @@
 local autocmd = vim.api.nvim_create_autocmd
 local augroup = vim.api.nvim_create_augroup
-local api = vim.api
-local lsp = vim.lsp
-local util = vim.lsp.util
-
----@param severity? vim.diagnostic.Severity
----@param count integer
-local function diagnostic_goto(count, severity)
-  severity = severity and vim.diagnostic.severity[severity] or nil
-  return function()
-    vim.diagnostic.jump { severity = severity, count = count }
-  end
-end
-
--- function keymap.set(mode: string|string[], lhs: string, rhs: string|function, opts?: vim.keymap.set.Opts)
-
---stylua: ignore start
-
----@class LspKeymaps
----@field [1] string[]        mode
----@field [2] string          lhs
----@field [3] string|function rhs
----@field [4] string          desc
-
----@type LspKeymaps[]
-local keys = {
-  { { "n" }, "K",          lsp.buf.hover,                "Hover"                      },
-  { { "n" }, "gd",         lsp.buf.definition,           "Goto Definition"            },
-  { { "n" }, "gD",         lsp.buf.declaration,          "Goto Declaration"           },
-  { { "n" }, "grr",        lsp.buf.references,           "Goto References"            },
-  { { "n" }, "grt",        lsp.buf.type_definition,      "Goto Type Definition"       },
-  { { "n" }, "gro",        lsp.buf.document_symbol,      "Document Symbols"           },
-  { { "n" }, "grO",        lsp.buf.workspace_symbol,     "Workspace Symbols"          },
-  { { "n" }, "<leader>uc", lsp.codelens.run,             "Run Codelens"               },
-  { { "n" }, "<leader>uC", lsp.codelens.refresh,         "Refresh & Display Codelens" },
-  { { "i" }, "<C-s>",      lsp.buf.signature_help,       "Signature Helper"           },
-
-  -- Diagnostic Keymaps
-  { { "n" }, "gl",         vim.diagnostic.open_float,    "Get Diagnostics"            },
-  { { "n" }, "]d",         diagnostic_goto(1),           "Next Diagnostic"            },
-  { { "n" }, "[d",         diagnostic_goto(-1),          "Previous Diagnostic"        },
-  { { "n" }, "]e",         diagnostic_goto(1,"ERROR"),   "Next Diagnostic"            },
-  { { "n" }, "[e",         diagnostic_goto(-1, "ERROR"), "Previous Diagnostic"        },
-  { { "n" }, "]w",         diagnostic_goto(1, "WARN"),   "Next Diagnostic"            },
-  { { "n" }, "[w",         diagnostic_goto(-1, "WARN"),  "Previous Diagnostic"        },
-}
---stylua: ignore end
 
 -- Capability-based actions
 local capability_actions = {
@@ -71,18 +25,6 @@ local capability_actions = {
     end
   end,
 }
-
--- Capability-based keymaps
---stylua: ignore start
-  ---@type table<lsp.ServerCapabilities, any>
-local capability_keymaps     = {
-  implementationProvider     = { { "n" },      "gri", lsp.buf.implementation, "Goto Implementation" },
-  renameProvider             = { { "n" },      "grn", lsp.buf.rename,         "Symbol Rename"       },
-  documentFormattingProvider = { { "n" },      "grf", lsp.buf.format,         "Code Format"         },
-  typeHierarchyProvider      = { { "n" },      "grh", lsp.buf.typehierarchy,  "Show Type Hierarchy" },
-  codeActionsProvider        = { { "n", "v" }, "gra", lsp.buf.code_action,    "Code Actions"        },
-}
---stylua: ignore end
 
 --- Creates Client Capabilities
 ---@return lsp.ClientCapabilities
@@ -114,16 +56,6 @@ local function setup_server_capabilities(client, buf)
   end
 end
 
----Sets up capability based keymaps
----@param client vim.lsp.Client
-local function setup_capability_keymaps(client)
-  for capability, keymap_def in pairs(capability_keymaps) do
-    if client.server_capabilities[capability] then
-      table.insert(keys, keymap_def)
-    end
-  end
-end
-
 local function lsp_attach()
   local lsp_group = augroup("barnt/lsp_attach", { clear = true })
   autocmd("LspAttach", {
@@ -136,12 +68,15 @@ local function lsp_attach()
         pcall(vim.keymap.del, "n", bind, { buffer = ev.buf })
       end
 
+      -- Setup our server capabilities
       setup_server_capabilities(client, ev.buf)
-      setup_capability_keymaps(client)
 
-      for _, map in ipairs(keys) do
-        vim.keymap.set(map[1], map[2], map[3], { buffer = ev.buf, desc = map[4] })
+      -- Add our buffer to our keymaps
+      for _, map in ipairs(Keymaps.lsp) do
+        table.insert(map[4], { buffer = ev.buf })
       end
+
+      Keymaps:make_buffer_only("lsp", ev.buf)
     end,
   })
 end

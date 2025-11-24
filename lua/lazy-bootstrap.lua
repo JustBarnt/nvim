@@ -1,4 +1,5 @@
 _G.Config = require("configurations")
+_G.Keymaps = require("user.keymaps")
 
 -- bootstrap lazy
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -30,3 +31,30 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup(Config.lazy)
 
 vim.cmd.colorscheme("onedark")
+Keymaps:activate("base")
+
+-- Load our filetype additions
+require("filetypes").setup()
+
+-- Load the our user modules
+require("user.options")
+require("user.autocmds")
+require("user.commands")
+
+-- TODO: Move to a plugin
+require("filetypes.ft-commands")
+
+-- Load neovide settings if we are in neovide
+if vim.g.neovide then
+  require("user.neovide")
+end
+
+-- TODO: Create a command for this
+-- local file_path = vim.fn.stdpath("config") .. '\\lua\\types.lua'
+-- local file = io.open(file_path, "a+")
+-- local fts = vim.fn.getcompletion("", "filetype")
+-- local types = table.concat(fts, '" | "')
+-- if file then
+--   file:write('\n')
+--   file:write('---@alias Filetype "' .. types .. '"')
+-- end

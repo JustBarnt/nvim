@@ -1,10 +1,26 @@
 ---@class Keymaps
----@field base Keymaps.base
+---@field base UserKeymaps[]
+---@field lsp  UserKeymaps[]
 local M = {}
+
+---@alias keymap_sets "base"|"lsp"
+
+---@param set keymap_sets
+---@return UserKeymaps[]?
+local function get_maps(self, set)
+  local maps = self[set]
+
+  if not maps then
+    vim.notify(("Keymaps: `%s` was not found"):format(set), vim.log.levels.ERROR)
+    return nil
+  end
+
+  return maps
+end
 
 setmetatable(M, {
   __index = function(t, k)
-    local ok, mod = pcall(require, "user.keymaps" .. k)
+    local ok, mod = pcall(require, "user.keymaps." .. k)
     if not ok then
       --stylua: ignore
       vim.notify(
@@ -13,9 +29,42 @@ setmetatable(M, {
       )
       return nil
     end
+
+    if type(mod) ~= "table" then
+      vim.notify(
+        string.format("User keymaps module 'user.keymaps.%s' did not return a table", k),
+        vim.log.levels.ERROR
+      )
+    end
+
     t[k] = mod
     return t[k]
   end,
 })
+
+---@param set keymap_sets
+function M:activate(set)
+  local maps = get_maps(self, set)
+  if not maps then return end
+
+  for _, map in ipairs(maps) do
+    local mode, lhs, rhs, opts = unpack(map)
+    opts = vim.tbl_deep_extend("force", { silent = true }, opts or {})
+    vim.keymap.set(mode, lhs, rhs, opts)
+  end
+end
+
+---@param set keymap_sets
+---@param bufnr integer
+function M:make_buffer_only(set, bufnr)
+  local maps = get_maps(self, set)
+  if not maps then return end
+
+  for _, map in ipairs(maps) do
+    local mode, lhs, rhs, opts = unpack(map)
+    local buffer_opts = vim.tbl_deep_extend("force", { silent = true, buffer = bufnr }, opts or {})
+    vim.keymap.set(mode, lhs, rhs, buffer_opts)
+  end
+end
 
 return M
