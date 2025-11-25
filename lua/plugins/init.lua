@@ -1,4 +1,3 @@
-_G.PlugCfg = require("plugins.configurations")
 
 return {
   "nvim-lua/plenary.nvim",
@@ -13,13 +12,10 @@ return {
     "folke/snacks.nvim",
     priority = 10000,
     lazy = false,
-    opts = PlugCfg.snacks.config,
+    opts = Config.plugins.snacks,
     config = function(_, opts)
       require("snacks").setup(opts)
-      for _, value in ipairs(PlugCfg.snacks.keys) do
-        local lhs, rhs, description = unpack(value)
-        vim.keymap.set("n", lhs, rhs, { desc = description })
-      end
+      Keymaps:activate("snacks")
     end,
   },
   { import = "plugins.lsp" },

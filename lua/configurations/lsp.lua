@@ -70,13 +70,7 @@ local function lsp_attach()
 
       -- Setup our server capabilities
       setup_server_capabilities(client, ev.buf)
-
-      -- Add our buffer to our keymaps
-      for _, map in ipairs(Keymaps.lsp) do
-        table.insert(map[4], { buffer = ev.buf })
-      end
-
-      Keymaps:make_buffer_only("lsp", ev.buf)
+      -- Keymaps:make_buffer_only("lsp", ev.buf)
     end,
   })
 end

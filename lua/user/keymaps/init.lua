@@ -1,22 +1,10 @@
 ---@class Keymaps
----@field base UserKeymaps[]
----@field lsp  UserKeymaps[]
+---@field base   UserKeymaps[]
+---@field lsp    UserKeymaps[]
+---@field snacks UserKeymaps[]
 local M = {}
 
----@alias keymap_sets "base"|"lsp"
-
----@param set keymap_sets
----@return UserKeymaps[]?
-local function get_maps(self, set)
-  local maps = self[set]
-
-  if not maps then
-    vim.notify(("Keymaps: `%s` was not found"):format(set), vim.log.levels.ERROR)
-    return nil
-  end
-
-  return maps
-end
+---@alias keymap_sets "base"|"lsp"|"snacks"
 
 setmetatable(M, {
   __index = function(t, k)
@@ -44,8 +32,12 @@ setmetatable(M, {
 
 ---@param set keymap_sets
 function M:activate(set)
-  local maps = get_maps(self, set)
-  if not maps then return end
+  local maps = self[set]
+
+  if not maps then
+    vim.notify(("Keymaps: `%s` was not found"):format(set), vim.log.levels.ERROR)
+    return
+  end
 
   for _, map in ipairs(maps) do
     local mode, lhs, rhs, opts = unpack(map)
@@ -57,8 +49,11 @@ end
 ---@param set keymap_sets
 ---@param bufnr integer
 function M:make_buffer_only(set, bufnr)
-  local maps = get_maps(self, set)
-  if not maps then return end
+  local maps = self[set]
+  if not maps then
+    vim.notify(("Keymaps: `%s` was not found"):format(set), vim.log.levels.ERROR)
+    return
+  end
 
   for _, map in ipairs(maps) do
     local mode, lhs, rhs, opts = unpack(map)

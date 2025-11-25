@@ -6,6 +6,7 @@
 ---@field diagnostics config.diagnostics
 ---@field lazy        config.lazy
 ---@field lsp         config.lsp
+---@field plugins     config.plugins
 ---@field ui          config.ui
 local M = {}
 
