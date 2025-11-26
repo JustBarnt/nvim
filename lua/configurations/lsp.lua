@@ -70,7 +70,7 @@ local function lsp_attach()
 
       -- Setup our server capabilities
       setup_server_capabilities(client, ev.buf)
-      -- Keymaps:make_buffer_only("lsp", ev.buf)
+      Keymaps:make_buffer_only("lsp", ev.buf)
     end,
   })
 end
