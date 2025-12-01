@@ -107,6 +107,7 @@ M.language_servers = {
   ["lemminx"] = "lemminx",
   ["lua-language-server"] = "lua_ls",
   ["nushell"] = "nushell",
+  ["powershell-editor-services"] = "powershell_es",
   ["pyrefly"] = "pyrefly",
   ["roslyn"] = "roslyn_ls",
   ["ruff"] = "ruff",
@@ -126,6 +127,13 @@ M.linters = { "cmakelint", "shellcheck" }
 M.setup = function()
   vim.lsp.config("*", {
     capabilities = create_capabilities(),
+  })
+
+  --  "C:\Users\bwilliams\.local\share\nvim-data\mason\packages\powershell-editor-services\PowerShellEditorServices\Start-EditorServices.ps1"
+
+  --TODO: Setup proper LSP here through configuration objects in `configurations/lsp`
+  vim.lsp.config('powershell_es', {
+    bundle_path = vim.fn.stdpath("data") .. "/mason/packages/powershell-editor-services",
   })
 
   local lsps = vim.tbl_values(Config.lsp.language_servers)
