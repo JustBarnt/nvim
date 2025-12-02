@@ -4,7 +4,7 @@ return {
   {
     "neovim/nvim-lspconfig",
     lazy = false,
-    init = function()
+    config = function()
       Config.lsp.setup()
     end,
   },

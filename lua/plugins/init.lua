@@ -8,6 +8,7 @@ return {
       MiniIcons.mock_nvim_web_devicons()
     end,
   },
+  { import = "plugins.coding" },
   { import = "plugins.lsp" },
   { import = "plugins.themes" },
   { import = "plugins.utilities" }

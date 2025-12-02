@@ -16,7 +16,7 @@ setmetatable(M, {
     if not ok then
       --stylua: ignore
       vim.notify(
-        string.format("Configuration module 'configuration.%s' not found", k),
+        string.format("Configuration module 'configurations.%s' not found", k),
         vim.log.levels.ERROR
       )
       return nil
