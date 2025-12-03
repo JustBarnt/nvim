@@ -2,6 +2,10 @@
 local M = {}
 
 M.icons = {
+  folds = {
+    open = "",
+    close = ""
+  },
   misc = {
     lsp = "󱁜 ",
     dots = "󰇘 ",
@@ -9,13 +13,15 @@ M.icons = {
     bullet = "• ",
     dot = " ",
     check = " ",
-    d_chev = " ",
+    chev = {
+      down = " ",
+      right = " ",
+      up = " ",
+    },
     file = "╼ ",
     hamburger = "󰍜 ",
     lock = " ",
-    r_chev = " ",
     location = " ",
-    up_chev = " ",
     info_i = " ",
     package = {
       installed = "󱧕 ",
