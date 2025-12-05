@@ -6,8 +6,8 @@ local ensure_installed = {
   "ini", "javascript", "jsdoc", "json",
   "json5", "jsonc", "just", "lua",
   "luadoc", "luap", "lua_patterns", "markdown",
-  "markdown_inline", "nu", "prisma", "php",
-  "printf", "query", "regex", "scheme",
+  "markdown_inline", "nu", "powershell", "prisma",
+  "php", "printf", "query", "regex", "scheme",
   "svelte", "toml", "tsx", "typescript",
   "vim", "vimdoc", "xml", "yaml",
 } 
