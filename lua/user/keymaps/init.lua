@@ -4,7 +4,7 @@
 ---@field snacks UserKeymaps[]
 local M = {}
 
----@alias keymap_sets "base"|"lsp"|"snacks"
+---@alias keymap_sets "base"|"lsp"|"snacks"|"grugfar"
 
 setmetatable(M, {
   __index = function(t, k)
