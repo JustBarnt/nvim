@@ -33,6 +33,8 @@ require("user.options")
 -- Configure lazy.nvim
 require("lazy").setup(Config.lazy)
 
+_G.LazyUtil = require("lazy.core.util")
+
 vim.cmd.colorscheme("onedark")
 Utils.keymaps.enable(Config.keys.base)
 

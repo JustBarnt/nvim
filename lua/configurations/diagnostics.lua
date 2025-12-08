@@ -22,14 +22,15 @@ M.config = {
   },
   update_in_insert = true, -- If performance gets bad maybe disable this? Or disable it automatically in know lsps with poor performance like TS_LS
   underline = { severity = { vim.diagnostic.severity.ERROR, vim.diagnostic.severity.WARN } },
-  virtual_text = {
-    spacing = 2,
-    source = "if_many",
-    prefix = ui.icons.misc.dot,
-    severity = {
-      min = vim.diagnostic.severity.WARN,
-    },
-  },
+  virtual_text = false
+  -- virtual_text = {
+  --   spacing = 2,
+  --   source = "if_many",
+  --   prefix = ui.icons.misc.dot,
+  --   severity = {
+  --     min = vim.diagnostic.severity.WARN,
+  --   },
+  -- },
 }
 
 return M
