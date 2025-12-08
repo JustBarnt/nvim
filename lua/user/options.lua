@@ -14,7 +14,7 @@ local options = {
   mouse = "a",
 
   -- Command Line and Messages
-  cmdheight = 1,
+  cmdheight = 0,
   inccommand = "split",
   shortmess = "aoOtTIcC",
 

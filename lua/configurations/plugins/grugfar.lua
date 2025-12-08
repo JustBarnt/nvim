@@ -14,10 +14,15 @@ local find_replace_current_buffer = function()
   require("grug-far").open({ prefills = { path = vim.fn.expand("%") }})
 end
 
+---@class config.plugins.grugfar
+local M =  {}
+
 ---@type UserKeymaps[]
-return {
+M.keys = {
   { {"n"}, "<leader>frw", find_replace_current_word  , { desc = "Find and Replace <CWORD>"      } },
   { {"n"}, "<leader>fra", find_replace_astgrep       , { desc = "Find and Replace with AstGrep" } },
   { {"n"}, "<leader>fr",  find_replace               , { desc = "Find and Replace"              } },
   { {"n"}, "<leader>frb", find_replace_current_buffer, { desc = "Find and Replace in Buffer"    } },
 }
+
+return M

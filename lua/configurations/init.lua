@@ -4,6 +4,7 @@
 
 ---@class config
 ---@field diagnostics config.diagnostics
+---@field keys        config.keys
 ---@field lazy        config.lazy
 ---@field lsp         config.lsp
 ---@field plugins     config.plugins

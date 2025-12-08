@@ -1,5 +1,5 @@
 _G.Config = require("configurations")
-_G.Keymaps = require("user.keymaps")
+_G.Utils = require("utils")
 
 -- bootstrap lazy
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -34,7 +34,7 @@ require("user.options")
 require("lazy").setup(Config.lazy)
 
 vim.cmd.colorscheme("onedark")
-Keymaps:activate("base")
+Utils.keymaps.enable(Config.keys.base)
 
 -- Load our filetype additions
 require("filetypes").setup()

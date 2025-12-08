@@ -1,6 +1,6 @@
 return {
   "MagicDuck/grug-far.nvim",
   config = function()
-    Keymaps:activate("grugfar")
+    Utils.keymaps.enable(Config.plugins.grugfar.keys)
   end
 }
