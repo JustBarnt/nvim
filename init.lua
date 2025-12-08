@@ -31,7 +31,7 @@ if vim.fn.has("nvim-0.11") ~= 1 then
 end
 
 vim.g.nushell = vim.fn.executable "nu"
-vim.g.debug = true
+vim.g.debug = false
 
 -- Bootstrap lazy.nvim we need to make sure any thing plugin releated is
 -- loaded and available for the rest of our configuration startup
