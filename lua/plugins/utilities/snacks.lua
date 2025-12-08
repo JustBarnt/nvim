@@ -1,6 +1,6 @@
 local keys = {
   { {"n"}, "<leader>,",  function() Snacks.picker.buffers() end,                { desc = "Buffers"              } },
-  { {"n"}, "<leader>g/",         function() Snacks.picker.grep() end,                   { desc = "Grep"                 } },
+  { {"n"}, "g/",         function() Snacks.picker.grep() end,                   { desc = "Grep"                 } },
   { {"n"}, "<leader>.",  function() Snacks.scratch.open() end,                  { desc = "Scratch Buffer"       } },
   { {"n"}, "<leader>e",  function() Snacks.explorer() end,                      { desc = "File Explorer"        } },
   { {"n"}, "<leader>E",  function() Snacks.explorer({ cwd = vim.uv.cwd() }) end,{ desc = "File Explorer Root"   } },
