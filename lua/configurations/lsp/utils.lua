@@ -1,3 +1,7 @@
+local autocmd = vim.api.nvim_create_autocmd
+local augroup = vim.api.nvim_create_augroup
+local lsp = vim.lsp
+
 local M = {}
 
 -- Capability-based actions
@@ -52,6 +56,26 @@ function M.setup_server_capabilities(client, buf)
     if client.server_capabilities[capability] then
       action(client, buf)
     end
+  end
+end
+
+---Enables Client Methods if supported
+---@param client vim.lsp.Client
+---@param buf    integer
+function M.setup_client_methods(client, buf)
+  local methods = vim.lsp.protocol.Methods
+  if client:supports_method(methods.textDocument_documentHighlight, buf) then
+    autocmd({"CursorHold", "CursorHoldI"}, {
+      group = augroup("barnt/lsp_doc_highlight", { clear = false }),
+      buffer = buf,
+      callback = lsp.buf.document_highlight
+    })
+
+    autocmd({"CursorMoved", "CursorMovedI"}, {
+      group = augroup("barnt/lsp_doc_highlight", { clear = false }),
+      buffer = buf,
+      callback = lsp.buf.clear_references
+    })
   end
 end
 

@@ -2,9 +2,7 @@
 ---@field grugfar    config.plugins.grugfar
 ---@field lualine    config.plugins.lualine
 ---@field lsp        config.plugins.lsp
----@field snacks     config.plugins.snacks
 ---@field treesitter config.plugins.treesitter
----@field whichkey   config.plugins.whichkey
 local M = {}
 
 setmetatable(M, {
