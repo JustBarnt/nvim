@@ -1,6 +1,6 @@
 local keys = {
   { {"n"}, "<leader>,",  function() Snacks.picker.buffers() end,                { desc = "Buffers"              } },
-  { {"n"}, "g/",         function() Snacks.picker.grep() end,                   { desc = "Grep"                 } },
+  { {"n"}, "<leader>g/",         function() Snacks.picker.grep() end,                   { desc = "Grep"                 } },
   { {"n"}, "<leader>.",  function() Snacks.scratch.open() end,                  { desc = "Scratch Buffer"       } },
   { {"n"}, "<leader>e",  function() Snacks.explorer() end,                      { desc = "File Explorer"        } },
   { {"n"}, "<leader>E",  function() Snacks.explorer({ cwd = vim.uv.cwd() }) end,{ desc = "File Explorer Root"   } },
@@ -51,26 +51,8 @@ return {
     },
     statuscolumn = { enabled = true },
   },
-  keys = {
-    { "<leader>,",  function() Snacks.picker.buffers() end,                { desc = "Buffers"              } },
-    { "g/",         function() Snacks.picker.grep() end,                   { desc = "Grep"                 } },
-    { "<leader>.",  function() Snacks.scratch.open() end,                  { desc = "Scratch Buffer"       } },
-    { "<leader>e",  function() Snacks.explorer() end,                      { desc = "File Explorer"        } },
-    { "<leader>E",  function() Snacks.explorer({ cwd = vim.uv.cwd() }) end,{ desc = "File Explorer Root"   } },
-    { "<leader>ff", function() Snacks.picker.files() end,                  { desc = "Find Files"           } },
-    { "<leader>fp", function() Snacks.picker.projects() end,               { desc = "Projects"             } },
-    { "<leader>sd", function() Snacks.picker.diagnostics() end,            { desc = "Diagnostics"          } },
-    { "<leader>sh", function() Snacks.picker.help() end,                   { desc = "Help Pages"           } },
-    { "<leader>sH", function() Snacks.picker.highlights() end,             { desc = "Highlights"           } },
-    { "<leader>sl", function() Snacks.picker.loclist() end,                { desc = "Location List"        } },
-    { "<leader>sq", function() Snacks.picker.qflist() end,                 { desc = "Quickfix List"        } },
-    { "<leader>sn", function() Snacks.picker.notifications() end,          { desc = "Notifications"        } },
-    { "<leader>rc", function() Snacks.debug.run() end,                     { desc = "Execute Lua Code"     } },
-    { "<leader>bd", function() Snacks.bufdelete() end,                     { desc = "Delete Buffer"        } },
-    { "<leader>bD", function() Snacks.bufdelete.other() end,               { desc = "Delete Other Buffers" } },
-  },
   config = function(_, opts)
     require("snacks").setup(opts)
-    -- Utils.keymaps.enable(keys)
+    Utils.keymaps.enable(keys)
   end,
 }

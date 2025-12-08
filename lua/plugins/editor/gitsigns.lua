@@ -1,48 +1,14 @@
-local ok, gs = pcall(require, "gitsigns")
-local keys = {}
-
-
-if ok then
-  local function next_hunk()
-    if vim.wo.diff then 
-      vim.cmd.normal({"]c", bang = true})
-    else 
-      ---@diagnostic disable-next-line: param-type-mismatch
-      gs.nav_hunk("next") 
-    end
-  end
-
-  local function prev_hunk()
-    if vim.wo.diff then
-      vim.cmd.normal({ "[c", bang = true })
-    else
-      ---@diagnostic disable-next-line: param-type-mismatch
-      gs.nav_hunk("prev")
-    end
-  end
-
-  local function first_hunk()
-      ---@diagnostic disable-next-line: param-type-mismatch
-    gs.nav_hunk("first") 
-  end
-
-  local function last_hunk()
-      ---@diagnostic disable-next-line: param-type-mismatch
-    gs.nav_hunk("last") 
-  end
-
-  ---@type UserKeymaps[]
-  keys = {
-    { {"n"}, "]h", next_hunk,                                                             { desc = "Next Hunk"     } },
-    { {"n"}, "[h", prev_hunk,                                                             { desc = "Previous Hunk" } },
-    { {"n"}, "]H", first_hunk,                                                            { desc = "First Hunk"    } },
-    { {"n"}, "[H", last_hunk,                                                             { desc = "Last Hunk"     } },
-    { {"n", "v"}, "<leader>ghs", "<CMD>Gitsigns stage_hunk<CR>",                          { desc = "Stage Hunk"    } },
-    { {"n", "v"}, "<leader>ghu", "<CMD>Gitsigns undo_stage_hunk<CR>",                     { desc = "Unstage Hunk"  } },
-    { {"n", "v"}, "<leader>ghr", "<CMD>Gitsigns reset_hunk<CR>",                          { desc = "Reset Hunk"    } },
-    { {"n", "v"}, "<leader>ghr", "<CMD>Gitsigns preview_hunk_inline<CR>",                 { desc = "Preview Hunk"  } },
-  }
-end
+---@type UserKeymaps[]
+local keys = {
+  { {"n"}, "]h", "<CMD>Gitsigns next_hunk<CR>",                                        { desc = "Next Hunk"     } },
+  { {"n"}, "[h", "<CMD>Gitsigns prev_hunk<CR>",                                        { desc = "Previous Hunk" } },
+  { {"n"}, "]H", "<CMD>Gitsigns nav_hunk \"first\"<CR>",                                                 { desc = "First Hunk"    } },
+  { {"n"}, "[H", "<CMD>Gitsigns nav_hunk \"last\"<CR>",                                                          { desc = "Last Hunk"     } },
+  { {"n", "v"}, "<leader>ghs", "<CMD>Gitsigns stage_hunk<CR>",                         { desc = "Stage Hunk"    } },
+  { {"n", "v"}, "<leader>ghu", "<CMD>Gitsigns undo_stage_hunk<CR>",                    { desc = "Unstage Hunk"  } },
+  { {"n", "v"}, "<leader>ghr", "<CMD>Gitsigns reset_hunk<CR>",                         { desc = "Reset Hunk"    } },
+  { {"n", "v"}, "<leader>ghr", "<CMD>Gitsigns preview_hunk_inline<CR>",                { desc = "Preview Hunk"  } },
+}
 
 return {
   "lewis6991/gitsigns.nvim",
