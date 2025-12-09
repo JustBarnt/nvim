@@ -2,6 +2,8 @@
 --       but I would like to keep the keymaps as a separate table
 --       also create a which-key register in that plugin file
 
+-- TODO: Add total characters selected with cursor to statusbar when visually selecting string
+
  _G.dd = function(...)
    require("snacks.debug").inspect(...)
  end
