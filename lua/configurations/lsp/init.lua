@@ -115,6 +115,7 @@ M.language_servers = {
   ["pyrefly"] = "pyrefly",
   ["roslyn"] = "roslyn_ls",
   ["ruff"] = "ruff",
+  ["sqls"] = "sqls",
   ["svelte-language-server"] = "svelte",
   ["tailwindcss-language-server"] = "tailwindcss",
   ["taplo"] = "taplo",
