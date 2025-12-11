@@ -3,7 +3,7 @@ local ensure_installed = {
   "bash", "c", "c_sharp", "cmake", "cpp",
   "diff", "git_config", "gitcommit", "git_rebase", "gitignore",
   "gitattributes", "go", "gomod", "gosum", "gowork",
-  "html", "ini", "javascript", "jsdoc", "json",
+  "html", "html_tags", "ini", "javascript", "jsdoc", "json",
   "json5", "jsonc", "just", "lua", "luadoc",
   "luap", "lua_patterns", "markdown", "markdown_inline", "nu",
   "powershell", "prisma", "php", "printf", "query",
