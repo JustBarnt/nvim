@@ -6,6 +6,8 @@ local keys = {
   { {'n'}, '<leader>.',         function() Snacks.scratch.open() end,                  { desc = 'Scratch Buffer'       } },
   { {'n'}, '<leader>e',         function() Snacks.explorer() end,                      { desc = 'File Explorer'        } },
   { {'n'}, '<leader>E',         function() Snacks.explorer({ cwd = vim.uv.cwd() }) end,{ desc = 'File Explorer Root'   } },
+  { {'n'}, '[[',                function() Snacks.words.jump(-vim.v.count1) end,       { desc = 'Previous Reference'   } },
+  { {'n'}, ']]',                function() Snacks.words.jump(vim.v.count1) end,{ desc = 'Next Reference'   } },
 
   -- Find
   { {'n'}, '<leader>fb',        function() Snacks.picker.buffers() end,                { desc = 'Buffers'              } },
@@ -71,6 +73,7 @@ return {
       },
     },
     statuscolumn = { enabled = true },
+    words = { enabled = true }
   },
   config = function(_, opts)
     require("snacks").setup(opts)

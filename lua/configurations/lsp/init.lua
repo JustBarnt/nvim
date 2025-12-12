@@ -17,7 +17,7 @@ local function lsp_attach()
 
       -- Setup our server capabilities
       utils.setup_server_capabilities(client, ev.buf)
-      utils.setup_client_methods(client, ev.buf)
+      -- utils.setup_client_methods(client, ev.buf)
       Utils.keymaps.make_buffer_only(Config.keys.lsp, ev.buf)
     end,
   })
