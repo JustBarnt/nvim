@@ -14,9 +14,8 @@ local options = {
   mouse = "a",
 
   -- Command Line and Messages
-  cmdheight = 0,
+  cmdheight = 1,
   inccommand = "split",
-  shortmess = "aoOtTIcC",
 
   -- Completion
   completeopt = { "menuone", "popup", "noselect" },
@@ -119,6 +118,7 @@ for k, v in pairs(options) do
   vim.opt[k] = v
 end
 
+vim.opt.shortmess:append({ W = true, I = true, c = true, C = true })
 vim.opt.isfname:append("@-@")
 vim.opt.iskeyword:append('-')
 vim.opt.whichwrap:append("<,>,[,],h,l")
