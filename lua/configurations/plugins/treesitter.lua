@@ -47,7 +47,7 @@ function M.indentexpr(buf)
   local has_indents =  M.have_query(M.get_lang(), "indents")
 
   if has_indents then
-   vim.b[buf].indentexpr = require("nvim-treesitter").indentexpr()
+   vim.bo[buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
   end
 end
 

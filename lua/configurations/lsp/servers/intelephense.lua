@@ -13,9 +13,9 @@ return {
       }
     }
   },
-  on_attach = function(client, bufnr)
-    -- NOTE: USE TREESITTER INDENT FOR PHP. Intelephense's `GetPhpIndent()`
-    --       SUCKS
-    vim.bo[bufnr].indentexpr = "nvim_treesitter#indent()"
-  end,
+  -- on_attach = function(client, bufnr)
+  --   -- NOTE: USE TREESITTER INDENT FOR PHP. Intelephense's `GetPhpIndent()`
+  --   --       SUCKS
+  --   vim.bo[bufnr].indentexpr = "nvim_treesitter#indent()"
+  -- end,
 }
