@@ -10,7 +10,7 @@ return {
     "htmldjango",
     "javascriptreact",
     "less",
-    "php",
+    -- "php",
     "pug",
     "sass",
     "scss",

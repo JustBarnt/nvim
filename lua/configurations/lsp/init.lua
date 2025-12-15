@@ -108,6 +108,7 @@ M.language_servers = {
   ["intelephense"] = "intelephense",
   ["json-lsp"] = "jsonls",
   ["just-lsp"] = "just",
+  ["laravel_ls"] = "laravel_ls",
   ["lemminx"] = "lemminx",
   ["lua-language-server"] = "lua_ls",
   ["nushell"] = "nushell",
