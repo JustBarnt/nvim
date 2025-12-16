@@ -1,6 +1,5 @@
 return {
-  cmd = { "emmet-ls", "--stdio" },
-  workspace_required = false,
+  cmd = { "emmet-language-server", "--stdio" },
   filetypes = {
     "astro",
     "css",
@@ -10,7 +9,7 @@ return {
     "htmldjango",
     "javascriptreact",
     "less",
-    -- "php",
+    "blade",
     "pug",
     "sass",
     "scss",
