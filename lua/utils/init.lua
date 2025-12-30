@@ -1,5 +1,6 @@
 ---@class utils
 ---@field keymaps utils.keymaps
+---@field wezterm utils.wezterm
 local M = {}
 
 setmetatable(M, {

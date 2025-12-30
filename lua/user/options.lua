@@ -93,8 +93,8 @@ local options = {
   wrap = false,
 
   -- Timing
-  timeoutlen = 1000,
-  updatetime = 200,
+  timeoutlen = 300,
+  updatetime = 300,
 
   -- UI and Appearance
   laststatus = 3,

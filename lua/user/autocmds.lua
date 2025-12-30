@@ -6,6 +6,18 @@ local vloc = vim.opt_local
 
 -- TODO: Create a table of 'FileType' specific options like I have for CSS and C++ in my current main "branch" of my config
 
+autocmd({'VimEnter', 'DirChanged', 'BufEnter'}, {
+  callback = function()
+    Utils.wezterm.set_wezterm_user_var("IS_NVIM", "true")
+  end,
+})
+
+autocmd('VimLeavePre', {
+  callback = function()
+    Utils.wezterm.set_wezterm_user_var("IS_NVIM", "false")
+  end,
+})
+
 autocmd("CmdlineEnter", {
   pattern = { "cd", "tcd", "lcd" },
   desc = "Disable out when using `cd` command inside neovim",
