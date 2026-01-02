@@ -9,7 +9,6 @@ local function diagnostic_goto(count, severity)
   end
 end
 
-
 ---@class config.keys
 local M = {}
 
