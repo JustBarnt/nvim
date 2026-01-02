@@ -29,7 +29,7 @@ return {
         lualine_a = { "mode" },
         lualine_b = { "branch" },
         lualine_c = {
-          { "filename", file_status = false, path = 1 },
+          Utils.lualine.root_dir(),
           {
             "diagnostics",
             symbols = {
@@ -39,7 +39,8 @@ return {
               hint = Config.ui.icons.diagnostics.Hint,
             },
           },
-          { "filetype", icon_only = true, separator = " ", padding = { left = 1, right = 0 } },
+          { "filetype", icon_only = true, separator = "", padding = { left = 1, right = 0 } },
+          { Utils.lualine.pretty_path() },
         },
 
         lualine_x = {
@@ -48,7 +49,7 @@ return {
           {
             require("lazy.status").updates,
             cond = require("lazy.status").has_updates,
-            color = function() return { fg = Snacks.util.color("Special") } end,
+            color = function() return { fg = Utils.color.hl_to_hex("Special") } end,
           },
           {
             "diff",
@@ -83,8 +84,4 @@ return {
     }
     return opts
   end,
-  config = function(_, opts)
-    vim.o.laststatus = vim.g.lualine_laststatus
-    require("lualine").setup(opts)
-  end
 }

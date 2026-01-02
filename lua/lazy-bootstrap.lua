@@ -40,6 +40,7 @@ Utils.keymaps.enable(Config.keys.base)
 
 -- Load our filetype additions
 require("filetypes").setup()
+Utils.root.setup()
 
 -- Load the our user modules
 require("user.autocmds")
