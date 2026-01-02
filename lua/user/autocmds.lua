@@ -13,6 +13,14 @@ autocmd({'VimEnter', 'DirChanged', 'BufEnter'}, {
 })
 
 autocmd("FileType", {
+  group = augroup("barnt/web-keywords", {clear = true}),
+  pattern = { "svelte", "css", "html" },
+  callback = function()
+    vim.opt_local.iskeyword:remove("-")
+  end
+})
+
+autocmd("FileType", {
   group = augroup("barnt/svelte-comments", {clear = true}),
   pattern = "svelte",
   callback = function(ev)
