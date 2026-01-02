@@ -12,6 +12,15 @@ autocmd({'VimEnter', 'DirChanged', 'BufEnter'}, {
   end,
 })
 
+autocmd("FileType", {
+  group = augroup("barnt/svelte-comments", {clear = true}),
+  pattern = "svelte",
+  callback = function(ev)
+    vim.opt_local.comments = 's:<!--,m:    ,e:-->,s1:/*,mb:*,ex:*/,://'
+    vim.opt_local.formatoptions:append("ro")
+  end
+})
+
 autocmd('VimLeavePre', {
   callback = function()
     Utils.wezterm.set_wezterm_user_var("IS_NVIM", "false")

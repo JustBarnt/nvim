@@ -1,5 +1,7 @@
 return {
   "folke/ts-comments.nvim",
-  opts = {},
+  opts = {
+    svelte = { "<!-- %s -->", "/* %s */", "// %s" }
+  },
   event = "VeryLazy"
 }
