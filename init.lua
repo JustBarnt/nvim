@@ -31,6 +31,8 @@ if vim.fn.has("nvim-0.11") ~= 1 then
   end
 end
 
+-- Set some global variables immediently
+
 vim.g.nushell = vim.fn.executable "nu"
 vim.g.debug = false
 

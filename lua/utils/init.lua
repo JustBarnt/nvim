@@ -1,5 +1,7 @@
 ---@class utils
+---@field color   utils.color
 ---@field keymaps utils.keymaps
+---@field lualine utils.lualine
 ---@field wezterm utils.wezterm
 local M = {}
 

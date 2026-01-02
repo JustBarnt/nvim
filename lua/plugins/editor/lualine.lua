@@ -23,7 +23,7 @@ return {
       options = {
         theme = "onedark",
         globalstatus = vim.o.laststatus == 3,
-        disabled_filetypes = { statusline = { "snacks_dashboard", "snacks_picker_list" } },
+        disabled_filetypes = { statusline = { "snacks_dashboard" } },
       },
       sections = {
         lualine_a = { "mode" },
@@ -79,7 +79,7 @@ return {
           end,
         },
       },
-      extensions = { "lazy" },
+      extensions = { "lazy", "neo-tree" },
     }
     return opts
   end,
