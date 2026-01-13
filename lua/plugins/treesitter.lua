@@ -4,6 +4,7 @@ return {
   build = ':TSUpdate',
   lazy = false,
   init = function()
+
     Config.plugins.treesitter.initialize()
   end,
   config = function() 

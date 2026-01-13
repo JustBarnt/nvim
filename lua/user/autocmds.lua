@@ -175,6 +175,18 @@ autocmd({ "FileType" }, {
   command = "wincmd L",
 })
 
+autocmd("User", {
+  pattern = "TSUpdate",
+  callback = function()
+    require("nvim-treesitter.parsers").comment = {
+      install_info = {
+        url = "https://github.com/OXY2DEV/tree-sitter-comment",
+        branch = "main",
+        queries = "queries/"
+      },
+    }
+  end
+})
 -- autocmd({ "CursorMoved", "CursorMovedI", "WinScrolled" }, {
 --   desc = "Fix scrolloff when you are at the EOF",
 --   group = augroup("barnt/scroll_eof", { clear = true }),
