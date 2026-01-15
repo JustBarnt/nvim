@@ -33,6 +33,7 @@ return {
         { "<leader>f",  group = "File/Find"                       },
         { "<leader>s",  group = "Search/Show"                     },
         { "<leader>m",  group = "Marks"                           },
+        { "<leader>t",  group = "TimeMachine"                     },
         { "[",          group = "Pevious"                         },
         { "]",          group = "Next"                            },
         { "g",          group = "LSP/Global"                      },
