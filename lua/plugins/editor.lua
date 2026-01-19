@@ -51,9 +51,6 @@ return {
         char = {
           jump_labels = true
         },
-        search = {
-          enabled = true
-        }
       },
     },
     -- stylua: ignore
