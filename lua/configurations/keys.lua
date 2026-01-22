@@ -63,7 +63,7 @@ M.base = {
 
 ---@type UserKeymaps[]
 M.lsp = {
-  { { "n" },      "K",          lsp.buf.hover,                                        { desc = "Hover"                      } },
+  { { "n" },      "K",          function() require("hover").open() end,               { desc = "Hover"                      } },
   { { "n" },      "gd",         function() Snacks.picker.lsp_definitions() end,       { desc = "Goto Definition"            } },
   { { "n" },      "gD",         function() Snacks.picker.lsp_declarations() end,      { desc = "Goto Declaration"           } },
   { { "n" },      "grr",        function() Snacks.picker.lsp_references() end,        { desc = "Goto References"            } },
