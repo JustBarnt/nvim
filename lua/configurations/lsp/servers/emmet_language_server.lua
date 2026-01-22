@@ -13,7 +13,7 @@ return {
     "pug",
     "sass",
     "scss",
-    "svelte",
+    -- "svelte",
     "typescriptreact",
     "vue",
   },

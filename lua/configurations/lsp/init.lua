@@ -120,8 +120,9 @@ M.language_servers = {
   ["svelte-language-server"] = "svelte",
   ["tailwindcss-language-server"] = "tailwindcss",
   ["taplo"] = "taplo",
+  ["tsgo"] = "tsgo",
   ["vim-language-server"] = "vimls",
-  ["vtsls"] = "vtsls",
+  -- ["vtsls"] = "vtsls",
   ["yaml-language-server"] = "yamlls",
 }
 
