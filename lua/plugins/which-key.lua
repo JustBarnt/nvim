@@ -1,7 +1,3 @@
-local function expand_buf()
-  return require("which-key.extras").expand.buf()
-end
-
 local function expand_window()
   return require("which-key.extras").expand.win()
 end
@@ -28,18 +24,20 @@ return {
     spec = {
       {
         mode = { "n", "v" },
+        { "<leader>c",  group = "Code"                            },
         { "<leader>g",  group = "Git"                             },
         { "<leader>gh", group = "Git Hunks"                       },
         { "<leader>f",  group = "File/Find"                       },
         { "<leader>s",  group = "Search/Show"                     },
         { "<leader>m",  group = "Marks"                           },
+        { "<leader>r",  group = "Rustaceanvim"                    },
         { "<leader>t",  group = "TimeMachine"                     },
         { "[",          group = "Pevious"                         },
         { "]",          group = "Next"                            },
         { "g",          group = "LSP/Global"                      },
         { "cs",         group = "Surround"                        },
         { "z",          group = "Folds"                           },
-        { "<leader>b",  group = "Buffer", expand = expand_buf     },
+        { "<leader>b",  group = "Buffer",                         },
         { "<leader>w",  group = "Windows", expand = expand_window },
       }
     }

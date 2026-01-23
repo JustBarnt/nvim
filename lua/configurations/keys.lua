@@ -64,13 +64,13 @@ M.base = {
 ---@type UserKeymaps[]
 M.lsp = {
   { { "n" },      "K",          function() require("hover").open() end,               { desc = "Hover"                      } },
-  { { "n" },      "gd",         function() Snacks.picker.lsp_definitions() end,       { desc = "Goto Definition"            } },
+  { { "n" },      "gd",         "<CMD>Glance definitions<CR>",                        { desc = "Goto Definition"            } },
   { { "n" },      "gD",         function() Snacks.picker.lsp_declarations() end,      { desc = "Goto Declaration"           } },
-  { { "n" },      "grr",        function() Snacks.picker.lsp_references() end,        { desc = "Goto References"            } },
-  { { "n" },      "grt",        function() Snacks.picker.lsp_type_definitions() end,  { desc = "Goto Type Definition"       } },
+  { { "n" },      "grr",        "<CMD>Glance references<CR>",                         { desc = "Goto References"            } },
+  { { "n" },      "grt",        "<CMD>Glance type_definitions<CR>",                   { desc = "Goto Type Definition"       } },
   { { "n" },      "gro",        function() Snacks.picker.lsp_symbols() end,           { desc = "Document Symbols"           } },
   { { "n" },      "grO",        function() Snacks.picker.lsp_workspace_symbols() end, { desc = "Workspace Symbols"          } },
-  { { "n" },      "gri",        function() Snacks.picker.lsp_implementations() end,   { desc = "Goto Implementation"        } },
+  { { "n" },      "gri",        "<CMD>Glance implementations<CR>",                    { desc = "Goto Implementation"        } },
   { { "n" },      "<leader>uc", lsp.codelens.run,                                     { desc = "Run Codelens"               } },
   { { "n" },      "<leader>uC", lsp.codelens.refresh,                                 { desc = "Refresh & Display Codelens" } },
   { { "i" },      "<C-s>",      lsp.buf.signature_help,                               { desc = "Signature Helper"           } },
@@ -87,6 +87,42 @@ M.lsp = {
   { { "n" },      "[e",         diagnostic_goto(-1, 1),                               { desc = "Previous Error"             } },
   { { "n" },      "]w",         diagnostic_goto(1, 2),                                { desc = "Next Warning"               } },
   { { "n" },      "[w",         diagnostic_goto(-1, 2),                               { desc = "Previous Warning"           } },
+}
+
+---@type UserKeymaps[]
+M.lsp_rust = {
+  -- Code Actions (grouped, better than vim.lsp.buf.code_action for Rust)
+  { { "n", "v" }, "gra",         function() vim.cmd.RustLsp('codeAction') end,                    { desc = "Code Actions"           } },
+  -- Hover with actions (better than standard hover)
+  { { "n" },      "K",           function() vim.cmd.RustLsp({ 'hover', 'actions' }) end,          { desc = "Hover Actions"          } },
+  -- Run/Execute
+  { { "n" },      "<leader>rr",  function() vim.cmd.RustLsp('runnables') end,                     { desc = "Show All Runnables"              } },
+  { { "n" },      "<leader>rR",  function() vim.cmd.RustLsp({ 'runnables', bang = true }) end,    { desc = "Rerun Last Runnable"    } },
+  { { "n" },      "<leader>run", function() vim.cmd.RustLsp('run') end,                           { desc = "Run (Current Position)"  } },
+  -- Debug
+  { { "n" },      "<leader>rd",  function() vim.cmd.RustLsp('debuggables') end,                   { desc = "Debuggables"            } },
+  { { "n" },      "<leader>rD",  function() vim.cmd.RustLsp({ 'debuggables', bang = true }) end,  { desc = "Rerun Last Debuggable"  } },
+  { { "n" },      "<leader>dbg", function() vim.cmd.RustLsp('debug') end,                         { desc = "Debug (current context)"} },
+  -- Tests
+  { { "n" },      "<leader>rt",  function() vim.cmd.RustLsp('testables') end,                     { desc = "Testables"              } },
+  { { "n" },      "<leader>rT",  function() vim.cmd.RustLsp({ 'testables', bang = true }) end,    { desc = "Rerun Last Testable"    } },
+  -- Error explanation (shows rust error index docs)
+  { { "n" },      "<leader>re",  function() vim.cmd.RustLsp('explainError') end,                  { desc = "Explain Error"          } },
+  { { "n" },      "<leader>rec", function() vim.cmd.RustLsp({ 'explainError', 'cycle' }) end,     { desc = "Explain Error (cycle)"  } },
+  { { "n" },      "<leader>rep", function() vim.cmd.RustLsp({ 'explainError', 'cycle_prev' }) end,{ desc = "Explain Error (prev)"   } },
+  -- Open Cargo.toml
+  { { "n" },      "<leader>rc",  function() vim.cmd.RustLsp('openCargo') end,                     { desc = "Open Cargo.toml"        } },
+  -- Join lines (Rust-aware)
+  { { "n" },      "J",           function() vim.cmd.RustLsp('joinLines') end,                     { desc = "Join Lines"             } },
+  -- Syntax tree
+  { { "n" },      "<leader>rs",  function() vim.cmd.RustLsp('syntaxTree') end,                    { desc = "Syntax Tree"            } },
+  -- Workspace/Server management
+  { { "n" },      "<leader>rw",  function() vim.cmd.RustLsp('reloadWorkspace') end,               { desc = "Reload Workspace"       } },
+  { { "n" },      "<leader>rsr", function() vim.cmd.RustLsp('ssr') end,                           { desc = "Structural Search Replace" } },
+  -- Workspace symbols
+  { { "n" },      "<leader>rws", function() vim.cmd.RustLsp('workspaceSymbol') end,               { desc = "Workspace Symbol"       } },
+  -- Related diagnostics
+  { { "n" },      "<leader>rrd", function() vim.cmd.RustLsp('relatedDiagnostics') end,            { desc = "Related Diagnostics"    } },
 }
 -- stylua: ignore end
 

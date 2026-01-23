@@ -4,7 +4,8 @@ local flash_inc_select  = { actions = { ["<c-space>"] = "next", ["<BS>"] = "prev
 return {
   {
     "nacro90/numb.nvim",
-    event = "VeryLazy"
+    event = "VeryLazy",
+    opts = {}
   },
   {
     "saghen/blink.indent",
@@ -84,6 +85,16 @@ return {
     },
     keys = {
       { "<leader>tt", "<CMD>TimeMachineToggle<CR>", desc = "Toggle Tree" },
+    }
+  },
+  {
+    "2KAbhishek/nerdy.nvim",
+    cmd = "Nerdy",
+    opts = {
+      max_recents = 30,
+    },
+    keys = {
+      { "<leader>sN", "<CMD>Nerdy list<CR>", desc = "Browse nerd font icons" }
     }
   }
 }

@@ -25,7 +25,7 @@ local keys = {
   { {'n'}, '<leader>sl',        function() Snacks.picker.loclist() end,                { desc = 'Location List'        } },
   { {'n'}, '<leader>sq',        function() Snacks.picker.qflist() end,                 { desc = 'Quickfix List'        } },
   { {'n'}, '<leader>sn',        function() Snacks.picker.notifications() end,          { desc = 'Notifications'        } },
-  { {'n'}, '<leader>rc',        function() Snacks.debug.run() end,                     { desc = 'Execute Lua Code'     } },
+  { {'n'}, '<leader>ce',        function() Snacks.debug.run() end,                     { desc = 'Execute Lua Code'     } },
   { {'n'}, '<leader>bd',        function() Snacks.bufdelete() end,                     { desc = 'Delete Buffer'        } },
   { {'n'}, '<leader>bD',        function() Snacks.bufdelete.other() end,               { desc = 'Delete Other Buffers' } },
 }

@@ -19,6 +19,11 @@ local function lsp_attach()
       utils.setup_server_capabilities(client, ev.buf)
       -- utils.setup_client_methods(client, ev.buf)
       Utils.keymaps.make_buffer_only(Config.keys.lsp, ev.buf)
+
+      -- override with rust specific keymaps
+      if client.name == "rust_analyzer" then
+        Utils.keymaps.make_buffer_only(Config.keys.lsp_rust, ev.buf)
+      end
     end,
   })
 end
@@ -116,6 +121,7 @@ M.language_servers = {
   ["pyrefly"] = "pyrefly",
   ["roslyn"] = "roslyn_ls",
   ["ruff"] = "ruff",
+  ["rust-analyzer"] = "rust_analyzer",
   ["sqls"] = "sqls",
   ["svelte-language-server"] = "svelte",
   ["tailwindcss-language-server"] = "tailwindcss",

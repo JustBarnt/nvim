@@ -7,7 +7,7 @@ local ensure_installed = {
   "json5", "just", "lua", "luadoc",
   "luap", "markdown", "markdown_inline", "nu",
   "powershell", "prisma", "php", "printf", "query",
-  "regex", "scheme", "sql", "svelte", "toml",
+  "regex", "rust", "scheme", "sql", "svelte", "toml",
   "tsx", "typescript", "vim", "vimdoc", "xml", "yaml",
 }
 -- stylua: ingnore end
