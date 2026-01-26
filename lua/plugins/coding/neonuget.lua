@@ -1,0 +1,4 @@
+return {
+  "MonsieurTib/neonuget",
+  opts = {}
+}

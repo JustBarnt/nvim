@@ -1,4 +1,3 @@
-
 return {
   "nvim-lua/plenary.nvim",
   {
@@ -19,7 +18,7 @@ return {
           ["tsconfig.json"] = { glyph = " ", hl = "MiniIconsAzure" },
           ["tsconfig.build.json"] = { glyph = " ", hl = "MiniIconsAzure" },
           ["yarn.lock"] = { glyph = "", hl = "MiniIconsBlue" },
-          ["composer.lock"] = { glyph = "", hl = "MiniIconsPurple"},
+          ["composer.lock"] = { glyph = "", hl = "MiniIconsPurple" },
         },
         filetype = {
           axaml = { glyph = "󰙳 ", hl = "MiniIconsGreen" },
@@ -29,4 +28,10 @@ return {
       MiniIcons.mock_nvim_web_devicons()
     end,
   },
+  { import = "plugins.coding" },
+  { import = "plugins.editor" },
+  { import = "plugins.formatting" },
+  { import = "plugins.lsp" },
+  { import = "plugins.themes" },
+  { import = "plugins.ui" },
 }
