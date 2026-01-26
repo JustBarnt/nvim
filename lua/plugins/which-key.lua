@@ -24,21 +24,22 @@ return {
     spec = {
       {
         mode = { "n", "v" },
+        { "<leader>b",  group = "Buffer",                         },
         { "<leader>c",  group = "Code"                            },
+        { "<leader>d",  group = "Delete",                         },
+        { "<leader>f",  group = "File/Find"                       },
         { "<leader>g",  group = "Git"                             },
         { "<leader>gh", group = "Git Hunks"                       },
-        { "<leader>f",  group = "File/Find"                       },
-        { "<leader>s",  group = "Search/Show"                     },
         { "<leader>m",  group = "Marks"                           },
         { "<leader>r",  group = "Rustaceanvim"                    },
+        { "<leader>s",  group = "Search/Show"                     },
         { "<leader>t",  group = "TimeMachine"                     },
+        { "<leader>w",  group = "Windows", expand = expand_window },
         { "[",          group = "Pevious"                         },
         { "]",          group = "Next"                            },
-        { "g",          group = "LSP/Global"                      },
         { "cs",         group = "Surround"                        },
+        { "g",          group = "LSP/Global"                      },
         { "z",          group = "Folds"                           },
-        { "<leader>b",  group = "Buffer",                         },
-        { "<leader>w",  group = "Windows", expand = expand_window },
       }
     }
   },

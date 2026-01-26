@@ -15,8 +15,11 @@ local M = {}
 -- stylua: ignore start
 ---@type UserKeymaps[]
 M.base = {
-  { { "n"}, "H", "<CMD>bPrev<CR>", { desc = "Previous Buffer"} },
-  { { "n"}, "L", "<CMD>bNext<CR>", { desc = "Next Buffer"} },
+  { { "n"}, "<S-h>", "<CMD>bprevious<CR>", { desc = "Previous Buffer" } },
+  { { "n"}, "<S-l>", "<CMD>bnext<CR>", { desc = "Next Buffer" } },
+
+  -- Buffer Keymaps
+  { { "n"}, "<leader>dB", "<CMD>:bd<CR>", { desc = "Delete Buffer and Window" } },
 
   -- Better up/down unless we provide a count like `5j` move by visual lines `gj` instead of logical lines
   { {"n", "x"}, "j", "v:count == 0 ? 'gj' : 'j'", { desc = "Down", expr = true } },
@@ -25,7 +28,6 @@ M.base = {
   -- Windows
   { {"n"}, "<leader>-", "<C-w>s",  { desc = "Split Window Below" } },
   { {"n"}, "<leader>|", "<C-w>v",  { desc = "Split Window Right" } },
-  { {"n"}, "<leader>wd", "<C-w>c", { desc = "Delete Window"      } },
 
   -- Window movement
   { {"n"}, "<C-h>", "<C-w>h", { desc = "Focus Left Window"  } },

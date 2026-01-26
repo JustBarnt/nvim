@@ -122,7 +122,6 @@ M.language_servers = {
   ["roslyn"] = "roslyn_ls",
   ["ruff"] = "ruff",
   ["rust-analyzer"] = "rust_analyzer",
-  ["sqls"] = "sqls",
   ["svelte-language-server"] = "svelte",
   ["tailwindcss-language-server"] = "tailwindcss",
   ["taplo"] = "taplo",
