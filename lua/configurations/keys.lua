@@ -15,6 +15,9 @@ local M = {}
 -- stylua: ignore start
 ---@type UserKeymaps[]
 M.base = {
+  { { "n"}, "H", "<CMD>bPrev<CR>", { desc = "Previous Buffer"} },
+  { { "n"}, "L", "<CMD>bNext<CR>", { desc = "Next Buffer"} },
+
   -- Better up/down unless we provide a count like `5j` move by visual lines `gj` instead of logical lines
   { {"n", "x"}, "j", "v:count == 0 ? 'gj' : 'j'", { desc = "Down", expr = true } },
   { {"n", "x"}, "k", "v:count == 0 ? 'gk' : 'k'", { desc = "Up", expr = true } },
@@ -24,18 +27,11 @@ M.base = {
   { {"n"}, "<leader>|", "<C-w>v",  { desc = "Split Window Right" } },
   { {"n"}, "<leader>wd", "<C-w>c", { desc = "Delete Window"      } },
 
-
   -- Window movement
   { {"n"}, "<C-h>", "<C-w>h", { desc = "Focus Left Window"  } },
   { {"n"}, "<C-j>", "<C-w>j", { desc = "Focus Lower Window" } },
   { {"n"}, "<C-k>", "<C-w>k", { desc = "Focus Upper Window" } },
   { {"n"}, "<C-l>", "<C-w>l", { desc = "Focus Right Window" } },
-
-  -- Resize Windows
-  { {"n"}, "<C-Left>",  "<CMD>vertical resize -2<cr>", { desc = "Decrease Window Width"  } },
-  { {"n"}, "<C-Down>",  "<CMD>resize -2<cr>",          { desc = "Decrease Window Height" } },
-  { {"n"}, "<C-Up>",    "<CMD>resize +2<cr>",          { desc = "Increase Window Height" } },
-  { {"n"}, "<C-Right>", "<CMD>vertical resize +2<cr>", { desc = "Increase Window Width"  } },
 
   -- Move Lines
   { {"v"}, "J", ":m '>+1<CR>gv=gv", { desc = "Move Line Down" } },

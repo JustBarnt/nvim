@@ -63,7 +63,6 @@ return {
       sources = {
         explorer  = {
           ignored = true,
-          layout = { preset = "sidebar", layout = { position = "right" } },
         }
       },
       win = {
