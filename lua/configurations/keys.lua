@@ -57,6 +57,9 @@ M.base = {
 
   -- Lazy
   { {"n"}, "<leader>l", "<CMD>Lazy<CR>",      { desc = "Lazy" }},
+
+  -- Terminal
+  { {"n"}, "<leader>fT", function() Snacks.terminal() end, { desc = "Terminal (cwd)" }},
 }
 
 ---@type UserKeymaps[]
