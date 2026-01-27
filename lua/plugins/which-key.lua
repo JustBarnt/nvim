@@ -20,7 +20,11 @@ return {
   event = "VeryLazy",
   opts = {
     defaults = {},
-    preset = "helix",
+    preset = "modern",
+    keys = {
+      scroll_down = "<C-n>",
+      scroll_up = "<C-p>"
+    },
     spec = {
       {
         mode = { "n", "v" },
@@ -33,7 +37,7 @@ return {
         { "<leader>m",  group = "Marks"                           },
         { "<leader>r",  group = "Rustaceanvim"                    },
         { "<leader>s",  group = "Search/Show"                     },
-        { "<leader>t",  group = "TimeMachine"                     },
+        { "<leader>t",  group = "TimeMachine/Terminal"            },
         { "<leader>w",  group = "Windows", expand = expand_window },
         { "[",          group = "Pevious"                         },
         { "]",          group = "Next"                            },

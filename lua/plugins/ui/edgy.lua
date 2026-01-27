@@ -20,6 +20,10 @@ return {
     end,
     opts = function()
       local opts = {
+        animate = { 
+          fps = 120,
+          cps = 1000
+        },
         bottom = {
           "Trouble",
           { ft = "qf", title = "QuickFix" },

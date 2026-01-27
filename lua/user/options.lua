@@ -3,7 +3,7 @@
 
 vim.g.root_spec = { "lsp", { ".git", "lua" }, "cwd"}
 
-if vim.g.nushell then
+if vim.g.nushell == 1 then
   require("user.nushell")
 end
 
