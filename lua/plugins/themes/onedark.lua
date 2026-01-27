@@ -1,16 +1,28 @@
 return {
-  "navarasu/onedark.nvim",
+  "olimorris/onedarkpro.nvim",
   priority = 1000,
   config = function()
-    require("onedark").setup({
-      style = "dark",
-      code_style = {
+    require("onedarkpro").setup({
+      styles = {
+        types = "NONE",
+        methods = "NONE",
+        numbers = "NONE",
+        strings = "NONE",
         comments = "italic",
         keywords = "bold,italic",
-        functions = "bold",
-        strings = "none",
-        variables = "none"
+        constants = "NONE",
+        functions = "italic",
+        operators = "NONE",
+        variables = "NONE",
+        parameters = "NONE",
+        conditionals = "italic",
+        virtual_text = "NONE",
       },
+      options = {
+        cursorline = true,
+        terminal_colors = true,
+        highlight_inactive_windows = true
+      }
     })
   end,
 }
