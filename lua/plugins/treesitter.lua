@@ -5,7 +5,7 @@ return {
     build = ':TSUpdate',
     lazy = false,
     init = function()
-      Config.plugins.treesitter.initialize()
+      Utils.treesitter.initialize()
     end,
     config = function()
       require('nvim-treesitter').setup()
@@ -33,7 +33,7 @@ return {
 
       local function attach(buf)
         local ft = vim.bo[buf].filetype
-        if not (vim.tbl_get(opts, "move", "enable") and Config.plugins.treesitter.have_query(ft, "textobjects")) then
+        if not (vim.tbl_get(opts, "move", "enable") and Utils.treesitter.have_query(ft, "textobjects")) then
           return
         end
 
@@ -52,7 +52,7 @@ return {
             local desc = table.concat(parts, " or ")
             desc = (key:sub(1, 1) == "[" and "Prev " or "Next ") .. desc
             desc = desc .. (key:sub(2, 2) == key:sub(2, 2):upper() and " End" or " Start")
-            vim.keymap.set({ "n", "x", "o" }, key, function()
+            Snacks.keymap.set({ "n", "x", "o" }, key, function()
               require("nvim-treesitter-textobjects.move")[method](query, "textobjects")
             end, {
               buffer = buf,

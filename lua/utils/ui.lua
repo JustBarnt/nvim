@@ -1,4 +1,4 @@
----@class config.ui
+---@class utils.ui
 local M = {}
 
 M.icons = {

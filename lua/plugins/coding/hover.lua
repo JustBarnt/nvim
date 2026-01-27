@@ -1,6 +1,5 @@
 return {
   "lewis6991/hover.nvim",
-  event = "VeryLazy",
   config = function()
     require("hover").config({
       providers = {

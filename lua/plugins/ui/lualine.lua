@@ -18,7 +18,7 @@ return {
       local lualine_require = require("lualine_require")
       lualine_require.require = require
 
-      local icons = Config.ui.icons
+      local icons = Utils.ui.icons
       vim.o.laststatus = vim.g.lualine_laststatus
 
       local opts = {
@@ -35,10 +35,10 @@ return {
             {
               "diagnostics",
               symbols = {
-                error = Config.ui.icons.diagnostics.Error,
-                warn = Config.ui.icons.diagnostics.Warn,
-                info = Config.ui.icons.diagnostics.Info,
-                hint = Config.ui.icons.diagnostics.Hint,
+                error = Utils.ui.icons.diagnostics.Error,
+                warn  = Utils.ui.icons.diagnostics.Warn,
+                info  = Utils.ui.icons.diagnostics.Info,
+                hint  = Utils.ui.icons.diagnostics.Hint,
               },
             },
             { "filetype",                 icon_only = true, separator = "", padding = { left = 1, right = 0 } },
@@ -56,9 +56,9 @@ return {
             {
               "diff",
               symbols = {
-                added = Config.ui.icons.git.added,
-                modified = Config.ui.icons.git.modified,
-                removed = Config.ui.icons.git.removed,
+                added = Utils.ui.icons.git.added,
+                modified = Utils.ui.icons.git.modified,
+                removed = Utils.ui.icons.git.removed,
               },
               source = function()
                 local gitsigns = vim.b.gitsigns_status_dict

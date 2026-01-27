@@ -1,6 +1,6 @@
 ---@module "blink.cmp"
 
----@class config.plugins.lsp.blink
+---@class utils.blink
 local M = {}
 
 ---@type blink.cmp.Fuzzy

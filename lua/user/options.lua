@@ -47,8 +47,8 @@ local options = {
     diff = "╱",
     eob = " ",
     fold = " ",
-    foldclose = Config.ui.icons.folds.close,
-    foldopen = Config.ui.icons.folds.open,
+    foldclose = Utils.ui.icons.folds.close,
+    foldopen = Utils.ui.icons.folds.open,
     foldsep = " ",
   },
 

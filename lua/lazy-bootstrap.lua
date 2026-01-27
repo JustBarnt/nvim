@@ -1,58 +1,80 @@
-_G.Config = require("configurations")
+-- Register our global variables
 _G.Utils = require("utils")
 
 -- bootstrap lazy
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.uv.fs_stat(lazypath) then
-    local lazyrepo = "https://github.com/folke/lazy.nvim.git"
-    local out = vim.fn.system {
-        "git",
-        "clone",
-        "--filter=blob:none",
-        lazyrepo,
-        "--branch=stable",
-        lazypath,
-    }
-    if vim.v.shell_error ~= 0 then
-        vim.api.nvim_echo({
-            { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
-            { out,                            "WarningMsg" },
-            { "\nPress any key to exit..." },
-        }, true, {})
-        vim.fn.getchar()
-        os.exit(1)
-    end
+  local lazyrepo = "https://github.com/folke/lazy.nvim.git"
+  local out = vim.fn.system {
+    "git",
+    "clone",
+    "--filter=blob:none",
+    lazyrepo,
+    "--branch=stable",
+    lazypath,
+  }
+  if vim.v.shell_error ~= 0 then
+    vim.api.nvim_echo({
+      { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
+      { out, "WarningMsg" },
+      { "\nPress any key to exit..." },
+    }, true, {})
+    vim.fn.getchar()
+    os.exit(1)
+  end
 end
 
 -- adds all of our plugins into vims runtimepath
 vim.opt.rtp:prepend(lazypath)
 
--- Load our options
-require("user.options")
-
 -- Configure lazy.nvim
-require("lazy").setup(Config.lazy)
+require("lazy").setup {
+  spec = {
+    { import = "plugins" },
+  },
+  local_spec = true,
+  install = { colorscheme = { "onedark", "habamax" } },
+  checker = { enabled = true, notify = false },
+  performance = {
+    rtp = {
+      disabled_plugins = {
+        "gzip",
+        "matchit",
+        "matchparen",
+        -- "netrwPlugin",
+        "tarPlugin",
+        "tohtml",
+        "tutor",
+        "zipPlugin",
+      },
+    },
+  },
+  ui = {
+    border = "rounded",
+    backdrop = 25,
+  },
+}
 
 _G.LazyUtil = require("lazy.core.util")
 
+-- Setup our RootDir awareness
+-- from: https://github.com/LazyVim/LazyVim/blob/c64a61734fc9d45470a72603395c02137802bc6f/lua/lazyvim/util/root.lua
+Utils.root.setup()
+
 vim.cmd.colorscheme("onedark")
-Utils.keymaps.enable(Config.keys.base)
 
 -- Load our filetype additions
 require("filetypes").setup()
-Utils.root.setup()
 
 -- Load the our user modules
 require("user.autocmds")
+require("user.diagnostics")
 require("user.commands")
+require("user.keys")
+require("user.options")
 
 -- TODO: Move to a plugin
 require("filetypes.ft-commands")
-
--- Load neovide settings if we are in neovide
-if vim.g.neovide then
-  require("user.neovide")
-end
 
 -- TODO: Create a command for this
 -- local file_path = vim.fn.stdpath("config") .. '\\lua\\types.lua'

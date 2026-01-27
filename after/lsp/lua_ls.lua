@@ -2,7 +2,14 @@
 return {
   settings = {
     Lua = {
-      workspace = { checkThirdParty = false },
+      runtime = {
+        version = "LuaJIT",
+        path = vim.split(package.path, ";")
+      },
+      workspace = {
+        checkThirdParty = false,
+        ignoreSubmodules = true,
+      },
       codeLens = { enable = true },
       completion = { callSnippet = "Replace" },
       doc = { privateName = { "^_" } },

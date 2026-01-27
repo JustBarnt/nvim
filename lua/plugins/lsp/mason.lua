@@ -1,33 +1,56 @@
 return {
   {
     "mason-org/mason.nvim",
-    event = "VeryLazy",
+    lazy = false,
     build = ":MasonUpdate",
+    opts_extended = { "ensure_installed" },
     opts = {
+        -- stylua: ignore start
+        ensure_installed = {
+          -- debuggers
+
+          -- formatters
+          "clang-format", "gofumpt", "goimports",
+          "gomodifytags", "shfmt", "stylua",
+          "xmlformatter",
+
+          -- language servers
+          "clangd", "cmake-language-server", "css-lsp", "css-variables-language-server",
+          "cssmodules-language-server", "emmet-language-server", "gopls",
+          "html-lsp", "intelephense", "json-lsp", "just-lsp",
+          "laravel_ls", "lemminx", "lua-language-server", "nushell",
+          "powershell-editor-services", "pyrefly", "roslyn", "ruff",
+          "rust-analyzer", "svelte-language-server", "tailwindcss-language-server", "taplo",
+          "tsgo", "vim-language-server", "yaml-language-server",
+
+          -- linters
+          "cmakelint", "shellcheck" 
+        },
+      -- stylua: ignore end
       ui = {
         icons = {
-          package_installed   = Config.ui.icons.misc.package.installed,
-          package_pending     = Config.ui.icons.misc.dots,
-          package_uninstalled = Config.ui.icons.misc.package.uninstalled,
+          package_installed = Utils.ui.icons.misc.package.installed,
+          package_pending = Utils.ui.icons.misc.dots,
+          package_uninstalled = Utils.ui.icons.misc.package.uninstalled,
         },
       },
       registries = { "github:mason-org/mason-registry", "github:crashdummyy/mason-registry" },
     },
-    init = function()
+    init = function(plugin)
       local mr = require("mason-registry")
 
       ---https://github.com/LazyVim/LazyVim/blob/c64a61734fc9d45470a72603395c02137802bc6f/lua/lazyvim/plugins/lsp/init.lua#L283
       mr:on("package:install:success", function()
         vim.defer_fn(function()
-          require("lazy.core.handler.event").trigger({
+          require("lazy.core.handler.event").trigger {
             event = "FileType",
             buf = vim.api.nvim_get_current_buf(),
-          })
+          }
         end, 100)
       end)
 
       mr.refresh(function()
-        for _, tool in ipairs(Config.lsp:ensure_installed()) do
+        for _, tool in ipairs(plugin.opts.ensure_installed) do
           if tool == "rust-analyzer" then
             goto continue
           end
@@ -40,6 +63,6 @@ return {
           ::continue::
         end
       end)
-    end
-  }
+    end,
+  },
 }
