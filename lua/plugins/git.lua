@@ -1,17 +1,4 @@
----@type UserKeymaps[]
-local keys = {
-  { {"n"}, "]h", "<CMD>Gitsigns next_hunk<CR>",                                        { desc = "Next Hunk"     } },
-  { {"n"}, "[h", "<CMD>Gitsigns prev_hunk<CR>",                                        { desc = "Previous Hunk" } },
-  { {"n"}, "]H", "<CMD>Gitsigns nav_hunk \"first\"<CR>",                               { desc = "First Hunk"    } },
-  { {"n"}, "[H", "<CMD>Gitsigns nav_hunk \"last\"<CR>",                                { desc = "Last Hunk"     } },
-  { {"n", "v"}, "<leader>ghs", "<CMD>Gitsigns stage_hunk<CR>",                         { desc = "Stage Hunk"    } },
-  { {"n", "v"}, "<leader>ghu", "<CMD>Gitsigns undo_stage_hunk<CR>",                    { desc = "Unstage Hunk"  } },
-  { {"n", "v"}, "<leader>ghr", "<CMD>Gitsigns reset_hunk<CR>",                         { desc = "Reset Hunk"    } },
-  { {"n", "v"}, "<leader>ghr", "<CMD>Gitsigns preview_hunk_inline<CR>",                { desc = "Preview Hunk"  } },
-}
-
-return 
-{
+return {
   {
     "esmuellert/codediff.nvim",
     dependencies = { "MunifTanjim/nui.nvim" },
@@ -19,6 +6,7 @@ return
   },
   {
     "lewis6991/gitsigns.nvim",
+    lazy = false,
     opts = {
       signs = {
         add = { text = "▎" },
@@ -39,9 +27,19 @@ return
       current_line_blame_opts = { virt_text = true, virt_text_pos = "right_align" },
       current_line_blame_formatter = "<author> | <author_time:%c>",
       update_debounce = 200,
-      on_attach = function(bufnr)
-        Utils.keymaps.make_buffer_only(keys, bufnr)
-      end,
+      -- on_attach = function(bufnr)
+      --   Utils.keymaps.make_buffer_only(keys, bufnr)
+      -- end,
+    },
+    keys = {
+      { "]h",          "<CMD>Gitsigns next_hunk<CR>",           desc = "Next Hunk" },
+      { "[h",          "<CMD>Gitsigns prev_hunk<CR>",           desc = "Previous Hunk" },
+      { "]H",          "<CMD>Gitsigns nav_hunk \"first\"<CR>",  desc = "First Hunk" },
+      { "[H",          "<CMD>Gitsigns nav_hunk \"last\"<CR>",   desc = "Last Hunk" },
+      { "<leader>ghs", "<CMD>Gitsigns stage_hunk<CR>",          desc = "Stage Hunk" },
+      { "<leader>ghu", "<CMD>Gitsigns undo_stage_hunk<CR>",     desc = "Unstage Hunk" },
+      { "<leader>ghr", "<CMD>Gitsigns reset_hunk<CR>",          desc = "Reset Hunk" },
+      { "<leader>ghr", "<CMD>Gitsigns preview_hunk_inline<CR>", desc = "Preview Hunk" },
     }
-  } 
+  }
 }

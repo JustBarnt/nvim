@@ -18,6 +18,6 @@ return {
 
   },
   keys = {
-    { "<leader>tt", "<CMD>TimeMachineToggle<CR>", desc = "Toggle Time-Machine" },
+    { "<leader>tm", "<CMD>TimeMachineToggle<CR>", desc = "Toggle Time-Machine" },
   }
 }

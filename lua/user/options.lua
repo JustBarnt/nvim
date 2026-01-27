@@ -130,6 +130,7 @@ vim.opt.breakindent = vim.o.wrap and true or false
 -- NOTE: This will contain any "nightly" features I am trying out. As
 --       neovim releases updates, nightly features will get moved out
 if vim.fn.has "nvim-0.12" == 1 then
+  vim.o.winborder = "rounded"
   vim.o.diffopt = "internal,filler,closeoff,algorithm:patience,indent-heuristic,inline:char,linematch:40"
   table.insert(vim.opt.fillchars, { foldinner = " " })
 end
