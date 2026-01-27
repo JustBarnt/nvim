@@ -5,7 +5,4 @@ return {
   keys = {
     { "<leader>st", function() Snacks.picker.todo_comments({ keywords = { "TODO", "FIX", "BUG", "HACK" }}) end, desc = "Todo" }
   },
-  config = function(_, opts)
-    require("todo-comments").setup(opts)
-  end
 }

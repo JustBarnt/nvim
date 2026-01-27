@@ -1,18 +1,10 @@
-local function edgy_toggle()
-  return require("edgy").toggle()
-end
-
-local function edgy_select()
-  return require("edgy").select()
-end
-
 return {
   {
     "folke/edgy.nvim",
     event = "VeryLazy",
     keys = {
-      { "<leader>ue", edgy_toggle, desc = "Edgy Toggle" },
-      { "<leader>uE", edgy_select, desc = "Edgy Select Window" }
+      { "<leader>ue", function() require("edgy").toggle() end, desc = "Edgy Toggle" },
+      { "<leader>uE", function() require("edgy").select() end, desc = "Edgy Select Window" }
     },
     init = function()
       vim.opt.laststatus = 3

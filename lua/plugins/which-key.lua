@@ -16,7 +16,7 @@ return {
     keys = {
       scroll_down = "<C-n>",
       scroll_up = "<C-p>"
-    },
+   },
     spec = {
       {
         mode = { "n", "v" },
@@ -31,6 +31,7 @@ return {
         { "<leader>s",  group = "Search" },
         { "<leader>t",  group = "TimeMachine/Terminal" },
         { "<leader>w",  group = "Windows", proxy = "<c-w>", expand = function() return require("which-key.extras").expand.win() end },
+        { "<leader>x",  group = "Diagnostics" },
         { "[",          group = "Pevious" },
         { "]",          group = "Next" },
         { "g",          group = "LSP/Global" },
