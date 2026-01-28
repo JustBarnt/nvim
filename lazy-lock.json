@@ -1,7 +1,9 @@
 {
   "SchemaStore.nvim": { "branch": "main", "commit": "9afa445602e6191917b4d32f1355e77b4525f905" },
   "blink.cmp": { "branch": "main", "commit": "b19413d214068f316c78978b08264ed1c41830ec" },
+  "blink.download": { "branch": "main", "commit": "86361b98f3c8317904a08e3bd12cf3cdcbe3e925" },
   "blink.indent": { "branch": "main", "commit": "9c80820ca77218a8d28e70075d6f44a1609911fe" },
+  "blink.pairs": { "branch": "main", "commit": "5a34bf6ea72340a70083548e186d745ac4882899" },
   "buffer-sticks.nvim": { "branch": "main", "commit": "41c63057faa9303b0e415701eb8d5b52f9ed044c" },
   "codediff.nvim": { "branch": "main", "commit": "eb84ff55302433aa4f6380575510b840619d8e44" },
   "codestats.nvim": { "branch": "master", "commit": "e0a6d0ba4c4cd1ed65233559b20c912561c9c31c" },

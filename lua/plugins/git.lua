@@ -38,10 +38,10 @@ return {
         topdelete = { text = "▎" },
         changedelete = { text = "▎" },
       },
+      attach_to_untracked = true,
       current_line_blame = true,
       current_line_blame_opts = { virt_text = true, virt_text_pos = "eol" },
-      current_line_blame_formatter = "<author> | <author_time:%c>",
-      update_debounce = 200,
+      current_line_blame_formatter = "<author> | <author_time:%R> - <summary>",
       on_attach = Utils.git.gitsigns_on_attach,
     },
   }
