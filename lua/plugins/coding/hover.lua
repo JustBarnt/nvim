@@ -3,8 +3,8 @@ return {
   config = function()
     require("hover").config({
       providers = {
-        'hover.providers.diagnostic',
         'hover.providers.lsp',
+        'hover.providers.diagnostic',
         'hover.providers.dictionary'
       },
       preview_opts = {

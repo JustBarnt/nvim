@@ -12,7 +12,7 @@ local ensure_installed = {
 }
 -- stylua: ingnore end
 
----@class config.plugins.treesitter
+---@class utils.treesitter
 local M = {}
 
 ---@param value string|number|nil Either the direct filetype, bufnr if known, or nil to automatically figure it out
@@ -56,6 +56,11 @@ function M.initialize()
   local to_install = vim.tbl_filter(isnt_installed, ensure_installed)
 
   if #to_install > 0 then
+    if vim.g.debug then
+      for _, p in ipairs(to_install) do
+        vim.notify(("Installing %s parser"):format(p), vim.log.levels.INFO, { title = "Treesitter Install"} )
+      end
+    end
     require("nvim-treesitter").install(to_install)
   end
 
