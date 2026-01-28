@@ -5,27 +5,27 @@ return {
     build = ":MasonUpdate",
     opts_extended = { "ensure_installed" },
     opts = {
-        -- stylua: ignore start
-        ensure_installed = {
-          -- debuggers
+      -- stylua: ignore start
+      ensure_installed = {
+        -- debuggers
 
-          -- formatters
-          "clang-format", "gofumpt", "goimports",
-          "gomodifytags", "shfmt", "stylua",
-          "xmlformatter",
+        -- formatters
+        "clang-format", "gofumpt", "goimports",
+        "gomodifytags", "shfmt", "stylua",
+        "xmlformatter",
 
-          -- language servers
-          "clangd", "cmake-language-server", "css-lsp", "css-variables-language-server",
-          "cssmodules-language-server", "emmet-language-server", "gopls",
-          "html-lsp", "intelephense", "json-lsp", "just-lsp",
-          "laravel_ls", "lemminx", "lua-language-server", "nushell",
-          "powershell-editor-services", "pyrefly", "roslyn", "ruff",
-          "rust-analyzer", "svelte-language-server", "tailwindcss-language-server", "taplo",
-          "tsgo", "vim-language-server", "yaml-language-server",
+        -- language servers
+        "clangd", "cmake-language-server", "css-lsp", "css-variables-language-server",
+        "cssmodules-language-server", "emmet-language-server", "gopls",
+        "html-lsp", "intelephense", "json-lsp", "just-lsp",
+        "laravel_ls", "lemminx", "lua-language-server", "nushell",
+        "powershell-editor-services", "pyrefly", "roslyn", "ruff",
+        "rust-analyzer", "svelte-language-server", "tailwindcss-language-server", "taplo",
+        "tsgo", "vim-language-server", "yaml-language-server",
 
-          -- linters
-          "cmakelint", "shellcheck" 
-        },
+        -- linters
+        "cmakelint", "shellcheck"
+      },
       -- stylua: ignore end
       ui = {
         icons = {
@@ -51,12 +51,17 @@ return {
 
       mr.refresh(function()
         for _, tool in ipairs(plugin.opts.ensure_installed) do
-          if tool == "rust-analyzer" then
+          if vim.tbl_contains({ "rust-analyzer", "nushell", "laravel_ls" }, tool) then
             goto continue
           end
-          local ok, p = pcall(mr.get_package, tool)
-          if ok then
-            if not p:is_installed() then
+          if tool == "roslyn" then
+            local ok, p = pcall(mr.get_package, "roslyn-unstable")
+            if ok and not p:is_installed() then
+              p:install()
+            end
+          else
+            local ok, p = pcall(mr.get_package, tool)
+            if ok and not p:is_installed() then
               p:install()
             end
           end
