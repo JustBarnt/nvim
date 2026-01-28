@@ -21,6 +21,7 @@ function M.keymaps(ev)
   local client = assert(vim.lsp.get_client_by_id(ev.data.client_id))
   -- Lsp Keymaps
   map.set("n", "K", function() require("hover").open() end, { desc = "Hover", buffer = ev.buf })
+  map.set("n", "gk", function() require("hover").enter() end, { desc = "Enter Hover Float", buffer = ev.buf })
   map.set("n", "gd", "<CMD>Glance definitions<CR>", { desc = "Goto Definition", buffer = ev.buf })
   map.set("n", "gD", function() Snacks.picker.lsp_declarations() end, { desc = "Goto Declaration", buffer = ev.buf })
   map.set("n", "grr", "<CMD>Glance references<CR>", { desc = "Goto References", buffer = ev.buf })
@@ -31,7 +32,7 @@ function M.keymaps(ev)
   map.set("n", "grn", lsp.buf.rename, { desc = "Symbol Rename", buffer = ev.buf })
   map.set("n", "grf", lsp.buf.format, { desc = "Code Format", buffer = ev.buf })
   map.set("n", "grh", lsp.buf.typehierarchy, { desc = "Show Type Hierarchy", buffer = ev.buf })
-  map.set({ "n", "v" }, "gra", lsp.buf.code_action, { desc = "Code Actions", buffer = ev.buf })
+  map.set({ "n", "v" }, "gra", require("tiny-code-action").code_action, { desc = "Code Actions", buffer = ev.buf, silent = true, noremap = true })
 
   -- Rust Lsp Keymaps
   map.set({ "n", "v" }, "gra", function() vim.cmd.RustLsp('codeAction') end, { desc = "Rust Code Actions", lsp = { name = "rust-analyzer" }, buffer = ev.buf })

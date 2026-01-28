@@ -1,6 +1,7 @@
 ---@class utils
 ---@field blink      utils.blink
 ---@field color      utils.color
+---@field git        utils.git
 ---@field lsp        utils.lsp
 ---@field lualine    utils.lualine
 ---@field root       utils.root

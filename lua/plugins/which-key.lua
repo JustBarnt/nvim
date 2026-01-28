@@ -25,7 +25,7 @@ return {
         { "<leader>d",  group = "Delete", },
         { "<leader>f",  group = "Files" },
         { "<leader>g",  group = "Git" },
-        { "<leader>gh", group = "Git Hunks" },
+        { "<leader>h",  group = "Git Hunks" },
         { "<leader>m",  group = "Marks" },
         { "<leader>r",  group = "Rustaceanvim" },
         { "<leader>s",  group = "Search" },
