@@ -8,7 +8,6 @@ return {
         ["clangd"] = "clangd",
         ["cmake-language-server"] = "cmake",
         ["css-lsp"] = "cssls",
-        ["css-variables-language-server"] = "css_variables",
         ["cssmodules-language-server"] = "cssmodules_ls",
         ["emmet-language-server"] = "emmet_language_server",
         ["gopls"] = "gopls",
