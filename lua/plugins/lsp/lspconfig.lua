@@ -2,15 +2,46 @@ return {
   {
     "neovim/nvim-lspconfig",
     lazy = false,
-    config = function()
+    opts_extended = { "lsps" },
+    opts = {
+      lsps = {
+        ["clangd"] = "clangd",
+        ["cmake-language-server"] = "cmake",
+        ["css-lsp"] = "cssls",
+        ["css-variables-language-server"] = "css_variables",
+        ["cssmodules-language-server"] = "cssmodules_ls",
+        ["emmet-language-server"] = "emmet_language_server",
+        ["gopls"] = "gopls",
+        ["html-lsp"] = "html",
+        ["intelephense"] = "intelephense",
+        ["json-lsp"] = "jsonls",
+        ["just-lsp"] = "just",
+        ["laravel_ls"] = "laravel_ls",
+        ["lemminx"] = "lemminx",
+        ["lua-language-server"] = "lua_ls",
+        ["nushell"] = "nushell",
+        ["powershell-editor-services"] = "powershell_es",
+        ["pyrefly"] = "pyrefly",
+        ["roslyn"] = "roslyn_ls",
+        ["ruff"] = "ruff",
+        ["rust-analyzer"] = "rust_analyzer",
+        ["svelte-language-server"] = "svelte",
+        ["tailwindcss-language-server"] = "tailwindcss",
+        ["taplo"] = "taplo",
+        ["tsgo"] = "tsgo",
+        ["vim-language-server"] = "vimls",
+        ["yaml-language-server"] = "yamlls",
+      }
+    },
+    config = function(_, opts)
       -- Blanket apply capabilities to all LSP's
       vim.lsp.config("*", {
         capabilities = Utils.lsp.create_capabilities(),
       })
 
-      for _, v in ipairs(vim.api.nvim_get_runtime_file("after/lsp/*", true)) do
-        local name = vim.fn.fnamemodify(v, ":t:r")
-        vim.lsp.enable(name)
+      for _, lsp in ipairs(vim.tbl_values(opts.lsps)) do
+        ---@type vim.lsp.Config
+        vim.lsp.enable(lsp)
       end
 
       local completion_kinds = vim.lsp.protocol.CompletionItemKind
