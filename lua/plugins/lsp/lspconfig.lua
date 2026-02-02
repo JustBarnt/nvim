@@ -62,6 +62,12 @@ return {
           -- Setup our server capabilities
           Utils.lsp.setup_server_capabilities(client, ev.buf)
           Utils.lsp.keymaps(ev)
+
+          -- Disable LSP SemanticTokens from Powershell_es
+          if client.name == "powershell_es" then
+            client.server_capabilities.semanticTokensProvider = nil
+            client.capabilities.textDocument.semanticTokens = nil
+          end
         end,
       })
 
