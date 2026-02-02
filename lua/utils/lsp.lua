@@ -138,7 +138,7 @@ function M.create_capabilities()
     lineFoldingOnly = true,
   }
 
-  capabilities.textDocument.semanticTokens.multilineTokenSupport = true
+  capabilities.textDocument.semanticTokens = nil
   capabilities.textDocument.completion.completionItem.snippetSupport = true
 
   local ok, blink = pcall(require, "blink.cmp")
