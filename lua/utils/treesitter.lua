@@ -1,6 +1,6 @@
 -- stylua: ingnore start
 local ensure_installed = {
-  "bash", "blade", "c", "c_sharp", "cmake", "cpp",
+  "bash", "blade", "c", "c_sharp", "cmake", "cpp", "ecma",
   "diff", "git_config", "gitcommit", "git_rebase", "gitignore",
   "gitattributes", "go", "gomod", "gosum", "gowork",
   "html", "html_tags", "ini", "javascript", "jsdoc", "json",

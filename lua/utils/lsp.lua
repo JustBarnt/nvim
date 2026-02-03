@@ -20,8 +20,7 @@ end
 function M.keymaps(ev)
   local client = assert(vim.lsp.get_client_by_id(ev.data.client_id))
   -- Lsp Keymaps
-  map.set("n", "K", function() require("hover").open() end, { desc = "Hover", buffer = ev.buf })
-  map.set("n", "gk", function() require("hover").enter() end, { desc = "Enter Hover Float", buffer = ev.buf })
+  map.set("n", "K", vim.lsp.buf.hover, { desc = "Hover", buffer = ev.buf })
   map.set("n", "gd", "<CMD>Glance definitions<CR>", { desc = "Goto Definition", buffer = ev.buf })
   map.set("n", "gD", function() Snacks.picker.lsp_declarations() end, { desc = "Goto Declaration", buffer = ev.buf })
   map.set("n", "grr", "<CMD>Glance references<CR>", { desc = "Goto References", buffer = ev.buf })
