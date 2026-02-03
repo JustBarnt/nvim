@@ -14,6 +14,7 @@ return {
   {
     "nvim-treesitter/nvim-treesitter-textobjects",
     branch = "main",
+    enabled = false,
     opts = {
       move = {
         enable = true,
