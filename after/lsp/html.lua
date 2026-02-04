@@ -5,7 +5,7 @@ return {
     "blade",
     "javascriptreact",
     "typescriptreact",
-    "svelte"
+    -- "svelte"
   },
   root_markers = {"index.html", ".git", "package.json"},
 }
