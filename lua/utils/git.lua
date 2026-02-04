@@ -30,7 +30,7 @@ function M.gitsigns_on_attach(buffer)
     gitsigns.stage_hunk({ vim.fn.line("."), vim.fn.line("v") })
   end, { desc = "Stage Hunk (Visual)", buffer = buffer })
 
-  map("v", "<leader>hs", function()
+  map("v", "<leader>hr", function()
     gitsigns.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
   end, { desc = "Reset Hunk (Visual)", buffer = buffer })
 
