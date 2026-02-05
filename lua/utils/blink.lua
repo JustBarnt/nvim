@@ -3,6 +3,11 @@
 ---@class utils.blink
 local M = {}
 
+---@type blink.cmp.AppearanceConfigPartial
+M.appearance = {
+  kind_icons = Utils.ui.icons.kinds.lsp
+}
+
 ---@type blink.cmp.Fuzzy
 M.fuzzy = { implementation = "prefer_rust" }
 
@@ -37,37 +42,35 @@ M.completion = {
   documentation = {
     auto_show = false,
     auto_show_delay_ms = 200,
-    window = { border = "rounded" },
     treesitter_highlighting = true,
   },
   menu = {
     scrollbar = false,
-    border = "rounded",
     draw = {
       treesitter = { "lsp" },
-      padding = { 1, 1 },
-      columns = { { "label" }, { "kind_icon" }, { "kind" } },
+      padding = { 0, 1 },
+      columns = { { "label", "label_description", gap = 1 }, { "kind", "kind_icon", gap = 1 }, { "source_name", gap = 1 } },
       components = {
-        kind_icon = {
+         kind_icon = {
           text = function(ctx)
-            local kind_icon, _, _ = require('mini.icons').get('lsp', ctx.kind)
-            return kind_icon
-          end,
-          highlight = function(ctx)
-            local _, hl, _ = require("mini.icons").get('lsp', ctx.kind)
-            return hl
+            
           end
-        },
-        kind = {
-          highlight = function(ctx)
-            local _, hl, _ = require("mini.icons").get("lsp", ctx.kind)
-            return hl
+         },
+        source_name = {
+          width = { max = 30 },
+          text = function(ctx)
+            local s_name = ctx.source_name
+            if ctx.item.client_name ~= nil then
+              s_name = ctx.item.client_name
+            end
+            return s_name
           end,
+          highlight = "BlinkCmpSource"
         }
       }
     },
   },
-  ghost_text = { enabled = false },
+  ghost_text = { enabled = true },
   list = {
     selection = {
       auto_insert = function(ctx)

@@ -6,6 +6,7 @@ return {
   ---@module "blink.cmp"
   ---@type blink.cmp.Config
   opts = {
+    appearance = Utils.blink.appearance,
     fuzzy = Utils.blink.fuzzy,
     keymap = Utils.blink.keymap_type,
     cmdline = Utils.blink.cmdline,
