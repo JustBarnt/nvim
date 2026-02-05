@@ -11,115 +11,107 @@ end
 --       vim.o only allows passing simple types like ints, booleans, or string.
 --       vim.opt allows passing rich objects like tables
 
-local options = {
-  -- Clipboard and Mouse
-  clipboard = "unnamedplus",
-  mouse = "a",
+-- Clipboard and Mouse
+vim.o.clipboard = "unnamedplus"
+vim.o.mouse = "a"
 
-  -- Command Line and Messages
-  cmdheight = 1,
-  inccommand = "split",
+-- Command Line and Messages
+vim.o.cmdheight = 1
+vim.o.inccommand = "split"
 
-  -- Completion
-  completeopt = { "menuone", "popup", "noselect" },
-  pumblend = 10,
-  pumheight = 10,
+-- Completion
+vim.o.completeopt = { "menuone", "popup", "noselect" }
+vim.o.pumblend = 10
+vim.o.pumheight = 10
 
-  -- Cursor and Visual Indicators
-  colorcolumn = "120",
-  cursorline = true,
-  guicursor = { "n-v-c:block", "i-ci-ve:hor20", "r-cr:hor20" },
-  list = true,
-  listchars = { space = "⋅", trail = "⋅", tab = "  ↦" },
-  number = true,
-  relativenumber = true,
+-- Cursor and Visual Indicators
+vim.o.colorcolumn = "120"
+vim.o.cursorline = true
+vim.o.guicursor = { "n-v-c:block", "i-ci-ve:hor20", "r-cr:hor20" }
+vim.o.list = true
+vim.o.listchars = { space = "⋅", trail = "⋅", tab = "  ↦" }
+vim.o.number = true
+vim.o.relativenumber = true
 
-  -- Diff
-  diffopt = { "internal", "filler", "closeoff", "algorithm:patience", "indent-heuristic", "linematch:60" },
+-- Diff
+vim.o.diffopt = { "internal", "filler", "closeoff", "algorithm:patience", "indent-heuristic", "linematch:60" }
 
-  -- Folding
-  foldcolumn = "1",
-  foldlevel = 99,
-  foldlevelstart = 99,
+-- Folding
+vim.o.foldcolumn = "1"
+vim.o.foldlevel = 99
+vim.o.foldlevelstart = 99
 
-  -- Formatting
-  fillchars = {
-    diff = "╱",
-    eob = " ",
-    fold = " ",
-    foldclose = Utils.ui.icons.folds.close,
-    foldopen = Utils.ui.icons.folds.open,
-    foldsep = " ",
-  },
+-- Formatting
+vim.opt.fillchars:append({
+  diff = "╱",
+  eob = " ",
+  fold = " ",
+  foldclose = Utils.ui.icons.folds.close,
+  foldopen = Utils.ui.icons.folds.open,
+  foldsep = " ",
+})
+vim.o.formatoptions = "jcroqlnt"
 
-  -- formatexpr = "v:lua.require'helpers.folds'.formatexpr()",
-  formatoptions = "jcroqlnt", -- Instructions to format text
+-- Indentation
+vim.o.cindent = false
+vim.o.cinoptions = { "g2", "h2" }
+vim.o.autoindent = true
+vim.o.expandtab = true
+vim.o.shiftround = true
+vim.o.shiftwidth = 2
+vim.o.smartindent = true
+vim.o.tabstop = 2
 
-  -- Indentation
-  cindent = false,
-  cinoptions = { "g2", "h2" },
-  autoindent = true,
-  expandtab = true,
-  shiftround = true,
-  shiftwidth = 2,
-  smartindent = true,
-  tabstop = 2,
+-- Navigation and Scrolling
+vim.o.jumpoptions = "view"
+vim.o.scrolloff = 4
+vim.o.sidescrolloff = 8
+vim.o.smoothscroll = true
 
-  -- Navigation and Scrolling
-  jumpoptions = "view",
-  scrolloff = 4,
-  sidescrolloff = 8,
-  smoothscroll = true,
+-- Search
+vim.o.grepformat = "%f:%l:%c:%m"
+vim.o.grepprg = "rg --vimgrep --smart-case"
+vim.o.ignorecase = true
+vim.o.smartcase = true
 
-  -- Search
-  grepformat = "%f:%l:%c:%m",
-  grepprg = "rg --vimgrep --smart-case",
-  ignorecase = true,
-  smartcase = true,
+-- Sessions
+vim.o.sessionoptions = { "buffers", "curdir", "tabpages", "winsize", "help", "globals", "skiprtp", "folds" }
 
-  -- Sessions
-  sessionoptions = { "buffers", "curdir", "tabpages", "winsize", "help", "globals", "skiprtp", "folds" },
+-- Spelling
+vim.o.spelllang = { "en" }
 
-  -- Spelling
-  spelllang = { "en" },
+-- Splits and Windows
+vim.o.helpheight = math.ceil((vim.o.lines - 1) * 0.25)
+vim.o.splitbelow = true
+vim.o.splitkeep = "screen"
+vim.o.splitright = true
+vim.o.winminwidth = 5
 
-  -- Splits and Windows
-  helpheight = math.ceil((vim.o.lines - 1) * 0.25),
-  splitbelow = true,
-  splitkeep = "screen",
-  splitright = true,
-  winminwidth = 5,
+-- Text Display
+vim.o.conceallevel = 2
+vim.o.linebreak = true
+vim.o.wrap = false
 
-  -- Text Display
-  conceallevel = 2,
-  linebreak = true,
-  wrap = false,
+-- Timing
+vim.o.timeoutlen = 300
+vim.o.updatetime = 300
 
-  -- Timing
-  timeoutlen = 300,
-  updatetime = 300,
+-- UI and Appearance
+vim.o.laststatus = 3
+vim.o.ruler = false
+vim.o.showmode = false
+vim.o.termguicolors = true
 
-  -- UI and Appearance
-  laststatus = 3,
-  ruler = false,
-  showmode = false,
-  termguicolors = true,
+-- Undo and History
+vim.o.undofile = true
+vim.o.undolevels = 10000
 
-  -- Undo and History
-  undofile = true,
-  undolevels = 10000,
-
-  -- Miscellaneous
-  autowrite = false,
-  maxmempattern = 10000,
-  virtualedit = "block",
-  wildmode = { "longest:full", "full" },
-  wildoptions = { "fuzzy", "pum", "tagfile" },
-}
-
-for k, v in pairs(options) do
-  vim.opt[k] = v
-end
+-- Miscellaneous
+vim.o.autowrite = false
+vim.o.maxmempattern = 10000
+vim.o.virtualedit = "block"
+vim.o.wildmode = { "longest:full", "full" }
+vim.o.wildoptions = { "fuzzy", "pum", "tagfile" }
 
 vim.opt.shortmess:append({ W = true, I = true, c = true, C = true })
 vim.opt.isfname:append("@-@")
@@ -132,5 +124,5 @@ vim.opt.breakindent = vim.o.wrap and true or false
 if vim.fn.has "nvim-0.12" == 1 then
   vim.o.winborder = "rounded"
   vim.o.diffopt = "internal,filler,closeoff,algorithm:patience,indent-heuristic,inline:char,linematch:40"
-  table.insert(vim.opt.fillchars, { foldinner = " " })
+  vim.opt.fillchars:append({ foldinner = " " })
 end
