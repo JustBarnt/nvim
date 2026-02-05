@@ -34,6 +34,8 @@ M.cmdline = {
   },
 }
 
+local run_once = false
+
 ---@type blink.cmp.CompletionConfigPartial
 M.completion = {
   accept = {
@@ -48,14 +50,9 @@ M.completion = {
     scrollbar = false,
     draw = {
       treesitter = { "lsp" },
-      padding = { 0, 1 },
-      columns = { { "label", "label_description", gap = 1 }, { "kind", "kind_icon", gap = 1 }, { "source_name", gap = 1 } },
+      padding = { 1, 1 },
+      columns = { { "kind_icon", gap = 1 }, { "label", "kind", gap = 1 }, { "source_name" } },
       components = {
-         kind_icon = {
-          text = function(ctx)
-            
-          end
-         },
         source_name = {
           width = { max = 30 },
           text = function(ctx)
@@ -87,7 +84,7 @@ M.completion = {
 M.signature = {
   enabled = true,
   window = {
-    show_documentation = false 
+    show_documentation = false
   },
 }
 
@@ -125,5 +122,5 @@ M.sources = {
     }
   },
 }
-  
+
 return M
