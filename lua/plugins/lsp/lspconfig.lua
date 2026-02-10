@@ -27,7 +27,8 @@ return {
         ["svelte-language-server"] = "svelte",
         ["tailwindcss-language-server"] = "tailwindcss",
         ["taplo"] = "taplo",
-        ["tsgo"] = "tsgo",
+        -- ["tsgo"] = "tsgo",
+        ["vtsls"] = "vtsls",
         ["vim-language-server"] = "vimls",
         ["yaml-language-server"] = "yamlls",
       }
