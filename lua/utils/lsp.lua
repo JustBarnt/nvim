@@ -29,7 +29,7 @@ function M.keymaps(ev)
   map.set("n", "gri", "<CMD>Glance implementations<CR>", { desc = "Goto Implementation", buffer = ev.buf })
   map.set("i", "<C-s>", lsp.buf.signature_help, { desc = "Signature Helper", buffer = ev.buf })
   map.set("n", "grn", lsp.buf.rename, { desc = "Symbol Rename", buffer = ev.buf })
-  map.set("n", "grf", lsp.buf.format, { desc = "Code Format", buffer = ev.buf })
+  map.set("n", "grf", function() require("conform").format( { bufnr = ev.buf } ) end, { desc = "Code Format", buffer = ev.buf })
   map.set("n", "grh", lsp.buf.typehierarchy, { desc = "Show Type Hierarchy", buffer = ev.buf })
   map.set({ "n", "v" }, "gra", require("tiny-code-action").code_action, { desc = "Code Actions", buffer = ev.buf, silent = true, noremap = true })
 
