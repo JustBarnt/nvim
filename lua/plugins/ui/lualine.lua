@@ -24,8 +24,8 @@ return {
 
       local opts = {
         options = {
-          component_separators = { left = '', right = '' },
-          section_separators = { left = '', right = '' },
+          component_separators = { left = "", right = "" },
+          section_separators = { left = "", right = "" },
           globalstatus = vim.o.laststatus == 3,
           disabled_filetypes = { statusline = { "snacks_dashboard" } },
         },
@@ -42,17 +42,17 @@ return {
             triforce.session_time,
           },
           lualine_y = {
-            Utils.lualine.components.lsp_status
+            Utils.lualine.components.lsp_status,
           },
           lualine_z = {
             { "progress", separator = "", padding = { left = 0, right = 1 } },
-            { "location", separator = "", padding = { left = 0, right = 1 }  },
+            { "location", separator = "", padding = { left = 0, right = 1 } },
             {
               function()
                 return " " .. os.date("%R")
               end,
               separator = "",
-              padding = { left = 0, right = 0 } 
+              padding = { left = 0, right = 0 },
             },
           },
         },
