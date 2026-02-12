@@ -18,73 +18,47 @@ return {
       local lualine_require = require("lualine_require")
       lualine_require.require = require
 
+      local triforce = require("triforce.lualine").components()
       local icons = Utils.ui.icons
       vim.o.laststatus = vim.g.lualine_laststatus
 
       local opts = {
         options = {
-          theme = "onedark",
+          component_separators = { left = '', right = '' },
+          section_separators = { left = '', right = '' },
           globalstatus = vim.o.laststatus == 3,
           disabled_filetypes = { statusline = { "snacks_dashboard" } },
         },
         sections = {
           lualine_a = { "mode" },
-          lualine_b = { "branch" },
+          lualine_b = { "branch", Utils.lualine.components.diffs, Utils.lualine.components.diags },
           lualine_c = {
-            Utils.lualine.root_dir(),
-            {
-              "diagnostics",
-              symbols = {
-                error = Utils.ui.icons.diagnostics.Error,
-                warn  = Utils.ui.icons.diagnostics.Warn,
-                info  = Utils.ui.icons.diagnostics.Info,
-                hint  = Utils.ui.icons.diagnostics.Hint,
-              },
-            },
-            { "filetype",                 icon_only = true, separator = "", padding = { left = 1, right = 0 } },
-            { Utils.lualine.pretty_path() },
+            Utils.lualine.components.filename,
+            { "filetype", icon_only = true, separator = "" },
           },
 
           lualine_x = {
-            Snacks.profiler.status(),
-            -- stylua: ignore
-            {
-              require("lazy.status").updates,
-              cond = require("lazy.status").has_updates,
-              color = function() return { fg = Utils.color.hl_to_hex("Special") } end,
-            },
-            {
-              "diff",
-              symbols = {
-                added = Utils.ui.icons.git.added,
-                modified = Utils.ui.icons.git.modified,
-                removed = Utils.ui.icons.git.removed,
-              },
-              source = function()
-                local gitsigns = vim.b.gitsigns_status_dict
-                if gitsigns then
-                  return {
-                    added = gitsigns.added,
-                    modified = gitsigns.changed,
-                    removed = gitsigns.removed,
-                  }
-                end
-              end,
-            },
+            { triforce.level, separator = "" },
+            triforce.session_time,
           },
           lualine_y = {
-            { "progress", separator = " ",                  padding = { left = 1, right = 0 } },
-            { "location", padding = { left = 0, right = 1 } },
+            Utils.lualine.components.lsp_status
           },
           lualine_z = {
-            function()
-              return " " .. os.date("%R")
-            end,
+            { "progress", separator = "", padding = { left = 0, right = 1 } },
+            { "location", separator = "", padding = { left = 0, right = 1 }  },
+            {
+              function()
+                return " " .. os.date("%R")
+              end,
+              separator = "",
+              padding = { left = 0, right = 0 } 
+            },
           },
         },
         extensions = { "lazy", "neo-tree" },
       }
       return opts
     end,
-  }
+  },
 }

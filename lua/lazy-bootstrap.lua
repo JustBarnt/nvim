@@ -34,7 +34,7 @@ require("lazy").setup {
   },
   rocks = { enabled = false },
   local_spec = true,
-  install = { colorscheme = { "onedark_vivid", "habamax" } },
+  install = { colorscheme = { "onedark", "habamax" } },
   checker = { enabled = true, notify = false },
   performance = {
     rtp = {
@@ -62,7 +62,7 @@ _G.LazyUtil = require("lazy.core.util")
 -- from: https://github.com/LazyVim/LazyVim/blob/c64a61734fc9d45470a72603395c02137802bc6f/lua/lazyvim/util/root.lua
 Utils.root.setup()
 
-vim.cmd.colorscheme("onedark_vivid")
+vim.cmd.colorscheme("onedark")
 
 -- Load our filetype additions
 require("filetypes").setup()

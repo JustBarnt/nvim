@@ -21,7 +21,7 @@ return {
       {
         mode = { "n", "v" },
         { "<leader>b",  group = "Buffer", expand = function() return require("which-key.extras").expand.buf() end },
-        { "<leader>c",  group = "Code" },
+        { "<leader>c",  group = "Code/Comment-Box" },
         { "<leader>d",  group = "Delete", },
         { "<leader>f",  group = "Files" },
         { "<leader>g",  group = "Git" },

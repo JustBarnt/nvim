@@ -71,9 +71,6 @@ return {
           end
         end,
       })
-
-      -- TODO: Renable this- it has moved to Utils.lsp.progress()
-      Utils.lsp.progress()
     end,
   },
 }
