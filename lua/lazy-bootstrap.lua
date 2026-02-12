@@ -73,7 +73,6 @@ require("user.diagnostics")
 require("user.commands")
 require("user.keys")
 require("user.options")
-require("breadcrumbs")
 
 -- TODO: Move to a plugin
 require("filetypes.ft-commands")
