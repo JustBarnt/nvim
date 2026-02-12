@@ -34,6 +34,7 @@ return {
       }
     },
     config = function(_, opts)
+      Utils.lsp.init()
       -- Blanket apply capabilities to all LSP's
       vim.lsp.config("*", {
         capabilities = Utils.lsp.create_capabilities(),

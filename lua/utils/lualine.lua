@@ -50,7 +50,7 @@ M.components = {
     symbols = {
       spinner = { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" },
       done = "✓",
-      separator = "",
+      separator = " ",
     },
     show_name = true,
   },
