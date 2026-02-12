@@ -52,6 +52,7 @@ M.components = {
       done = "✓",
       separator = " ",
     },
+    ignore_lsp = { "cssmodules_ls", "emmet_language_server", "just", "html" },
     show_name = true,
   },
 }
