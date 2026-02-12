@@ -10,7 +10,7 @@ return {
       xp_rewards = {
         char = 0.5,
         line = 1,
-        save = 100,
+        save = 50,
       },
     },
     config = function(_, opts)
