@@ -40,14 +40,14 @@ opt.signcolumn = "yes"
 opt.diffopt = { "internal", "filler", "closeoff", "algorithm:patience", "indent-heuristic", "linematch:60" }
 
 -- Folding
-vim.opt.fillchars:append({
+vim.opt.fillchars = {
+  foldopen = "󰅀",
+  foldclose = "󰅂", 
+  fold = " ",
+  foldsep = " ",
   diff = "╱",
   eob = " ",
-  fold = " ",
-  foldclose = Utils.ui.icons.folds.close,
-  foldopen = Utils.ui.icons.folds.open,
-  foldsep = " ",
-})
+}
 opt.foldlevel = 99
 opt.foldmethod = "indent"
 opt.foldtext = ""

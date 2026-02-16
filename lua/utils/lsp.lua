@@ -23,89 +23,42 @@ end
 function M.keymaps(ev)
   local client = assert(vim.lsp.get_client_by_id(ev.data.client_id))
   -- Lsp Keymaps
+  -- stylua: ignore start
   map.set("n", "K", vim.lsp.buf.hover, { desc = "Hover", buffer = ev.buf })
   map.set("n", "gd", "<CMD>Glance definitions<CR>", { desc = "Goto Definition", buffer = ev.buf })
-  map.set("n", "gD", function()
-    Snacks.picker.lsp_declarations()
-  end, { desc = "Goto Declaration", buffer = ev.buf })
+  map.set("n", "gD", function() Snacks.picker.lsp_declarations() end, { desc = "Goto Declaration", buffer = ev.buf })
   map.set("n", "grr", "<CMD>Glance references<CR>", { desc = "Goto References", buffer = ev.buf })
   map.set("n", "grt", "<CMD>Glance type_definitions<CR>", { desc = "Goto Type Definition", buffer = ev.buf })
   map.set("n", "grs", "<CMD>Trouble symbols toggle focus=false<CR>", { desc = "Document Symbols", buffer = ev.buf })
   map.set("n", "gri", "<CMD>Glance implementations<CR>", { desc = "Goto Implementation", buffer = ev.buf })
   map.set("i", "<C-s>", lsp.buf.signature_help, { desc = "Signature Helper", buffer = ev.buf })
   map.set("n", "grn", lsp.buf.rename, { desc = "Symbol Rename", buffer = ev.buf })
-  map.set("n", "grf", function()
-    require("conform").format { bufnr = ev.buf }
-  end, { desc = "Code Format", buffer = ev.buf })
+  map.set("n", "grf", function() require("conform").format( { bufnr = ev.buf } ) end, { desc = "Code Format", buffer = ev.buf })
   map.set("n", "grh", lsp.buf.typehierarchy, { desc = "Show Type Hierarchy", buffer = ev.buf })
-  map.set(
-    { "n", "v" },
-    "gra",
-    require("tiny-code-action").code_action,
-    { desc = "Code Actions", buffer = ev.buf, silent = true, noremap = true }
-  )
+  map.set({ "n", "v" }, "gra", require("tiny-code-action").code_action, { desc = "Code Actions", buffer = ev.buf, silent = true, noremap = true })
 
   -- Rust Lsp Keymaps
-  map.set({ "n", "v" }, "gra", function()
-    vim.cmd.RustLsp("codeAction")
-  end, { desc = "Rust Code Actions", lsp = { name = "rust-analyzer" }, buffer = ev.buf })
-  map.set("n", "K", function()
-    vim.cmd.RustLsp { "hover", "actions" }
-  end, { desc = "Rust Hover", lsp = { name = "rust-analyzer" }, buffer = ev.buf })
-  map.set("n", "<leader>rr", function()
-    vim.cmd.RustLsp("runnables")
-  end, { desc = "Show All Runnables", lsp = { name = "rust-analyzer" }, buffer = ev.buf })
-  map.set("n", "<leader>rR", function()
-    vim.cmd.RustLsp { "runnables", bang = true }
-  end, { desc = "Rerun Last Runnable", lsp = { name = "rust-analyzer" }, buffer = ev.buf })
-  map.set("n", "<leader>run", function()
-    vim.cmd.RustLsp("run")
-  end, { desc = "Run (Current Position)", lsp = { name = "rust-analyzer" }, buffer = ev.buf })
-  map.set("n", "<leader>rd", function()
-    vim.cmd.RustLsp("debuggables")
-  end, { desc = "Debuggables", lsp = { name = "rust-analyzer" }, buffer = ev.buf })
-  map.set("n", "<leader>rD", function()
-    vim.cmd.RustLsp { "debuggables", bang = true }
-  end, { desc = "Rerun Last Debuggable", lsp = { name = "rust-analyzer" }, buffer = ev.buf })
-  map.set("n", "<leader>dbg", function()
-    vim.cmd.RustLsp("debug")
-  end, { desc = "Debug (current context)", lsp = { name = "rust-analyzer" }, buffer = ev.buf })
-  map.set("n", "<leader>rt", function()
-    vim.cmd.RustLsp("testables")
-  end, { desc = "Testables", lsp = { name = "rust-analyzer" }, buffer = ev.buf })
-  map.set("n", "<leader>rT", function()
-    vim.cmd.RustLsp { "testables", bang = true }
-  end, { desc = "Rerun Last Testable", lsp = { name = "rust-analyzer" }, buffer = ev.buf })
-  map.set("n", "<leader>re", function()
-    vim.cmd.RustLsp("explainError")
-  end, { desc = "Explain Error", lsp = { name = "rust-analyzer" }, buffer = ev.buf })
-  map.set("n", "<leader>rec", function()
-    vim.cmd.RustLsp { "explainError", "cycle" }
-  end, { desc = "Explain Error (cycle)", lsp = { name = "rust-analyzer" }, buffer = ev.buf })
-  map.set("n", "<leader>rep", function()
-    vim.cmd.RustLsp { "explainError", "cycle_prev" }
-  end, { desc = "Explain Error (prev)", lsp = { name = "rust-analyzer" }, buffer = ev.buf })
-  map.set("n", "<leader>rc", function()
-    vim.cmd.RustLsp("openCargo")
-  end, { desc = "Open Cargo.toml", lsp = { name = "rust-analyzer" }, buffer = ev.buf })
-  map.set("n", "J", function()
-    vim.cmd.RustLsp("joinLines")
-  end, { desc = "Join Lines", lsp = { name = "rust-analyzer" }, buffer = ev.buf })
-  map.set("n", "<leader>rs", function()
-    vim.cmd.RustLsp("syntaxTree")
-  end, { desc = "Syntax Tree", lsp = { name = "rust-analyzer" }, buffer = ev.buf })
-  map.set("n", "<leader>rw", function()
-    vim.cmd.RustLsp("reloadWorkspace")
-  end, { desc = "Reload Workspace", lsp = { name = "rust-analyzer" }, buffer = ev.buf })
-  map.set("n", "<leader>rsr", function()
-    vim.cmd.RustLsp("ssr")
-  end, { desc = "Structural Search Replace", lsp = { name = "rust-analyzer" }, buffer = ev.buf })
-  map.set("n", "<leader>rws", function()
-    vim.cmd.RustLsp("workspaceSymbol")
-  end, { desc = "Workspace Symbol", lsp = { name = "rust-analyzer" }, buffer = ev.buf })
-  map.set("n", "<leader>rrd", function()
-    vim.cmd.RustLsp("relatedDiagnostics")
-  end, { desc = "Related Diagnostics", lsp = { name = "rust-analyzer" }, buffer = ev.buf })
+  map.set({ "n", "v" }, "gra", function() vim.cmd.RustLsp('codeAction') end, { desc = "Rust Code Actions", lsp = { name = "rust-analyzer" }, buffer = ev.buf })
+  map.set("n", "K", function() vim.cmd.RustLsp({ 'hover', 'actions' }) end, { desc = "Rust Hover", lsp = { name = "rust-analyzer" }, buffer = ev.buf })
+  map.set("n", "<leader>rr", function() vim.cmd.RustLsp('runnables') end, { desc = "Show All Runnables", lsp = { name = "rust-analyzer" }, buffer = ev.buf })
+  map.set("n", "<leader>rR", function() vim.cmd.RustLsp({ 'runnables', bang = true }) end, { desc = "Rerun Last Runnable", lsp = { name = "rust-analyzer" }, buffer = ev.buf })
+  map.set("n", "<leader>run", function() vim.cmd.RustLsp('run') end, { desc = "Run (Current Position)", lsp = { name = "rust-analyzer" }, buffer = ev.buf })
+  map.set("n", "<leader>rd", function() vim.cmd.RustLsp('debuggables') end, { desc = "Debuggables", lsp = { name = "rust-analyzer" }, buffer = ev.buf })
+  map.set("n", "<leader>rD", function() vim.cmd.RustLsp({ 'debuggables', bang = true }) end, { desc = "Rerun Last Debuggable", lsp = { name = "rust-analyzer" }, buffer = ev.buf })
+  map.set("n", "<leader>dbg", function() vim.cmd.RustLsp('debug') end, { desc = "Debug (current context)", lsp = { name = "rust-analyzer" }, buffer = ev.buf })
+  map.set("n", "<leader>rt", function() vim.cmd.RustLsp('testables') end, { desc = "Testables", lsp = { name = "rust-analyzer" }, buffer = ev.buf })
+  map.set("n", "<leader>rT", function() vim.cmd.RustLsp({ 'testables', bang = true }) end, { desc = "Rerun Last Testable", lsp = { name = "rust-analyzer" }, buffer = ev.buf })
+  map.set("n", "<leader>re", function() vim.cmd.RustLsp('explainError') end, { desc = "Explain Error", lsp = { name = "rust-analyzer" }, buffer = ev.buf })
+  map.set("n", "<leader>rec", function() vim.cmd.RustLsp({ 'explainError', 'cycle' }) end, { desc = "Explain Error (cycle)", lsp = { name = "rust-analyzer" }, buffer = ev.buf })
+  map.set("n", "<leader>rep", function() vim.cmd.RustLsp({ 'explainError', 'cycle_prev' }) end, { desc = "Explain Error (prev)", lsp = { name = "rust-analyzer" }, buffer = ev.buf })
+  map.set("n", "<leader>rc", function() vim.cmd.RustLsp('openCargo') end, { desc = "Open Cargo.toml", lsp = { name = "rust-analyzer" }, buffer = ev.buf })
+  map.set("n", "J", function() vim.cmd.RustLsp('joinLines') end, { desc = "Join Lines", lsp = { name = "rust-analyzer" }, buffer = ev.buf })
+  map.set("n", "<leader>rs", function() vim.cmd.RustLsp('syntaxTree') end, { desc = "Syntax Tree", lsp = { name = "rust-analyzer" }, buffer = ev.buf })
+  map.set("n", "<leader>rw", function() vim.cmd.RustLsp('reloadWorkspace') end, { desc = "Reload Workspace", lsp = { name = "rust-analyzer" }, buffer = ev.buf })
+  map.set("n", "<leader>rsr", function() vim.cmd.RustLsp('ssr') end, { desc = "Structural Search Replace", lsp = { name = "rust-analyzer" }, buffer = ev.buf })
+  map.set("n", "<leader>rws", function() vim.cmd.RustLsp('workspaceSymbol') end, { desc = "Workspace Symbol", lsp = { name = "rust-analyzer" }, buffer = ev.buf })
+  map.set("n", "<leader>rrd", function() vim.cmd.RustLsp('relatedDiagnostics') end, { desc = "Related Diagnostics", lsp = { name = "rust-analyzer" }, buffer = ev.buf })
+  -- stylua: ignore end
 end
 
 -- Capability-based actions
@@ -128,7 +81,7 @@ local capability_actions = {
   end,
 
   codeLensProvider = function(client, buf)
-    local ok = pcall(vim.lsp.codelens.refresh)
+    local ok = pcall(vim.lsp.codelens.enable, true, { bufnr = buf })
     if not ok then
       vim.notify(("Client `%s` does not support `codelens`"):format(client.name), vim.log.levels.INFO)
     end
