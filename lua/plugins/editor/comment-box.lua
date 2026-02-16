@@ -2,6 +2,12 @@ return {
   "LudoPinelli/comment-box.nvim",
   cmd = {
     "CBcatalog",
+    "CBllbox",
+    "CBllline",
+    "CBline",
+    "CBalbox15",
+    "CBd",
+    "CBy"
   },
   keys = {
     { "<leader>cbb", "<CMD>CBllbox<CR>", desc = "Comment Box" },
