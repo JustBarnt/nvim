@@ -95,7 +95,7 @@ return {
     statuscolumn = {
       left = { "mark", "sign" },
       right = { "fold", "git" },
-      folds = { open = true, git_hl = true },
+      folds = { open = true, git_hl = false },
       git = { patterns = { "GitSign", "MiniDiffSign" } },
       refresh = 50
     },
