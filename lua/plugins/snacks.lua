@@ -92,7 +92,13 @@ return {
     quickfile = { enabled = true }, -- When doing `nvim <filename>` load it as quickly as possible before loading plugins
     rename = { enabled = true },
     scroll = { enabled = true },
-    statuscolumn = { enabled = true },
+    statuscolumn = {
+      left = { "mark", "sign" },
+      right = { "fold", "git" },
+      folds = { open = true, git_hl = true },
+      git = { patterns = { "GitSign", "MiniDiffSign" } },
+      refresh = 50
+    },
     terminal = {
       win = {
         keys = {
