@@ -48,7 +48,7 @@ vim.opt.fillchars = {
   diff = "╱",
   eob = " ",
 }
-opt.foldlevel = 99
+opt.foldlevel = 9999
 opt.foldmethod = "indent"
 opt.foldtext = ""
 
