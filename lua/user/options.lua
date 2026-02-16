@@ -41,7 +41,7 @@ opt.diffopt = { "internal", "filler", "closeoff", "algorithm:patience", "indent-
 
 -- Folding
 vim.opt.fillchars = {
-  foldopen = "",
+  foldopen = "",
   foldclose = "", 
   fold = " ",
   foldsep = " ",
