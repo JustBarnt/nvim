@@ -3,8 +3,8 @@ local M = {}
 
 M.icons = {
   folds = {
-    open = "",
-    close = ""
+    open = "󰅀",
+    close = "󰅂"
   },
   misc = {
     lsp = "󱁜 ",

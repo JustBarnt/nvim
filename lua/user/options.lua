@@ -34,16 +34,12 @@ opt.list = true
 opt.listchars = { space = "⋅", trail = "⋅", tab = "  ↦" }
 opt.number = true
 opt.relativenumber = true
+opt.signcolumn = "yes"
 
 -- Diff
 opt.diffopt = { "internal", "filler", "closeoff", "algorithm:patience", "indent-heuristic", "linematch:60" }
 
 -- Folding
-opt.foldcolumn = "1"
-opt.foldlevel = 99
-opt.foldlevelstart = 99
-
--- Formatting
 vim.opt.fillchars:append({
   diff = "╱",
   eob = " ",
@@ -52,6 +48,11 @@ vim.opt.fillchars:append({
   foldopen = Utils.ui.icons.folds.open,
   foldsep = " ",
 })
+opt.foldlevel = 99
+opt.foldmethod = "indent"
+opt.foldtext = ""
+
+-- Formatting
 opt.formatoptions = "jcroqlnt"
 
 -- Indentation
@@ -126,5 +127,4 @@ opt.breakindent = opt.wrap and true or false
 if vim.fn.has "nvim-0.12" == 1 then
   opt.winborder = "rounded"
   opt.diffopt = "internal,filler,closeoff,algorithm:patience,indent-heuristic,inline:char,linematch:40"
-  opt.fillchars:append({ foldinner = " " })
 end

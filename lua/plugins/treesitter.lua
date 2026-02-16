@@ -2,19 +2,71 @@ return {
   {
     'nvim-treesitter/nvim-treesitter',
     branch = 'main',
-    build = ':TSUpdate',
-    lazy = false,
-    init = function()
-      Utils.treesitter.initialize()
+    build = function()
+      local TS = require("nvim-treesitter")
+      TS.update(nil, { summary = true })
     end,
-    config = function()
-      require('nvim-treesitter').setup()
+    event = "VeryLazy",
+    cmd = { "TSUpdate", "TSInstall", "TSLog", "TSUninstall" },
+    opts_extend = { "esnure_installed" },
+    opts = {
+      -- stylua: ingnore start
+      ensure_installed = {
+        "bash", "blade", "c", "c_sharp", "cmake", "cpp",
+        "diff", "git_config", "gitcommit", "git_rebase", "gitignore",
+        "gitattributes", "go", "gomod", "gosum", "gowork",
+        "html", "html_tags", "ini", "javascript", "jsdoc", "json",
+        "json5", "just", "lua", "luadoc",
+        "luap", "markdown", "markdown_inline", "nu",
+        "powershell", "prisma", "php", "printf", "query",
+        "regex", "rust", "scheme", "sql", "svelte", "toml",
+        "tsx", "typescript", "vim", "vimdoc", "xml", "yaml",
+      }
+      -- stylua: ingnore end
+    },
+    config = function(_, opts)
+      local TS = require('nvim-treesitter')
+      TS.setup(opts)
+
+      Utils.treesitter.get_installed(true)
+
+      local install = vim.tbl_filter(function(lang)
+        return not Utils.treesitter.have(lang)
+      end, opts.ensure_installed or {})
+
+      if #install > 0 then
+        TS.install(install, { summary = true }):await(function()
+          Utils.treesitter.get_installed(true)
+        end)
+      end
+
+      vim.api.nvim_create_autocmd("FileType", {
+        group = vim.api.nvim_create_augroup("barnt/treesitter", { clear = true }),
+        callback = function(ev)
+          local ft, lang = ev.match, vim.treesitter.language.get_lang(ev.match)
+          if not Utils.treesitter.have(ft) then
+            return
+          end
+
+          if Utils.treesitter.have(ft, "highlights") then
+            pcall(vim.treesitter.start, ev.buf)
+          end
+
+          if Utils.treesitter.have(ft, "indents") then
+            vim.api.nvim_set_option_value("indentexpr", "v:lua.Utils.treesitter.indentexpr()", { scope = "local" })
+          end
+
+          if Utils.treesitter.have(ft, "folds") then
+            vim.api.nvim_set_option_value("foldmethod", "expr", { scope = "local" })
+            vim.api.nvim_set_option_value("foldexpr", "v:lua.Utils.treesitter.foldexpr()", { scope = "local" })
+          end
+        end
+      })
     end,
   },
   {
     "nvim-treesitter/nvim-treesitter-textobjects",
     branch = "main",
-    enabled = false,
     opts = {
       move = {
         enable = true,

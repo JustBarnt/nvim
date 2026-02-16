@@ -1,86 +1,55 @@
--- stylua: ingnore start
-local ensure_installed = {
-  "bash", "blade", "c", "c_sharp", "cmake", "cpp",
-  "diff", "git_config", "gitcommit", "git_rebase", "gitignore",
-  "gitattributes", "go", "gomod", "gosum", "gowork",
-  "html", "html_tags", "ini", "javascript", "jsdoc", "json",
-  "json5", "just", "lua", "luadoc",
-  "luap", "markdown", "markdown_inline", "nu",
-  "powershell", "prisma", "php", "printf", "query",
-  "regex", "rust", "scheme", "sql", "svelte", "toml",
-  "tsx", "typescript", "vim", "vimdoc", "xml", "yaml",
-}
--- stylua: ingnore end
-
 ---@class utils.treesitter
 local M = {}
 
----@param value string|number|nil Either the direct filetype, bufnr if known, or nil to automatically figure it out
----@return string
-function M.get_lang(value)
-  value = value or vim.api.nvim_get_current_buf()
-  local ft = type(value) == 'number' and vim.bo[value].filetype or value --[[@as string]]
-  local lang = vim.treesitter.language.get_lang(ft) or ""
-  return lang
+M._installed = nil ---@type table<string, boolean>?
+M._queries = {} ---@type table<string, boolean>
+
+---@param update boolean?
+function M.get_installed(update)
+  if update then
+    M._installed, M._queries = {}, {}
+    for _, lang in ipairs(require("nvim-treesitter").get_installed("parsers")) do
+      M._installed[lang] = true
+    end
+  end
+  return M._installed or {}
 end
 
---- Returns if the given lang has the specified query
----@param lang string  The language to check
----@param query string Query to check for
+---@param lang string
+---@param query string
 ---@return boolean
 function M.have_query(lang, query)
-  return vim.treesitter.query.get(lang, query) ~= nil
+  local key = lang .. ":" .. query
+  if M._queries[key] == nil then
+    M._queries[key] = vim.treesitter.query.get(lang, query) ~= nil
+  end
+  return M._queries[key]
 end
 
---- Uses treesitters `foldexpr` if available
+---@param what string|number|nil
+---@param query? string
+---@overload fun(buf?: number): boolean
+---@overload fun(ft:string): boolean
+---@return boolean 
+function M.have(what, query)
+  what = what or vim.api.nvim_get_current_buf()
+  what = type(what) == "number" and vim.bo[what].filetype or what --[[@as string]]
+  local lang = vim.treesitter.language.get_lang(what)
+  if lang == nil or M.get_installed()[lang] == nil then
+    return false
+  end
+  if query and not M.have_query(lang, query) then
+    return false
+  end
+  return true
+end
+
 function M.foldexpr()
-  local has_folds = M.have_query(M.get_lang(), "folds")
-  if has_folds then
-    vim.wo.foldexpr = vim.treesitter.foldexpr()
-    vim.wo.foldmethod = 'expr'
-  end
+  return M.have(nil, "folds") and vim.treesitter.foldexpr() or "0"
 end
 
---- Uses Treesitter `indentexpr` if available
----@param buf integer Buffer number
-function M.indentexpr(buf)
-  local has_indents =  M.have_query(M.get_lang(), "indents")
-
-  if has_indents then
-   vim.bo[buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
-  end
-end
-
-function M.initialize()
-  local isnt_installed = function(lang) return #vim.api.nvim_get_runtime_file('parser/' .. lang .. '.*', false) == 0 end
-  local to_install = vim.tbl_filter(isnt_installed, ensure_installed)
-
-  if #to_install > 0 then
-    if vim.g.debug then
-      for _, p in ipairs(to_install) do
-        vim.notify(("Installing %s parser"):format(p), vim.log.levels.INFO, { title = "Treesitter Install"} )
-      end
-    end
-    require("nvim-treesitter").install(to_install)
-  end
-
-  local filetypes = {}
-  for _, lang in ipairs(ensure_installed) do
-    for _, ft in ipairs(vim.treesitter.language.get_filetypes(lang)) do
-      table.insert(filetypes, ft)
-    end
-  end
-
-  vim.api.nvim_create_autocmd('FileType', {
-    desc = 'Start Treesitter',
-    group = vim.api.nvim_create_augroup('barnt/start_treesitter', { clear = true }),
-    pattern = filetypes,
-    callback = function(ev)
-      vim.treesitter.start(ev.buf)
-      M.foldexpr()
-      M.indentexpr(ev.buf)
-    end
-  })
+function M.indentexpr()
+  return M.have(nil, "indents") and require("nvim-treesitter").indentexpr() or -1
 end
 
 return M
