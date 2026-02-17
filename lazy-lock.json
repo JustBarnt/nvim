@@ -4,7 +4,7 @@
   "blink.download": { "branch": "main", "commit": "86361b98f3c8317904a08e3bd12cf3cdcbe3e925" },
   "blink.indent": { "branch": "main", "commit": "9c80820ca77218a8d28e70075d6f44a1609911fe" },
   "blink.pairs": { "branch": "main", "commit": "5a34bf6ea72340a70083548e186d745ac4882899" },
-  "buffer-sticks.nvim": { "branch": "main", "commit": "41c63057faa9303b0e415701eb8d5b52f9ed044c" },
+  "buffer-sticks.nvim": { "branch": "main", "commit": "c4ed6a6b9a2b060c3f1bf873e88eb25460e11309" },
   "codediff.nvim": { "branch": "main", "commit": "7e5cda21dab96901cbc4bf3b15828aa8c7b490a7" },
   "codedocs.nvim": { "branch": "main", "commit": "18b4b9eea36a920070d3100ad9b611dce2b041a9" },
   "comment-box.nvim": { "branch": "main", "commit": "06bb771690bc9df0763d14769b779062d8f12bc5" },

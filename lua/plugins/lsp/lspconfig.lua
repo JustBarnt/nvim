@@ -10,6 +10,7 @@ return {
         ["css-lsp"] = "cssls",
         ["cssmodules-language-server"] = "cssmodules_ls",
         ["emmet-language-server"] = "emmet_language_server",
+        ["eslint-lsp"] = "eslint",
         ["gopls"] = "gopls",
         ["html-lsp"] = "html",
         ["intelephense"] = "intelephense",
