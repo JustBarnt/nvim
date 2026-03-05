@@ -12,14 +12,14 @@ return {
     opts = {
       -- stylua: ingnore start
       ensure_installed = {
-        "bash", "blade", "c", "c_sharp", "cmake", "cpp",
+        "bash", "blade", "c", "c_sharp", "cmake", "cpp", "css",
         "diff", "git_config", "gitcommit", "git_rebase", "gitignore",
         "gitattributes", "go", "gomod", "gosum", "gowork",
         "html", "html_tags", "ini", "javascript", "jsdoc", "json",
         "json5", "just", "lua", "luadoc",
         "luap", "markdown", "markdown_inline", "nu",
         "powershell", "prisma", "php", "printf", "query",
-        "regex", "rust", "scheme", "sql", "svelte", "toml",
+        "regex", "rust", "scheme", "scss", "sql", "svelte", "toml",
         "tsx", "typescript", "vim", "vimdoc", "xml", "yaml",
       }
       -- stylua: ingnore end
