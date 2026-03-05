@@ -62,8 +62,6 @@ _G.LazyUtil = require("lazy.core.util")
 -- from: https://github.com/LazyVim/LazyVim/blob/c64a61734fc9d45470a72603395c02137802bc6f/lua/lazyvim/util/root.lua
 Utils.root.setup()
 
-vim.cmd.colorscheme("onedark")
-
 -- Load our filetype additions
 require("filetypes").setup()
 
