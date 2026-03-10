@@ -67,7 +67,7 @@ M.completion = {
       }
     },
   },
-  ghost_text = { enabled = true },
+  ghost_text = { enabled = false },
   list = {
     selection = {
       auto_insert = function(ctx)
