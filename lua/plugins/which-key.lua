@@ -20,9 +20,9 @@ return {
     spec = {
       {
         mode = { "n", "v" },
-        { "<leader>b",  group = "Buffer", expand = function() return require("which-key.extras").expand.buf() end },
+        { "<leader>b",  group = "Buffer/Breakpoints (Debugging)" },
         { "<leader>c",  group = "Code/Comment-Box" },
-        { "<leader>d",  group = "Delete", },
+        { "<leader>d",  group = "Delete/DAP (Debugger)", },
         { "<leader>f",  group = "Files" },
         { "<leader>g",  group = "Git" },
         { "<leader>h",  group = "Git Hunks" },

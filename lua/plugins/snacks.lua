@@ -47,8 +47,8 @@ return {
 
     -- Misc
     { '<leader>cr',  function() Snacks.debug.run() end,                 desc = 'Execute Lua Code' },
-    { '<leader>bd',  function() Snacks.bufdelete() end,                 desc = 'Delete Buffer' },
-    { '<leader>bod', function() Snacks.bufdelete.other() end,           desc = 'Delete Other Buffers' },
+    { '<leader>db',  function() Snacks.bufdelete() end,                 desc = 'Delete Buffer' },
+    { '<leader>dob', function() Snacks.bufdelete.other() end,           desc = 'Delete Other Buffers' },
   },
   --stylua: ignore-end
   ---@type snacks.Config
