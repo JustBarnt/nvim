@@ -10,7 +10,7 @@ map.set("n", "<leader>l", "<CMD>Lazy<CR>", { desc = "Lazy" })
 -- Buffer navigation
 map.set("n", "<S-h>", "<CMD>bprevious<CR>", { desc = "Previous Buffer" })
 map.set("n", "<S-l>", "<CMD>bnext<CR>", { desc = "Next Buffer" })
-map.set("n", "<leader>dB", "<CMD>:bd<CR>", { desc = "Delete Buffer and Window" })
+map.set("n", "<leader>bD", "<CMD>:bd<CR>", { desc = "Delete Buffer and Window" })
 
 -- Better up/down unless we provide a count like `5j` move by visual lines `gj` instead of logical lines
 map.set({ "n", "x" }, "j", "v:count == 0 ? 'gj' : 'j'", { desc = "Down", expr = true })

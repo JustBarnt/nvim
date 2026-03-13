@@ -10,7 +10,7 @@ return {
         checkThirdParty = false,
         ignoreSubmodules = true,
       },
-      codeLens = { enable = true },
+      codeLens = { enable = false },
       completion = { callSnippet = "Replace" },
       doc = { privateName = { "^_" } },
       hint = {

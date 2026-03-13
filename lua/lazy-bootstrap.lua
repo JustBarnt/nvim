@@ -62,6 +62,9 @@ _G.LazyUtil = require("lazy.core.util")
 -- from: https://github.com/LazyVim/LazyVim/blob/c64a61734fc9d45470a72603395c02137802bc6f/lua/lazyvim/util/root.lua
 Utils.root.setup()
 
+-- Setup any DAP Adapters we have
+Utils.dap.init()
+
 -- Load our filetype additions
 require("filetypes").setup()
 

@@ -7,8 +7,6 @@ return {
     opts = {
       -- stylua: ignore start
       ensure_installed = {
-        -- debuggers
-
         -- formatters
         "clang-format", "gofumpt", "goimports",
         "gomodifytags", "shfmt", "stylua",
