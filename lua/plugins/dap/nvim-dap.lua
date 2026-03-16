@@ -23,10 +23,10 @@ return {
       { "<leader>ds", function() require("dap").session() end, desc = "Session" },
       { "<leader>dt", function() require("dap").terminate() end, desc = "Terminate" },
 
-      { "Down", function() require("dap").step_over() end, desc = "Step Over" },
-      { "Right", function() require("dap").step_into() end, desc = "Step Into" },
-      { "Left", function() require("dap").step_out() end, desc = "Step Out" },
-      { "Up", function() require("dap").restart_frame() end, desc = "Restart Frame" }, 
+      { "<Down>", function() require("dap").step_over() end, desc = "Step Over" },
+      { "<Right>", function() require("dap").step_into() end, desc = "Step Into" },
+      { "<Left>", function() require("dap").step_out() end, desc = "Step Out" },
+      { "<Up>", function() require("dap").restart_frame() end, desc = "Restart Frame" }, 
     },
     config = function()
       if Utils.has("mason-nvim-dap.nvim") then

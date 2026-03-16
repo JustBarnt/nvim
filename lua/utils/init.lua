@@ -5,6 +5,7 @@
 ---@field git        utils.git
 ---@field lsp        utils.lsp
 ---@field lualine    utils.lualine
+---@field marks      utils.marks
 ---@field root       utils.root
 ---@field treesitter utils.treesitter
 ---@field ui         utils.ui
