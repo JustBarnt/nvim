@@ -1,10 +1,10 @@
 local map = Snacks.keymap
 
 -- Mark Helpers
-map("n", "<leader>m", Utils.marks.mark, { desc = "Mark line" })
-map("n", "<leader>dm", Utils.marks.del_mark, { desc = "Delete mark" })
-map("n", "<leader>Dm", Utils.marks.del_all_marks, { desc = "Delete all mark" })
-map("n", "m", Utils.marks.jump_to_mark, { desc = "Create Mark" })
+map.set("n", "<leader>m", Utils.marks.mark, { desc = "Mark line" })
+map.set("n", "<leader>dm", Utils.marks.del_mark, { desc = "Delete mark" })
+map.set("n", "<leader>Dm", Utils.marks.del_all_marks, { desc = "Delete all mark" })
+map.set("n", "m", Utils.marks.jump_to_mark, { desc = "Create Mark" })
 
 -- Better Indenting
 map.set("v", "<", "<gv")
