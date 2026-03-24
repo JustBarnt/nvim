@@ -20,7 +20,7 @@ return {
         "luap", "markdown", "markdown_inline", "nu",
         "powershell", "prisma", "php", "printf", "query",
         "regex", "rust", "scheme", "scss", "sql", "svelte", "toml",
-        "tsx", "typescript", "vim", "vimdoc", "yaml",
+        "tsx", "typescript", "vim", "vimdoc", "xml", "yaml",
       }
       -- stylua: ingnore end
     },
@@ -44,6 +44,7 @@ return {
         group = vim.api.nvim_create_augroup("barnt/treesitter", { clear = true }),
         callback = function(ev)
           local ft, lang = ev.match, vim.treesitter.language.get_lang(ev.match)
+          local filetype = vim.api.nvim_get_option_value("filetype", { buf = ev.buf })
           if not Utils.treesitter.have(ft) then
             return
           end

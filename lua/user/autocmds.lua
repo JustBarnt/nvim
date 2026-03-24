@@ -175,6 +175,18 @@ autocmd({ "FileType" }, {
   command = "wincmd L",
 })
 
+autocmd({ "FileType" }, {
+  group = augroup("barnt/xml_setup", { clear = true }),
+  desc = "Apply various rules to XML filetypes",
+  pattern = "xml",
+  callback = function(ev)
+    vim.defer_fn(function()
+      vim.notify("Stopping XML Treesitter", vim.log.levels.INFO)
+      vim.treesitter.stop(ev.buf)
+    end, 1000)
+  end 
+})
+
 -- autocmd({ "CursorMoved", "CursorMovedI", "WinScrolled" }, {
 --   desc = "Fix scrolloff when you are at the EOF",
 --   group = augroup("barnt/scroll_eof", { clear = true }),
