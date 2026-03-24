@@ -55,7 +55,7 @@ return {
   opts = {
     animate = { enabled = true },
     bufdelete = { enabled = true },
-    dashboard = { enabled = true },
+    -- dashboard = { enabled = true },
     explorer = { replace_netrw = true, trash = true },
     input = { enabled = true },
     image = { enabled = true },

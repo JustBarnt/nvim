@@ -116,7 +116,7 @@ opt.virtualedit = "block"
 opt.wildmode = { "longest:full", "full" }
 opt.wildoptions = { "fuzzy", "pum", "tagfile" }
 
-opt.shortmess:append({ W = true, I = true, c = true, C = true })
+opt.shortmess:append({ W = true, I = false, c = true, C = true })
 opt.isfname:append("@-@")
 opt.iskeyword:append('-')
 opt.whichwrap:append("<,>,[,],h,l")
