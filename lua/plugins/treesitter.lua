@@ -20,7 +20,7 @@ return {
         "luap", "markdown", "markdown_inline", "nu",
         "powershell", "prisma", "php", "printf", "query",
         "regex", "rust", "scheme", "scss", "sql", "svelte", "toml",
-        "tsx", "typescript", "vim", "vimdoc", "xml", "yaml",
+        "tsx", "typescript", "vim", "vimdoc", "yaml",
       }
       -- stylua: ingnore end
     },
