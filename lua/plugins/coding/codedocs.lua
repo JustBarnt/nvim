@@ -1,5 +1,6 @@
 return {
-  "jeangiraldoo/codedocs.nvim",
+  -- "jeangiraldoo/codedocs.nvim",
+  dir = "D:/Personal/Github/codedocs.nvim",
   keys = {
     {
       "<leader>k", 
