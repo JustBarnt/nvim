@@ -41,17 +41,6 @@ autocmd("CmdlineEnter", {
   command = "!silent",
 })
 
-autocmd("User", {
-  group = augroup("barnt/lsprename", { clear = true }),
-  desc = "Use Snacks to enable LSP file renaming for imports when a file is moved or renamed",
-  pattern = "OilActionsPost",
-  callback = function(event)
-    if event.data.actions.type == "move" then
-      Snacks.rename.on_rename_file(event.data.actions.src_url, event.data.actions.dest_url)
-    end
-  end,
-})
-
 autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
   group = augroup("barnt/checktime", { clear = true }),
   desc = "Reload the file if the content changed",

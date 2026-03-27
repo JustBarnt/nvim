@@ -19,11 +19,11 @@ vim.print = dd
 vim.g.mapleader = vim.keycode("<space>")
 vim.g.maplocalleader = vim.keycode("\\")
 
--- Support only Neovim v0.11 and nightly
-if vim.fn.has("nvim-0.11") ~= 1 then
+-- Support only Neovim v0.12 and nightly
+if vim.fn.has("nvim-0.12") ~= 1 then
   if vim.v.shell_error ~= 0 then
     vim.api.nvim_echo({
-      { "Must be using at least Neovim v0.11 to use:\n", "ErrorMsg" },
+      { "Must be using at least Neovim v0.12 to use:\n", "ErrorMsg" },
       { "\nPress any key to exit..." },
     }, true, {})
     vim.fn.getchar()
