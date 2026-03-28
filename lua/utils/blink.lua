@@ -92,11 +92,18 @@ M.signature = {
 ---@diagnostic disable: missing-fields
 M.sources = {
   -- add lazydev to your completion providers
-  default = { "lsp", "path", "snippets", "buffer" },
+  default = { "lsp", "easy-dotnet", "path", "snippets", "buffer" },
   per_filetype = {
     lua = { inherit_defaults = true, "lazydev" },
   },
   providers = {
+    ["easy-dotnet"] = {
+      name = "easy-dotnet",
+      enabled = true,
+      module = "easy-dotnet.completion.blink",
+      score_offset = 10000,
+      async = true
+    },
     lazydev = {
       name = "LazyDev",
       module = "lazydev.integrations.blink",

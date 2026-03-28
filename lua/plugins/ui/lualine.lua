@@ -22,6 +22,7 @@ return {
       local icons = Utils.ui.icons
       vim.o.laststatus = vim.g.lualine_laststatus
 
+      local job_indicator = { require("easy-dotnet.ui-modules.jobs").lualine }
       local opts = {
         options = {
           component_separators = { left = "", right = "" },
@@ -30,7 +31,7 @@ return {
           disabled_filetypes = { statusline = { "snacks_dashboard" } },
         },
         sections = {
-          lualine_a = { "mode" },
+          lualine_a = { "mode", job_indicator },
           lualine_b = { "branch", Utils.lualine.components.diffs, Utils.lualine.components.diags },
           lualine_c = {
             Utils.lualine.components.filename,
