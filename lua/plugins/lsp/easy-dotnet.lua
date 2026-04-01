@@ -116,6 +116,7 @@ return {
     server = {
       ---@type nil | "Off" | "Critical" | "Error" | "Warning" | "Information" | "Verbose" | "All"
       log_level = nil,
+      -- also need nuget installed: `winget install Microsoft.NuGet`
       use_visual_studio = true
     },
     -- choose which picker to use with the plugin
