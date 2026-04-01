@@ -28,6 +28,41 @@ setmetatable(M, {
   end,
 })
 
+function M.lazy_notify()
+  local notifs = {}
+  local function temp(...)
+    table.insert(notifs, vim.F.pack_len(...))
+  end
+
+  local orig = vim.notify
+  vim.notify = temp -- This stores our notifications in a temp table until we are ready
+
+  local timer = vim.uv.new_timer()
+  local check = assert(vim.uv.new_check())
+
+  local replay = function()
+    timer:stop()
+    check:stop()
+    if vim.notify() == temp then
+      vim.notify = orig -- put back the original notify if needed
+    end
+    vim.schedule(function()
+      ---@diagnostic disable-next-line: no-unknown
+      for _, notif in ipairs(notifs) do
+        vim.notify(vim.F.unpack_len(notif))
+      end
+    end)
+  end
+
+  check:start(function()
+    if vim.notify ~= temp then
+      replay()
+    end
+  end)
+  -- or if it took longer than 500ms, something is wrong
+  timer:start(500, 0, replay)
+end
+
 function M.is_win()
   return vim.uv.os_uname().sysname:find("Windows") ~= nil
 end

@@ -9,9 +9,7 @@ local function term_nav(dir)
 end
 
 return {
-  "folke/snacks.nvim",
-  priority = 10000,
-  lazy = false,
+  "snacks.nvim",
   --stylua: ignore-start
   keys = {
     -- Most Used
