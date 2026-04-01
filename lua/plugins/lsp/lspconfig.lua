@@ -16,6 +16,7 @@ return {
         ["intelephense"] = "intelephense",
         ["json-lsp"] = "jsonls",
         ["just-lsp"] = "just",
+        ["kotlin-lsp"] = "kotlin-lsp",
         ["laravel_ls"] = "laravel_ls",
         ["lemminx"] = "lemminx",
         ["lua-language-server"] = "lua_ls",

@@ -15,7 +15,7 @@ return {
         -- language servers
         "clangd", "cmake-language-server", "css-lsp", "css-variables-language-server",
         "cssmodules-language-server", "emmet-language-server", "gopls",
-        "html-lsp", "intelephense", "json-lsp", "just-lsp",
+        "html-lsp", "intelephense", "json-lsp", "just-lsp", "kotlin-lsp",
         "laravel_ls", "lemminx", "lua-language-server", "nushell",
         "powershell-editor-services", "pyrefly", "roslyn", "ruff",
         "rust-analyzer", "svelte-language-server", "tailwindcss-language-server", "taplo",
