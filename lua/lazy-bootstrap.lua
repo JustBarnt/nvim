@@ -78,6 +78,8 @@ require("user.options")
 -- TODO: Move to a plugin
 require("filetypes.ft-commands")
 
+require("vim._core.ui2").enable({})
+
 -- TODO: Create a command for this
 -- local file_path = vim.fn.stdpath("config") .. '\\lua\\types.lua'
 -- local file = io.open(file_path, "a+")
