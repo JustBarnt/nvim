@@ -13,7 +13,7 @@ return {
         "xmlformatter",
 
         -- language servers
-        "clangd", "cmake-language-server", "css-lsp", "css-variables-language-server",
+        "clangd", "css-lsp", "css-variables-language-server",
         "cssmodules-language-server", "emmet-language-server", "gopls",
         "html-lsp", "intelephense", "json-lsp", "just-lsp", "kotlin-lsp",
         "laravel_ls", "lemminx", "lua-language-server", "nushell",
