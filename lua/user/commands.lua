@@ -33,3 +33,24 @@ command("Grep", function(opts)
   vim.cmd(command)
   vim.cmd("copen")
 end, { nargs = 1 })
+
+local format_filetypes = { "xml" }
+
+command("Format", function(opts)
+  local ft = opts.args
+
+  if ft == "xml" then
+    vim.cmd([['<,'>!powershell -Command "$xml=[xml][Console]::In.ReadToEnd();$sw=New-Object System.IO.StringWriter;$xw=New-Object System.Xml.XmlTextWriter($sw);$xw.Formatting='Indented';$xw.Indentation=2;$xml.WriteTo($xw);$sw.ToString()"]])
+  else
+    vim.notify(("Format: filetype: %s not supported yet"):format(ft))
+  end
+end, {
+    nargs = 1,
+    range = true,
+    desc = "Format visual selections by filetype",
+    complete = function(arglead)
+      return vim.tbl_filter(function(ft)
+        return ft:find(arglead, 1, true) ~= nil
+      end, format_filetypes)
+    end,
+  })
