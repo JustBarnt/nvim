@@ -129,4 +129,4 @@ if vim.fn.has "nvim-0.12" == 1 then
   opt.diffopt = "internal,filler,closeoff,algorithm:patience,indent-heuristic,inline:char,linematch:40"
 end
 
-vim.cmd("colorscheme onedark")
+vim.cmd("colorscheme tokyonight-night")
