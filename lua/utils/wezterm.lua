@@ -8,8 +8,8 @@ function M.set_wezterm_user_var(var, value)
     return
   end
 
-  io.stdout:write(string.format("\027]1337;SetUserVar=%s=%s\007", var, vim.base64.encode(value)))
-  io.stdout:flush()
+  local seq = string.format("\027]1337;SetUserVar=%s=%s\007", var, vim.base64.encode(value))
+  vim.api.nvim_ui_send(seq)
 end
 
 return M
