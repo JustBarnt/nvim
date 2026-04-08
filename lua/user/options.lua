@@ -18,7 +18,7 @@ opt.clipboard = "unnamedplus"
 opt.mouse = "a"
 
 -- Command Line and Messages
-opt.cmdheight = 1
+opt.cmdheight = 0
 opt.inccommand = "split"
 
 -- Completion
@@ -122,11 +122,54 @@ opt.iskeyword:append('-')
 opt.whichwrap:append("<,>,[,],h,l")
 opt.breakindent = opt.wrap and true or false
 
--- NOTE: This will contain any "nightly" features I am trying out. As
---       neovim releases updates, nightly features will get moved out
-if vim.fn.has "nvim-0.12" == 1 then
-  opt.winborder = "rounded"
-  opt.diffopt = "internal,filler,closeoff,algorithm:patience,indent-heuristic,inline:char,linematch:40"
-end
+opt.winborder = "rounded"
+opt.diffopt = "internal,filler,closeoff,algorithm:patience,indent-heuristic,inline:char,linematch:40"
+
+require("vim._core.ui2").enable({
+	enable = true,
+	msg = {
+		targets = {
+			[""] = "msg",
+			empty = "cmd",
+			bufwrite = "msg",
+			confirm = "cmd",
+			emsg = "pager",
+			echo = "msg",
+			echomsg = "msg",
+			echoerr = "pager",
+			completion = "cmd",
+			list_cmd = "pager",
+			lua_error = "pager",
+			lua_print = "msg",
+			progress = "pager",
+			rpc_error = "pager",
+			quickfix = "msg",
+			search_cmd = "cmd",
+			search_count = "cmd",
+			shell_cmd = "pager",
+			shell_err = "pager",
+			shell_out = "pager",
+			shell_ret = "msg",
+			undo = "msg",
+			verbose = "pager",
+			wildlist = "cmd",
+			wmsg = "msg",
+			typed_cmd = "cmd",
+		},
+		cmd = {
+			height = 0.5,
+		},
+		dialog = {
+			height = 0.5,
+		},
+		msg = {
+			height = 0.3,
+			timeout = 5000,
+		},
+		pager = {
+			height = 0.5,
+		},
+	},
+})
 
 vim.cmd("colorscheme tokyonight-night")

@@ -38,13 +38,6 @@ require("lazy").setup {
       priority = 1000,
       lazy = false,
       opts = {},
-      config = function(_, opts)
-        local notify = vim.notify
-        require("snacks").setup(opts)
-        if Utils.has("noice.nvim") then
-          vim.notify = notify
-        end
-      end
     }
   },
   rocks = { enabled = false },
@@ -73,9 +66,6 @@ require("lazy").setup {
 
 _G.LazyUtil = require("lazy.core.util")
 
--- Delay notifications until noice.nvim is ready
-Utils.lazy_notify()
-
 -- Setup our RootDir awareness
 -- from: https://github.com/LazyVim/LazyVim/blob/c64a61734fc9d45470a72603395c02137802bc6f/lua/lazyvim/util/root.lua
 Utils.root.setup()
@@ -95,8 +85,6 @@ require("user.options")
 
 -- TODO: Move to a plugin
 require("filetypes.ft-commands")
-
--- require("vim._core.ui2").enable({})
 
 -- TODO: Create a command for this
 -- local file_path = vim.fn.stdpath("config") .. '\\lua\\types.lua'

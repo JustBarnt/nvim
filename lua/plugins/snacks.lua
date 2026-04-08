@@ -58,7 +58,7 @@ return {
     input = { enabled = true },
     image = { enabled = true },
     lazygit = { enabled = vim.fn.has("lazygit") == 1 },
-    notifier = { style = "minimal", refresh = 50, top_down = false },
+    notifier = { enabled = false, style = "minimal", refresh = 50, top_down = false },
     notify = { enabled = true },
     picker = {
       debug = { score = true },
