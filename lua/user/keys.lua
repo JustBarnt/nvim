@@ -45,3 +45,10 @@ map.set("o", "n", "'Nn'[v:searchforward]", { expr = true, desc = "Next Search Re
 map.set("n", "N", "'nN'[v:searchforward].'zv'", { expr = true, desc = "Prev Search Result" })
 map.set("x", "N", "'nN'[v:searchforward]", { expr = true, desc = "Prev Search Result" })
 map.set("o", "N", "'nN'[v:searchforward]", { expr = true, desc = "Prev Search Result" })
+
+
+map.set("n", "<leader>Rn", function()
+  local session = vim.fn.stdpath("state") .. "/restart_session.vim"
+  vim.cmd("mksession! " .. vim.fn.fnameescape(session))
+  vim.cmd("restart source " .. vim.fn.fnameescape(session))
+end, { desc = "Restart Neovim" })
