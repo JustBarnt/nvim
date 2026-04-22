@@ -7,6 +7,7 @@ M.icons = {
     close = "󰅂"
   },
   misc = {
+    bug = "",
     lsp = "󱁜 ",
     dots = "󰇘 ",
     branch = " ",

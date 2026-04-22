@@ -35,6 +35,7 @@ opt.listchars = { space = "⋅", trail = "⋅", tab = "  ↦" }
 opt.number = true
 opt.relativenumber = true
 opt.signcolumn = "yes"
+opt.statusline = "%{%v:lua.Utils.statusline.render()%}"
 
 -- Diff
 opt.diffopt = { "internal", "filler", "closeoff", "algorithm:patience", "indent-heuristic", "linematch:60" }

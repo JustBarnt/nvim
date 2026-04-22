@@ -7,6 +7,7 @@
 ---@field lualine    utils.lualine
 ---@field marks      utils.marks
 ---@field root       utils.root
+---@field statusline utils.statusline
 ---@field treesitter utils.treesitter
 ---@field ui         utils.ui
 ---@field wezterm    utils.wezterm

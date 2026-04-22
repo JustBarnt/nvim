@@ -5,14 +5,16 @@ return {
     vim.o.cmdheight = 0
     require("tiny-cmdline").setup {
       width = {
-        fraction = 0.7,
+        value = "70%",
         min = 40,
         max = 80,
       },
       position = {
-        x = 0.5,
-        y = 0,
+        x = "50%",
+        y = "5%",
       },
+      menu_col_offset = 3,
+      native_types = { "/", "?" },
       on_reposition = require("tiny-cmdline").adapters.blink,
     }
   end,
