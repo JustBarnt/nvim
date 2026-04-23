@@ -1,5 +1,5 @@
 {
-  "SchemaStore.nvim": { "branch": "main", "commit": "d09eb13366fe95deeecf3deba7a4639f0c82fcdc" },
+  "SchemaStore.nvim": { "branch": "main", "commit": "591d3df3b23111f85ed44821da2a8c64e694d8a5" },
   "blink.cmp": { "branch": "main", "commit": "451168851e8e2466bc97ee3e026c3dcb9141ce07" },
   "blink.indent": { "branch": "main", "commit": "9c80820ca77218a8d28e70075d6f44a1609911fe" },
   "blink.pairs": { "branch": "main", "commit": "4e43012356d33a26f69eae475f746fbe9f325f44" },
@@ -11,7 +11,7 @@
   "crates.nvim": { "branch": "main", "commit": "694357861ec9ebf12475ddcdd04ea45a0923c32d" },
   "diffview.nvim": { "branch": "main", "commit": "4516612fe98ff56ae0415a259ff6361a89419b0a" },
   "dropbar.nvim": { "branch": "master", "commit": "ce202248134e3949aac375fd66c28e5207785b10" },
-  "easy-dotnet.nvim": { "branch": "main", "commit": "1e6b569af3818a1665f14115aea7b0a920b179f6" },
+  "easy-dotnet.nvim": { "branch": "main", "commit": "3af61d2dc6840c0bafb8603bcecadf146f802cc2" },
   "edgy.nvim": { "branch": "main", "commit": "8bfd2808994a988c975694122f68624b8a219f5f" },
   "flash.nvim": { "branch": "main", "commit": "fcea7ff883235d9024dc41e638f164a450c14ca2" },
   "gitsigns.nvim": { "branch": "main", "commit": "6d808f99bd63303646794406e270bd553ad7792e" },
@@ -20,6 +20,7 @@
   "guess-indent.nvim": { "branch": "main", "commit": "84a4987ff36798c2fc1169cbaff67960aed9776f" },
   "lazy.nvim": { "branch": "main", "commit": "306a05526ada86a7b30af95c5cc81ffba93fef97" },
   "lazydev.nvim": { "branch": "main", "commit": "ff2cbcba459b637ec3fd165a2be59b7bbaeedf0d" },
+  "lualine.nvim": { "branch": "master", "commit": "47f91c416daef12db467145e16bed5bbfe00add8" },
   "mason-nvim-dap.nvim": { "branch": "main", "commit": "9a10e096703966335bd5c46c8c875d5b0690dade" },
   "mason.nvim": { "branch": "main", "commit": "12ddd182d9efbdc848b540f16484a583d52da0fb" },
   "mini.icons": { "branch": "main", "commit": "bac6317300e205335df425296570d84322730067" },

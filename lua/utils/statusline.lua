@@ -3,6 +3,11 @@ local icons = require("utils.statusline-icons")
 ---@class utils.statusline
 local M = {}
 
+local separators = {
+  compontent = { left = "", right = "" },
+  section = { left = "", right = "" }
+}
+
 ---@param group string
 ---@return string
 local sl_hl = function(group)
@@ -37,7 +42,18 @@ local set_hl_groups = function()
     StatusLineInverted = { link = "StatusLineModeNormal" },
     StatusLineDiffAdded = { fg = get_hl("diffAdded").fg },
     StatusLineDiffChanged = { fg = get_hl("diffChanged").fg },
-    StatusLineDiffRemoved = { fg = get_hl("diffRemoved").fg }
+    StatusLineDiffRemoved = { fg = get_hl("diffRemoved").fg },
+
+    -- Section separators (transition from colored block back to statusline bg)
+    StatusLineModeNormalSep  = { fg = get_hl("StatusLine").fg,  bg = get_hl("StatusLine").bg },
+    StatusLineModePendingSep = { fg = get_hl("Comment").fg,     bg = get_hl("StatusLine").bg },
+    StatusLineModeVisualSep  = { fg = get_hl("SpecialKey").fg,  bg = get_hl("StatusLine").bg },
+    StatusLineModeInsertSep  = { fg = get_hl("diffAdded").fg,   bg = get_hl("StatusLine").bg },
+    StatusLineModeCommandSep = { fg = get_hl("Number").fg,      bg = get_hl("StatusLine").bg },
+    StatusLineModeReplaceSep = { fg = get_hl("Constant").fg,    bg = get_hl("StatusLine").bg },
+    -- Right side separators (transition from statusline bg into colored block)
+    StatusLineInvertedSep    = { fg = get_hl("StatusLine").fg,  bg = get_hl("StatusLine").bg },
+    StatusLineInsertSep      = { fg = get_hl("diffAdded").fg,   bg = get_hl("StatusLine").bg },
   }
 
   for group, opts in pairs(statusline_groups) do
@@ -102,7 +118,10 @@ local mode_component = function()
   local mode = settings.name or "UNKNOWN"
   local hl = settings.hl or "Other"
 
-  return sl_hl("StatusLineMode" .. hl) .. " " .. mode .. " "
+  return sl_hl("StatusLineMode" .. hl)
+    .. " " .. mode .. " "
+    .. sl_hl("StatusLineMode" .. hl .. "Sep")
+    .. separators.section.left
 end
 
 vim.api.nvim_create_autocmd("User", {
@@ -124,19 +143,19 @@ local git_component = function()
   if dict then
     local parts = {}
     if (dict.added or 0) > 0 then
-      table.insert(parts, sl_hl("StatusLineDiffAdded") .. Utils.ui.icons.git.added .. dict.added)
+      table.insert(parts, sl_hl("StatusLineDiffAdded") .. Utils.ui.icons.git.added .. dict.added .. " ")
     end
     if (dict.changed or 0) > 0 then
-      table.insert(parts, sl_hl("StatusLineDiffChanged") .. Utils.ui.icons.git.modified .. dict.changed)
+      table.insert(parts, sl_hl("StatusLineDiffChanged") .. Utils.ui.icons.git.modified .. dict.changed .. " ")
     end
     if (dict.removed or 0) > 0 then
-      table.insert(parts, sl_hl("StatusLineDiffRemoved") .. Utils.ui.icons.git.removed .. dict.removed)
+      table.insert(parts, sl_hl("StatusLineDiffRemoved") .. Utils.ui.icons.git.removed .. dict.removed .. " ")
     end
 		if #parts > 0 then
-			component = component .. " " .. table.concat(parts, sl_hl("StatusLine") .. " ")
+			component = component .. " " .. table.concat(parts, sl_hl("StatusLine"))
 		end
   end
-	return component
+	return component .. separators.compontent.left
 end
 
 ---@return string?
@@ -218,11 +237,21 @@ local lsp_clients_component = function()
 end
 
 ---@return string
----@return number
 local diagnostic_component = function()
-  -- Add some padding around the actual info; need to use patterns so
-  -- highlights are also applied to the padding.
-  return vim.diagnostic.status(0):gsub("%w+:", " %0", 1):gsub("(:%d+)%%", "%1 %%")
+  local parts = {}
+  for _, severity in ipairs({ "ERROR", "WARN" }) do
+    local count = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity[severity] })
+    if count > 0 then
+      local icon = icons.diagnostics[severity]
+      table.insert(parts, sl_hl("Diagnostic" .. severity:sub(1,1) .. severity:sub(2):lower()) .. icon.symbol .. " " .. count)
+    end
+  end
+
+  if #parts == 0 then
+    return ""
+  end
+
+  return table.concat(parts, sl_hl("StatusLine") .. separators.compontent.left)
 end
 
 --- The buffer's filetype.
@@ -257,8 +286,7 @@ local file_component = function()
 end
 
 local file_percent_component = function()
-	local cur = vim.fn.line(".")
-  local total = vim.fn.line("$")
+  local cur = vim.fn.line(".") local total = vim.fn.line("$")
   local pct
   if cur == 1 then
     pct = "TOP"
@@ -268,11 +296,18 @@ local file_percent_component = function()
     pct = string.format("%2d%%%%", math.floor(cur / total * 100))
   end
 
-  return sl_hl("StatusLineDim") .. pct
+  return sl_hl("StatusLineInvertedSep")
+    .. separators.section.right
+    .. sl_hl("StatusLineInverted")
+    .. " " .. pct .. " "
+    .. string.format("%2d:%-2d ", vim.fn.line("."), vim.fn.virtcol("."))
 end
 
 local time_component = function()
-  return sl_hl("StatusLineDim") .. " " .. os.date("%R") .. " "
+  return sl_hl("StatusLineInsertSep")
+    .. separators.section.right
+    .. sl_hl("StatusLineModeInsert")
+    .. " " .. os.date("%R") .. " "
 end
 
 ---@return string?
@@ -295,12 +330,6 @@ local wordcount_component = function()
     .. " "
 end
 
---- The current line, total line count, and column position.
----@return string
-local position_component = function()
-  return sl_hl("StatusLineInverted") .. string.format(" %2d:%-2d ", vim.fn.line("."), vim.fn.virtcol("."))
-end
-
 function M.render()
   local win_is_active = tonumber(vim.g.actual_curwin) == vim.api.nvim_get_current_win()
 
@@ -311,26 +340,48 @@ function M.render()
 
   local ft = vim.bo.filetype
 
-  local components = {
+  local left_components = {
     mode_component(),
     git_component(),
     diagnostic_component(),
     file_component(),
     modified_component(),
+  }
+
+  local center_components = {
     dap_component(),
-    "%=",
     lsp_progress_component(),
-    lsp_clients_component(),
+  }
+
+  local right_components = {
     ft == "markdown" and wordcount_component() or "",
+    lsp_clients_component(),
     file_percent_component(),
-    position_component(),
     time_component()
   }
 
-  return table.concat(
-		vim.iter(components):filter(function(c) return c and c ~= "" end):totable(),
-		sl_hl("StatusLine") .. " "
-	)
+  local left = table.concat(
+    vim.iter(left_components):filter(function(c) return c and c~= "" end):totable(),
+    sl_hl("StatusLine") .. " "
+  )
+
+  local center = table.concat(
+    vim.iter(center_components):filter(function(c) return c and c ~= "" end):totable(),
+      sl_hl("StatusLine") .. " "
+  )
+
+  local right = table.concat(
+    vim.iter(right_components):filter(function(c) return c and c ~= "" end):totable(),
+      sl_hl("StatusLine") .. " "
+  )
+
+  return left
+    .. sl_hl("StatusLine") .. " "
+    .. "%="
+    .. center
+    .. "%="
+    .. right
 end
+
 
 return M
