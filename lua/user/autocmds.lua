@@ -23,6 +23,16 @@ local ui2 = require("vim._core.ui2")
 local ui2 = require("vim._core.ui2")
 local msgs = require("vim._core.ui2.messages")
 local orig_set_pos = msgs.set_pos
+local orig_msg_show = msgs.msg_show
+
+-- Work around for: https://github.com/neovim/neovim/issues/36447
+-- skipping any kind of bufwrite messages
+msgs.msg_show = function(kind, content, replace_last, _, append, id, trigger)
+  if kind == "bufwrite" then
+    return msgs.show_msg("msg", kind, content, replace_last, append, id)
+  end
+  return orig_msg_show(kind, content, replace_last, _, append, id, trigger)
+end
 
 msgs.set_pos = function(tgt)
 	orig_set_pos(tgt)
