@@ -17,6 +17,7 @@ return {
         show = { "filename", "space", "label" },
         active_indicator = "",
         keys = {
+          close_buffer = "<C-q>",
           move_up = "<C-p>",
           move_down = "<C-n>",
         },
