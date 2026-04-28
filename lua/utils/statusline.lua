@@ -43,19 +43,8 @@ local set_hl_groups = function()
     StatusLineDiffAdded = { fg = get_hl("diffAdded").fg },
     StatusLineDiffChanged = { fg = get_hl("diffChanged").fg },
     StatusLineDiffRemoved = { fg = get_hl("diffRemoved").fg },
-
-    -- Section separators (transition from colored block back to statusline bg)
-    StatusLineModeNormalSep  = { fg = get_hl("StatusLine").fg,  bg = get_hl("StatusLine").bg },
-    StatusLineModePendingSep = { fg = get_hl("Comment").fg,     bg = get_hl("StatusLine").bg },
-    StatusLineModeVisualSep  = { fg = get_hl("SpecialKey").fg,  bg = get_hl("StatusLine").bg },
-    StatusLineModeInsertSep  = { fg = get_hl("diffAdded").fg,   bg = get_hl("StatusLine").bg },
-    StatusLineModeCommandSep = { fg = get_hl("Number").fg,      bg = get_hl("StatusLine").bg },
-    StatusLineModeReplaceSep = { fg = get_hl("Constant").fg,    bg = get_hl("StatusLine").bg },
-    -- Right side separators (transition from statusline bg into colored block)
-    StatusLineInvertedSep    = { fg = get_hl("StatusLine").fg,  bg = get_hl("StatusLine").bg },
     StatusLineInsertSep      = { fg = get_hl("diffAdded").fg,   bg = get_hl("StatusLine").bg },
   }
-
   for group, opts in pairs(statusline_groups) do
     vim.api.nvim_set_hl(0, group, opts)
   end
@@ -120,8 +109,6 @@ local mode_component = function()
 
   return sl_hl("StatusLineMode" .. hl)
     .. " " .. mode .. " "
-    .. sl_hl("StatusLineMode" .. hl .. "Sep")
-    .. separators.section.left
 end
 
 vim.api.nvim_create_autocmd("User", {
@@ -296,18 +283,15 @@ local file_percent_component = function()
     pct = string.format("%2d%%%%", math.floor(cur / total * 100))
   end
 
-  return sl_hl("StatusLineInvertedSep")
-    .. separators.section.right
-    .. sl_hl("StatusLineInverted")
+  return separators.compontent.right
+    .. sl_hl("StatusLineBold")
     .. " " .. pct .. " "
     .. string.format("%2d:%-2d ", vim.fn.line("."), vim.fn.virtcol("."))
 end
 
 local time_component = function()
-  return sl_hl("StatusLineInsertSep")
-    .. separators.section.right
-    .. sl_hl("StatusLineModeInsert")
-    .. " " .. os.date("%R") .. " "
+  return sl_hl("StatusLineModeInsert")
+    .. "  " .. os.date("%R") .. " "
 end
 
 ---@return string?
