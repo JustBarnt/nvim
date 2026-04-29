@@ -124,7 +124,7 @@ local git_component = function()
     return
   end
 
-  local component = highlight_icon(icons.misc.branch) .. " " .. sl_hl("StatusLine") .. head
+  local component = highlight_icon(icons.misc.branch) .. " " .. sl_hl("StatusLine") .. head .. " "
 
   local dict = vim.b.gitsigns_status_dict
   if dict then
@@ -230,7 +230,7 @@ local diagnostic_component = function()
     local count = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity[severity] })
     if count > 0 then
       local icon = icons.diagnostics[severity]
-      table.insert(parts, sl_hl("Diagnostic" .. severity:sub(1,1) .. severity:sub(2):lower()) .. icon.symbol .. " " .. count)
+      table.insert(parts, sl_hl("Diagnostic" .. severity:sub(1,1) .. severity:sub(2):lower()) .. icon.symbol .. " " .. count .. " ")
     end
   end
 
@@ -238,7 +238,7 @@ local diagnostic_component = function()
     return ""
   end
 
-  return table.concat(parts, sl_hl("StatusLine") .. separators.compontent.left)
+  return table.concat(parts, sl_hl("StatusLine")) .. separators.compontent.left
 end
 
 --- The buffer's filetype.
