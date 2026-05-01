@@ -1,18 +1,28 @@
 local icons = require("utils.statusline-icons")
 
 ---@class utils.statusline
-local M = {}
+local M  = {}
+
+-- ╭─────────────────────────────────────────────────────────╮
+-- │ Types                                                   │
+-- ╰─────────────────────────────────────────────────────────╯
+
+---@class StatuslineSegment
+---@field text string
+---@field hl? string -- defaults to "StatusLine"
+
+---@alias StatuslineComponent StatuslineSegment[]
+
+-- ╭─────────────────────────────────────────────────────────╮
+-- │ Helpers                                                 │
+-- ╰─────────────────────────────────────────────────────────╯
 
 local separators = {
-  compontent = { left = "", right = "" },
-  section = { left = "", right = "" }
+  component = { left = "", right = "" },
+  section = { left = "", right = "" },
+  powerline = { left = "", right = "" },
 }
 
----@param group string
----@return string
-local sl_hl = function(group)
-  return "%#" .. group .. "#"
-end
 
 ---@param group string
 ---@return vim.api.keyset.get_hl_info
@@ -20,244 +30,223 @@ local get_hl = function(group)
   return vim.api.nvim_get_hl(0, { name = group, link = false, create = false })
 end
 
----@param icon CustomIcon
+---@param segments StatuslineSegment[]
 ---@return string
-local highlight_icon = function(icon)
-  return sl_hl(icon.group) .. icon.symbol .. sl_hl("StatusLine")
+local serialize_segments = function(segments)
+  local out = {}
+  local current_hl = nil
+  for _, seg in ipairs(segments) do
+    local hl = seg.hl or "StatusLine"
+    if hl ~= current_hl then
+      table.insert(out, "%#" .. hl .. "#")
+      current_hl = hl
+    end
+    table.insert(out, seg.text)
+  end
+  return table.concat(out)
 end
 
-local set_hl_groups = function()
-  ---@type table<string, vim.api.keyset.highlight>
-  local statusline_groups = {
-    StatusLineModeNormal = { fg = get_hl("StatusLine").bg, bg = get_hl("StatusLine").fg },
-    StatusLineModePending = { fg = get_hl("StatusLine").bg, bg = get_hl("Comment").fg },
-    StatusLineModeVisual = { fg = get_hl("StatusLine").bg, bg = get_hl("SpecialKey").fg },
-    StatusLineModeInsert = { fg = get_hl("StatusLine").bg, bg = get_hl("diffAdded").fg },
-    StatusLineModeCommand = { fg = get_hl("StatusLine").bg, bg = get_hl("Number").fg },
-    StatusLineModeReplace = { fg = get_hl("StatusLine").bg, bg = get_hl("Constant").fg },
-    StatusLineModeOther = { link = "StatusLine" },
-    StatusLineBold = { bold = true },
-    StatusLineDim = { fg = get_hl("LineNr").fg },
-    StatusLineDimItalic = { fg = get_hl("LineNr").fg, italic = true },
-    StatusLineInverted = { link = "StatusLineModeNormal" },
-    StatusLineDiffAdded = { fg = get_hl("diffAdded").fg },
-    StatusLineDiffChanged = { fg = get_hl("diffChanged").fg },
-    StatusLineDiffRemoved = { fg = get_hl("diffRemoved").fg },
-    StatusLineInsertSep      = { fg = get_hl("diffAdded").fg,   bg = get_hl("StatusLine").bg },
+---@param icon CustomIcon
+---@return StatuslineSegment[]
+local icon_segments = function(icon)
+  return {
+    { text = icon.symbol, hl = icon.group },
+    { text = "",          hl = "StatusLine" }
   }
-  for group, opts in pairs(statusline_groups) do
+end
+
+---@param items string[]
+---@param hl?    string
+---@return StatuslineSegment
+local gen_component = function(items, hl)
+  local text = ""
+  hl = hl or "StatusLine"
+  for _, item in pairs(items) do
+    text = text .. item
+  end
+  return { text = text, hl = hl }
+end
+
+-- ╭─────────────────────────────────────────────────────────╮
+-- │ Highlight Groups                                        │
+-- ╰─────────────────────────────────────────────────────────╯
+
+-- Mode name -> { bg color source group, bg color attribute }
+-- These drive both the mode block AND the generated sep groups.
+local mode_hl_sources = {
+  Normal  = { group = "StatusLine",  attr = "fg"  },
+  Pending = { group = "Comment",     attr = "fg"  },
+  Visual  = { group = "SpecialKey",  attr = "fg"  },
+  Insert  = { group = "diffAdded",   attr = "fg"  },
+  Command = { group = "Number",      attr = "fg"  },
+  Replace = { group = "Constant",    attr = "fg"  },
+}
+
+local set_hl_groups = function()
+  local sl_bg = get_hl("StatusLine").bg
+  local sl_fg = get_hl("StatusLine").fg
+
+  ---@type table<string, vim.api.keyset.highlight>
+  local groups = {
+    StatusLineModeOther      = { link = "StatusLine" },
+    StatusLineBold           = { bold = true },
+    StatusLineDim            = { fg = get_hl("LineNr").fg },
+    StatusLineDimItalic      = { fg = get_hl("LineNr").fg, italic = true },
+    StatusLineInverted       = { fg = sl_bg, bg = sl_fg },
+    StatusLineDiffAdded      = { fg = get_hl("diffAdded").fg },
+    StatusLineDiffChanged    = { fg = get_hl("diffChanged").fg },
+    StatusLineDiffRemoved    = { fg = get_hl("diffRemoved").fg },
+    StatusLineInsertSep      = { fg = get_hl("diffAdded").fg, bg = sl_bg }
+  }
+
+  -- Generate mode block + sep groups from mode_hl_sources
+  for mode_name, source in pairs(mode_hl_sources) do
+    local mode_bg = get_hl(source.group)[source.attr]
+    groups["StatusLineMode" .. mode_name] = { fg = sl_bg, bg = mode_bg }
+    -- Sep group: arrow fg matches the mode block color, bg is the statusline bg
+    groups["StatusLineMode" .. mode_name .. "Sep"] = { fg = mode_bg, bg = sl_bg }
+  end
+
+  for group, opts in pairs(groups) do
     vim.api.nvim_set_hl(0, group, opts)
   end
 end
 
 set_hl_groups()
 
--- Re-apply highlights when colorscheme changes
 vim.api.nvim_create_autocmd("ColorScheme", {
   group = vim.api.nvim_create_augroup("barnt/statusline_colors", { clear = true }),
   desc = "Re-apply statusline highlights on colorscheme change",
   callback = set_hl_groups,
 })
 
----@return string
+-- ╭─────────────────────────────────────────────────────────╮
+-- │ Components                                              │
+-- ╰─────────────────────────────────────────────────────────╯
+
+---@return StatuslineComponent
 local mode_component = function()
-	-- Note that: \19 = ^S and \22 = ^V.
-	-- stylua: ignore start
-	local mode_settings = {
-		["n"]     = { name = "NORMAL",     hl = "Normal" },
-		["no"]    = { name = "OP-PENDING", hl = "Pending" },
-		["nov"]   = { name = "OP-PENDING", hl = "Pending" },
-		["noV"]   = { name = "OP-PENDING", hl = "Pending" },
-		["no\22"] = { name = "OP-PENDING", hl = "Pending" },
-		["niI"]   = { name = "NORMAL",     hl = "Normal" },
-		["niR"]   = { name = "NORMAL",     hl = "Normal" },
-		["niV"]   = { name = "NORMAL",     hl = "Normal" },
-		["nt"]    = { name = "NORMAL",     hl = "Normal" },
-		["ntT"]   = { name = "NORMAL",     hl = "Normal" },
-		["v"]     = { name = "VISUAL",     hl = "Visual" },
-		["vs"]    = { name = "VISUAL",     hl = "Visual" },
-		["V"]     = { name = "V-LINE",     hl = "Visual" },
-		["Vs"]    = { name = "V-LINE",     hl = "Visual" },
-		["\22"]   = { name = "V-BLOCK",    hl = "Visual" },
-		["\22s"]  = { name = "V-BLOCK",    hl = "Visual" },
-		["s"]     = { name = "SELECT",     hl = "Insert" },
-		["S"]     = { name = "S-LINE",     hl = "Normal" },
-		["\19"]   = { name = "S-BLOCK",    hl = "Normal" },
-		["i"]     = { name = "INSERT",     hl = "Insert" },
-		["ic"]    = { name = "INSERT",     hl = "Insert" },
-		["ix"]    = { name = "INSERT",     hl = "Insert" },
-		["R"]     = { name = "REPLACE",    hl = "Replace" },
-		["Rc"]    = { name = "REPLACE",    hl = "Replace" },
-		["Rx"]    = { name = "REPLACE",    hl = "Replace" },
-		["Rv"]    = { name = "V-REPLACE",  hl = "Replace" },
-		["Rvc"]   = { name = "V-REPLACE",  hl = "Replace" },
-		["Rvx"]   = { name = "V-REPLACE",  hl = "Replace" },
-		["c"]     = { name = "COMMAND",    hl = "Command" },
-		["cv"]    = { name = "EX",         hl = "Command" },
-		["ce"]    = { name = "EX",         hl = "Command" },
-		["r"]     = { name = "REPLACE",    hl = "Normal" },
-		["rm"]    = { name = "MORE",       hl = "Normal" },
-		["r?"]    = { name = "CONFIRM",    hl = "Normal" },
-		["!"]     = { name = "SHELL",      hl = "Normal" },
-		["t"]     = { name = "TERMINAL",   hl = "Command" },
-	}
+  -- stylua: ignore start
+  local mode_settings = {
+    ["n"]     = { name = "NORMAL",     hl = "Normal" },
+    ["no"]    = { name = "OP-PENDING", hl = "Pending" },
+    ["nov"]   = { name = "OP-PENDING", hl = "Pending" },
+    ["noV"]   = { name = "OP-PENDING", hl = "Pending" },
+    ["no\22"] = { name = "OP-PENDING", hl = "Pending" },
+    ["niI"]   = { name = "NORMAL",     hl = "Normal" },
+    ["niR"]   = { name = "NORMAL",     hl = "Normal" },
+    ["niV"]   = { name = "NORMAL",     hl = "Normal" },
+    ["nt"]    = { name = "NORMAL",     hl = "Normal" },
+    ["ntT"]   = { name = "NORMAL",     hl = "Normal" },
+    ["v"]     = { name = "VISUAL",     hl = "Visual" },
+    ["vs"]    = { name = "VISUAL",     hl = "Visual" },
+    ["V"]     = { name = "V-LINE",     hl = "Visual" },
+    ["Vs"]    = { name = "V-LINE",     hl = "Visual" },
+    ["\22"]   = { name = "V-BLOCK",    hl = "Visual" },
+    ["\22s"]  = { name = "V-BLOCK",    hl = "Visual" },
+    ["s"]     = { name = "SELECT",     hl = "Insert" },
+    ["S"]     = { name = "S-LINE",     hl = "Normal" },
+    ["\19"]   = { name = "S-BLOCK",    hl = "Normal" },
+    ["i"]     = { name = "INSERT",     hl = "Insert" },
+    ["ic"]    = { name = "INSERT",     hl = "Insert" },
+    ["ix"]    = { name = "INSERT",     hl = "Insert" },
+    ["R"]     = { name = "REPLACE",    hl = "Replace" },
+    ["Rc"]    = { name = "REPLACE",    hl = "Replace" },
+    ["Rx"]    = { name = "REPLACE",    hl = "Replace" },
+    ["Rv"]    = { name = "V-REPLACE",  hl = "Replace" },
+    ["Rvc"]   = { name = "V-REPLACE",  hl = "Replace" },
+    ["Rvx"]   = { name = "V-REPLACE",  hl = "Replace" },
+    ["c"]     = { name = "COMMAND",    hl = "Command" },
+    ["cv"]    = { name = "EX",         hl = "Command" },
+    ["ce"]    = { name = "EX",         hl = "Command" },
+    ["r"]     = { name = "REPLACE",    hl = "Normal" },
+    ["rm"]    = { name = "MORE",       hl = "Normal" },
+    ["r?"]    = { name = "CONFIRM",    hl = "Normal" },
+    ["!"]     = { name = "SHELL",      hl = "Normal" },
+    ["t"]     = { name = "TERMINAL",   hl = "Command" },
+  }
   -- stylua: ignore end
 
-  local settings = mode_settings[vim.api.nvim_get_mode().mode] or {}
-  local mode = settings.name or "UNKNOWN"
-  local hl = settings.hl or "Other"
+  local settings  = mode_settings[vim.api.nvim_get_mode().mode] or {}
+  local mode      = settings.name or "UNKNOWN"
+  local hl        = "StatusLineMode" .. (settings.hl or "Other")
+  local hl_sep    = hl .. "Sep"
 
-  return sl_hl("StatusLineMode" .. hl)
-    .. " " .. mode .. " "
+  return {
+    gen_component({ " ", mode, " " }, hl),
+    gen_component({ separators.powerline.left }, hl_sep),
+  }
 end
 
 vim.api.nvim_create_autocmd("User", {
   pattern = "GitSignsUpdate",
   group = vim.api.nvim_create_augroup("barnt/statusline_gitsigns", { clear = true }),
-  command = "redrawstatus",
+  command = "redrawstatus"
 })
 
----@return string?
+---@return StatuslineComponent
 local git_component = function()
   local head = vim.b.gitsigns_head
   if not head or head == "" then
-    return
+    return {}
   end
 
-  local component = highlight_icon(icons.misc.branch) .. " " .. sl_hl("StatusLine") .. head .. " "
+  local segments = {}
+  vim.list_extend(segments, icon_segments(icons.misc.branch))
+  table.insert(segments, gen_component({ head, " " }))
 
   local dict = vim.b.gitsigns_status_dict
+  local git_icons = Utils.ui.icons.git
   if dict then
-    local parts = {}
     if (dict.added or 0) > 0 then
-      table.insert(parts, sl_hl("StatusLineDiffAdded") .. Utils.ui.icons.git.added .. dict.added .. " ")
+      table.insert(segments, gen_component({ git_icons.added, dict.added, " " }, "StatusLineDiffAdded"))
     end
     if (dict.changed or 0) > 0 then
-      table.insert(parts, sl_hl("StatusLineDiffChanged") .. Utils.ui.icons.git.modified .. dict.changed .. " ")
+      table.insert(segments, gen_component({ git_icons.modified, dict.changed, " " }, "StatusLineDiffChanged"))
     end
     if (dict.removed or 0) > 0 then
-      table.insert(parts, sl_hl("StatusLineDiffRemoved") .. Utils.ui.icons.git.removed .. dict.removed .. " ")
+      table.insert(segments, gen_component({ git_icons.removed, dict.removed, " " }, "StatusLineDiffRemoved"))
     end
-		if #parts > 0 then
-			component = component .. " " .. table.concat(parts, sl_hl("StatusLine"))
-		end
-  end
-	return component .. separators.compontent.left
-end
-
----@return string?
-local dap_component = function()
-  if not package.loaded["dap"] or require("dap").status() == "" then
-    return
   end
 
-  return string.format("%%#%s#%s  %s", "Special", icons.misc.bug.symbol, require("dap").status())
+  table.insert(segments, gen_component({ separators.component.left }))
+  return segments
 end
 
----@type table<string, string?>
-local progress_status = {
-  client = nil,
-  kind = nil,
-  title = nil,
-}
-
-vim.api.nvim_create_autocmd("LspProgress", {
-  group = vim.api.nvim_create_augroup("barnt/statusline", { clear = true }),
-  desc = "Update LSP progress in statusline",
-  pattern = { "begin", "end" },
-  callback = function(args)
-    -- This should in theory never happen, but I've seen weird errors.
-    if not args.data then
-      return
-    end
-
-    progress_status = {
-      client = vim.lsp.get_client_by_id(args.data.client_id).name,
-      kind = args.data.params.value.kind,
-      title = args.data.params.value.title,
-    }
-
-    if progress_status.kind == "end" then
-      progress_status.title = nil
-      -- Wait a bit before clearing the status.
-      vim.defer_fn(function()
-        vim.api.nvim__redraw { statusline = true }
-      end, 3000)
-    else
-      vim.api.nvim__redraw { statusline = true }
-    end
-  end,
-})
-
----@return string?
-local lsp_progress_component = function()
-  if not progress_status.client or not progress_status.title then
-    return
-  end
-
-  -- Avoid noisy messages while typing.
-  if vim.startswith(vim.api.nvim_get_mode().mode, "i") then
-    return
-  end
-
-  return highlight_icon(icons.misc.lsp)
-    .. " "
-    .. sl_hl("StatusLineDim")
-    .. progress_status.client
-    .. ": "
-    .. sl_hl("StatusLineDimItalic")
-    .. progress_status.title
-end
-
----@return string?
-local lsp_clients_component = function()
-	local clients = vim.lsp.get_clients({ bufnr = 0 })
-	if #clients == 0 then
-		return 
-	end
-
-	local names = vim.iter(clients):map(function(c) return c.name end):totable()
-	return highlight_icon(icons.misc.lsp)
-		.. " "
-		.. sl_hl("StatusLineDim")
-		.. table.concat(names, ", ")
-end
-
----@return string
+---@return StatuslineComponent
 local diagnostic_component = function()
-  local parts = {}
+  local segments = {}
+
   for _, severity in ipairs({ "ERROR", "WARN" }) do
     local count = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity[severity] })
     if count > 0 then
       local icon = icons.diagnostics[severity]
-      table.insert(parts, sl_hl("Diagnostic" .. severity:sub(1,1) .. severity:sub(2):lower()) .. icon.symbol .. " " .. count .. " ")
+      local hl   = "Diagnostic" .. severity:sub(1, 1) .. severity:sub(2):lower()
+      table.insert(segments, gen_component({ icon.symbol, tostring(count), " " }, hl))
     end
   end
 
-  if #parts == 0 then
-    return ""
+  if #segments > 0 then
+    table.insert(segments, gen_component({ separators.component.left }))
   end
 
-  return table.concat(parts, sl_hl("StatusLine")) .. separators.compontent.left
+  return segments
 end
 
---- The buffer's filetype.
----@return string?
+---@return StatuslineComponent
 local file_component = function()
   local devicons = require("nvim-web-devicons")
 
-  local buftype = vim.bo.buftype
-  local ft = vim.bo.filetype
-
+  local ft       = vim.bo.filetype
   local buf_path = vim.api.nvim_buf_get_name(0)
   local buf_name = vim.fn.fnamemodify(buf_path, ":t")
-  local buf_ext = vim.fn.fnamemodify(buf_path, ":e")
+  local buf_ext  = vim.fn.fnamemodify(buf_path, ":e")
 
   if ft == "" and buf_path == "" then
-    return
+    return {}
   end
 
-  local icon = (icons.ft[ft] or {}).symbol
+  local icon    = (icons.ft[ft] or {}).symbol
   local icon_hl = (icons.ft[ft] or {}).group
 
   if not icon then
@@ -269,12 +258,93 @@ local file_component = function()
   end
 
   local display_name = buf_name == "" and buf_path or buf_name
-  return sl_hl(icon_hl) .. icon .. " " .. sl_hl("StatusLineBold") .. display_name
+
+  return {
+    gen_component({ icon, " " }, icon_hl),
+    gen_component({ display_name }, "StatusLineBold"),
+  }
 end
 
+---@return StatuslineComponent
+local dap_component = function()
+  if not package.loaded["dap"] or require("dap").status() == "" then
+    return {}
+  end
+
+  return {
+    gen_component({ icons.misc.bug.symbol }, "Special"),
+    gen_component({ "  ", require("dap").status() })
+  }
+end
+
+---@type table<string, string?>
+local progress_status = {
+  client = nil,
+  kind   = nil,
+  title  = nil,
+}
+
+vim.api.nvim_create_autocmd("LspProgress", {
+  group = vim.api.nvim_create_augroup("barnt/statusline", { clear = true }),
+  desc = "Update LSP Progress in statusline",
+  pattern = { "begin", "end" },
+  callback = function(args)
+    if not args.data then return end
+
+    progress_status = {
+      client = vim.lsp.get_client_by_id(args.data.client_id).name,
+      kind   = args.data.params.value.kind,
+      title  = args.data.params.value.title
+    }
+
+    if progress_status.kind == "end" then
+      progress_status.title = nil
+      vim.defer_fn(function()
+        vim.api.nvim__redraw { statusline = true }
+      end, 3000)
+    else
+      vim.api.nvim__redraw { statusline = true }
+    end
+  end
+})
+
+---@return StatuslineComponent
+local lsp_progress_component = function()
+  local invalid = not progress_status.client
+    or not progress_status.title
+    or vim.startswith(vim.api.nvim_get_mode().mode, "i")
+
+  if invalid then
+    return {}
+  end
+
+  local segments = {}
+  vim.list_extend(segments, icon_segments(icons.misc.lsp))
+  table.insert(segments, gen_component({ progress_status.client, ": " }, "StatusLineDim"))
+  table.insert(segments, gen_component({ progress_status.title }, "StatusLineDimItalic"))
+  return segments
+end
+
+---@return StatuslineComponent
+local lsp_clients_component = function()
+  local clients = vim.lsp.get_clients({ bufnr = 0 })
+  if #clients == 0 then
+    return {}
+  end
+
+  local names = vim.iter(clients):map(function(c) return c.name end):totable()
+  local segments = {}
+  vim.list_extend(segments, icon_segments(icons.misc.lsp))
+  table.insert(segments, gen_component({ table.concat(names, ", ") }, "StatusLineDim"))
+  return segments
+end
+
+---@return StatuslineComponent
 local file_percent_component = function()
-  local cur = vim.fn.line(".") local total = vim.fn.line("$")
+  local cur   = vim.fn.line(".")
+  local total = vim.fn.line("$")
   local pct
+
   if cur == 1 then
     pct = "TOP"
   elseif cur == total then
@@ -283,35 +353,79 @@ local file_percent_component = function()
     pct = string.format("%2d%%%%", math.floor(cur / total * 100))
   end
 
-  return separators.compontent.right
-    .. sl_hl("StatusLineBold")
-    .. " " .. pct .. " "
-    .. string.format("%2d:%-2d ", vim.fn.line("."), vim.fn.virtcol("."))
+  local pos = string.format("%2d:%-2d", vim.fn.line("."), vim.fn.virtcol("."))
+
+  return {
+    gen_component({ separators.component.right }),
+    gen_component({ " ", pct, " ", pos, " " }, "StatusLineBold"),
+  }
 end
 
+---@return StatuslineComponent
 local time_component = function()
-  return sl_hl("StatusLineModeInsert")
-    .. "  " .. os.date("%R") .. " "
+  local settings  = mode_hl_sources[vim.api.nvim_get_mode().mode] -- intentionally nil for most modes
+  -- Reuse whatever the current mode color is for the right-side cap
+  local cur_mode  = vim.api.nvim_get_mode().mode
+  -- stylua: ignore start
+  local mode_map  = {
+    n = "Normal", no = "Pending", nov = "Pending", ["no\22"] = "Pending",
+    v = "Visual", V = "Visual", ["\22"] = "Visual",
+    i = "Insert", ic = "Insert", ix = "Insert",
+    R = "Replace", Rv = "Replace",
+    c = "Command", cv = "Command", t = "Command",
+  }
+  -- stylua: ignore end
+  local hl_key    = mode_map[cur_mode] or "Normal"
+  local hl        = "StatusLineMode" .. hl_key
+  local hl_sep    = hl .. "Sep"
+
+  return {
+    gen_component({ separators.powerline.right }, hl_sep),
+    gen_component({ "  ", tostring(os.date("%R")), " " }, hl),
+  }
 end
 
----@return string?
+---@return StatuslineComponent
 local modified_component = function()
-  if vim.bo.modified then
-    return sl_hl("StatusLineModified") .. "[+]"
+  if not vim.bo.modified then
+    return {}
   end
+  return {
+    gen_component({ " [+]" }, "StatusLineDiffAdded")
+  }
 end
 
----@return string
+---@return StatuslineComponent
 local wordcount_component = function()
-  local wc = vim.api.nvim_buf_call(0, vim.fn.wordcount)
+  local wc     = vim.api.nvim_buf_call(0, vim.fn.wordcount)
   local visual = vim.fn.mode():match("^[vV\22]")
 
-  return sl_hl("StatusLineDim")
-    .. " "
-    .. string.format("%s%sw", visual and wc.visual_words .. "/" or "", wc.words)
-    .. " "
-    .. string.format("%s%sc", visual and wc.visual_chars .. "/" or "", wc.chars)
-    .. " "
+  return {
+    gen_component({
+      string.format(" %s%sw %s%sc ",
+        visual and wc.visual_words .. "/" or "", wc.words,
+        visual and wc.visual_chars .. "/" or "", wc.chars),
+    }, "StatusLineDim")
+  }
+end
+
+-- ╭─────────────────────────────────────────────────────────╮
+-- │ Render                                                  │
+-- ╰─────────────────────────────────────────────────────────╯
+
+---@param groups StatuslineComponent[]
+---@return string
+local render_section = function(groups)
+  local segments = {}
+  for _, component in ipairs(groups) do
+    if #component > 0 then
+      if #segments > 0 then
+        table.insert(segments, gen_component({ " " }))
+      end
+      vim.list_extend(segments, component)
+    end
+  end
+  return serialize_segments(segments)
 end
 
 function M.render()
@@ -319,53 +433,32 @@ function M.render()
 
   if not win_is_active then
     local file = file_component()
-    return file and " " .. file or ""
+    return #file > 0 and " " .. serialize_segments(file) or ""
   end
 
   local ft = vim.bo.filetype
 
-  local left_components = {
+  local left = render_section({
     mode_component(),
     git_component(),
     diagnostic_component(),
     file_component(),
     modified_component(),
-  }
+  })
 
-  local center_components = {
+  local center = render_section({
     dap_component(),
     lsp_progress_component(),
-  }
+  })
 
-  local right_components = {
-    ft == "markdown" and wordcount_component() or "",
+  local right = render_section({
+    ft == "markdown" and wordcount_component() or {},
     lsp_clients_component(),
     file_percent_component(),
-    time_component()
-  }
+    time_component(),
+  })
 
-  local left = table.concat(
-    vim.iter(left_components):filter(function(c) return c and c~= "" end):totable(),
-    sl_hl("StatusLine") .. " "
-  )
-
-  local center = table.concat(
-    vim.iter(center_components):filter(function(c) return c and c ~= "" end):totable(),
-      sl_hl("StatusLine") .. " "
-  )
-
-  local right = table.concat(
-    vim.iter(right_components):filter(function(c) return c and c ~= "" end):totable(),
-      sl_hl("StatusLine") .. " "
-  )
-
-  return left
-    .. sl_hl("StatusLine") .. " "
-    .. "%="
-    .. center
-    .. "%="
-    .. right
+  return left .. "%#StatusLine# %=" .. center .. "%=" .. right
 end
-
 
 return M
