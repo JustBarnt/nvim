@@ -44,6 +44,7 @@
   "snacks.nvim": { "branch": "main", "commit": "ad9ede6a9cddf16cedbd31b8932d6dcdee9b716e" },
   "sort.nvim": { "branch": "main", "commit": "fa6318fc6676294bff0fd56ae8e8f9552be1ac7e" },
   "teide.nvim": { "branch": "main", "commit": "95041d1d78e786bd88be64bca3e1771f7b6236df" },
+  "thorn.nvim": { "branch": "main", "commit": "a793d5026ae09a17da175c5d8bd884df18a4b9a1" },
   "time-machine.nvim": { "branch": "main", "commit": "d9e8de2b0fd485182b759e5e7eec82014bc43f72" },
   "tiny-cmdline.nvim": { "branch": "main", "commit": "ad58747b955d0743ccfd56e97da1a4c1fac89f58" },
   "tiny-code-action.nvim": { "branch": "main", "commit": "9f4b05c2f93f76a7bd517d9587ad0dc73cca0d0d" },
