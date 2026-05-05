@@ -175,4 +175,4 @@ require("vim._core.ui2").enable({
 	},
 })
 
-vim.cmd("colorscheme thorn-dark-warm")
+vim.cmd("colorscheme everforest")
