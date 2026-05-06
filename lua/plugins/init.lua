@@ -2,6 +2,8 @@ return {
   "nvim-lua/plenary.nvim",
   {
     "nvim-mini/mini.icons",
+    priority = 1000,
+    lazy = false,
     config = function()
       require("mini.icons").setup({
         style = "glyph",

@@ -2,7 +2,6 @@ return {
   {
     "mfussenegger/nvim-dap",
     dependencies = {
-      "rcarriga/nvim-dap-ui",
       {
         "theHamsta/nvim-dap-virtual-text",
         opts = {},
@@ -45,28 +44,18 @@ return {
     end,
   },
   {
-    "rcarriga/nvim-dap-ui",
-    dependencies = { "nvim-neotest/nvim-nio" },
-    -- stylua: ignore
-    keys = {
-      { "<leader>du", function() require("dapui").toggle({ }) end, desc = "Dap UI" },
-      { "<leader>de", function() require("dapui").eval() end, desc = "Eval", mode = {"n", "x"} },
+    "igorlfs/nvim-dap-view",
+    lazy = false,
+    version = "1.*",
+    ---@module 'dap-view'
+    ---@type dapview.Config
+    opts = {
+      winbar = {
+        controls = { enabled = true }
+      },
+      auto_toggle = true,
+      follow_tab = true,
     },
-    opts = {},
-    config = function(_, opts)
-      local dap = require("dap")
-      local dapui = require("dapui")
-      dapui.setup(opts)
-      dap.listeners.after.event_initialized["dapui_config"] = function()
-        dapui.open {}
-      end
-      dap.listeners.before.event_terminated["dapui_config"] = function()
-        dapui.close {}
-      end
-      dap.listeners.before.event_exited["dapui_config"] = function()
-        dapui.close {}
-      end
-    end,
   },
   {
     "jay-babu/mason-nvim-dap.nvim",
