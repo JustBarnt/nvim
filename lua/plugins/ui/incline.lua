@@ -5,10 +5,16 @@ return {
     local d_icons = Utils.ui.icons.diagnostics
     require("incline").setup {
       render = function(props)
+        local head = vim.b.gitsigns_head or ""
         local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ":t")
         if filename == "" then
           filename = "[No Name]"
         end
+
+        if head ~= "" then
+          head = "on " .. head .. " " .. Utils.ui.icons.misc.branch
+        end
+
         local ft_icon, ft_color, is_default = MiniIcons.get("file", filename)
 
         local function get_git_diff()
@@ -50,6 +56,7 @@ return {
           { get_git_diff() },
           { (ft_icon or "") .. " ", guifg = ft_color, guibg = "none" },
           { filename .. " ", gui = vim.bo[props.buf].modified and "bold,italic" or "bold" },
+          { head, guifg = ft_color, gui = "bold"}
         }
       end,
     }

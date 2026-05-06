@@ -188,77 +188,10 @@ local git_component = function()
   end
 
   local segments = {}
-  vim.list_extend(segments, icon_segments(icons.misc.branch))
   table.insert(segments, gen_component({ head, " " }))
-
-  local dict = vim.b.gitsigns_status_dict
-  local git_icons = Utils.ui.icons.git
-  if dict then
-    if (dict.added or 0) > 0 then
-      table.insert(segments, gen_component({ git_icons.added, dict.added, " " }, "StatusLineDiffAdded"))
-    end
-    if (dict.changed or 0) > 0 then
-      table.insert(segments, gen_component({ git_icons.modified, dict.changed, " " }, "StatusLineDiffChanged"))
-    end
-    if (dict.removed or 0) > 0 then
-      table.insert(segments, gen_component({ git_icons.removed, dict.removed, " " }, "StatusLineDiffRemoved"))
-    end
-  end
-
-  table.insert(segments, gen_component({ separators.component.left }))
-  return segments
-end
-
----@return StatuslineComponent
-local diagnostic_component = function()
-  local segments = {}
-
-  for _, severity in ipairs({ "ERROR", "WARN" }) do
-    local count = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity[severity] })
-    if count > 0 then
-      local icon = icons.diagnostics[severity]
-      local hl   = "Diagnostic" .. severity:sub(1, 1) .. severity:sub(2):lower()
-      table.insert(segments, gen_component({ icon.symbol, tostring(count), " " }, hl))
-    end
-  end
-
-  if #segments > 0 then
-    table.insert(segments, gen_component({ separators.component.left }))
-  end
+  vim.list_extend(segments, icon_segments(icons.misc.branch))
 
   return segments
-end
-
----@return StatuslineComponent
-local file_component = function()
-  local devicons = require("nvim-web-devicons")
-
-  local ft       = vim.bo.filetype
-  local buf_path = vim.api.nvim_buf_get_name(0)
-  local buf_name = vim.fn.fnamemodify(buf_path, ":t")
-  local buf_ext  = vim.fn.fnamemodify(buf_path, ":e")
-
-  if ft == "" and buf_path == "" then
-    return {}
-  end
-
-  local icon    = (icons.ft[ft] or {}).symbol
-  local icon_hl = (icons.ft[ft] or {}).group
-
-  if not icon then
-    icon, icon_hl = devicons.get_icon(buf_name, buf_ext)
-  end
-
-  if not icon then
-    icon, icon_hl = devicons.get_icon_by_filetype(ft, { default = true })
-  end
-
-  local display_name = buf_name == "" and buf_path or buf_name
-
-  return {
-    gen_component({ icon, " " }, icon_hl),
-    gen_component({ display_name }, "StatusLineBold"),
-  }
 end
 
 ---@return StatuslineComponent
@@ -425,18 +358,11 @@ end
 function M.render()
   local win_is_active = tonumber(vim.g.actual_curwin) == vim.api.nvim_get_current_win()
 
-  if not win_is_active then
-    local file = file_component()
-    return #file > 0 and " " .. serialize_segments(file) or ""
-  end
-
   local ft = vim.bo.filetype
 
   local left = render_section({
     mode_component(),
     git_component(),
-    diagnostic_component(),
-    file_component(),
     modified_component(),
   })
 
