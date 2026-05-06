@@ -103,8 +103,6 @@ local set_hl_groups = function()
   for mode_name, source in pairs(mode_hl_sources) do
     local mode_bg = get_hl(source.group)[source.attr]
     groups["StatusLineMode" .. mode_name] = { fg = sl_bg, bg = mode_bg }
-    -- Sep group: arrow fg matches the mode block color, bg is the statusline bg
-    groups["StatusLineMode" .. mode_name .. "Sep"] = { fg = mode_bg, bg = sl_bg }
   end
 
   for group, opts in pairs(groups) do
@@ -170,11 +168,9 @@ local mode_component = function()
   local settings  = mode_settings[vim.api.nvim_get_mode().mode] or {}
   local mode      = settings.name or "UNKNOWN"
   local hl        = "StatusLineMode" .. (settings.hl or "Other")
-  local hl_sep    = hl .. "Sep"
 
   return {
-    gen_component({ " ", mode, " " }, hl),
-    gen_component({ separators.powerline.left }, hl_sep),
+    gen_component({ " ", mode, " " }, hl)
   }
 end
 
@@ -377,10 +373,8 @@ local time_component = function()
   -- stylua: ignore end
   local hl_key    = mode_map[cur_mode] or "Normal"
   local hl        = "StatusLineMode" .. hl_key
-  local hl_sep    = hl .. "Sep"
 
   return {
-    gen_component({ separators.powerline.right }, hl_sep),
     gen_component({ "  ", tostring(os.date("%R")), " " }, hl),
   }
 end
