@@ -24,7 +24,7 @@ function M.keymaps(ev)
   local client = assert(vim.lsp.get_client_by_id(ev.data.client_id))
   -- Lsp Keymaps
   -- stylua: ignore start
-  map.set("n", "K", vim.lsp.buf.hover, { desc = "Hover", buffer = ev.buf })
+  map.set("n", "K", require("pretty_hover").hover, { desc = "Hover", buffer = ev.buf })
   map.set("n", "gd", "<CMD>Glance definitions<CR>", { desc = "Goto Definition", buffer = ev.buf })
   map.set("n", "gD", function() Snacks.picker.lsp_declarations() end, { desc = "Goto Declaration", buffer = ev.buf })
   map.set("n", "grr", "<CMD>Glance references<CR>", { desc = "Goto References", buffer = ev.buf })
