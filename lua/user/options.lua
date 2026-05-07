@@ -20,7 +20,7 @@ opt.clipboard = "unnamedplus"
 opt.mouse = "a"
 
 -- Command Line and Messages
-opt.cmdheight = 0
+opt.cmdheight = 1
 opt.inccommand = "split"
 
 -- Completion
