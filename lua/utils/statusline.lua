@@ -110,13 +110,15 @@ local set_hl_groups = function()
   end
 end
 
-set_hl_groups()
-
 vim.api.nvim_create_autocmd("ColorScheme", {
   group = vim.api.nvim_create_augroup("barnt/statusline_colors", { clear = true }),
   desc = "Re-apply statusline highlights on colorscheme change",
   callback = set_hl_groups,
 })
+
+vim.schedule(function()
+  set_hl_groups()
+end)
 
 -- ╭─────────────────────────────────────────────────────────╮
 -- │ Components                                              │
