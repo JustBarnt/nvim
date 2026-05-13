@@ -39,3 +39,7 @@ vim.g.debug = false
 -- Bootstrap lazy.nvim we need to make sure any thing plugin releated is
 -- loaded and available for the rest of our configuration startup
 require("lazy-bootstrap")
+
+if vim.g.neovide then
+   require "user.neovide"
+end
