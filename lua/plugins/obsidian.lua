@@ -1,5 +1,6 @@
 return {
   "obsidian.nvim",
+  enabled = false,
   ---@module "obsidian"
   ---@type obsidian.config
   opts = {
