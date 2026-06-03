@@ -4,8 +4,8 @@
 ---@field dap        utils.dap
 ---@field git        utils.git
 ---@field lsp        utils.lsp
----@field lualine    utils.lualine
 ---@field marks      utils.marks
+---@field overseer   utils.overseer
 ---@field root       utils.root
 ---@field statusline utils.statusline
 ---@field treesitter utils.treesitter

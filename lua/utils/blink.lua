@@ -99,11 +99,15 @@ M.signature = {
 ---@diagnostic disable: missing-fields
 M.sources = {
   -- add lazydev to your completion providers
-  default = { "lsp", "easy-dotnet", "path", "snippets", "buffer" },
+  default = { "lsp", "easy-dotnet", "path", "snippets", "buffer", "overseer" },
   per_filetype = {
     lua = { inherit_defaults = true, "lazydev" },
   },
   providers = {
+    ["overseer"] = {
+      name = "overseer",
+      module = "blink.compat.source",
+    },
     ["easy-dotnet"] = {
       name = "easy-dotnet",
       enabled = true,
