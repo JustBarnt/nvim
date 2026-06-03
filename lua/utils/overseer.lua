@@ -42,6 +42,7 @@ M.templates = {
     builder = function(params)
       return {
         cmd = { "cmake", "--build", "--preset", params.presets },
+        components = { { "on_output_quickfix", open = true }, "default" },
       }
     end,
     -- condition = {
@@ -69,6 +70,7 @@ M.templates = {
     builder = function(params)
       return {
         cmd = { "cmake", "--preset", params.presets },
+        components = { { "on_output_quickfix", open = true }, "default" },
       }
     end,
     -- condition = {
@@ -80,7 +82,6 @@ M.templates = {
 function M.setup_template()
   for _, template in ipairs(M.templates) do
     require("overseer").register_template(template)
-    vim.notify(string.format("Registered Template: %s", template.name), vim.log.levels.INFO)
   end
 end
 
