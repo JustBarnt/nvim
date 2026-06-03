@@ -4,6 +4,10 @@
 
 -- TODO: Add total characters selected with cursor to statusbar when visually selecting string
 
+if vim.g.vscode then
+    return
+end
+
  _G.dd = function(...)
    require("snacks.debug").inspect(...)
  end

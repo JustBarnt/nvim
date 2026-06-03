@@ -16,7 +16,7 @@ return {
         "css-lsp", "css-variables-language-server",
         "cssmodules-language-server", "emmet-language-server", "gopls",
         "html-lsp", "intelephense", "json-lsp", "just-lsp", "kotlin-lsp",
-        "laravel_ls", "lemminx", "lua-language-server", "nushell",
+        "laravel_ls", "lemminx", "lua-language-server", "nushell", "neocmakelsp",
         "powershell-editor-services", "pyrefly", "roslyn", "ruff",
         "rust-analyzer", "svelte-language-server", "tailwindcss-language-server", "taplo",
         "tsgo", "vim-language-server", "yaml-language-server",

@@ -20,6 +20,7 @@ return {
         ["lemminx"] = "lemminx",
         ["lua-language-server"] = "lua_ls",
         ["nushell"] = "nushell",
+        ["neocmakelsp"] = "neocmakelsp",
         ["powershell-editor-services"] = "powershell_es",
         ["pyrefly"] = "pyrefly",
         ["roslyn"] = "roslyn_ls",
