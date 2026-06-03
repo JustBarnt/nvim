@@ -42,7 +42,6 @@ M.templates = {
     builder = function(params)
       return {
         cmd = { "cmake", "--build", "--preset", params.presets },
-        components = { { "on_output_quickfix", open = true }, "default" },
       }
     end,
     -- condition = {
@@ -70,7 +69,6 @@ M.templates = {
     builder = function(params)
       return {
         cmd = { "cmake", "--preset", params.presets },
-        components = { { "on_output_quickfix", open = true }, "default" },
       }
     end,
     -- condition = {
