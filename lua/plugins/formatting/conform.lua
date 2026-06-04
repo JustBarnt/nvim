@@ -26,6 +26,9 @@ return {
         lsp_format = "fallback",
       },
       formatters = {
+        ["clang-format"] = {
+          command = "clang-format"
+        },
         biome = {
           require_cwd = true,
         },
@@ -49,7 +52,6 @@ return {
       },
       formatters_by_ft = {
         cpp = { "clang-format" },
-        c_sharp = { "clang-format" },
         nu = { "topiary_nu" },
         json = { "jq" },
         jsonc = { "biome" },

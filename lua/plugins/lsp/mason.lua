@@ -8,9 +8,8 @@ return {
       -- stylua: ignore start
       ensure_installed = {
         -- formatters
-        "clang-format", "gofumpt", "goimports",
-        "gomodifytags", "shfmt", "stylua",
-        "xmlformatter",
+        "gofumpt", "goimports", "gomodifytags",
+        "shfmt", "stylua", "xmlformatter",
 
         -- language servers
         "css-lsp", "css-variables-language-server",
