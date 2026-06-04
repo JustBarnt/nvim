@@ -26,9 +26,6 @@ return {
         lsp_format = "fallback",
       },
       formatters = {
-        ["clang-format"] = {
-          command = "clang-format"
-        },
         biome = {
           require_cwd = true,
         },
