@@ -1,7 +1,6 @@
 return {
   {
-    -- "justbarnt/buffer-sticks.nvim",
-    dir = "D:/Personal/Github/buffer-sticks.nvim/",
+    "justbarnt/buffer-sticks.nvim",
     event = "VeryLazy",
     opts = {
       show_by_default = true,
