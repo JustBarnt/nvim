@@ -97,7 +97,7 @@ autocmd("TextYankPost", {
   group = augroup("barnt/yank", { clear = true }),
   desc = "Highlight yanked text",
   callback = function()
-    vim.hl.on_yank()
+    vim.hl.hl_op()
   end,
 })
 
@@ -217,15 +217,3 @@ autocmd({ "FileType" }, {
     end, 1000)
   end 
 })
-
--- autocmd({ "CursorMoved", "CursorMovedI", "WinScrolled" }, {
---   desc = "Fix scrolloff when you are at the EOF",
---   group = augroup("barnt/scroll_eof", { clear = true }),
---   callback = function(event)
---     if api.nvim_win_get_config(0).relative ~= "" then
---       return -- Ignore floating windows
---     end
---
---     local win_height = fn.winheight(0)
---   end
--- })
