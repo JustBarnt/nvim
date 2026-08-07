@@ -2,16 +2,10 @@ local flash_remote_opts = { remote_op = { restore = true, motion = false } }
 local flash_inc_select  = { actions = { ["<c-space>"] = "next", ["<BS>"] = "prev" } }
 
 return {
-  "folke/flash.nvim",
+  "justbarnt/flash.nvim",
   event = "VeryLazy",
   ---@type Flash.Config
-  opts = {
-    modes = {
-      char = {
-        jump_labels = true
-      },
-    },
-  },
+  opts = {},
   -- stylua: ignore
   keys = {
     { "s",         mode = { "n", "x", "o" }, function() require("flash").jump() end,                       desc = "Flash" },
