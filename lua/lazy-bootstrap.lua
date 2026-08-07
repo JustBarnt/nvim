@@ -42,7 +42,7 @@ require("lazy").setup {
   },
   rocks = { enabled = false },
   local_spec = true,
-  install = { colorscheme = { "everforest", "tokyonight", "onedark", "habamax" } },
+  install = { colorscheme = { "tokyonight", "habamax" } },
   checker = { enabled = true, notify = false },
   performance = {
     rtp = {
