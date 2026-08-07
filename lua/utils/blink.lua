@@ -9,7 +9,7 @@ M.appearance = {
 }
 
 ---@type blink.cmp.Fuzzy
-M.fuzzy = { implementation = "prefer_rust" }
+M.fuzzy = { implementation = "prefer_rust", prebuild_binaries = { download = true } }
 
 ---@type blink.cmp.KeymapConfig
 M.keymap_type = { preset = "default" }

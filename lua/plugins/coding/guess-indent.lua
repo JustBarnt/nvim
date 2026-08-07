@@ -1,4 +1,4 @@
-return { 
-  "nmac427/guess-indent.nvim",
-  opts = {}
-}
+vim.pack.add({
+  -- Indent Matching
+  { src = "nmac427/guess-indent.nvim" },
+})

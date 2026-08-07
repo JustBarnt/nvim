@@ -1,9 +1,13 @@
+-- Leader keys
+-- vim.keycode translates keycodes instead of strings
+vim.g.mapleader = vim.keycode("<space>")
+vim.g.maplocalleader = vim.keycode("\\")
+
+
 -- Load a nushell specific terminal setup if
 -- nushell is installed on this system
 
 vim.g.markdown_folding = 1
-
-vim.g.root_spec = { "lsp", { ".git", "lua" }, "cwd"}
 
 if vim.g.nushell == 1 then
   require("user.nushell")
