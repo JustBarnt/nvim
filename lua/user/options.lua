@@ -128,6 +128,8 @@ opt.breakindent = opt.wrap and true or false
 opt.winborder = "rounded"
 opt.diffopt = "internal,filler,closeoff,algorithm:patience,indent-heuristic,inline:char,linematch:40"
 
+opt.messagesopt:append("timeout:5000")
+
 require("vim._core.ui2").enable({
 	enable = true,
 	msg = {
@@ -159,15 +161,11 @@ require("vim._core.ui2").enable({
 			wmsg = "msg",
 			typed_cmd = "cmd",
 		},
-		cmd = {
-			height = 0.5,
-		},
 		dialog = {
 			height = 0.5,
 		},
 		msg = {
 			height = 0.3,
-			timeout = 5000,
 		},
 		pager = {
 			height = 0.5,
