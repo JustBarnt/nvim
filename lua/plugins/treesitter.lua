@@ -40,6 +40,8 @@ return {
         end)
       end
 
+      vim.treesitter.language.register("javascript", "babel")
+
       vim.api.nvim_create_autocmd("FileType", {
         group = vim.api.nvim_create_augroup("barnt/treesitter", { clear = true }),
         callback = function(ev)

@@ -19,7 +19,7 @@ return {
         "laravel_ls", "lemminx", "lua-language-server", "nushell", "neocmakelsp",
         "powershell-editor-services", "pyrefly", "roslyn", "ruff",
         "rust-analyzer", "svelte-language-server", "tailwindcss-language-server", "taplo",
-        "tsgo", "vim-language-server", "yaml-language-server",
+        "tsc", "vim-language-server", "yaml-language-server",
 
         -- linters
         "cmakelint", "shellcheck"
