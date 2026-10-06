@@ -52,8 +52,16 @@ map.set("n", "<leader>Rn", function()
   vim.cmd("restart source " .. vim.fn.fnameescape(session))
 end, { desc = "Restart Neovim" })
 
-map.set({ "n", "v" }, "<leader>rw", function()
+map.set({ "n", "x" }, "<leader>rw", function()
   local word = vim.fn.expand("<cword>")
+  local mode = vim.fn.mode()
+  
+  if mode == "v" or mode == "V" then
+    local lines = vim.fn.getregion(vim.fn.getpos("v"), vim.fn.getpos("."), { type = mode })
+    word = table.concat(lines, "\n")
+    vim.api.nvim_feedkeys(vim.keycode("<Esc>"), "nx", false)
+  end
+
   local prompt = "Replace: %s [%d]:"
   local cpos = vim.api.nvim_win_get_cursor(0)
   local ns_id = vim.api.nvim_create_namespace("replace_word_ns")
@@ -69,7 +77,9 @@ map.set({ "n", "v" }, "<leader>rw", function()
 
   vim.ui.input({ prompt = string.format(prompt, word, #word) }, function(input)
     if input and #input > 0 then
-      vim.cmd(string.format("%%s#%s#%s#g", word, input))
+      local pattern = "\\V" .. vim.fn.escape(word, "\\#"):gsub("\n", "\\n")
+      vim.cmd(string.format("%%s#%s#%s#g", pattern, vim.fn.escape(input, "\\#&~")))
+      cpos[1] = math.min(cpos[1], vim.api.nvim_buf_line_count(0))
       vim.api.nvim_win_set_cursor(0, cpos)
     end
   end)
@@ -83,4 +93,4 @@ map.set({ "n", "v" }, "<leader>rw", function()
       update_virtual_text(bufnr, input_text)
     end,
   })
-end, { desc = "Replace `<cword>` instance in buffer" })
+end, { desc = "Replace `<cword>` or visual selection in buffer" })
