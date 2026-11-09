@@ -13,7 +13,7 @@
 
 ---@type vim.lsp.Config
 return {
-  cmd = { 'D:/personal/3rdPartyLibs/Qt/6.12.0/msvc2022_64/bin/qmlls.exe' },
+  cmd = { 'qmlls' },
   filetypes = { 'qml', 'qmljs' },
   root_markers = { '.git' },
 }
