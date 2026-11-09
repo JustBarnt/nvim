@@ -23,6 +23,7 @@ return {
         ["neocmakelsp"] = "neocmakelsp",
         ["powershell-editor-services"] = "powershell_es",
         ["pyrefly"] = "pyrefly",
+        ["qmlls"] = "qmlls",
         ["roslyn"] = "roslyn_ls",
         ["ruff"] = "ruff",
         ["svelte-language-server"] = "svelte",
