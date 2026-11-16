@@ -173,4 +173,4 @@ require("vim._core.ui2").enable({
 	},
 })
 
-vim.cmd("colorscheme tokyonight-night")
+vim.cmd("colorscheme tokyobones")
