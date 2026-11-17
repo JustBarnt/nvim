@@ -1,6 +1,7 @@
 return {
   {
     "neovim/nvim-lspconfig",
+    enabled = not vim.g.vsneo,
     lazy = false,
     opts_extended = { "lsps" },
     opts = {
@@ -32,7 +33,7 @@ return {
         ["vtsls"] = "vtsls",
         ["vim-language-server"] = "vimls",
         ["yaml-language-server"] = "yamlls",
-      }
+      },
     },
     config = function(_, opts)
       -- Blanket apply capabilities to all LSP's

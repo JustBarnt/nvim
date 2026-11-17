@@ -1,5 +1,6 @@
 return {
   "folke/trouble.nvim",
+  enabled = not vim.g.vsneo,
   event = "VeryLazy",
   specs = {
     {

@@ -1,5 +1,6 @@
 return {
   "b0o/incline.nvim",
+  enabled = not vim.g.vsneo,
   config = function()
     local g_icons = Utils.ui.icons.git
     local d_icons = Utils.ui.icons.diagnostics

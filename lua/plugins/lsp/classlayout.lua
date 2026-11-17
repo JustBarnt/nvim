@@ -2,6 +2,7 @@
 -- In a floating window.
 return {
   "J-Cowsert/classlayout.nvim",
+  enabled = not vim.g.vsneo,
   ft = { "c", "cpp" },
-  opts = {}
+  opts = {},
 }

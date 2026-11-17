@@ -1,6 +1,7 @@
 return {
   {
     "mrcjkb/rustaceanvim",
+    enabled = not vim.g.vsneo,
     version = "^9",
     init = function()
       vim.g.rustaceanvim = {

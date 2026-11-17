@@ -1,12 +1,14 @@
 return {
   {
-    "saghen/blink.compat",
+    "saghen/blink.compat", 
+    enabled = not vim.g.vsneo,
     version = "2.*",
     lazy = true,
     opts = {}
   },
   {
     "saghen/blink.cmp",
+    enabled = not vim.g.vsneo,
     event = { "InsertEnter", "CmdlineEnter" },
     version = "v1.10.2",
     -- build = "cargo build --release",

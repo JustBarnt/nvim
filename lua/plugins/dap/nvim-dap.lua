@@ -1,9 +1,11 @@
 return {
   {
     "mfussenegger/nvim-dap",
+    enabled = not vim.g.vsneo,
     dependencies = {
       {
         "theHamsta/nvim-dap-virtual-text",
+        enabled = not vim.g.vsneo,
         opts = {},
       },
     },
@@ -45,6 +47,7 @@ return {
   },
   {
     "igorlfs/nvim-dap-view",
+    enabled = not vim.g.vsneo,
     lazy = false,
     version = "1.*",
     ---@module 'dap-view'
@@ -59,6 +62,7 @@ return {
   },
   {
     "jay-babu/mason-nvim-dap.nvim",
+    enabled = not vim.g.vsneo,
     dependencies = "mason.nvim",
     cmd = { "DapInstall", "DapUninstall" },
     opts = {

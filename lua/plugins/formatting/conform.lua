@@ -1,5 +1,6 @@
 return {
   "stevearc/conform.nvim",
+  enabled = not vim.g.vsneo,
   dependencies = { "mason.nvim" },
   lazy = true,
   cmd = "ConformInfo",

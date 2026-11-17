@@ -1,6 +1,7 @@
 return {
   {
     "mason-org/mason.nvim",
+    enabled = not vim.g.vsneo,
     lazy = false,
     build = ":MasonUpdate",
     opts_extended = { "ensure_installed" },

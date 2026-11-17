@@ -1,27 +1,30 @@
 return {
   {
-     "NeogitOrg/neogit",
-     lazy = true,
-     dependencies = {
-       "nvim-lua/plenary.nvim",
-       "sindrets/diffview.nvim",
-       "folke/snacks.nvim"
-     },
-     cmd = "Neogit",
-     keys = {
-       { "<leader>gg", "<CMD>Neogit<CR>", desc = "Show Neogit"}
-     },
-     opts = {
+    "NeogitOrg/neogit",
+    enabled = not vim.g.vsneo,
+    lazy = true,
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "sindrets/diffview.nvim",
+      "folke/snacks.nvim",
+    },
+    cmd = "Neogit",
+    keys = {
+      { "<leader>gg", "<CMD>Neogit<CR>", desc = "Show Neogit" },
+    },
+    opts = {
       initial_branch_name = "main",
-     }
+    },
   },
   {
     "esmuellert/codediff.nvim",
+    enabled = not vim.g.vsneo,
     dependencies = { "MunifTanjim/nui.nvim" },
-    cmd = "CodeDiff"
+    cmd = "CodeDiff",
   },
   {
     "lewis6991/gitsigns.nvim",
+    enabled = not vim.g.vsneo,
     opts = {
       signs = {
         add = { text = "▎" },
@@ -44,5 +47,5 @@ return {
       current_line_blame_formatter = "<author> | <author_time:%R> - <summary>",
       on_attach = Utils.git.gitsigns_on_attach,
     },
-  }
+  },
 }

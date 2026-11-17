@@ -1,5 +1,6 @@
 return {
   "2KAbhishek/nerdy.nvim",
+  enabled = not vim.g.vsneo,
   cmd = "Nerdy",
   opts = {
     max_recents = 30,

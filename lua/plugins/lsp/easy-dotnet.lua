@@ -1,5 +1,6 @@
 return {
   "GustavEikaas/easy-dotnet.nvim",
+  enabled = not vim.g.vsneo,
   dependencies = { "nvim-lua/plenary.nvim", "mfussenegger/nvim-dap", "folke/snacks.nvim" },
   opts = {
     managed_terminal = {
@@ -117,7 +118,7 @@ return {
       ---@type nil | "Off" | "Critical" | "Error" | "Warning" | "Information" | "Verbose" | "All"
       log_level = nil,
       -- also need nuget installed: `winget install Microsoft.NuGet`
-      use_visual_studio = true
+      use_visual_studio = true,
     },
     -- choose which picker to use with the plugin
     -- possible values are "telescope" | "fzf" | "snacks" | "basic"

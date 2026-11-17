@@ -1,5 +1,6 @@
 return {
   "stevearc/overseer.nvim",
+  enabled = not vim.g.vsneo,
   ---@module 'overseer'
   ---@type overseer.SetupOpts 
   opts = {

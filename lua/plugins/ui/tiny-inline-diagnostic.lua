@@ -1,6 +1,7 @@
 return {
   {
     "rachartier/tiny-inline-diagnostic.nvim",
+    enabled = not vim.g.vsneo,
     event = "VeryLazy",
     priority = 1000,
     opts = {

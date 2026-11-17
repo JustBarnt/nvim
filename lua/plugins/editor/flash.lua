@@ -3,6 +3,7 @@ local flash_inc_select  = { actions = { ["<c-space>"] = "next", ["<BS>"] = "prev
 
 return {
   "justbarnt/flash.nvim",
+  enabled = not vim.g.vsneo,
   event = "VeryLazy",
   ---@type Flash.Config
   opts = {},

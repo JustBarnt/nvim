@@ -1,5 +1,6 @@
 return {
   "folke/which-key.nvim",
+  enabled = not vim.g.vsneo,
   event = "VeryLazy",
   keys = {
     { "<leader>?",    function() require("which-key").show({ global = false }) end,              desc = "Buffer Keymaps" },

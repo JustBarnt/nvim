@@ -1,5 +1,6 @@
 return {
   "y3owk1n/time-machine.nvim",
+  enabled = not vim.g.vsneo,
   cmd = {
     "TimeMachineToggle",
     "TimeMachinePurgeBuffer",

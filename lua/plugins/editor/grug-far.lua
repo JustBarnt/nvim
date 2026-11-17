@@ -1,5 +1,6 @@
 return {
   "MagicDuck/grug-far.nvim",
+  enabled = not vim.g.vsneo,
   event = "VeryLazy",
   keys = {
     { "<leader>frw", function() require("grug-far").open({ prefills = { search = vim.fn.expand("<cword>") } }) end, desc = "Find and Replace <CWORD>" },

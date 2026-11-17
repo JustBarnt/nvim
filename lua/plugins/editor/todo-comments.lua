@@ -1,5 +1,6 @@
 return {
   "folke/todo-comments.nvim",
+  enabled = not vim.g.vsneo,
   event = "BufReadPre",
   opts = {
     highlight = {

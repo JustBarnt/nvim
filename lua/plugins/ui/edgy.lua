@@ -1,10 +1,23 @@
 return {
   {
     "folke/edgy.nvim",
+    enabled = not vim.g.vsneo,
     event = "VeryLazy",
     keys = {
-      { "<leader>ue", function() require("edgy").toggle() end, desc = "Edgy Toggle" },
-      { "<leader>uE", function() require("edgy").select() end, desc = "Edgy Select Window" }
+      {
+        "<leader>ue",
+        function()
+          require("edgy").toggle()
+        end,
+        desc = "Edgy Toggle",
+      },
+      {
+        "<leader>uE",
+        function()
+          require("edgy").select()
+        end,
+        desc = "Edgy Select Window",
+      },
     },
     init = function()
       vim.opt.laststatus = 3
@@ -12,9 +25,9 @@ return {
     end,
     opts = function()
       local opts = {
-        animate = { 
+        animate = {
           fps = 120,
-          cps = 1000
+          cps = 1000,
         },
         bottom = {
           "Trouble",
@@ -24,8 +37,8 @@ return {
             size = { height = 20 },
             filter = function(buf)
               return vim.bo[buf].buftype == "help"
-            end
-          }
+            end,
+          },
         },
         left = {
           {
@@ -34,13 +47,13 @@ return {
             size = { width = 0.4 },
             filter = function(buf, win)
               return vim.bo[buf].buftype == "nofile"
-                  and vim.bo[buf].filetype == "snacks_picker_list"
-                  and vim.api.nvim_win_get_config(win).relative == ""
-            end
-          }
+                and vim.bo[buf].filetype == "snacks_picker_list"
+                and vim.api.nvim_win_get_config(win).relative == ""
+            end,
+          },
         },
         right = {
-          { title = "Grug Far", ft = "grug-far", size = { width = 0.4 } }
+          { title = "Grug Far", ft = "grug-far", size = { width = 0.4 } },
         },
         keys = {
           ["<c-Right>"] = function(win)
@@ -55,10 +68,10 @@ return {
           ["<c-Down>"] = function(win)
             win:resize("height", -2)
           end,
-        }
+        },
       }
 
-      for _, pos in ipairs({ "top", "bottom", "left", "right" }) do
+      for _, pos in ipairs { "top", "bottom", "left", "right" } do
         opts[pos] = opts[pos] or {}
 
         -- Trouble
@@ -66,11 +79,11 @@ return {
           ft = "trouble",
           filter = function(_buf, win)
             return vim.w[win].trouble
-                and vim.w[win].trouble.position == pos
-                and vim.w[win].trouble.type == "split"
-                and vim.w[win].trouble.relative == "editor"
-                and not vim.w[win].trouble_preview
-          end
+              and vim.w[win].trouble.position == pos
+              and vim.w[win].trouble.type == "split"
+              and vim.w[win].trouble.relative == "editor"
+              and not vim.w[win].trouble_preview
+          end,
         })
         --
         -- Snacks terminal
@@ -80,14 +93,14 @@ return {
           title = "%{b:snacks_terminal.id}: %{b:term_title}",
           filter = function(_buf, win)
             return vim.w[win].snacks_win
-                and vim.w[win].snacks_win.position == pos
-                and vim.w[win].snacks_win.relative == "editor"
-                and not vim.w[win].trouble_preview
+              and vim.w[win].snacks_win.position == pos
+              and vim.w[win].snacks_win.relative == "editor"
+              and not vim.w[win].trouble_preview
           end,
         })
       end
 
       return opts
     end,
-  }
+  },
 }
