@@ -8,8 +8,11 @@ if vim.g.vsneo then
   vim.g.vsneo_syntax = 1
   vim.cmd("syntax on")
   vim.g.vsneo_preset = "tokyo_night"
+
   -- vim.g.vsneo_mode_line = true
   -- vim.g.vsneo_mode_line_opacity = 0.12
+  vim.g.vsneo_scroll_animation_length = 0
+  vim.g.vsneo_scroll_animation_far_lines = 1
 end
 
 -- Leader keys
