@@ -85,7 +85,16 @@ require("user.commands")
 -- TODO: Move to a plugin
 require("filetypes.ft-commands")
 
+if vim.g.vsneo then
+  require("user.vsneokeys")
+  vim.print("Loading vsneokeys")
+else
+  require("user.nvimkeys")
+  vim.print("Loading nvimkeys")
+end
+
 require("user.keys")
+vim.print("Loading shared keys")
 require("user.options")
 
 

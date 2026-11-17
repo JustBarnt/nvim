@@ -8,10 +8,7 @@ local function term_nav(dir)
   end
 end
 
-return {
-  "snacks.nvim",
-  --stylua: ignore-start
-  keys = {
+local keys = {
     -- Most Used
     { '<leader>.',   function() Snacks.scratch.open() end,              desc = 'Scratch Buffer' },
     { '<leader>e',   function() Snacks.explorer() end,                  desc = 'File Explorer' },
@@ -47,7 +44,12 @@ return {
     { '<leader>cr',  function() Snacks.debug.run() end,                 desc = 'Execute Lua Code' },
     { '<leader>db',  function() Snacks.bufdelete() end,                 desc = 'Delete Buffer' },
     { '<leader>dob', function() Snacks.bufdelete.other() end,           desc = 'Delete Other Buffers' },
-  },
+  }
+
+return {
+  "snacks.nvim",
+  --stylua: ignore-start
+  keys = not vim.g.vsneo and keys or {},
   --stylua: ignore-end
   ---@type snacks.Config
   opts = {
