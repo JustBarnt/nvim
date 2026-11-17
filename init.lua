@@ -4,20 +4,6 @@
 
 -- TODO: Add total characters selected with cursor to statusbar when visually selecting string
 
-if vim.g.vscode then
-    return
-end
-
- _G.dd = function(...)
-   require("snacks.debug").inspect(...)
- end
-
-_G.bt = function(...)
-  require("snacks.debug").backtrace()
-end
-
-vim.print = dd
-
 -- Leader keys
 -- vim.keycode translates keycodes instead of strings
 vim.g.mapleader = vim.keycode("<space>")
@@ -43,7 +29,3 @@ vim.g.debug = false
 -- Bootstrap lazy.nvim we need to make sure any thing plugin releated is
 -- loaded and available for the rest of our configuration startup
 require("lazy-bootstrap")
-
-if vim.g.neovide then
-   require "user.neovide"
-end

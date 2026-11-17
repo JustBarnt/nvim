@@ -64,31 +64,30 @@ require("lazy").setup {
   },
 }
 
--- These are things we only want to load when we aren't
--- in visual studio
+_G.LazyUtil = require("lazy.core.util")
+
+-- Setup our RootDir awareness
+-- from: https://github.com/LazyVim/LazyVim/blob/c64a61734fc9d45470a72603395c02137802bc6f/lua/lazyvim/util/root.lua
+Utils.root.setup()
+
 if not vim.g.vsneo then
-  _G.LazyUtil = require("lazy.core.util")
-
-  -- Setup our RootDir awareness
-  -- from: https://github.com/LazyVim/LazyVim/blob/c64a61734fc9d45470a72603395c02137802bc6f/lua/lazyvim/util/root.lua
-  Utils.root.setup()
-
   -- Setup any DAP Adapters we have
   Utils.dap.init()
-
-  -- Load our filetype additions
-  require("filetypes").setup()
-
-  require("user.autocmds")
-  require("user.diagnostics")
-  require("user.commands")
-
-  -- TODO: Move to a plugin
-  require("filetypes.ft-commands")
 end
+
+-- Load our filetype additions
+require("filetypes").setup()
+
+require("user.autocmds")
+require("user.diagnostics")
+require("user.commands")
+
+-- TODO: Move to a plugin
+require("filetypes.ft-commands")
 
 require("user.keys")
 require("user.options")
+
 
 -- TODO: Create a command for this
 -- local file_path = vim.fn.stdpath("config") .. '\\lua\\types.lua'
