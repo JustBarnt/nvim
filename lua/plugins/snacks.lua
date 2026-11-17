@@ -53,16 +53,17 @@ return {
   --stylua: ignore-end
   ---@type snacks.Config
   opts = {
-    animate = { enabled = true },
-    bufdelete = { enabled = true },
+    animate = { enabled = not vim.g.vsneo and true or false },
+    bufdelete = { enabled = not vim.g.vsneo and true or false },
     -- dashboard = { enabled = true },
-    explorer = { replace_netrw = true, trash = true },
-    input = { enabled = true },
-    image = { enabled = true },
-    lazygit = { enabled = vim.fn.has("lazygit") == 1 },
+    explorer = { enabled = not vim.g.vsneo and true or false, replace_netrw = true, trash = true },
+    input = { enabled = not vim.g.vsneo and true or false },
+    image = { enabled = not vim.g.vsneo and true or false },
+    lazygit = { enabled = vim.fn.has("lazygit") == 1 and not vim.g.vsneo and true or false },
     notifier = { style = "minimal", refresh = 50, top_down = false },
     notify = { enabled = true },
     picker = {
+      enabled = not vim.g.vsneo and true or false,
       debug = { score = true },
       formatters = {
         file = {
@@ -111,10 +112,11 @@ return {
         },
       },
     },
-    quickfile = { enabled = true }, -- When doing `nvim <filename>` load it as quickly as possible before loading plugins
-    rename = { enabled = true },
-    scroll = { enabled = true },
+    quickfile = { enabled = not vim.g.vsneo and true or false }, -- When doing `nvim <filename>` load it as quickly as possible before loading plugins
+    rename = { enabled = not vim.g.vsneo and true or false },
+    scroll = { enabled = not vim.g.vsneo and true or false },
     statuscolumn = {
+      enabled = not vim.g.vsneo and true or false, 
       left = { "mark", "sign" },
       right = { "fold", "git" },
       folds = { open = true, git_hl = false },
@@ -122,6 +124,7 @@ return {
       refresh = 50
     },
     terminal = {
+      enabled = not vim.g.vsneo and true or false,
       win = {
         keys = {
           nav_h = { "<C-h>", term_nav("h"), desc = "Go to Left Window",  expr = true, mode = "t" },
@@ -131,6 +134,6 @@ return {
         }
       }
     },
-    words = { enabled = true }
+    words = { enabled = not vim.g.vsneo and true or false }
   }
 }

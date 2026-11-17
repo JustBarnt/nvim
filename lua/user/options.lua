@@ -34,8 +34,8 @@ opt.cursorline = true
 opt.guicursor = { "n-v-c:block", "i-ci-ve:hor20", "r-cr:hor20" }
 opt.list = true
 opt.listchars = { space = "⋅", trail = "⋅", tab = "  ↦" }
-opt.number = true
-opt.relativenumber = true
+opt.number = not vim.g.vsneo and true or false
+opt.relativenumber = not vim.g.vsneo and true or false
 opt.signcolumn = "yes"
 opt.statusline = "%{%v:lua.Utils.statusline.render()%}"
 
@@ -69,10 +69,14 @@ opt.smartindent = true
 opt.tabstop = 2
 
 -- Navigation and Scrolling
-opt.jumpoptions = "view"
-opt.scrolloff = 4
-opt.sidescrolloff = 8
-opt.smoothscroll = true
+if not vim.g.vsneo then
+  opt.jumpoptions = "view"
+  opt.scrolloff = 4
+  opt.sidescrolloff = 8
+  opt.smoothscroll = true
+else 
+  opt.scroll = 26
+end
 
 -- Search
 opt.grepformat = "%f:%l:%c:%m"
