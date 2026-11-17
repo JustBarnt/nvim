@@ -74,8 +74,6 @@ if not vim.g.vsneo then
   opt.scrolloff = 4
   opt.sidescrolloff = 8
   opt.smoothscroll = true
-else 
-  opt.scroll = 26
 end
 
 -- Search
