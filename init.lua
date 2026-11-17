@@ -7,17 +7,7 @@
 if vim.g.vsneo then
   vim.g.vsneo_syntax = 1
   vim.cmd("syntax on")
-  vim.g.vsneo_preset = nil
-
-  -- vim.g.vsneo_mode_line = true
-  -- vim.g.vsneo_mode_line_opacity = 0.12
-  vim.g.vsneo_scroll_animation_length = 0
-  vim.g.vsneo_scroll_animation_far_lines = 1
-  vim.g.vsneo_cursor_animation_length = 0
-  vim.g.vsneo_cursor_short_animation_length = 0
-  vim.g.vsneo_cursor_trail_size = 0
-  vim.g.vsneo_cursor_animate_in_insert_mode = false
-  vim.g.vsneo_cursor_vfx_mode = nil
+  vim.g.vsneo_preset = 'tokyo_night'
 end
 
 -- Leader keys

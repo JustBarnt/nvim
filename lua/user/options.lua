@@ -20,7 +20,7 @@ opt.clipboard = "unnamedplus"
 opt.mouse = not vim.g.vsneo and "a" or "nvi"
 
 -- Command Line and Messages
-opt.cmdheight = 1
+opt.cmdheight = not vim.g.vsneo and 1 or 0
 opt.inccommand = "split"
 
 -- Completion
