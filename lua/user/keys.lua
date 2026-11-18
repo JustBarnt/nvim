@@ -9,8 +9,6 @@ map.set({ "n", "x" }, "j", "v:count == 0 ? 'gj' : 'j'", { desc = "Down", expr = 
 map.set({ "n", "x" }, "k", "v:count == 0 ? 'gk' : 'k'", { desc = "Up", expr = true })
 
 -- Windows
-map.set("n", "<leader>-", "<C-w>s", { desc = "Split Window Below" })
-map.set("n", "<leader>|", "<C-w>v", { desc = "Split Window Right" })
 map.set("n", "<C-h>", "<C-w>h", { desc = "Focus Left Window" })
 map.set("n", "<C-j>", "<C-w>j", { desc = "Focus Lower Window" })
 map.set("n", "<C-k>", "<C-w>k", { desc = "Focus Upper Window" })

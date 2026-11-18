@@ -107,3 +107,11 @@ vsc('<leader>gr', 'Team.Git.OpenRepository', 'Repository window')
 
 -- windows
 vsc('<leader>e', 'View.SolutionExplorer', 'Solution Explorer')
+
+local vsplit = function()
+  vsneo.cmd('Window.NewVerticalTabGroup')
+end
+
+vim.keymap.set('n', '<leader>|', vsplit, { desc = 'Vertical split (VS)' })
+vim.api.nvim_create_user_command('Vsplit', vsplit, { desc = 'Vertical split (VS)' })
+vim.cmd([[cnoreabbrev <expr> vsp getcmdtype() == ':' && getcmdline() ==# 'vsp' ? 'Vsplit' : 'vsp']])

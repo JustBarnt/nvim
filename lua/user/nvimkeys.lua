@@ -1,5 +1,8 @@
 local map = Snacks.keymap
 
+map.set("n", "<leader>-", "<C-w>s", { desc = "Split Window Below" })
+map.set("n", "<leader>|", "<C-w>v", { desc = "Split Window Right" })
+
 -- Mark Helpers
 map.set("n", "<leader>m", Utils.marks.mark, { desc = "Mark line" })
 map.set("n", "<leader>dm", Utils.marks.del_mark, { desc = "Delete mark" })
