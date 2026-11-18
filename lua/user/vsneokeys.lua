@@ -17,6 +17,11 @@ end
 -- vim.keymap.del('n', '<leader>sf')
 vim.keymap.set('n', '<leader>ff', function() vsneo.seeky('files') end, { desc = "Find Files (Seeky)"})
 
+-- I want gc and gcc to behave the same way in visual studio as it does in vim
+local comment = function() return require('vim._comment').operator() end
+vim.keymap.set({ 'n', 'x' }, 'gc', comment, { expr = true, desc = 'Toggle comment' })
+vim.keymap.set('n', 'gcc', function() return comment() .. '_' end, { expr = true, desc = 'Toggle comment line' })
+
 vsc('<C-r>', 'Edit.Redo', 'Redo Change')
 
 -- buffers / tabs
