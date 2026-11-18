@@ -1,7 +1,16 @@
-local function vsc(lhs, command, desc)
-  vim.keymap.set('n', lhs, function() vsneo.cmd(command) end,
-    { silent = true, desc = desc })
+for _, k in ipairs({ 'gi', 'gr' }) do
+  pcall(vim.keymap.del, 'n', k)
 end
+
+local function vsc(lhs, command, desc, run)
+  run = run or false
+  if not run then
+    vim.keymap.set('n', lhs, function() vsneo.cmd(command) end, { silent = true, desc = desc })
+  else
+    vim.keymap.set('n', lhs, function() vsneo.goto_cmd(command) end, { silent = true, desc = desc })
+  end
+end
+
 -- find: the embedded Seeky picker (Telescope-style, over the native fff
 -- engine — built into VSNeo, nothing else to install). Its keys are Visual
 -- Studio chords, so they work in every mode and take nothing from nvim:
@@ -35,9 +44,13 @@ vsc('<leader>bp', 'Window.PreviousTab', 'Previous tab')
 vsc('grn', 'Refactor.Rename', 'Rename symbol')
 vsc('grf', 'Edit.FormatDocument', 'Format document')
 vsc('gre', 'View.ErrorList', 'Error list')
-vsc('grR', 'Edit.FindAllReferences', 'Find All References')
 vsc('gro', 'EditorContextMenus.CodeWindow.ToggleHeaderCodeFile', 'Toggle Header/Source Code')
 vsc('grO', 'EditorContextMenus.CodeWindow.PeekHeaderCodeFile', 'Peek Header/Source Code')
+vsc('grr', 'Edit.FindAllReferences', 'References (VS)')
+vsc('gri', 'Edit.GoToImplementation', 'Implementation (VS)')
+vsc('grn', 'Refactor.Rename', 'Rename (VS)')
+vsc('gra', 'View.QuickActionsForPosition', 'Code action (VS)')
+vsc('gO',  function() vsneo.seeky('outline') end, 'Outline (Seeky)')
 vsc('<leader>k', 'Edit.PeekDefinition', 'Peek Definition')
 
 -- multi-edit: arm the matches of the last search (/ or *), change one with
