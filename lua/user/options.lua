@@ -51,9 +51,10 @@ vim.opt.fillchars = {
   diff = "╱",
   eob = " ",
 }
--- opt.foldlevel = 9999
--- opt.foldmethod = "indent"
--- opt.foldtext = ""
+
+-- Folding
+vim.opt.foldlevel = 99
+vim.opt.foldlevelstart = 99
 
 -- Formatting
 opt.formatoptions = "jcroqlnt"
