@@ -12,6 +12,8 @@ if vim.g.vsneo then
 
   vim.g.vsneo_mode_line = true
   vim.g.vsneo_mode_line_opacity = 0.12
+
+  vim.g.vsneo_cursor_vfx_mode = { "wireframe" }
 end
 
 -- Leader keys
