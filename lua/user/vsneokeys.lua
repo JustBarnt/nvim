@@ -115,3 +115,7 @@ end
 vim.keymap.set('n', '<leader>|', vsplit, { desc = 'Vertical split (VS)' })
 vim.api.nvim_create_user_command('Vsplit', vsplit, { desc = 'Vertical split (VS)' })
 vim.cmd([[cnoreabbrev <expr> vsp getcmdtype() == ':' && getcmdline() ==# 'vsp' ? 'Vsplit' : 'vsp']])
+
+
+vim.cmd("Sethandler <C-y> i:vim")
+vim.keymap.set('i', '<C-y>', '<CMD>Vsc Edit.InsertTab<CR>', { desc = "Select Completion Item" })
