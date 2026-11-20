@@ -31,6 +31,7 @@ return {
         ["tailwindcss-language-server"] = "tailwindcss",
         ["taplo"] = "taplo",
         ["vtsls"] = "vtsls",
+        ['tsc'] = 'tsc',
         ["vim-language-server"] = "vimls",
         ["yaml-language-server"] = "yamlls",
       },
