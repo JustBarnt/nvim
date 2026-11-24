@@ -8,7 +8,7 @@ return {
     end,
     event = "VeryLazy",
     cmd = { "TSUpdate", "TSInstall", "TSLog", "TSUninstall" },
-    opts_extend = { "esnure_installed" },
+    opts_extend = { "ensure_installed" },
     opts = {
       -- stylua: ingnore start
       ensure_installed = {
@@ -89,7 +89,7 @@ return {
 
       local function attach(buf)
         local ft = vim.bo[buf].filetype
-        if not (vim.tbl_get(opts, "move", "enable") and Utils.treesitter.have_query(ft, "textobjects")) then
+        if not (vim.tbl_get(opts, "move", "enable") and Utils.treesitter.have(ft, "textobjects")) then
           return
         end
 

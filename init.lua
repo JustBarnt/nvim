@@ -4,6 +4,21 @@
 
 -- TODO: Add total characters selected with cursor to statusbar when visually selecting string
 
+-- Workaround until VSNeo defaults to using Visual Studios documentable for filetypes
+if vim.g.vsneo then
+  vim.api.nvim_create_autocmd('BufEnter', {
+    group = vim.api.nvim_create_augroup('vsneo_unnamed_php', { clear = true }),
+    callback = function(args)
+      local buf = args.buf
+      if vim.api.nvim_buf_get_name(buf) ~= '' or vim.bo[buf].filetype ~= '' then return end
+      local is_php = vim.api.nvim_buf_call(buf, function()
+        return vim.fn.search([[<?php\|<?=]], 'nw') > 0
+      end)
+      if is_php then vim.bo[buf].filetype = 'php' end
+    end,
+  })
+end
+
 if vim.g.vsneo then
   vim.g.vsneo_syntax = 1
   vim.cmd("syntax on")

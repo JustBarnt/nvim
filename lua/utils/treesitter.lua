@@ -1,8 +1,20 @@
+_installed = nil ---@type table<string, boolean>?
+_queries = {} ---@type table<string, boolean>
+
+---@param lang string
+---@param query string
+---@return boolean
+function have_query(lang, query)
+  local key = lang .. ":" .. query
+  if _queries[key] == nil then
+    _queries[key] = vim.treesitter.query.get(lang, query) ~= nil
+  end
+  return _queries[key]
+end
+
+
 ---@class utils.treesitter
 local M = {}
-
-M._installed = nil ---@type table<string, boolean>?
-M._queries = {} ---@type table<string, boolean>
 
 ---@param update boolean?
 function M.get_installed(update)
@@ -13,17 +25,6 @@ function M.get_installed(update)
     end
   end
   return M._installed or {}
-end
-
----@param lang string
----@param query string
----@return boolean
-function M.have_query(lang, query)
-  local key = lang .. ":" .. query
-  if M._queries[key] == nil then
-    M._queries[key] = vim.treesitter.query.get(lang, query) ~= nil
-  end
-  return M._queries[key]
 end
 
 ---@param what string|number|nil
@@ -38,7 +39,7 @@ function M.have(what, query)
   if lang == nil or M.get_installed()[lang] == nil then
     return false
   end
-  if query and not M.have_query(lang, query) then
+  if query and not have_query(lang, query) then
     return false
   end
   return true
